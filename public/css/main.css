@@ -1,0 +1,73 @@
+@import url("/css/layout.css");
+@import url("/css/color.css");
+@import url("/css/item.css");
+@font-face{
+    font-family: "Cantarell";
+    src: "/css/Cantarell-VF.otf";
+}
+*{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+html{
+    font-size: 14px;
+    font-family: "Cantarell";
+    line-height: 1.15;
+}
+body{
+    line-height: 2;
+    min-height: 100%;
+    position: relative;
+    background-color: var(--bg);
+    color:var(--font-color);
+    margin: 0;
+}
+a{
+    text-decoration: none;
+    color:var(--font-color);
+    transition: color .3s ease-in-out;
+}
+a:hover{
+    color:rgba(73,177,245,0.7);
+}
+header{
+    height:100vh;
+    background-attachment: fixed;
+    position: relative;
+    width: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: all .5s ease-in-out;
+    background-image: linear-gradient(45deg, var(--blue4) 70%, var(--purple2) 100%);
+}
+header.shrinked{
+    height:30rem;
+}
+header nav{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding:0 36px;
+    width: 100%;
+    height: 60px;
+    font-size: 1.3em;
+    color:white;
+    position: fixed;
+    background-color: rgb(36,31,49);
+    font-weight: 700;
+    z-index:2;
+}
+.blogName{
+    flex:1;
+}
+.navItem a{
+    color:white;
+}
+footer{
+    position: relative;
+    background: #49b1f5;
+    padding:2rem 1rem;
+    text-align: center;
+}

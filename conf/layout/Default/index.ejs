@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%! widget:xhead !%>
+        <link type="text/css" rel="stylesheet" href="/css/index.css">
+        <title>
+            <%! widget:title !%>
+        </title>
+    </head>
+    <body>
+        <header>
+            <%! widget:nav !%>
+            <div class="centerArea">
+                <h1><%! widget:title !%></h1>
+                <a href="<%= info.url-%>"><%= info.name -%></a>
+                <br/>
+                <p><%= info.note -%></p>
+            </div>
+            <div class="scrollDown">
+                <i class="fas fa-angle-down"></i>
+            </div>
+        </header>
+        <main class="wrapper">
+            <div class="wrapperItem wrapperLeft">
+                <%! widget:about !%>
+                <%! widget:announcement !%>
+                <%! widget:archivelist !%>
+                <% if (!info.features.hasThirdBar) { -%>
+                        <%! extensions !%>
+                <% } -%>
+            </div>
+            <div class="wrapperItem wrapperMain">
+                <% POSTS.slice(0,5).forEach(item=>{ -%>
+                    <div class="postCard cardLikedItem">
+                        <div class="postCardInfoContainer">
+                            <a href="<%= item.src %>" class="postCardTitle"><%= item.title %></a>
+                            <div class="postData metaItem">
+                                <span>发布于</span>
+                                <span><%= item.date %></span>
+                            </div>
+                            <div class="lessContentItem">
+                                <%- item.less %>
+                            </div>
+                        </div>
+                    </div>
+                <% }) -%>
+            </div>
+            <% if (info.features.hasThirdBar) { -%>
+                <div class="wrapperItem wrapperRight">
+                    <%! extensions !%>
+                </div>
+            <% } -%>
+        </main>
+        <%! widget:footer !%>
+    </body>
+</html>

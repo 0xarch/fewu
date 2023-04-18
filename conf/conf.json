@@ -1,0 +1,19 @@
+{
+    "name":"0xarch",
+    "url":"https://github.com/0xarch",
+    "avatar":"https://cn.bing.com/favicon.ico",
+    "note":"We won't be disturbed!",
+    "location":"Xvd 114514",
+    "features":{
+        "hasThirdBar":false,
+        "thirdSideExtensions":[],
+        "hasAnnouncement":true,
+        "announcementText":"欢迎来到我的博客!"
+    },
+    "lookAndFeel":{
+        "background":"https://images.alphacoders.com/260/260601.jpg",
+        "customSiteTitle":"Test",
+        "theme":"Default",
+        "layout":"Default"
+    }
+}

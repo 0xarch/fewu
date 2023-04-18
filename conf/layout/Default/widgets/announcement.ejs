@@ -1,0 +1,13 @@
+<% if (info.features.hasAnnouncement) { -%>
+    <div class="notice cardLikedItem">
+        <div class="cardHeader">
+            <i class="fas fa-bullhorn"></i>
+            <span>公告</span>
+        </div>
+        <div class="cardText announcement">
+            <span>
+                <%= info.features.announcementText -%>
+            </span>
+        </div>
+    </div>
+<% } -%>

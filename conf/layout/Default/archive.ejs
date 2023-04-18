@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%! widget:xhead !%>
+        <title>
+            <%! widget:title !%>
+        </title>
+    </head>
+    <body>
+        <header class="shrinked">
+            <%! widget:nav !%>
+            <div class="centerArea">
+                <h1>归档</h1>
+                <h3>共<%= ginfo.postCount -%>篇文章</h3>
+            </div>
+            
+        </header>
+        <div class="wrapper">
+            <div class="wrapperItem wrapperLeft">
+                <%! widget:about !%>
+                <%! widget:announcement !%>
+                <% if (!info.features.hasThirdBar) { -%>
+                        <%! extensions !%>
+                <% } -%>
+            </div>
+            <div class="wrapperItem wrapperMain">
+                <div class="cardLikedItem postList">
+                    <h2>文章总览</h2>
+                    <% POSTS.forEach(item=>{ -%>
+                        <div class="inPostList">
+                            <span class="dateItem"><%= item.date -%></span>
+                            <br/>
+                            <a href="<%= item.src %>" class="postCardTitle small"><%= item.title -%></a>
+                        </div>
+                    <% }) -%>
+                </div>
+            </div>
+            <% if (info.features.hasThirdBar) { -%>
+                <div class="wrapperItem wrapperRight">
+                    <%! extensions !%>
+                </div>
+            <% } -%>
+        </div>
+        <%! widget:footer !%>
+    </body>
+</html>

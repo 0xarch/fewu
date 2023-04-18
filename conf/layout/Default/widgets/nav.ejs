@@ -1,0 +1,27 @@
+<nav>
+    <span class="blogName">
+        <% if (info.lookAndFeel.customSiteTitle != undefined) { -%>
+            <%= info.lookAndFeel.customSiteTitle -%>
+        <% } else { -%>
+            <%= info.name -%>'s Blog
+        <% } -%>
+    </span>
+    <span class="navItem">
+        <div class="menuItems mr">
+            <i class="fa-fw fas fa-home"></i>
+            <a href="/">首页</a>
+        </div>
+        <div class="menuItems mr">
+            <i class="fa-fw fas fa-archive"></i>
+            <a href="/archive/">归档</a>
+        </div>
+        <div class="menuItems mr">
+            <i class="fa-fw fas fa-folder-open"></i>
+            <a href="/category/">分类</a>
+        </div>
+        <div class="menuItems mr">
+            <i class="fa-fw fas fa-heart"></i>
+            <a href="/about/">关于</a>
+        </div>
+    </span>
+</nav>

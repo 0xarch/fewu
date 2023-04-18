@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%! widget:xhead !%>
+        <title>
+            <%! widget:title !%>
+        </title>
+    </head>
+    <body>
+        <header class="shrinked">
+            <%! widget:nav !%>
+            <div class="centerArea">
+                <h1><%= post.title -%></h1>
+                <h3>发布于<%= post.date -%></h3>
+            </div>
+        </header>
+        <div class="wrapper">
+            <div class="wrapperItem wrapperLeft">
+                <%! widget:about !%>
+                <%! widget:announcement !%>
+                <%! widget:archivelist !%>
+                <% if (!info.features.hasThirdBar) { -%>
+                    <%! extensions !%>
+                <% } -%>
+            </div>
+            <div class="wrapperItem wrapperMain">
+                <div class="postContent cardLikedItem">
+                    <%- post.content %>
+                </div>
+            </div>
+            <% if (info.features.hasThirdBar) { -%>
+                <div class="wrapperItem wrapperRight">
+                    <%! extensions !%>
+                </div>
+            <% } -%>
+        </div>
+        <%! widget:footer !%>
+    </body>
+</html>
