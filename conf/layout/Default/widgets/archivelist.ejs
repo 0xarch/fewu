@@ -1,12 +1,15 @@
 <div class="cardArchives cardLikedItem">
-    <div class="cardHeader">
+    <a class="widgetHeader" href="/archive/">
         <i class="fa-fw fas fa-archive"></i>
         <span>归档</span>
-        <a class="widgetHeaderLink" href="/archive/"><i class="fas fa-angle-right"></i></a>
-    </div>
+        <span class="widgetHeaderLink"><i class="fas fa-angle-right"></i></span>
+    </a>
     <div class="widgetContent">
-        <% POSTS.forEach(item=>{ %>
-            
+        <h3 style="margin:0">最近的文章</h3>
+        <% RECENT_POSTS.forEach(item=>{ %>
+            <div class="recent_posts">
+                <a href="<%= item.url -%>"><%= item.title -%></a>
+            </div>
         <% }) %>
     </div>
 </div>

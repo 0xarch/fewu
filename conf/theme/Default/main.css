@@ -1,6 +1,7 @@
 @import url("/css/layout.css");
 @import url("/css/color.css");
 @import url("/css/item.css");
+@import url("/css/widget.css");
 @font-face{
     font-family: "Cantarell";
     src: "/css/Cantarell-VF.otf";
@@ -67,7 +68,8 @@ header nav{
 }
 footer{
     position: relative;
-    background: #49b1f5;
+    background-color: rgb(20,22,23);
+    color:white;
     padding:2rem 1rem;
     text-align: center;
 }

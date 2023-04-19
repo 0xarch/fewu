@@ -94,7 +94,9 @@ function extractLess(markdownContent) {
   }
 }
 
-exports.posts = readPosts(POSTS_DIR);
+const POSTS = readPosts(POSTS_DIR);
+
+exports.POSTS = POSTS;
 
 function insertItems(content) {
   var content = content;

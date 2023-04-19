@@ -1,0 +1,27 @@
+.widgetHeaderLink{
+    float: right;
+    color: var(--font-color);
+}
+.widgetHeader{
+    font-size: 1.2em;
+    padding-bottom: .3em;
+    color:var(--font-color);
+    display: block;
+}
+.widget{
+    border-radius: var(--rounded-corner);
+    background-color: var(--bg);
+    padding:1rem 1.2rem;
+    position: relative;
+    box-shadow: var(--card-box-shadow);
+    transition: box-shadow .3s;
+}
+.widget:hover{
+    box-shadow: var(--card-box-shadow-hover);
+}
+.avatar{
+    height:8em;
+    width: 8em;
+    object-fit: cover;
+    border-radius: 100%;
+}

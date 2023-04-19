@@ -31,9 +31,12 @@
             </div>
             <div class="wrapperItem wrapperMain">
                 <% POSTS.slice(0,5).forEach(item=>{ -%>
-                    <div class="postCard cardLikedItem">
+                    <div class="postCard widget">
                         <div class="postCardInfoContainer">
                             <a href="<%= item.src %>" class="postCardTitle"><%= item.title %></a>
+                            <% if(item.top=="true") { -%>
+                                <span class="ontop"></span>
+                            <% } -%>
                             <div class="postData metaItem">
                                 <span>发布于</span>
                                 <span><%= item.date %></span>

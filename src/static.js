@@ -3,11 +3,13 @@ const Fs = require("fs");
 const FsExtra = require("node-fs-extra");
 const Path = require("path");
 const POST = require("./post");
+const SORT = require("./sorter");
 
 const PUBLIC_DIR = "./public";
 const CONF = require("./conf").CONF;
 
-const POSTS = POST.posts;
+const POSTS = SORT.DEFAULT_POSTS;
+const RECENT_POSTS=SORT.RECENT_POSTS;
 const EXTENSIONS = POST.extensions;
 
 const LAYOUT_DIR = `./conf/layout/${CONF.lookAndFeel.layout}`;
@@ -31,7 +33,7 @@ const GINFO = {
 };
 
 function build(type,extra,path){
-    const content = ejs.render(layouts[type],{...extra,info:CONF,extensions:EXTENSIONS,ginfo:GINFO,POSTS},{views:[LAYOUT_DIR]}).toString();
+    const content = ejs.render(layouts[type],{...extra,info:CONF,extensions:EXTENSIONS,ginfo:GINFO,POSTS,RECENT_POSTS},{views:[LAYOUT_DIR]}).toString();
     Fs.mkdirSync(Path.dirname(path),{recursive:true},()=>{});
     Fs.writeFile(`${path}`,content,err=>{if(err)throw err});
 }

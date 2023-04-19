@@ -12,6 +12,9 @@
 .cardLikedItem:hover{
     box-shadow: var(--card-box-shadow-hover);
 }
+.recentPosts{
+    margin:.25em;
+}
 .cardHeader{
     font-size: 1.2em;
     padding-bottom: .3em;
@@ -59,10 +62,6 @@
 .menuItems:hover::after{
     width: 100%;
 }
-.widgetHeaderLink{
-    float: right;
-    color: var(--font-color);
-}
 .centerArea{
     width:70vw;
     height:50vh;
@@ -86,11 +85,14 @@
     border-radius: 100pt;
     padding:.25em;
 }
-.avatar{
-    height:8em;
-    width: 8em;
-    object-fit: cover;
-    border-radius: 100%;
+.ontop{
+    display: inline-block;
+    height:1em;
+    width: 1em;
+    background:var(--red3);
+    border-radius: 1em;
+    margin:auto .75em;
+    position: relative;
 }
 .count{
     font-size: larger;
