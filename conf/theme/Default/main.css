@@ -33,7 +33,7 @@ a:hover{
     color:rgba(73,177,245,0.7);
 }
 header{
-    height:100vh;
+    height:80vh;
     background-attachment: fixed;
     position: relative;
     width: 100%;
