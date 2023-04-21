@@ -65,9 +65,9 @@
 }
 .centerArea{
     width:70vw;
-    height:40vh;
+    height:50%;
     text-align: center;
-    top:15vh;
+    top:25%;
     left:15vw;
     font-weight: bold;
     position: absolute;
