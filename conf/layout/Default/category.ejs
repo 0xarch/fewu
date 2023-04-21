@@ -23,14 +23,17 @@
             <% } -%>
             <div class="wrapperItem wrapperMain">
                 <div class="widget nohover postList">
-                    <h2>文章总览</h2>
-                    <% POSTS.forEach(item=>{ -%>
+                    <h2>分类总览</h2>
+                    <% CATEGORY_POSTS.forEach(Category=>{ %>
                         <div class="inPostList">
-                            <span class="dateItem"><%= item.date -%></span>
-                            <br/>
-                            <a href="<%= item.src %>" class="postCardTitle small"><%= item.title -%></a>
+                            <h3 class="m0"><%= Category.cate -%></h3>
+                            <% Category.incl.forEach(inclItem=>{ %>
+                                <div>
+                                    <a href="<%= inclItem.src %>"><%= inclItem.title -%></a>
+                                </div>
+                            <% }) %>
                         </div>
-                    <% }) -%>
+                    <% }) %>
                 </div>
             </div>
             <div class="wrapperItem wrapperRight">

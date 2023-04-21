@@ -11,6 +11,7 @@ const CONF = require("./conf").CONF;
 const ABOUT = POST.ABOUT;
 const POSTS = SORT.DEFAULT_POSTS;
 const RECENT_POSTS=SORT.RECENT_POSTS;
+const CATEGORY_POSTS=SORT.CATEGORY_POSTS;
 const EXTENSIONS = POST.extensions;
 
 const LAYOUT_DIR = `./conf/layout/${CONF.lookAndFeel.layout}`;
@@ -36,7 +37,7 @@ const GINFO = {
 };
 
 function build(type,extra,path){
-    const content = ejs.render(layouts[type],{...extra,info:CONF,extensions:EXTENSIONS,ginfo:GINFO,POSTS,RECENT_POSTS},{views:[LAYOUT_DIR]}).toString();
+    const content = ejs.render(layouts[type],{...extra,info:CONF,extensions:EXTENSIONS,ginfo:GINFO,POSTS,RECENT_POSTS,CATEGORY_POSTS},{views:[LAYOUT_DIR]}).toString();
     Fs.mkdirSync(Path.dirname(path),{recursive:true},()=>{});
     Fs.writeFile(`${path}`,content,err=>{if(err)throw err});
 }
