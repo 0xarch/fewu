@@ -16,15 +16,13 @@
             
         </header>
         <div class="wrapper">
-            <div class="wrapperItem wrapperLeft">
-                <%! widget:about !%>
-                <%! widget:announcement !%>
-                <% if (!info.features.hasThirdBar) { -%>
-                        <%! extensions !%>
-                <% } -%>
-            </div>
+            <% if (info.features.hasThirdBar) { -%>
+                <div class="wrapperItem wrapperLeft">
+                    <%! extensions !%>
+                </div>
+            <% } -%>
             <div class="wrapperItem wrapperMain">
-                <div class="cardLikedItem postList">
+                <div class="widget nohover postList">
                     <h2>文章总览</h2>
                     <% POSTS.forEach(item=>{ -%>
                         <div class="inPostList">
@@ -35,11 +33,14 @@
                     <% }) -%>
                 </div>
             </div>
-            <% if (info.features.hasThirdBar) { -%>
-                <div class="wrapperItem wrapperRight">
-                    <%! extensions !%>
-                </div>
-            <% } -%>
+            <div class="wrapperItem wrapperRight">
+                <%! widget:about !%>
+                <%! widget:announcement !%>
+                <%! widget:archivelist !%>
+                <% if (!info.features.hasThirdBar) { -%>
+                        <%! extensions !%>
+                <% } -%>
+            </div>
         </div>
         <%! widget:footer !%>
     </body>

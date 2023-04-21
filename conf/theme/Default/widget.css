@@ -13,10 +13,9 @@
     background-color: var(--bg);
     padding:1rem 1.2rem;
     position: relative;
-    box-shadow: var(--card-box-shadow);
     transition: box-shadow .3s;
 }
-.widget:hover{
+.widget:not(.nohover):hover{
     box-shadow: var(--card-box-shadow-hover);
 }
 .avatar{

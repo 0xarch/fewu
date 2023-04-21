@@ -72,3 +72,7 @@
         --font-color:#7c7978;
     }
 }
+code.hljs{
+	background-color: var(--bg);
+
+}

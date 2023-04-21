@@ -32,6 +32,19 @@ const sortBy = (array, field, sort = "asc") => {
   return array;
 };
 
+function readPost(filePath){
+  const content = fs.readFileSync(filePath, "utf-8");
+  const { data, content: markdownContent } = parseMarkdown(content);
+  const htmlContent = marked.parse(markdownContent);
+  const less = extractLess(markdownContent);
+
+  return {
+    ...data,
+    less,
+    content: htmlContent,
+  };
+}
+
 function readPosts(dir) {
   const files = fs.readdirSync(dir);
   const posts = [];
@@ -42,7 +55,7 @@ function readPosts(dir) {
 
     if (stat.isDirectory()) {
       posts.push(...readPosts(filePath));
-    } else if (path.extname(file) === ".md") {
+    } else if (path.extname(file) === ".md" && path.basename(file,".md") != "about" ) {
       const content = fs.readFileSync(filePath, "utf-8");
       const { data, content: markdownContent } = parseMarkdown(content);
       const htmlContent = marked.parse(markdownContent);
@@ -94,10 +107,6 @@ function extractLess(markdownContent) {
   }
 }
 
-const POSTS = readPosts(POSTS_DIR);
-
-exports.POSTS = POSTS;
-
 function insertItems(content) {
   var content = content;
   // Use a regular expression to match the format <%! widget:key !%> in the content
@@ -120,4 +129,9 @@ function insertItems(content) {
   return content;
 }
 
+const ABOUT = readPost(`${POSTS_DIR}/about.md`);
+const POSTS = readPosts(POSTS_DIR);
+
+exports.ABOUT = ABOUT;
+exports.POSTS = POSTS;
 exports.insertItems=(content)=>insertItems(content);
