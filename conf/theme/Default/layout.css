@@ -42,4 +42,15 @@
     header{
         height:30rem !important;
     }
+    nav .navButton{
+        display: block;
+    }
+    nav .navItem{
+        display: none;
+    }
+    nav:hover .navItem{
+        display: block;
+        background-color: rgb(36,31,49);
+        border-radius: var(--rounded-corner);
+    }
 }

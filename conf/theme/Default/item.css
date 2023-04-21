@@ -25,7 +25,7 @@
 }
 .postCard{
     display: flex;
-    height: 20em;
+    min-height: 20em;
     flex-direction: row;
     align-items: center;
 }
@@ -85,6 +85,10 @@
     background:var(--blue1);
     border-radius: 100pt;
     padding:.25em;
+}
+.centerArea a:hover{
+    color:white;
+    background:var(--blue3);
 }
 .ontop{
     display: inline-block;

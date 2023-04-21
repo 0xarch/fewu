@@ -55,6 +55,7 @@ header nav{
     height: 60px;
     font-size: 1.3em;
     color:white;
+    background-color: rgb(36,31,49);
     position: fixed;
     font-weight: 700;
     z-index:2;
@@ -64,6 +65,9 @@ header nav{
 }
 .navItem a{
     color:white;
+}
+.navButton{
+    display: none;
 }
 footer{
     position: relative;
