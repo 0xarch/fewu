@@ -23,3 +23,16 @@
 .wrapperItem>*:first-child{
     margin-top: 0;
 }
+@media only screen and (orientation:portrait){
+    .wrapper{
+        flex-direction: column;
+    }
+    .wrapperLeft{
+        padding-right: 0;
+        margin-bottom: 1em;
+    }
+    .wrapperRight{
+        padding-left: 0;
+        margin-top: 1em;
+    }
+}
