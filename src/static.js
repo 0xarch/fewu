@@ -12,6 +12,7 @@ const CONF = require("./conf").CONF;
 
 const ABOUT = POST.ABOUT;
 const POSTS = SORT.DEFAULT_POSTS;
+const DATE_POSTS = SORT.DATE_POSTS;
 const RECENT_POSTS=SORT.RECENT_POSTS;
 const CATEGORY_POSTS=SORT.CATEGORY_POSTS;
 const EXTENSIONS = POST.extensions;
@@ -42,7 +43,7 @@ const GINFO = {
 
 async function build(type,extra,path){
     LOG(`Building [${type}] to ${path}`);
-    const content = ejs.render(layouts[type],{...extra,info:CONF,extensions:EXTENSIONS,ginfo:GINFO,POSTS,RECENT_POSTS,CATEGORY_POSTS},{views:[LAYOUT_DIR]}).toString();
+    const content = ejs.render(layouts[type],{...extra,info:CONF,extensions:EXTENSIONS,ginfo:GINFO,POSTS,RECENT_POSTS,CATEGORY_POSTS,DATE_POSTS},{views:[LAYOUT_DIR]}).toString();
     Fs.mkdirSync(Path.dirname(path),{recursive:true},()=>{});
     Fs.writeFile(`${path}`,content,err=>{
         if(err)throw err;

@@ -1,48 +1,21 @@
 .postData{
     color:#858585;
 }
-.cardLikedItem{
-    background-color: var(--bg);
-    border-radius: 9px;
-    padding:1rem 1.2rem;
-    position: relative;
-    box-shadow: var(--card-box-shadow);
-    transition: box-shadow .3s;
-}
-.cardLikedItem:hover{
-    box-shadow: var(--card-box-shadow-hover);
-}
 .recentPosts{
     margin:.25em;
 }
-.cardHeader{
-    font-size: 1.2em;
-    padding-bottom: .3em;
-}
-.lessContentItem{
-    margin-top: .3em;
-    color:var(--font-color);
-}
-.postCard{
-    display: flex;
-    min-height: 20em;
-    flex-direction: row;
-    align-items: center;
-}
-.postCardInfoContainer{
-    width: 100%;
-    display: inline-block;
-    padding:0 40px;
-}
 .postCardTitle{
     margin-bottom: 0.3em;
-    font-size: 1.72em;
+    font-size: larger;
     line-height: 1.4;
     color:var(--color);
     font-weight: bold;
 }
 .postCardTitle.small{
-    font-size: medium;
+    font-size: large;
+}
+.postContent a{
+    text-decoration: underline;
 }
 .menuItems{
     display: inline-block;
@@ -89,14 +62,6 @@
 .centerArea a:hover{
     color:white;
     background:var(--blue3);
-}
-.ontop{
-    display: block;
-    height:1px;
-    background:var(--red3);
-    border-radius: 1em;
-    margin:auto .75em;
-    position: relative;
 }
 .count{
     font-size: larger;

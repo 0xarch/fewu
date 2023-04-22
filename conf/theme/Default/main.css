@@ -54,7 +54,7 @@ header nav{
     width: 100%;
     min-height: 60px;
     height: max-content;
-    font-size: 1.3em;
+    font-size: 1.3rem;
     color:white;
     background-color: rgb(36,31,49);
     position: fixed;

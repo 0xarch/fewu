@@ -2,7 +2,7 @@ const POSTS=require("./post").POSTS.sort(sortByDate);
 const LOG=console.log;
 
 function sortByDate(a,b){
-    return a.date.slice(0,4)*365+a.date.slice(5,7)*30+a.date.slice(8,10)-b.date.slice(0,4)*365+b.date.slice(5,7)+b.date.slice(8,10);
+    return a.date.slice(0,4)*365+a.date.slice(5,7)*30+a.date.slice(8,10)-(b.date.slice(0,4)*365+b.date.slice(5,7)+b.date.slice(8,10));
 }
 
 // _______ 按置顶排序 _______
@@ -44,5 +44,6 @@ LOG("Sort posts by category");
 // ________ EXPORT ________
 exports.TOP_POSTS=topPosts;
 exports.CATEGORY_POSTS=categoryPosts;
-exports.RECENT_POSTS=POSTS;
+exports.RECENT_POSTS=POSTS.slice(0,5);
 exports.DEFAULT_POSTS=DEFAULT_POSTS;
+exports.DATE_POSTS=POSTS;

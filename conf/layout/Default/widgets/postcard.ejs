@@ -1,9 +1,9 @@
 <div class="postCard widget">
     <div class="postCardInfoContainer">
+        <a href="<%= item.src %>" class="postCardTitle"><%= item.title %></a>
         <% if(item.top=="true") { -%>
             <span class="ontop"></span>
         <% } -%>
-        <a href="<%= item.src %>" class="postCardTitle"><%= item.title %></a>
         <div class="postData">
             <span>发布于</span>
             <span><%= item.date %></span>

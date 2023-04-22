@@ -7,3 +7,26 @@
     width: 100%;
     text-align: center;
 }
+.lessContentItem{
+    margin-top: .3em;
+    color:var(--font-color);
+}
+.postCard{
+    display: flex;
+    min-height: 20em;
+    flex-direction: row;
+    align-items: center;
+}
+.postCardInfoContainer{
+    width: 100%;
+    display: inline-block;
+    padding:0 40px;
+}
+.ontop{
+    display: block;
+    height:1px;
+    background:var(--red3);
+    border-radius: 1em;
+    margin:auto .75em;
+    position: relative;
+}

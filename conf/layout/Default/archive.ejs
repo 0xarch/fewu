@@ -2,9 +2,7 @@
 <html>
     <head>
         <%! widget:xhead !%>
-        <title>
-            <%! widget:title !%>
-        </title>
+        <title>归档 | <%! widget:title !%></title>
     </head>
     <body>
         <header class="shrinked">
@@ -24,9 +22,9 @@
             <div class="wrapperItem wrapperMain">
                 <div class="widget nohover postList">
                     <h2>文章总览</h2>
-                    <% POSTS.forEach(item=>{ -%>
+                    <% DATE_POSTS.forEach(item=>{ -%>
                         <div class="inPostList">
-                            <span class="dateItem"><%= item.date -%></span>
+                            <span class="postData"><%= item.date -%></span>
                             <br/>
                             <a href="<%= item.src %>" class="postCardTitle small"><%= item.title -%></a>
                         </div>
