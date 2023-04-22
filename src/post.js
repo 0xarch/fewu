@@ -2,6 +2,7 @@ const path = require("path");
 const marked = require("marked");
 const fs = require("fs");
 const STATIC = require("./static");
+const { log } = require("console");
 const CONF = require("./conf").CONF;
 
 const POSTS_DIR = "./posts";
@@ -47,7 +48,7 @@ function readPost(filePath){
 
 function readPosts(dir) {
   const files = fs.readdirSync(dir);
-  const posts = [];
+  const posts = Array();
 
   for (const file of files) {
     const filePath = path.join(dir, file);
@@ -69,7 +70,7 @@ function readPosts(dir) {
     }
   }
 
-  return sortBy(posts,"date");
+  return posts;
 }
 
 function parseMarkdown(content) {
@@ -109,17 +110,12 @@ function extractLess(markdownContent) {
 
 function insertItems(content) {
   var content = content;
-  // Use a regular expression to match the format <%! widget:key !%> in the content
-// and extract the key
   const widgetRegex = /<%! widget:(\w+) !%>/g;
   const widgetKeys = [];
   let match;
   while ((match = widgetRegex.exec(content)) !== null) {
     widgetKeys.push(match[1]);
   }
-
-  // Loop through the widget keys and replace the corresponding <%! widget:key !%> 
-  // in the content with the contents of the key.ejs file in WIDGET_DIR
   for (const key of widgetKeys) {
     const widgetContent = fs.readFileSync(`${WIDGET_DIR}/${key}.ejs`, "utf-8");
     content = content.replace(`<%! widget:${key} !%>`, widgetContent);

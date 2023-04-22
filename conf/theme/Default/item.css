@@ -1,4 +1,4 @@
-.metaItem{
+.postData{
     color:#858585;
 }
 .cardLikedItem{
@@ -91,9 +91,8 @@
     background:var(--blue3);
 }
 .ontop{
-    display: inline-block;
-    height:1em;
-    width: 1em;
+    display: block;
+    height:1px;
     background:var(--red3);
     border-radius: 1em;
     margin:auto .75em;

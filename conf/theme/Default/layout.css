@@ -16,6 +16,7 @@
 }
 .wrapper>.wrapperItem:not(.wrapperMain){
     flex:1;
+    position: sticky;
 }
 .wrapperItem>*{
     margin-top: 1em;

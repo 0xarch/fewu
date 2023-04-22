@@ -1,4 +1,5 @@
 const POSTS=require("./post").POSTS.sort(sortByDate);
+const LOG=console.log;
 
 function sortByDate(a,b){
     return a.date.slice(0,4)*365+a.date.slice(5,7)*30+a.date.slice(8,10)-b.date.slice(0,4)*365+b.date.slice(5,7)+b.date.slice(8,10);
@@ -7,6 +8,7 @@ function sortByDate(a,b){
 // _______ 按置顶排序 _______
 var topPosts=Array();
 var untopPosts=Array();
+
 POSTS.forEach(item=>{
     if (item.top=="true"){
         topPosts.push(item);
@@ -15,6 +17,7 @@ POSTS.forEach(item=>{
     }
 });
 const DEFAULT_POSTS=topPosts.concat(untopPosts);
+LOG("Sort posts by top");
 
 // _________ 分类 _________
 const categories=[];
@@ -36,7 +39,9 @@ categories.forEach(item=>{
     });
     categoryPosts.push(incl);
 });
-console.log(categoryPosts);
+LOG("Sort posts by category");
+
+// ________ EXPORT ________
 exports.TOP_POSTS=topPosts;
 exports.CATEGORY_POSTS=categoryPosts;
 exports.RECENT_POSTS=POSTS;
