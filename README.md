@@ -1,2 +1,2 @@
 # 0xarch.github.io
-Node based static blog system
+Including a Node based static blog system
