@@ -26,6 +26,10 @@
     margin-top: 0;
 }
 @media only screen and (orientation:portrait){
+    .flexColumn_Portrait{
+        display: flex;
+        flex-direction: column;
+    }
     .wrapper{
         flex-direction: column;
     }
