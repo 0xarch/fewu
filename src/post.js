@@ -1,9 +1,8 @@
 const path = require("path");
 const marked = require("marked");
 const fs = require("fs");
-const STATIC = require("./static");
-const { log } = require("console");
 const CONF = require("./conf").CONF;
+const LOG = console.log;
 
 const POSTS_DIR = "./posts";
 const WIDGET_DIR = `./conf/layout/${CONF.lookAndFeel.layout}/widgets`;
@@ -18,23 +17,17 @@ extensions.forEach(extension => {
       const fileContent = fs.readFileSync(fileName).toString();
       combinedContent += fileContent;
     } else {
-      console.log(`Extension file ${fileName} does not exist`);
+      LOG(`<File does not exist> Extension file ${fileName}`);
     }
   });
 
 exports.extensions=extContent;
 
-const sortBy = (array, field, sort = "asc") => {
-  const sortOpt = {
-      asc: (a, b, sortField) => a[sortField] - b[sortField],
-      desc: (a, b, sortField) => b[sortField] - a[sortField],
-  };
-  array.sort((a, b) => sortOpt[sort](a, b, field));
-  return array;
-};
-
 function readPost(filePath){
-  const content = fs.readFileSync(filePath, "utf-8");
+  const content = fs.readFileSync(filePath, "utf-8",(err)=>{
+    if(err){
+      LOG(`<Error> Met an error while reading [${filePath}]`);
+    }});
   const { data, content: markdownContent } = parseMarkdown(content);
   const htmlContent = marked.parse(markdownContent);
   const less = extractLess(markdownContent);
@@ -47,6 +40,11 @@ function readPost(filePath){
 }
 
 function readPosts(dir) {
+  fs.access(dir,(err)=>{
+    if(err){
+      LOG("<Failed> Met an error while reading post directory, [<Try> mkdir]");
+    }
+  });
   const files = fs.readdirSync(dir);
   const posts = Array();
 
@@ -57,16 +55,7 @@ function readPosts(dir) {
     if (stat.isDirectory()) {
       posts.push(...readPosts(filePath));
     } else if (path.extname(file) === ".md" && path.basename(file,".md") != "about" ) {
-      const content = fs.readFileSync(filePath, "utf-8");
-      const { data, content: markdownContent } = parseMarkdown(content);
-      const htmlContent = marked.parse(markdownContent);
-      const less = extractLess(markdownContent);
-
-      posts.push({
-        ...data,
-        less,
-        content: htmlContent,
-      });
+      posts.push(readPost(filePath));
     }
   }
 

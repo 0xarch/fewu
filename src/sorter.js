@@ -1,8 +1,20 @@
 const POSTS=require("./post").POSTS.sort(sortByDate); // 按时间排序
 const LOG=console.log;
 
+// ____ 比较函数 ____
 function sortByDate(a,b){
-    return a.date.slice(0,4)*365+a.date.slice(5,7)*30+a.date.slice(8,10)-(b.date.slice(0,4)*365+b.date.slice(5,7)+b.date.slice(8,10));
+    const A=a.date,B=b.date;
+    const Ay=A.slice(0,4),By=B.slice(0,4);
+    if ( Ay > By ) return -1;
+    else if ( Ay < By ) return 1;
+    else { // Ay = By
+        const Am=A.slice(5,7),Bm=B.slice(5,7);
+        if ( Am > Bm ) return -1;
+        else if ( Am < Bm ) return 1;
+        else { // Am = Bm
+            return B.slice(8,10) - A.slice(8,10);
+        }
+    };
 }
 
 // _______ 按置顶排序 _______
@@ -17,7 +29,7 @@ POSTS.forEach(item=>{
     }
 });
 const DEFAULT_POSTS=topPosts.concat(untopPosts);
-LOG("Sort posts by top");
+LOG("<Success> sort by top");
 
 // _________ 分类 _________
 const categories=[];
@@ -28,6 +40,17 @@ POSTS.forEach(item=>{
 });
 const categoryPosts=[];
 categories.forEach(item=>{
+    /*
+        categoryPosts的结构比较特殊：
+        [ 
+            {
+                cate:分类名,
+                incl:[ ... ]
+            },
+            { ... },
+            ...
+        ]
+    */
     const incl={
         "cate":item,
         "incl":[]
@@ -39,7 +62,7 @@ categories.forEach(item=>{
     });
     categoryPosts.push(incl);
 });
-LOG("Sort posts by category");
+LOG("<Success> Sort by category");
 
 // ________ EXPORT ________
 exports.TOP_POSTS=topPosts;

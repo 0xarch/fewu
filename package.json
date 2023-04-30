@@ -5,7 +5,7 @@
     "@types/js-yaml": "^4.0.5",
     "@types/marked": "^4.0.8",
     "fs": "^0.0.1-security",
-    "node-fs-extra": "^0.8.2",
+    "node-fs-extra": "*",
     "os": "^0.1.2"
   },
   "dependencies": {
