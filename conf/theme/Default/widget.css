@@ -2,7 +2,7 @@
     float: right;
     color: var(--font-color);
 }
-.widgetHeader{
+.widget .header{
     font-size: 1.2em;
     padding-bottom: .3em;
     color:var(--font-color);

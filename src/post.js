@@ -2,28 +2,9 @@ const path = require("path");
 const marked = require("marked");
 const fs = require("fs");
 
-const CONF=require("./conf.js").CONF;
-
 const LOG = console.log;
 
 const POSTS_DIR = "./posts";
-
-const EXT_DIR = "./conf/layout/extensions";
-
-const extensions = CONF.features.thirdSideExtensions;
-let extContent = "";
-
-extensions.forEach(extension => {
-    const fileName = `${EXT_DIR}/${extension}.ejs`;
-    if (fs.existsSync(fileName)) {
-      const fileContent = fs.readFileSync(fileName).toString();
-      combinedContent += fileContent;
-    } else {
-      LOG(`<File does not exist> Extension file ${fileName}`);
-    }
-  });
-
-exports.extensions=extContent;
 
 function readPost(filePath){
   const content = fs.readFileSync(filePath, "utf-8",(err)=>{

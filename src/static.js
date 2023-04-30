@@ -58,7 +58,7 @@ const GINFO = {
 async function build(type,extra,path){
     LOG(`<Progress> Building [${type}] to ${path}`);
     var content = MATCH.parseBuiltin(layouts[type],type,extra.post);
-    content = ejsRender(content,{...extra,info:CONF,extensions:EXTENSIONS,ginfo:GINFO,...ALL_SORTS},{views:[LAYOUT_DIR]}).toString();
+    content = ejsRender(content,{...extra,info:CONF,ginfo:GINFO,...ALL_SORTS},{views:[LAYOUT_DIR]}).toString();
     fs.mkdirSync(Path.dirname(path),{recursive:true},()=>{});
     fs.writeFile(`${path}`,content,err=>{
         if(err) throw err;

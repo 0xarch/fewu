@@ -12,7 +12,7 @@ extensions.forEach(extension => {
     const fileName = `${EXT_DIR}/${extension}.ejs`;
     if (fs.existsSync(fileName)) {
       const fileContent = fs.readFileSync(fileName).toString();
-      combinedContent += fileContent;
+      extContent += fileContent;
     } else {
       LOG(`<File does not exist> Extension file ${fileName}`);
     }
@@ -84,14 +84,15 @@ function parseBuiltin(content,layoutType,post) {
     } else {
         TitleSuffix = `${CONF.name}'s Blog`;
     }
-    return content
+    content = content
     .replace(/<%! builtin:title !%>/g,`${TitlePrefix}${TitleSeperator}${TitleSuffix}`)
     .replace(/<%! builtin:siteTitle !%>/g,TitleSuffix)
-    .replace(/<%! builtin:extensions !%>/g,extContent);
+    .replace(/<%! builtin:extensions !%>/g,extContent)
+    return parseCSS(content);
 }
 
 function autoParseLayout(filePath){
-    return parseCSS(parseWidget(parseLayout(filePath)));
+    return parseWidget(parseLayout(filePath));
 }
 
 exports.parseWidget=(filePath)=>parseWidget(filePath);
