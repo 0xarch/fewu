@@ -11,7 +11,7 @@
         "announcementText":"欢迎来到我的博客!"
     },
     "lookAndFeel":{
-        "background":"https://images.alphacoders.com/260/260601.jpg",
+        "background":"",
         "customSiteTitle":"Hello! 0xarch",
         "theme":"Default",
         "layout":"Default"

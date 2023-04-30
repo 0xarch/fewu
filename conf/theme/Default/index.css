@@ -1,12 +1,3 @@
-.scrollDown{
-    font-size: 4em;
-    opacity: .7;
-    color:aliceblue;
-    bottom:0;
-    position: absolute;
-    width: 100%;
-    text-align: center;
-}
 .lessContentItem{
     margin-top: .3em;
     color:var(--font-color);

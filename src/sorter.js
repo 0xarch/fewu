@@ -1,4 +1,4 @@
-const POSTS=require("./post").POSTS.sort(sortByDate);
+const POSTS=require("./post").POSTS.sort(sortByDate); // 按时间排序
 const LOG=console.log;
 
 function sortByDate(a,b){
