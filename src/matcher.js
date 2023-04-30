@@ -87,7 +87,7 @@ function parseLayout(filePath) {
 }
 
 function parseBuiltin(content,layoutType,post) {
-    let TitlePrefix="",TitleSeperator="",TitleSuffix;
+    let TitlePrefix="",TitleSeperator="",TitleSuffix,Features="";
     switch (layoutType){
         case "archive":{
             TitlePrefix = "归档";
@@ -108,10 +108,15 @@ function parseBuiltin(content,layoutType,post) {
     } else {
         TitleSuffix = `${CONF.name}'s Blog`;
     }
+    if ( CONF.features.enableCodeHighlight )
+        Features+="<link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css'>"+
+        "<script src='//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js'></script>"+
+        "<script>hljs.highlightAll()</script>";
     content = content
-    .replace(/<%! builtin:title !%>/g,`${TitlePrefix}${TitleSeperator}${TitleSuffix}`)
+    .replace(/<%! builtin:title !%>/g,`<title>${TitlePrefix}${TitleSeperator}${TitleSuffix}</title>`)
     .replace(/<%! builtin:siteTitle !%>/g,TitleSuffix)
     .replace(/<%! builtin:extensions !%>/g,extContent)
+    .replace(/<%! builtin:features !%>/g,Features);
     return parseCSS(content);
 }
 

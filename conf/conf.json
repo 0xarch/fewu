@@ -8,7 +8,8 @@
         "hasThirdBar":false,
         "thirdSideExtensions":["about","announcement"],
         "hasAnnouncement":true,
-        "announcementText":"欢迎来到我的博客!"
+        "announcementText":"欢迎来到我的博客!",
+        "enableCodeHighlight":true
     },
     "lookAndFeel":{
         "background":"",

@@ -80,7 +80,6 @@ function extractLess(markdownContent) {
   }
 }
 
-
 const ABOUT = readPost(`${POSTS_DIR}/about.md`);
 const POSTS = readPosts(POSTS_DIR);
 
