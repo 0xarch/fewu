@@ -30,10 +30,16 @@ function parseWidget(content) {
       content = content.replace(`<%! widget:${key} !%>`, widgetContent);
     }
 
-    return parseCSS(content);
+    if ( widgetRegex.test(content) )
+        content = parseWidget(content);
+
+    return content;
 }
 
 function parseCSS(content){
+    var content = content.replace(/<([^.^\/^ ^>]*?)\.([^>^"]*?)>/g,'<$1 class="$2">');
+    content = content.replace(/<([^ ^<^\/]*?)\s*?\[([\s\S]*?)\]\s*?(.*?)?>/g,'<$1 class="$2" $3>');
+    content = content.replace(/<([^ ^<^\/]*?)\s*?\[([\s\S]*?)\]\s*?(.*?)?\/>/g,'<$1 class="$2" $3/>');
     const classRegex= /class="([\s\S]*?)"/g;
     const classes = [];
     let match;
@@ -44,14 +50,10 @@ function parseCSS(content){
         const c = key.replace(':fR_',' flexRow :').replace(':fC_',' flexColumn :').replace(':fI_',' flexItem :')
                      .replace(':fJC','flexJC').replace(':fAC','flexAC').replace(':fAJC','flexACJC')
                      .replace(':mw',' marginLeft marginRight').replace(':mh',' marginTop marginBottom')
-                     ;
+                     .replace(/\./g," ");
         content = content.replace(`class="${key}"`,`class="${c}"`);
     }
-    return content
-    .replace(/_acs_:ml([^"^ ]*?)/g,"marginLeft _acs_:m$1")
-    .replace(/_acs_:mt([^"^ ]*?)/g,"marginTop _acs_:m$1")
-    .replace(/_acs_:mr([^"^ ]*?)/g,"marginRight _acs_:m$1")
-    .replace(/_acs_:mb/g,"marginBottom");
+    return content;
 }
 
 function parseLayout(filePath) {
@@ -89,10 +91,11 @@ function parseBuiltin(content,layoutType,post) {
 }
 
 function autoParseLayout(filePath){
-    return parseWidget(parseLayout(filePath));
+    return parseCSS(parseWidget(parseLayout(filePath)));
 }
 
 exports.parseWidget=(filePath)=>parseWidget(filePath);
 exports.parseLayout=(filePath)=>parseLayout(filePath);
+exports.parseCSS=(content)=>parseCSS(content);
 exports.autoParseLayout=(filePath)=>autoParseLayout(filePath);
 exports.parseBuiltin=(content,layoutType,post)=>parseBuiltin(content,layoutType,post);

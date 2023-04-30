@@ -1,10 +1,10 @@
 <link type="text/css" rel="stylesheet" href="/css/index.css">
 <header>
     <%! widget:nav !%>
-    <div class="centerArea">
+    <div.centerArea>
         <h1><%! builtin:siteTitle !%></h1>
         <div class=":fC_fJC">
-            <div><img class="avatar" src="<%= info.avatar %>"/></div>
+            <div><img [avatar] src="<%= info.avatar %>"/></div>
             <div>
                 <a href="<%= info.url-%>"><%= info.name -%></a><br/>
                 <p style="font-size:large"><%= info.note -%></p>
@@ -12,20 +12,13 @@
         </div>
     </div>
 </header>
-<main class="wrapper">
+<main.wrapper>
     <%! widget:leftbar !%>
-    <div class="wrapperItem wrapperMain">
+    <div.wrapperItem.wrapperMain>
         <% POSTS.slice(0,5).forEach(item=>{ -%>
             <%! widget:postcard !%>
         <% }) -%>
     </div>
-    <div class="wrapperItem wrapperRight">
-        <%! widget:about !%>
-        <%! widget:announcement !%>
-        <%! widget:archivelist !%>
-        <% if (!info.features.hasThirdBar) { -%>
-                <%! builtin:extensions !%>
-        <% } -%>
-    </div>
+    <%! widget:rightbar !%>
 </main>
 <%! widget:footer !%>

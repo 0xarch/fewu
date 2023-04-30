@@ -1,31 +1,24 @@
-<header class="shrinked">
+<header.shrinked>
     <%! widget:nav !%>
-    <div class="centerArea">
+    <div.centerArea>
         <h1>归档</h1>
         <h3>共<%= ginfo.postCount -%>篇文章</h3>
     </div>
 </header>
-<div class="wrapper">
+<div.wrapper>
     <%! widget:leftbar !%>
-    <div class="wrapperItem wrapperMain">
-        <div class="widget nohover postList">
+    <div.wrapperItem.wrapperMain>
+        <div.widget.nohover.postList>
             <h2>文章总览</h2>
             <% DATE_POSTS.forEach(item=>{ -%>
-                <div class="inPostList">
-                    <span class="postData"><%= item.date -%></span>
+                <div.inPostList>
+                    <span.postData><%= item.date -%></span>
                     <br/>
-                    <a href="<%= item.src %>" class="postCardTitle small"><%= item.title -%></a>
+                    <a [postCardTitle small] href="<%= item.src %>"><%= item.title -%></a>
                 </div>
             <% }) -%>
         </div>
     </div>
-    <div class="wrapperItem wrapperRight">
-        <%! widget:about !%>
-        <%! widget:announcement !%>
-        <%! widget:archivelist !%>
-        <% if (!info.features.hasThirdBar) { -%>
-                <%! builtin:extensions !%>
-        <% } -%>
-    </div>
+    <%! widget:rightbar !%>
 </div>
 <%! widget:footer !%>

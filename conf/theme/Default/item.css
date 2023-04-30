@@ -1,9 +1,5 @@
-.postData{
-    color:#858585;
-}
-.recentPosts{
-    margin:.25em;
-}
+.postData{ color:#858585 }
+.recentPosts{ margin:.25em }
 .postCardTitle{
     margin-bottom: 0.3em;
     font-size: larger;
@@ -11,12 +7,8 @@
     color:var(--color);
     font-weight: bold;
 }
-.postCardTitle.small{
-    font-size: large;
-}
-.postContent a{
-    text-decoration: underline;
-}
+.postCardTitle.small{ font-size: large }
+.postContent a{ text-decoration: underline }
 .menuItems{
     display: inline-block;
     font-size: smaller;
@@ -33,9 +25,7 @@
     width: 0%;
     transition: width .3s ease-in-out;
 }
-.menuItems:hover::after{
-    width: 100%;
-}
+.menuItems:hover::after{ width: 100% }
 .centerArea{
     width:70vw;
     height:50%;
@@ -67,9 +57,7 @@
     font-size: larger;
     font-weight: bold;
 }
-.centered{
-    text-align: center;
-}
+.centered{ text-align: center }
 .flexItem,.flexRow,.flexColumn{ display: flex }
 .flexRow{ flex-direction: row }
 .flexColumn{ flex-direction: column }

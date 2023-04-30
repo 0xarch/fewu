@@ -1,12 +1,12 @@
-<div class="postCard widget">
-    <div class="postCardInfoContainer">
-        <a href="<%= item.src %>" class="postCardTitle"><%= item.title %></a>
-        <% if(item.top=="true") { -%><span class="ontop"></span><% } -%>
-        <div class="postData">
+<div.postCard.widget>
+    <div.postCardInfoContainer>
+        <a [postCardTitle] href="<%= item.src %>"><%= item.title %></a>
+        <% if(item.top=="true") { -%><span.ontop></span><% } -%>
+        <div.postData>
             <span>发布于</span>
             <span><%= item.date %></span>
         </div>
-        <div class="lessContentItem">
+        <div.lessContentItem>
             <%- item.less %>
         </div>
     </div>

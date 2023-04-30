@@ -15,12 +15,8 @@
     position: relative;
     transition: box-shadow .3s;
 }
-.widget:not(.nohover){
-    box-shadow: var(--card-box-shadow);
-}
-.widget:not(.nohover):hover{
-    box-shadow: var(--card-box-shadow-hover);
-}
+.widget:not(.nohover){ box-shadow: var(--card-box-shadow) }
+.widget:not(.nohover):hover{ box-shadow: var(--card-box-shadow-hover) }
 .avatar{
     height:8em;
     width: 8em;

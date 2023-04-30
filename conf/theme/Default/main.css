@@ -29,9 +29,7 @@ a{
     color:var(--font-color);
     transition: color .3s ease-in-out;
 }
-a:hover{
-    color:rgba(73,177,245,0.7);
-}
+a:hover{ color:rgba(73,177,245,0.7) }
 header{
     height:80vh;
     background-attachment: fixed;
@@ -43,9 +41,7 @@ header{
     transition: all .5s ease-in-out;
     background-color: rgb(36,31,49);
 }
-header.shrinked{
-    height:30rem;
-}
+header.shrinked{ height:30rem }
 header nav{
     display: flex;
     flex-wrap: wrap;
@@ -61,21 +57,13 @@ header nav{
     font-weight: 700;
     z-index:2;
 }
-.blogName{
-    flex:1;
-}
-.navItem a{
-    color:white;
-}
-.navButton{
-    display: none;
-}
+.blogName{ flex:1 }
+.navItem a{ color:white }
+.navButton{ display: none }
 footer{
     position: relative;
     background-color: rgb(20,22,23);
     padding:2rem 1rem;
     text-align: center;
 }
-footer a{
-    color:white;
-}
+footer a{ color:white }
