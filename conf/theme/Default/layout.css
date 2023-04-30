@@ -5,14 +5,10 @@
     max-width: 1200px;
     width: 100%;
 }
-.wrapper>.wrapperItem.wrapperMain{ flex:3 }
+.wrapperMain{ flex:3 }
 .wrapperLeft{ padding-right:15px }
 .wrapperRight{ padding-left:15px }
-.wrapper>.wrapperItem:not(.wrapperMain){
-    flex:1;
-    position: sticky;
-    top:50px;
-}
+.wrapperItem:not(.wrapperMain){ flex:1 }
 .wrapperItem>*:not(:first-child){ margin-top: 1em }
 @media only screen and (orientation:portrait){
     .flexColumn_Portrait{

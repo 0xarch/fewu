@@ -72,7 +72,4 @@
         --font-color:#8c8988;
     }
 }
-code.hljs{
-	background-color: var(--bg);
-
-}
+code.hljs{ background-color: var(--bg) }
