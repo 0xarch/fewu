@@ -7,7 +7,7 @@ const CONF=require("./conf.js").CONF;
 const LOG = console.log;
 
 const POSTS_DIR = "./posts";
-const WIDGET_DIR = `./conf/layout/${CONF.lookAndFeel.layout}/widgets`;
+
 const EXT_DIR = "./conf/layout/extensions";
 
 const extensions = CONF.features.thirdSideExtensions;
@@ -99,26 +99,9 @@ function extractLess(markdownContent) {
   }
 }
 
-function insertItems(filePath) {
-  var content = fs.readFileSync(filePath).toString();
-  const widgetRegex = /<%! widget:(\w+) !%>/g;
-  const widgetKeys = [];
-  let match;
-  while ((match = widgetRegex.exec(content)) !== null) {
-    widgetKeys.push(match[1]);
-  }
-  for (const key of widgetKeys) {
-    const widgetContent = fs.readFileSync(`${WIDGET_DIR}/${key}.ejs`, "utf-8");
-    content = content.replace(`<%! widget:${key} !%>`, widgetContent);
-  }
-
-  content = content.replace(/<%! extensions !%>/g,extContent);
-  return content;
-}
 
 const ABOUT = readPost(`${POSTS_DIR}/about.md`);
 const POSTS = readPosts(POSTS_DIR);
 
 exports.ABOUT = ABOUT;
 exports.POSTS = POSTS;
-exports.insertItems=(content)=>insertItems(content);

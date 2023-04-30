@@ -1,48 +1,35 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <%! widget:xhead !%>
-        <title>分类 <%= info.lookAndFeel.customSeperator -%> <%! widget:title !%></title>
-    </head>
-    <body>
-        <header class="shrinked">
-            <%! widget:nav !%>
-            <div class="centerArea">
-                <h1>分类</h1>
-                <h3>共<%= ginfo.cateCount -%>个分类</h3>
-            </div>
-            
-        </header>
-        <div class="wrapper">
-            <% if (info.features.hasThirdBar) { -%>
-                <div class="wrapperItem wrapperLeft">
-                    <%! extensions !%>
-                </div>
-            <% } -%>
-            <div class="wrapperItem wrapperMain">
-                <div class="widget nohover postList">
-                    <h2>分类总览</h2>
-                    <% CATEGORY_POSTS.forEach(Category=>{ %>
-                        <div class="inPostList">
-                            <h3 class="m0"><%= Category.cate -%></h3>
-                            <% Category.incl.forEach(inclItem=>{ %>
-                                <div>
-                                    <a href="<%= inclItem.src %>"><%= inclItem.title -%></a>
-                                </div>
-                            <% }) %>
+<header class="shrinked">
+    <%! widget:nav !%>
+    <div class="centerArea">
+        <h1>分类</h1>
+        <h3>共<%= ginfo.cateCount -%>个分类</h3>
+    </div>
+    
+</header>
+<div class="wrapper">
+    <%! widget:leftbar !%>
+    <div class="wrapperItem wrapperMain">
+        <div class="widget nohover postList">
+            <h2>分类总览</h2>
+            <% CATEGORY_POSTS.forEach(Category=>{ %>
+                <div class="inPostList">
+                    <h3 class="m0"><%= Category.cate -%></h3>
+                    <% Category.incl.forEach(inclItem=>{ %>
+                        <div>
+                            <a href="<%= inclItem.src %>"><%= inclItem.title -%></a>
                         </div>
                     <% }) %>
                 </div>
-            </div>
-            <div class="wrapperItem wrapperRight">
-                <%! widget:about !%>
-                <%! widget:announcement !%>
-                <%! widget:archivelist !%>
-                <% if (!info.features.hasThirdBar) { -%>
-                        <%! extensions !%>
-                <% } -%>
-            </div>
+            <% }) %>
         </div>
-        <%! widget:footer !%>
-    </body>
-</html>
+    </div>
+    <div class="wrapperItem wrapperRight">
+        <%! widget:about !%>
+        <%! widget:announcement !%>
+        <%! widget:archivelist !%>
+        <% if (!info.features.hasThirdBar) { -%>
+                <%! builtin:extensions !%>
+        <% } -%>
+    </div>
+</div>
+<%! widget:footer !%>

@@ -15,6 +15,7 @@ LOG("--------------------------");
 
 const POST = require("./post.js");
 const SORT = require("./sorter.js");
+const MATCH = require("./matcher.js");
 const CONF = require("./conf.js").CONF;
 const PUBLIC_DIR = "./public";
 
@@ -32,13 +33,14 @@ const EXTENSIONS = POST.extensions;
 const LAYOUT_DIR = `./conf/layout/${CONF.lookAndFeel.layout}`;
 const THEME_DIR = `./conf/theme/${CONF.lookAndFeel.theme}`;
 
+
 LOG("Reading Layouts");
 const layouts = {
-    index : POST.insertItems(`${LAYOUT_DIR}/index.ejs`),
-    archive : POST.insertItems(`${LAYOUT_DIR}/archive.ejs`),
-    category : POST.insertItems(`${LAYOUT_DIR}/category.ejs`),
-    post : POST.insertItems(`${LAYOUT_DIR}/post.ejs`),
-    about: POST.insertItems(`${LAYOUT_DIR}/post.ejs`),
+    index : MATCH.autoParseLayout(`${LAYOUT_DIR}/index.ejs`),
+    archive : MATCH.autoParseLayout(`${LAYOUT_DIR}/archive.ejs`),
+    category : MATCH.autoParseLayout(`${LAYOUT_DIR}/category.ejs`),
+    post : MATCH.autoParseLayout(`${LAYOUT_DIR}/post.ejs`),
+    about: MATCH.autoParseLayout(`${LAYOUT_DIR}/post.ejs`),
 }
 
 LOG("Reading Categories");
@@ -55,7 +57,8 @@ const GINFO = {
 
 async function build(type,extra,path){
     LOG(`<Progress> Building [${type}] to ${path}`);
-    const content = ejsRender(layouts[type],{...extra,info:CONF,extensions:EXTENSIONS,ginfo:GINFO,...ALL_SORTS},{views:[LAYOUT_DIR]}).toString();
+    var content = MATCH.parseBuiltin(layouts[type],type,extra.post);
+    content = ejsRender(content,{...extra,info:CONF,extensions:EXTENSIONS,ginfo:GINFO,...ALL_SORTS},{views:[LAYOUT_DIR]}).toString();
     fs.mkdirSync(Path.dirname(path),{recursive:true},()=>{});
     fs.writeFile(`${path}`,content,err=>{
         if(err) throw err;
@@ -66,8 +69,6 @@ async function build(type,extra,path){
 function ending(){
     copy(THEME_DIR,`${PUBLIC_DIR}/css`,(err)=>{if(err)throw err});
 }
-
-
 
 exports.CONF=CONF;
 exports.PUBLIC_DIR=PUBLIC_DIR;

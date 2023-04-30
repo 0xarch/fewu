@@ -1,37 +1,25 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <%! widget:xhead !%>
-        <title><%- post.title -%> <%= info.lookAndFeel.customSeperator -%> <%! widget:title !%></title>
-    </head>
-    <body>
-        <header class="shrinked">
-            <%! widget:nav !%>
-            <div class="centerArea">
-                <h1><%= post.title -%></h1>
-                <h3>发布于<%= post.date -%></h3>
-            </div>
-        </header>
-        <div class="wrapper">
-            <% if (info.features.hasThirdBar) { -%>
-                <div class="wrapperItem wrapperLeft">
-                    <%! extensions !%>
-                </div>
-            <% } -%>
-            <div class="wrapperItem wrapperMain">
-                <div class="postContent widget nohover">
-                    <%- post.content -%>
-                </div>
-            </div>
-            <div class="wrapperItem wrapperRight">
-                <%! widget:about !%>
-                <%! widget:announcement !%>
-                <%! widget:archivelist !%>
-                <% if (!info.features.hasThirdBar) { -%>
-                        <%! extensions !%>
-                <% } -%>
-            </div>
+
+<header class="shrinked">
+    <%! widget:nav !%>
+    <div class="centerArea">
+        <h1><%= post.title -%></h1>
+        <h3>发布于<%= post.date -%></h3>
+    </div>
+</header>
+<div class="wrapper">
+    <%! widget:leftbar !%>
+    <div class="wrapperItem wrapperMain">
+        <div class="postContent widget nohover">
+            <%- post.content -%>
         </div>
-        <%! widget:footer !%>
-    </body>
-</html>
+    </div>
+    <div class="wrapperItem wrapperRight">
+        <%! widget:about !%>
+        <%! widget:announcement !%>
+        <%! widget:archivelist !%>
+        <% if (!info.features.hasThirdBar) { -%>
+                <%! builtin:extensions !%>
+        <% } -%>
+    </div>
+</div>
+<%! widget:footer !%>

@@ -6,6 +6,14 @@
 
 如果你想使用 Hogger , 请按照以下步骤：
 
+安装 Node.js 及 npm
+
 fork 或 clone 本仓库
 
 删除 posts/* 
+
+使用 $ npm install 安装依赖
+
+运行 node src/main.js 生成
+
+推送到网站上

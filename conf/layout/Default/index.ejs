@@ -1,47 +1,33 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <%! widget:xhead !%>
-        <link type="text/css" rel="stylesheet" href="/css/index.css">
-        <title><%! widget:title !%></title>
-    </head>
-    <body>
-        <header>
-            <%! widget:nav !%>
-            <div class="centerArea">
-                <h1><%! widget:title !%></h1>
-                <div class="flexItem flexJustifyCenter flexColumn_Portrait">
-                    <div>
-                        <img class="avatar" src="<%= info.avatar %>"/>
-                    </div>
-                    <div>
-                        <a href="<%= info.url-%>"><%= info.name -%></a>
-                        <br/>
-                        <p><%= info.note -%></p>
-                    </div>
-                </div>
+<header>
+    <%! widget:nav !%>
+    <div class="centerArea">
+        <h1><%! builtin:title !%></h1>
+        <div class="flexItem flexJustifyCenter flexColumn_Portrait">
+            <div>
+                <img class="avatar" src="<%= info.avatar %>"/>
             </div>
-        </header>
-        <main class="wrapper">
-            <% if (info.features.hasThirdBar) { -%>
-                <div class="wrapperItem wrapperLeft">
-                    <%! extensions !%>
-                </div>
-            <% } -%>
-            <div class="wrapperItem wrapperMain">
-                <% POSTS.slice(0,5).forEach(item=>{ -%>
-                    <%! widget:postcard !%>
-                <% }) -%>
+            <div>
+                <a href="<%= info.url-%>"><%= info.name -%></a>
+                <br/>
+                <p><%= info.note -%></p>
             </div>
-            <div class="wrapperItem wrapperRight">
-                <%! widget:about !%>
-                <%! widget:announcement !%>
-                <%! widget:archivelist !%>
-                <% if (!info.features.hasThirdBar) { -%>
-                        <%! extensions !%>
-                <% } -%>
-            </div>
-        </main>
-        <%! widget:footer !%>
-    </body>
-</html>
+        </div>
+    </div>
+</header>
+<main class="wrapper">
+    <%! widget:leftbar !%>
+    <div class="wrapperItem wrapperMain">
+        <% POSTS.slice(0,5).forEach(item=>{ -%>
+            <%! widget:postcard !%>
+        <% }) -%>
+    </div>
+    <div class="wrapperItem wrapperRight">
+        <%! widget:about !%>
+        <%! widget:announcement !%>
+        <%! widget:archivelist !%>
+        <% if (!info.features.hasThirdBar) { -%>
+                <%! builtin:extensions !%>
+        <% } -%>
+    </div>
+</main>
+<%! widget:footer !%>
