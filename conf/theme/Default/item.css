@@ -8,6 +8,7 @@
     font-weight: bold;
 }
 .postCardTitle.small{ font-size: 1.5em }
+.postContent { word-wrap: break-word; word-break: keep-all }
 .postContent a{ text-decoration: underline }
 .menuItems{
     display: inline-block;
@@ -36,10 +37,7 @@
     position: absolute;
     color:white;
 }
-.centerArea h1{
-    font-size: 48pt;
-    margin:0;
-}
+.centerArea h1{ font-size: 48pt; margin:0 }
 .centerArea a{
     font-size:24pt;
     font-weight: bolder;
@@ -53,10 +51,7 @@
     color:white;
     background:var(--blue3);
 }
-.count{
-    font-size: larger;
-    font-weight: bold;
-}
+.count{ font-size: larger; font-weight: bold }
 .centered{ text-align: center }
 .flexItem,.flexRow,.flexColumn{ display: flex }
 .flexRow{ flex-direction: row }

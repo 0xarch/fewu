@@ -6,14 +6,14 @@
     "location":"Xvd 114514",
     "features":{
         "hasThirdBar":false,
-        "thirdSideExtensions":["about"],
+        "thirdSideExtensions":["about","announcement"],
         "hasAnnouncement":true,
         "announcementText":"欢迎来到我的博客!"
     },
     "lookAndFeel":{
         "background":"",
         "customSiteTitle":"Hello! 0xarch",
-        "customSeperator":"::",
+        "customSeperator":"| ",
         "theme":"Default",
         "layout":"Default"
     }

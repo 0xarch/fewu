@@ -11,23 +11,10 @@
 .wrapperItem:not(.wrapperMain){ flex:1 }
 .wrapperItem>*:not(:first-child){ margin-top: 1em }
 @media only screen and (orientation:portrait){
-    .flexColumn_Portrait{
-        display: flex;
-        flex-direction: column;
-    }
     .wrapper{ flex-direction: column }
-    .wrapperLeft{
-        padding-right: 0;
-        margin-bottom: 1em;
-    }
-    .wrapperRight{
-        padding-left: 0;
-        margin-top: 1em;
-    }
-    html{
-        font-size: 28px !important;
-        line-height: 1.3 !important;
-    }
+    .wrapperLeft{ padding-right: 0; margin-bottom: 1em }
+    .wrapperRight{ padding-left: 0; margin-top: 1em }
+    html{ font-size: 28px !important; line-height: 1.3 !important }
     header{ height:30rem !important }
     nav .navButton{ display: block }
     nav .navItem{ display: none }
