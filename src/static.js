@@ -1,6 +1,7 @@
-const ejs = require("ejs");
-const Fs = require("fs");
-const FsExtra = require("node-fs-extra");
+//const ejs = require("ejs");
+const ejsRender = require("ejs").render;
+const fs = require("fs");
+const copy = require("node-fs-extra").copy;
 const Path = require("path");
 const LOG=console.log;
 
@@ -12,10 +13,10 @@ LOG("2023 0xarch");
 LOG("https://github.com/0xarch/");
 LOG("--------------------------");
 
-const POST = require("./post");
-const SORT = require("./sorter");
+const POST = require("./post.js");
+const SORT = require("./sorter.js");
+const CONF = require("./conf.js").CONF;
 const PUBLIC_DIR = "./public";
-const CONF = require("./conf").CONF;
 
 const ABOUT = POST.ABOUT;
 LOG("Getting Posts from sorter");
@@ -33,11 +34,11 @@ const THEME_DIR = `./conf/theme/${CONF.lookAndFeel.theme}`;
 
 LOG("Reading Layouts");
 const layouts = {
-    index : POST.insertItems(Fs.readFileSync(`${LAYOUT_DIR}/index.ejs`).toString()),
-    archive : POST.insertItems(Fs.readFileSync(`${LAYOUT_DIR}/archive.ejs`).toString()),
-    category : POST.insertItems(Fs.readFileSync(`${LAYOUT_DIR}/category.ejs`).toString()),
-    post : POST.insertItems(Fs.readFileSync(`${LAYOUT_DIR}/post.ejs`).toString()),
-    about: POST.insertItems(Fs.readFileSync(`${LAYOUT_DIR}/post.ejs`).toString()),
+    index : POST.insertItems(`${LAYOUT_DIR}/index.ejs`),
+    archive : POST.insertItems(`${LAYOUT_DIR}/archive.ejs`),
+    category : POST.insertItems(`${LAYOUT_DIR}/category.ejs`),
+    post : POST.insertItems(`${LAYOUT_DIR}/post.ejs`),
+    about: POST.insertItems(`${LAYOUT_DIR}/post.ejs`),
 }
 
 LOG("Reading Categories");
@@ -54,16 +55,16 @@ const GINFO = {
 
 async function build(type,extra,path){
     LOG(`<Progress> Building [${type}] to ${path}`);
-    const content = ejs.render(layouts[type],{...extra,info:CONF,extensions:EXTENSIONS,ginfo:GINFO,...ALL_SORTS},{views:[LAYOUT_DIR]}).toString();
-    Fs.mkdirSync(Path.dirname(path),{recursive:true},()=>{});
-    Fs.writeFile(`${path}`,content,err=>{
+    const content = ejsRender(layouts[type],{...extra,info:CONF,extensions:EXTENSIONS,ginfo:GINFO,...ALL_SORTS},{views:[LAYOUT_DIR]}).toString();
+    fs.mkdirSync(Path.dirname(path),{recursive:true},()=>{});
+    fs.writeFile(`${path}`,content,err=>{
         if(err) throw err;
         else LOG(`<Success> built ${path}`);
     });
 }
 
 function ending(){
-    FsExtra.copy(THEME_DIR,`${PUBLIC_DIR}/css`,(err)=>{if(err)throw err});
+    copy(THEME_DIR,`${PUBLIC_DIR}/css`,(err)=>{if(err)throw err});
 }
 
 

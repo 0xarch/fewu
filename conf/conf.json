@@ -13,6 +13,7 @@
     "lookAndFeel":{
         "background":"",
         "customSiteTitle":"Hello! 0xarch",
+        "customSeperator":"::",
         "theme":"Default",
         "layout":"Default"
     }

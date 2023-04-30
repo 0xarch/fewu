@@ -1,6 +1,6 @@
-const STATIC = require("./static");
+const STATIC = require("./static.js");
 
-const PUBLIC_DIR = STATIC.PUBLIC_DIR;
+const PUBLIC_DIR=STATIC.PUBLIC_DIR;
 
 STATIC.BUILD("index",{},`${PUBLIC_DIR}/index.html`);
 STATIC.BUILD("archive",{},`${PUBLIC_DIR}/archive/index.html`);

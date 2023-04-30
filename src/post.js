@@ -1,7 +1,9 @@
 const path = require("path");
 const marked = require("marked");
 const fs = require("fs");
-const CONF = require("./conf").CONF;
+
+const CONF=require("./conf.js").CONF;
+
 const LOG = console.log;
 
 const POSTS_DIR = "./posts";
@@ -97,8 +99,8 @@ function extractLess(markdownContent) {
   }
 }
 
-function insertItems(content) {
-  var content = content;
+function insertItems(filePath) {
+  var content = fs.readFileSync(filePath).toString();
   const widgetRegex = /<%! widget:(\w+) !%>/g;
   const widgetKeys = [];
   let match;
