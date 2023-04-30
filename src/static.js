@@ -7,7 +7,7 @@ const LOG=console.log;
 
 // 打印版本
 LOG("--------------------------");
-LOG("Hogger v0.2.2");
+LOG("Hogger v0.2.6");
 LOG("Based on Node.js");
 LOG("2023 0xarch");
 LOG("https://github.com/0xarch/");

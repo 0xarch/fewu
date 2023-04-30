@@ -30,7 +30,28 @@ function parseWidget(content) {
       content = content.replace(`<%! widget:${key} !%>`, widgetContent);
     }
 
-    return content;
+    return parseCSS(content);
+}
+
+function parseCSS(content){
+    const classRegex= /class="([\s\S]*?)"/g;
+    const classes = [];
+    let match;
+    while ((match = classRegex.exec(content)) !== null) {
+        classes.push(match[1]);
+    }
+    for (const key of classes) {
+        const c = key.replace(':fR_',' flexRow :').replace(':fC_',' flexColumn :').replace(':fI_',' flexItem :')
+                     .replace(':fJC','flexJC').replace(':fAC','flexAC').replace(':fAJC','flexACJC')
+                     .replace(':mw',' marginLeft marginRight').replace(':mh',' marginTop marginBottom')
+                     ;
+        content = content.replace(`class="${key}"`,`class="${c}"`);
+    }
+    return content
+    .replace(/_acs_:ml([^"^ ]*?)/g,"marginLeft _acs_:m$1")
+    .replace(/_acs_:mt([^"^ ]*?)/g,"marginTop _acs_:m$1")
+    .replace(/_acs_:mr([^"^ ]*?)/g,"marginRight _acs_:m$1")
+    .replace(/_acs_:mb/g,"marginBottom");
 }
 
 function parseLayout(filePath) {
@@ -44,20 +65,16 @@ function parseBuiltin(content,layoutType,post) {
     switch (layoutType){
         case "archive":{
             TitlePrefix = "归档";
-            break;
-        }
+            break }
         case "category":{
             TitlePrefix = "分类";
-            break;
-        }
+            break }
         case "post":{
             TitlePrefix = post.title;
-            break;
-        }
+            break }
         case "about":{
             TitlePrefix = "关于";
-            break;
-        }
+            break }
     }
     if (layoutType != "index") TitleSeperator= ` ${CONF.lookAndFeel.customSeperator} `;
     if ( CONF.lookAndFeel.customSiteTitle != undefined || CONF.lookAndFeel.customSiteTitle != "none" ) {
@@ -67,7 +84,8 @@ function parseBuiltin(content,layoutType,post) {
     }
     return content
     .replace(/<%! builtin:title !%>/g,`${TitlePrefix}${TitleSeperator}${TitleSuffix}`)
-    .replace(/<%! builtin:extensions !%>/g,extContent);;
+    .replace(/<%! builtin:siteTitle !%>/g,TitleSuffix)
+    .replace(/<%! builtin:extensions !%>/g,extContent);
 }
 
 function autoParseLayout(filePath){

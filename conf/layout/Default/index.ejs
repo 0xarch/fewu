@@ -1,15 +1,13 @@
+<link type="text/css" rel="stylesheet" href="/css/index.css">
 <header>
     <%! widget:nav !%>
     <div class="centerArea">
-        <h1><%! builtin:title !%></h1>
-        <div class="flexItem flexJustifyCenter flexColumn_Portrait">
+        <h1><%! builtin:siteTitle !%></h1>
+        <div class=":fC_fJC">
+            <div><img class="avatar" src="<%= info.avatar %>"/></div>
             <div>
-                <img class="avatar" src="<%= info.avatar %>"/>
-            </div>
-            <div>
-                <a href="<%= info.url-%>"><%= info.name -%></a>
-                <br/>
-                <p><%= info.note -%></p>
+                <a href="<%= info.url-%>"><%= info.name -%></a><br/>
+                <p style="font-size:large"><%= info.note -%></p>
             </div>
         </div>
     </div>
