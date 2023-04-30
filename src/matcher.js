@@ -48,7 +48,7 @@ function parseCSS(content){
     }
     for (const key of classes) {
         const c = key.replace(':fR_',' flexRow :').replace(':fC_',' flexColumn :').replace(':fI_',' flexItem :')
-                     .replace(':fJC','flexJC').replace(':fAC','flexAC').replace(':fAJC','flexACJC')
+                     .replace(':fJC','flexJC').replace(':fAC','flexAC').replace(':fAJC','flexAC flexJC')
                      .replace(':mw',' marginLeft marginRight').replace(':mh',' marginTop marginBottom')
                      .replace(/\./g," ");
         content = content.replace(`class="${key}"`,`class="${c}"`);
