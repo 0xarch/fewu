@@ -11,6 +11,7 @@ const PUBLIC_DIR = "./public";
 const CONF = require("./conf").CONF;
 
 const ABOUT = POST.ABOUT;
+LOG("Getting Posts from sorter");
 const POSTS = SORT.DEFAULT_POSTS;
 const DATE_POSTS = SORT.DATE_POSTS;
 const RECENT_POSTS=SORT.RECENT_POSTS;
@@ -41,12 +42,19 @@ const GINFO = {
     cateArr
 };
 
+const ALL_SORTS = {
+    POSTS: SORT.DEFAULT_POSTS,
+    DATE_POSTS: SORT.DATE_POSTS,
+    RECENT_POSTS: SORT.RECENT_POSTS,
+    CATEGORY_POSTS: SORT.CATEGORY_POSTS,
+}
+
 async function build(type,extra,path){
     LOG(`Building [${type}] to ${path}`);
-    const content = ejs.render(layouts[type],{...extra,info:CONF,extensions:EXTENSIONS,ginfo:GINFO,POSTS,RECENT_POSTS,CATEGORY_POSTS,DATE_POSTS},{views:[LAYOUT_DIR]}).toString();
+    const content = ejs.render(layouts[type],{...extra,info:CONF,extensions:EXTENSIONS,ginfo:GINFO,...ALL_SORTS},{views:[LAYOUT_DIR]}).toString();
     Fs.mkdirSync(Path.dirname(path),{recursive:true},()=>{});
     Fs.writeFile(`${path}`,content,err=>{
-        if(err)throw err;
+        if(err) throw err;
         else LOG(`Successfully built ${path}`);
     });
 }
