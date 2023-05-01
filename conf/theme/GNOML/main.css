@@ -51,3 +51,4 @@ header nav{
 .navItem a,footer a{ color:white }
 .navButton{ display: none }
 footer{ position: relative; background-color: rgb(20,22,23); padding:2rem 1rem; text-align: center }
+footer h3 { color:#858585 }
