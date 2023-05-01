@@ -68,4 +68,3 @@ exports.POSTS=POSTS;
 exports.ABOUT=ABOUT;
 exports.BUILD=(type,extra,path)=>build(type,extra,path);
 exports.ENDING=ending();
-exports.VERSION=version();
