@@ -60,6 +60,7 @@ function parseWidget(content) {
     if ( widgetRegex.test(content) )
         content = parseWidget(content);
 
+    content = content.replace(/<%! layout:extensions !%>/g,extContent);
     return content;
 }
 
@@ -142,7 +143,7 @@ function parseFunction(content){
 function parseLayout(filePath) {
     const content = fs.readFileSync(filePath).toString();
     return `${LAYOUT_BASE}`
-    .replace("<%! layout:body !%>",content);
+    .replace(/<%! layout:body !%>/g,content);
 }
 
 function parseBuiltin(content,layoutType,post) {
@@ -174,13 +175,14 @@ function parseBuiltin(content,layoutType,post) {
     content = content
     .replace(/<%! builtin:title !%>/g,`<title>${TitlePrefix}${TitleSeperator}${TitleSuffix}</title>`)
     .replace(/<%! builtin:siteTitle !%>/g,TitleSuffix)
-    .replace(/<%! builtin:extensions !%>/g,extContent)
     .replace(/<%! builtin:features !%>/g,Features);
     return parseCSS(content);
 }
 
 function autoParseLayout(filePath){
-    return parseFunction(parseWidget(parseLayout(filePath)));
+    const ret=parseFunction(parseWidget(parseLayout(filePath)));
+    console.log(ret);
+    return ret;
 }
 
 exports.parseWidget=(filePath)=>parseWidget(filePath);
