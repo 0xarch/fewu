@@ -123,17 +123,19 @@ function parseCSS(content){
                 <!--content-->
             </each >
             其中val为数组名，key为在forEach中使用的子元素名，<!--content-->为forEach中的内容，
-    2. <%= -%>
+    2. <%= -%> / <%- -%>
         例如：
             <@foo.bar>
+            <@-foo.bar>
         等价于
-            <%= foo.bar -%> 及 <%= foo.bar %>
+            <%= foo.bar -%>
+            <%- foo.bar -%>
         
 */
 function parseFunction(content){
     var content = content;
     content = content.replace(/<each\s*\(([\w.]+?)~([^~]+?)\)\s*>/g,"<% $1.forEach($2=>{ -%>").replace(/<\/each\s*>/g,"<% }) -%>")
-    .replace(/<@([\w.]+)\s*>/g,"<%= $1 -%>");
+    .replace(/<@([\w.]+)\s*>/g,"<%= $1 -%>").replace(/<@\-([\w.]+)\s*>/g,"<%- $1 -%>");
     return content;
 }
 
