@@ -35,7 +35,7 @@ MEM: ${os.totalmem()}(Bytes)
 
 OS: ${os.arch()}, ${os.type()} ${os.release()}
 
-${lines.join("\\n\n")}`;
+${lines.join("\n\n")}`;
 
     fs.writeFile(`./posts/${filePath.name}.md`,content,(err)=>{
         if(err) throw err;
