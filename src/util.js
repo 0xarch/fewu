@@ -30,7 +30,9 @@ date: ${y}-${m}-${d}
 category: 日志
 ---
 CPU: ${os.cpus()[0].model}
+
 MEM: ${os.totalmem()}(Bytes)
+
 OS: ${os.arch()}, ${os.type()} ${os.release()}
 
 ${lines.join("\\n\n")}`;
