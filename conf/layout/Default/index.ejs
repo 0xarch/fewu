@@ -3,11 +3,11 @@
     <%! widget:nav !%>
     <div.centerArea>
         <h1><%! builtin:siteTitle !%></h1>
-        <div class=":fC_fJC">
-            <div><img [avatar] src="<%= info.avatar %>"/></div>
+        <div.:fC_fJC>
+            <div><img [avatar] src="<@info.avatar>"/></div>
             <div>
-                <a href="<%= info.url-%>"><%= info.name -%></a><br/>
-                <p style="font-size:large"><%= info.note -%></p>
+                <a href="<@info.url>"><@info.name></a><br/>
+                <p style="font-size:large"><@info.note></p>
             </div>
         </div>
     </div>
@@ -21,4 +21,3 @@
     </div>
     <%! widget:rightbar !%>
 </main>
-<%! widget:footer !%>

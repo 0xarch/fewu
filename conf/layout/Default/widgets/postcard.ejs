@@ -1,13 +1,13 @@
 <div.postCard.widget.:fR_fAJC>
     <div.postCardInfoContainer>
-        <a [postCardTitle] href="<%= item.src %>"><%= item.title %></a>
+        <a [postCardTitle] href="<@item.src>"><@item.title></a>
         <% if(item.top=="true") { -%><span.ontop></span><% } -%>
         <div.postData>
             <span>发布于</span>
-            <span><%= item.date %></span>
+            <span><@item.date></span>
         </div>
         <div.lessContentItem>
-            <%- item.less %>
+            <@item.less>
         </div>
     </div>
 </div>

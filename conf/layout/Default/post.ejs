@@ -1,17 +1,16 @@
 <header.shrinked>
     <%! widget:nav !%>
     <div.centerArea>
-        <h1><%= post.title -%></h1>
-        <h3>发布于<%= post.date -%></h3>
+        <h1><@post.title></h1>
+        <h3>发布于<@post.date></h3>
     </div>
 </header>
 <div.wrapper>
     <%! widget:leftbar !%>
     <div.wrapperItem.wrapperMain>
         <div.widget.nohover.postContent>
-            <%- post.content -%>
+            <@post.content>
         </div>
     </div>
     <%! widget:rightbar !%>
 </div>
-<%! widget:footer !%>

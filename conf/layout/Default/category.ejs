@@ -2,7 +2,7 @@
     <%! widget:nav !%>
     <div.centerArea>
         <h1>分类</h1>
-        <h3>共<%= ginfo.cateCount -%>个分类</h3>
+        <h3>共<@ginfo.cateCount>个分类</h3>
     </div>
 </header>
 <div.wrapper>
@@ -10,18 +10,15 @@
     <div.wrapperItem.wrapperMain>
         <div.widget.nohover.postList>
             <h2>分类总览</h2>
-            <% CATEGORY_POSTS.forEach(Category=>{ %>
+                <each (CATEGORY_POSTS~Category)>
                 <div.inPostList>
-                    <h3.m0><%= Category.cate -%></h3>
-                    <% Category.incl.forEach(inclItem=>{ %>
-                        <div>
-                            <a href="<%= inclItem.src %>"><%= inclItem.title -%></a>
-                        </div>
-                    <% }) %>
+                    <h3.m0><@Category.cate></h3>
+                    <each (Category.incl~item)>
+                        <%! widget:postlisting !%>
+                    </each>
                 </div>
-            <% }) %>
+            </each>
         </div>
     </div>
     <%! widget:rightbar !%>
 </div>
-<%! widget:footer !%>

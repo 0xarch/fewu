@@ -2,7 +2,7 @@
     <%! widget:nav !%>
     <div.centerArea>
         <h1>归档</h1>
-        <h3>共<%= ginfo.postCount -%>篇文章</h3>
+        <h3>共<@ginfo.postCount>篇文章</h3>
     </div>
 </header>
 <div.wrapper>
@@ -11,14 +11,9 @@
         <div.widget.nohover.postList>
             <h2>文章总览</h2>
             <each (DATE_POSTS~item)>
-                <div.inPostList>
-                    <span.postData><%= item.date -%></span>
-                    <br/>
-                    <a [postCardTitle small] href="<%= item.src %>"><%= item.title -%></a>
-                </div>
+                <%! widget:postlisting !%>
             </each>
         </div>
     </div>
     <%! widget:rightbar !%>
 </div>
-<%! widget:footer !%>

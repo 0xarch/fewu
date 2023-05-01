@@ -26,6 +26,21 @@ extensions.forEach(extension => {
     }
 });
 
+/*
+    本处代码为 Hogger 的 EJS模板 提供了widgets的include简写支持
+    例如：
+        对于一个主题，其目录像这样：
+        Name
+        | - widgets
+        |   | - some.ejs
+        |   | - ...
+        | - index.ejs
+        | - ...
+        在index.ejs中插入some.ejs模板可以被写为：
+            <%! widget:some !%>
+        等价于 EJS 的 include()
+
+*/
 function parseWidget(content) {
     const widgetRegex = /<%! widget:(\w+) !%>/g;
     const widgetKeys = [];
@@ -33,9 +48,13 @@ function parseWidget(content) {
     while ((match = widgetRegex.exec(content)) !== null) {
       widgetKeys.push(match[1]);
     }
+    const widgetContents = {};
+    widgetKeys.forEach(key=>{
+        widgetContents[key]=fs.readFileSync(`${WIDGET_DIR}/${key}.ejs`, "utf-8");
+    });
+
     for (const key of widgetKeys) {
-      const widgetContent = fs.readFileSync(`${WIDGET_DIR}/${key}.ejs`, "utf-8");
-      content = content.replace(`<%! widget:${key} !%>`, widgetContent);
+      content = content.replace(`<%! widget:${key} !%>`, widgetContents[key]);
     }
 
     if ( widgetRegex.test(content) )
@@ -69,8 +88,8 @@ function parseWidget(content) {
 */
 function parseCSS(content){
     var content = content.replace(/<([^.^\/^ ^>]*?)\.([^>^"]*?)>/g,'<$1 class="$2">');
-    content = content.replace(/<([^ ^<^\/]*?)\s*?\[([\s\S]*?)\]\s*?(.*?)?>/g,'<$1 class="$2" $3>');
-    content = content.replace(/<([^ ^<^\/]*?)\s*?\[([\s\S]*?)\]\s*?(.*?)?\/>/g,'<$1 class="$2" $3/>');
+    content = content.replace(/<([^ ^<^\/^@]*?)\s*?\[([\s\S]*?)\]\s*?(.*?)?>/g,'<$1 class="$2" $3>');
+    content = content.replace(/<([^ ^<^\/^@]*?)\s*?\[([\s\S]*?)\]\s*?(.*?)?\/>/g,'<$1 class="$2" $3/>');
     const classRegex= /class="([\s\S]*?)"/g;
     const classes = [];
     let match;
@@ -89,53 +108,33 @@ function parseCSS(content){
 }
 
 /*
-    TODO: 内置特殊函数支持
+    TODO: 内置特殊函数简写支持 (基于全能的.replace)
     1. forEach支持
         例如：
-            <each (RECENT_POSTS~item) >
-                <%! widget:postcard !%> // 此处的widget暂时不是我们关心的
+            <each (foo~bar) >
+                <%! doc:foobar !%> // 此处的widget暂时不是我们关心的
             </each>
         等价于
-            <% RECENT_POSTS.forEach(item=>{ -%>
-                <%! widget:postcard !%>
+            <% foo.forEach(bar=>{ -%>
+                <%! doc:foobar !%>
             <% }) -%>
         格式：
             <each (val~key) >
                 <!--content-->
             </each >
             其中val为数组名，key为在forEach中使用的子元素名，<!--content-->为forEach中的内容，
-            
-        代码详见函数 fn_ForEach(input){...}
-        注意： 由于作者蹩脚的代码水平，这个功能不支持嵌套，多层嵌套仍需使用EJS的val.forEach
+    2. <%= -%>
+        例如：
+            <@foo.bar>
+        等价于
+            <%= foo.bar -%> 及 <%= foo.bar %>
+        
 */
 function parseFunction(content){
     var content = content;
-    content = fn_ForEach(content);
+    content = content.replace(/<each\s*\(([\w.]+?)~([^~]+?)\)\s*>/g,"<% $1.forEach($2=>{ -%>").replace(/<\/each\s*>/g,"<% }) -%>")
+    .replace(/<@([\w.]+)\s*>/g,"<%= $1 -%>");
     return content;
-}
-
-// Powerful Code for ForEach
-function fn_ForEach(input) {
-    const regex = /<each\s*\(([\w.]+?)~(\w+)\)\s*>([^~]*?)<\/each\s*>/g;
-    let match;
-    let output = input;
-    while ((match = regex.exec(output)) !== null) {
-        console.log(match[1]);
-        const val = match[1];
-        const key = match[2];
-        const content = match[3];
-        const arr = eval(val);
-        let inner_content = "";
-        arr.forEach((item) => {
-            const data = { [key]: item };
-            inner_content += ejs.render(content, data);
-        });
-        output = output.slice(0, match.index) + inner_content + output.slice(match.index + match[0].length);
-    }
-    if (regex.test(output)) {
-        output = fn_ForEach(output);
-    }
-    return output;
 }
 
 function parseLayout(filePath) {
