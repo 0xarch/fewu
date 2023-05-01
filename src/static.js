@@ -5,14 +5,6 @@ const copy = require("node-fs-extra").copy;
 const Path = require("path");
 const LOG=console.log;
 
-// 打印版本
-LOG("--------------------------");
-LOG("Hogger v0.3.0");
-LOG("Based on Node.js");
-LOG("2023 0xarch");
-LOG("https://github.com/0xarch/");
-LOG("--------------------------");
-
 const POST = require("./post.js");
 const SORT = require("./sorter.js");
 const MATCH = require("./matcher.js");
@@ -20,7 +12,7 @@ const CONF = require("./conf.js").CONF;
 const PUBLIC_DIR = "./public";
 
 const ABOUT = POST.ABOUT;
-LOG("Getting Posts from sorter");
+LOG("<Process> Getting Posts from sorter");
 const ALL_SORTS = {
     POSTS: SORT.DEFAULT_POSTS,
     DATE_POSTS: SORT.DATE_POSTS,
@@ -28,7 +20,7 @@ const ALL_SORTS = {
     CATEGORY_POSTS: SORT.CATEGORY_POSTS,
 }
 const POSTS = SORT.DEFAULT_POSTS;
-const EXTENSIONS = POST.extensions;
+LOG("<Success> Got Posts");
 
 const LAYOUT_DIR = `./conf/layout/${CONF.lookAndFeel.layout}`;
 const THEME_DIR = `./conf/theme/${CONF.lookAndFeel.theme}`;
@@ -76,3 +68,4 @@ exports.POSTS=POSTS;
 exports.ABOUT=ABOUT;
 exports.BUILD=(type,extra,path)=>build(type,extra,path);
 exports.ENDING=ending();
+exports.VERSION=version();

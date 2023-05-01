@@ -12,8 +12,10 @@ fork 或 clone 本仓库
 
 删除 posts/* 
 
-使用 $ npm install 安装依赖
+使用 ```$ npm install``` 安装依赖
 
 运行 node src/main.js 生成
 
 推送到网站上
+
+对于其他功能，请使用 ```node src/main.js help```
