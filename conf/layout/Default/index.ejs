@@ -15,9 +15,9 @@
 <main.wrapper>
     <%! widget:leftbar !%>
     <div.wrapperItem.wrapperMain>
-        <% RECENT_POSTS.forEach(item=>{ -%>
+        <each (RECENT_POSTS~item)>
             <%! widget:postcard !%>
-        <% }) -%>
+        </each>
     </div>
     <%! widget:rightbar !%>
 </main>

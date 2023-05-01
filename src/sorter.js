@@ -45,7 +45,7 @@ categories.forEach(item=>{
         [ 
             {
                 cate:分类名,
-                incl:[ ... ]
+                incl:[ ...包含在该分类中的博客... ]
             },
             { ... },
             ...

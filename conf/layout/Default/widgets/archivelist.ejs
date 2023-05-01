@@ -6,10 +6,10 @@
     </a>
     <div.content>
         <h3.m0>最近的文章</h3>
-        <% RECENT_POSTS.forEach(item=>{ %>
+        <each (RECENT_POSTS~item)>
             <div.recent_posts>
                 <a href="<%= item.src -%>"><%= item.title -%></a>
             </div>
-        <% }) %>
+        </each>
     </div>
 </div>

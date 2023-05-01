@@ -10,13 +10,13 @@
     <div.wrapperItem.wrapperMain>
         <div.widget.nohover.postList>
             <h2>文章总览</h2>
-            <% DATE_POSTS.forEach(item=>{ -%>
+            <each (DATE_POSTS~item)>
                 <div.inPostList>
                     <span.postData><%= item.date -%></span>
                     <br/>
                     <a [postCardTitle small] href="<%= item.src %>"><%= item.title -%></a>
                 </div>
-            <% }) -%>
+            </each>
         </div>
     </div>
     <%! widget:rightbar !%>

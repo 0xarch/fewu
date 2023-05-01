@@ -1,4 +1,4 @@
-# 0xarch.github.io
+# 0xarch.netlify.app
 
 我的个人博客
 
