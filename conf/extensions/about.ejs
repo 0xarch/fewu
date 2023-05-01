@@ -1,18 +1,18 @@
 <div.widget.about>
     <div.centered>
-        <img [avatar] src="<%= info.avatar %>"/>
-        <h3><a href="<%= info.url %>"><%= info.name -%></a></h3>
-        <h5><%= info.note -%></h5>
+        <img [avatar] src="<@info.avatar>"/>
+        <h3><a href="<@info.url>"><@info.name></a></h3>
+        <h5><@info.note></h5>
     </div>
     <div.centered.info-data>
         <div.counting-post.:fR_fJC>
             <div.postCount.mr>
                 <span>文章</span><br/>
-                <span.count><%= ginfo.postCount %></span>
+                <span.count><@ginfo.postCount></span>
             </div>
             <div.cateCount.ml>
                 <span>分类</span><br/>
-                <span.count><%= ginfo.cateCount %></span>
+                <span.count><@ginfo.cateCount></span>
             </div>
         </div>
     </div>

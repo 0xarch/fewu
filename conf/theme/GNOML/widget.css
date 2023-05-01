@@ -20,5 +20,5 @@
     object-fit: cover;
     border-radius: 100%;
 }
-.inPostList{ background:var(--inner-bg); border-radius: var(--rounded-corner); margin: 1em; padding:.25em; padding-left:1em }
-.inPostList:hover { background:var(--border-color) }
+.listItem{ background:var(--inner-bg); border-radius: var(--rounded-corner); margin: 1em; padding:.25em; padding-left:1em }
+.listItem:hover { background:var(--border-color) }
