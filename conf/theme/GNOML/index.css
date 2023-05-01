@@ -1,4 +1,4 @@
-.lessContentItem{ margin-top: .3em; color:var(--font-color) }
+.lessContentItem{ margin-top: .3em; color:var(--inherit-color) }
 .postCard{ min-height: 20em }
 .postCardInfoContainer{ width: 100%; display: inline-block; padding:0 40px }
 .ontop{ display: block; height:1px; background:var(--red3); margin:auto .75em;position: relative }

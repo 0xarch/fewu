@@ -1,10 +1,10 @@
-.postData{ color:#858585 }
+.meta { color: var(--inherit-color) }
 .recentPosts{ margin:.25em }
 .postCardTitle{
     margin-bottom: 0.3em;
     font-size: 2em;
     line-height: 1.4;
-    color:var(--color);
+    color:var(--default-color);
     font-weight: bold;
 }
 .postCardTitle.small{ font-size: 1.5em }
@@ -53,13 +53,3 @@
 }
 .count{ font-size: larger; font-weight: bold }
 .centered{ text-align: center }
-.flexItem,.flexRow,.flexColumn{ display: flex }
-.flexRow{ flex-direction: row }
-.flexColumn{ flex-direction: column }
-.flexAlignCenter{ align-items: center }
-.flexJustifyCenter{ justify-content: center }
-.mr,.marginRight{ margin-right: .5em }
-.ml,.marginLeft{ margin-left: .5em }
-.mt,.marginTop{ margin-top: .5em }
-.mb,.marginBottom{ margin-bottom: .5em }
-.m0{ margin:0 }

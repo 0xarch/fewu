@@ -10,6 +10,16 @@
 .wrapperRight{ padding-left:15px }
 .wrapperItem:not(.wrapperMain){ flex:1 }
 .wrapperItem>*:not(:first-child){ margin-top: 1em }
+.flexItem,.flexRow,.flexColumn{ display: flex }
+.flexRow{ flex-direction: row }
+.flexColumn{ flex-direction: column }
+.flexAlignCenter{ align-items: center }
+.flexJustifyCenter{ justify-content: center }
+.mr,.marginRight{ margin-right: .5em }
+.ml,.marginLeft{ margin-left: .5em }
+.mt,.marginTop{ margin-top: .5em }
+.mb,.marginBottom{ margin-bottom: .5em }
+.m0{ margin:0 }
 @media only screen and (orientation:portrait){
     .wrapper{ flex-direction: column }
     .wrapperLeft{ padding-right: 0; margin-bottom: 1em }

@@ -51,25 +51,28 @@
 	--dark3: rgb(61, 56, 70);
 	--dark4: rgb(36, 31, 49);
 	--dark5: rgb(0, 0, 0);
-	--text: #f6f5f4;
-	--maxwidth: 56rem;
 }
 @media (prefers-color-scheme:light){
     :root{
-        --bg:var(--bg-light);
-        --color:var(--color-light);
-        --card-box-shadow:0px 3px 8px 6px rgba(7,17,27,0.06);
+        --bg:#ffffff;
+		--widget-bg:#fafafa;
+		--inner-bg:#e6e6e6;
+		--border-color:#d8d8d8;
+		--deafult-color:#000;
+		--inherit-color:#333333;
         --card-box-shadow-hover:0px 3px 8px 6px rgba(7,17,27,0.15);
-        --font-color:#4c4948;
     }
 }
 @media (prefers-color-scheme:dark){
     :root{
-        --bg:var(--bg-dark);
+        --bg:#1e1e1e;
+		--widget-bg:#242424;
+		--inner-bg:#3a3a3a;
+		--border-color:#454545;
         --color:var(--color-dark);
-        --card-box-shadow:0px 3px 8px 6px rgba(67,77,87,0.1);
+		--default-color:#fff;
+		--inherit-color:#bbbbbb;
         --card-box-shadow-hover:0px 3px 8px 6px rgba(67,77,87,0.2);
-        --font-color:#8c8988;
     }
 }
 code.hljs{ background-color: var(--bg) }
