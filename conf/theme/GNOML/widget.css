@@ -24,5 +24,5 @@
 .listItem:hover{ background:var(--border-color) }
 .listItem.lp{ margin:.5em; padding:.2em; padding-left:1em }
 .nbButton{ padding:.35em; display: inline-block; cursor: default;font-size:1em }
-.nbButton.lp{ font-size: small; padding:.25em }
+.nbButton.lp{ font-size: .8em; padding:.25em }
 .nbButton:hover{ background:rgba(255,255,255,0.2) }
