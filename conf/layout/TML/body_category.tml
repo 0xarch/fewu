@@ -1,5 +1,4 @@
 <header'[shrinked]>
-    !include.src(widgets/nav);
     <div'[centerArea]>
         !h1.in(分类);
         !h3.in(共 @ginfo.cateCount@ 个分类);

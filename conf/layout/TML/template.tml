@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%link#rel[stylesheet]#href[https://use.fontawesome.com/releases/v5.7.1/css/all.css]>
-        <link rel="stylesheet" href="/css/main.css">
+        !link.rel(stylesheet).href(https://use.fontawesome.com/releases/v5.7.1/css/all.css);
+        !link.rel(stylesheet).href(/css/main.css);
         !link.rel(shortcut icon).href(@info.avatar@);
+        &builtin::title
+        &builtin::features
     </head>
     <body>
+    <nav'[fI flAC]>
+        !span'[l].in( &builtin::siteTitle );
+            <span.navItem>
+                !div'[nbButton mr].in(!a.href(/).in(!i'[fa-fw fas fa-home].in();首页););
+                !div'[nbButton mr].in(!a.href(/archive/).in(!i'[fa-fw fas fa-archive].in();归档););
+                !div'[nbButton mr].in(!a.href(/category/).in(!i'[fa-fw fas fa-folder-open].in();分类););
+                !div'[nbButton mr].in(!a.href(/about/).in(!i'[fa-fw fas fa-heart].in();关于););
+            </span>
+            !span'[navButton mh mw].in(!i'[fas fa-fw fa-bars].in(););
+    </nav>
         &layout::body;
         <footer>
             <div'[footer fI flJC]>

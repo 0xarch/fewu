@@ -34,7 +34,7 @@ header{
     background-color: rgb(36,31,49) 
 }
 header.shrinked{ height:30rem }
-header nav{
+nav{
     flex-wrap: wrap;
     padding:0 36px;
     width: 100%;
@@ -47,7 +47,7 @@ header nav{
     font-weight: 700;
     z-index:2;
 }
-.blogName{ flex:1 }
+nav .l{ flex:1 }
 .navItem a,footer a{ color:white }
 .navButton{ display: none }
 footer{ position: relative; background-color: rgb(20,22,23); padding:2rem 1rem; text-align: center }

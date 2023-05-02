@@ -1,6 +1,5 @@
 <%link#rel[stylesheet]#href[/css/index.css]>
 <header>
-    !include.src(widgets/nav);
     <div'[centerArea]>
         !h1.in( &builtin::siteTitle );
         <div'[fC flJC]>

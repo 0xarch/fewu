@@ -27,7 +27,7 @@ function parseBuiltin(content,layoutType,post) {
         "<script src='//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js'></script>"+
         "<script>hljs.highlightAll()</script>";
     content = content
-    .replace(/&builtin::title;/g,`<title>${TitlePrefix}${TitleSeperator}${TitleSuffix}</title>`)
+    .replace(/&builtin::title/g,`<title>${TitlePrefix}${TitleSeperator}${TitleSuffix}</title>`)
     .replace(/&builtin::siteTitle/g,TitleSuffix)
     .replace(/&builtin::features/g,Features);
     return content;

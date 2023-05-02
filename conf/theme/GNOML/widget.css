@@ -20,5 +20,9 @@
     object-fit: cover;
     border-radius: 100%;
 }
-.listItem{ background:var(--inner-bg); border-radius: var(--rounded-corner); margin: 1em; padding:.25em; padding-left:1em }
-.listItem:hover { background:var(--border-color) }
+.listItem,.nbButton{ border-radius: var(--rounded-corner) }
+.listItem{ background:var(--inner-bg); margin: 1em; padding:.25em; padding-left:1em }
+.listItem:hover{ background:var(--border-color) }
+.listItem.lp{ margin:.5em; padding:.2em; padding-left:1em }
+.nbButton{ padding:.35em; display: inline-block; cursor: default }
+.nbButton:hover{ background:rgba(255,255,255,0.2) }

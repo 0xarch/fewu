@@ -1,5 +1,4 @@
 <header'[shrinked]>
-    !include.src(widgets/nav);
     <div'[centerArea]>
         !h1.in(归档);
         !h3.in(共 @ginfo.postCount@ 篇文章);

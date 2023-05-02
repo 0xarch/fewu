@@ -1,5 +1,5 @@
 <header'[shrinked]>
-    !include.src(widgets/nav);
+    /* !include.src(widgets/nav); */
     <div'[centerArea]>
         !h1.in(@post.title@);
         !h3.in(发布于 @post.date@);

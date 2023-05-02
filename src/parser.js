@@ -8,7 +8,7 @@ const includeRegExp = /<include src="([\w\.\/\+\-\:\!]+?)"\s*>/g;
 
 // 非必要请勿使用贪婪模式
 const macroExp = /!([\w'\[\] \-]+)((\.(?:[\w]+)\([^;!]*?\))*);/g;
-const macroArgExp = /\.(\w+)\(([\S ]+)\)/g;
+const macroArgExp = /\.(\w+)\(([^;()]+)\)/g;
 const innerMacroExp = /\.in\(([^;()]*)\)/;
 
 const fs = require("fs");

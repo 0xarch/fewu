@@ -1,5 +1,4 @@
 .meta { color: var(--inherit-color) }
-.recentPosts{ margin:.25em }
 .postCardTitle{
     margin-bottom: 0.3em;
     font-size: 2em;
@@ -10,23 +9,6 @@
 .postCardTitle.small{ font-size: 1.5em }
 .postContent { word-wrap: break-word; word-break: keep-all }
 .postContent a{ text-decoration: underline }
-.menuItems{
-    display: inline-block;
-    font-size: smaller;
-    cursor: default;
-    position: relative;
-}
-.menuItems::after{
-    content:'';
-    position: absolute;
-    top:1.7em;
-    left:0;
-    background-color: var(--blue3);
-    height:3px;
-    width: 0%;
-    transition: width .3s ease-in-out;
-}
-.menuItems:hover::after{ width: 100% }
 .centerArea{
     width:70vw;
     height:50%;

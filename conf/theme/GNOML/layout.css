@@ -6,9 +6,7 @@
     width: 100%;
 }
 .wrapperMain{ flex:3 }
-.wrapperLeft{ padding-right:15px }
-.wrapperRight{ padding-left:15px }
-.wrapperItem:not(.wrapperMain){ flex:1 }
+.wrapperRight{ padding-left:15px; flex:1 }
 .wrapperItem>*:not(:first-child){ margin-top: 1em }
 .flexItem,.flexRow,.flexColumn,.fI,.fR,.fC{ display: flex }
 .flexRow,.fR{ flex-direction: row }
@@ -22,7 +20,6 @@
 .m0{ margin:0 }
 @media only screen and (orientation:portrait){
     .wrapper{ flex-direction: column }
-    .wrapperLeft{ padding-right: 0; margin-bottom: 1em }
     .wrapperRight{ padding-left: 0; margin-top: 1em }
     html{ font-size: 28px !important; line-height: 1.3 !important }
     header{ height:30rem !important }
