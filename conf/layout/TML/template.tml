@@ -10,28 +10,28 @@
     <body>
     <nav'[fI flAC]>
         !span'[l].in( &builtin::siteTitle );
-            <span.navItem>
+            !span'[navItem].in(
                 !div'[nbButton lp mr].in(!a.href(/).in(!i'[fa-fw fas fa-home].in();首页););
                 !div'[nbButton lp mr].in(!a.href(/archive/).in(!i'[fa-fw fas fa-archive].in();归档););
                 !div'[nbButton lp mr].in(!a.href(/category/).in(!i'[fa-fw fas fa-folder-open].in();分类););
                 !div'[nbButton lp mr].in(!a.href(/about/).in(!i'[fa-fw fas fa-heart].in();关于););
-            </span>
+            );
             !span'[navButton mh mw].in(!i'[fas fa-fw fa-bars].in(););
     </nav>
         &layout::body;
-        <footer>
-            <div'[footer fI flJC]>
-                <div'[mw]>
+        !footer.in(
+            !div'[footer fI flJC].in(
+                !div'[mw].in(
                     !h3'[m0].in(网站);
                     !a.href(https://github.com/).in(Github);;
                     !a.href(https://netlify.com/).in(Netlify);;
                     !a.href(https://gnome.org/).in(GNOME);;
-                </div>
-                <div'[mw]>
+                );
+                !div'[mw].in(
                     !h3'[m0].in(关于Hogger);
                     !a.href(https://github.com/0xarch/blog).in(源代码);;
-                </div>
-            </div>
-        </footer>
+                );
+            );
+        );
     </body>
 </html>
