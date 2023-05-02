@@ -11,10 +11,10 @@
     <nav'[fI flAC]>
         !span'[l].in( &builtin::siteTitle );
             <span.navItem>
-                !div'[nbButton mr].in(!a.href(/).in(!i'[fa-fw fas fa-home].in();首页););
-                !div'[nbButton mr].in(!a.href(/archive/).in(!i'[fa-fw fas fa-archive].in();归档););
-                !div'[nbButton mr].in(!a.href(/category/).in(!i'[fa-fw fas fa-folder-open].in();分类););
-                !div'[nbButton mr].in(!a.href(/about/).in(!i'[fa-fw fas fa-heart].in();关于););
+                !div'[nbButton lp mr].in(!a.href(/).in(!i'[fa-fw fas fa-home].in();首页););
+                !div'[nbButton lp mr].in(!a.href(/archive/).in(!i'[fa-fw fas fa-archive].in();归档););
+                !div'[nbButton lp mr].in(!a.href(/category/).in(!i'[fa-fw fas fa-folder-open].in();分类););
+                !div'[nbButton lp mr].in(!a.href(/about/).in(!i'[fa-fw fas fa-heart].in();关于););
             </span>
             !span'[navButton mh mw].in(!i'[fas fa-fw fa-bars].in(););
     </nav>
@@ -29,7 +29,7 @@
                 </div>
                 <div'[mw]>
                     !h3'[m0].in(关于Hogger);
-                    !a.href(https://github.com/0xarch/0xarch.github.io/).in(源代码);;
+                    !a.href(https://github.com/0xarch/blog).in(源代码);;
                 </div>
             </div>
         </footer>

@@ -1,4 +1,4 @@
-<div'[listItem]>
+!div'[listItem].in(
     !span'[meta].in(@item.date@);;
     !a'[postCardTitle small].href(@item.src@).in(@item.title@);
-</div>
+);

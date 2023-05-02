@@ -1,9 +1,9 @@
 <div'[widget cardArchives]>
-    <a'[header] href="/archive/">
+    !a'[header].href(/archive/).in(
         !i'[fa-fw fas fa-archive].in();
         !span.in(归档);
         !span'[widgetHeaderLink].in(!i'[fas fa-angle-right].in(););
-    </a>
+    );
     <div'[content]>
         !h3'[m0].in(最近的文章);
         <each:RECENT_POSTS:item>

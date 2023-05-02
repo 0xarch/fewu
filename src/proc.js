@@ -20,13 +20,11 @@ const PublicDir="./public";
 const ThemeDir=`./conf/theme/${info.lookAndFeel.theme}`;
 const LayoutDir=`./conf/layout/${info.lookAndFeel.layout}`;
 
-console.log(tml.parseVar(Layouts.post,{post:POSTS[0]}));
-
 async function build(type,extra,path){
     console.log(`<Progress> Building [${type}] to ${path}`);
     var content = Layouts[type];
     content = tml.parseVar(content,extra);
-    content = matcher.parseBuiltin(content);
+    content = matcher.parseBuiltin(content,type,extra.post);
     Fs.mkdirSync(Path.dirname(path),{recursive:true},()=>{});
     Fs.writeFile(`${path}`,content,err=>{
         if(err) throw err;

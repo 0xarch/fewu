@@ -1,7 +1,7 @@
 <div'[widget about]>
     <div'[centered]>
         !img'[avatar].src(@info.avatar@);
-        <h3>!a.href(@info.url@).in(@info.name@);</h3>
+        !h3.in( !a.href(@info.url@).in(@info.name@); );
         !h5.in(@info.note@);
     </div>
     <div'[centered info-data]>

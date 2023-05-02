@@ -9,7 +9,6 @@
     border-radius: var(--rounded-corner);
     background-color: var(--widget-bg);
     padding:1rem 1.2rem;
-    position: relative;
     transition: box-shadow .3s;
     border:1px solid var(--border-color);
 }
@@ -24,5 +23,6 @@
 .listItem{ background:var(--inner-bg); margin: 1em; padding:.25em; padding-left:1em }
 .listItem:hover{ background:var(--border-color) }
 .listItem.lp{ margin:.5em; padding:.2em; padding-left:1em }
-.nbButton{ padding:.35em; display: inline-block; cursor: default }
+.nbButton{ padding:.35em; display: inline-block; cursor: default;font-size:1em }
+.nbButton.lp{ font-size: small; padding:.25em }
 .nbButton:hover{ background:rgba(255,255,255,0.2) }
