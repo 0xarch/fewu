@@ -8,15 +8,15 @@
 .wrapperMain{ flex:3 }
 .wrapperRight{ padding-left:15px; flex:1 }
 .wrapperItem>*:not(:first-child){ margin-top: 1em }
-.flexItem,.flexRow,.flexColumn,.fI,.fR,.fC{ display: flex }
-.flexRow,.fR{ flex-direction: row }
-.flexColumn,.fC{ flex-direction: column }
-.flexAlignCenter,.flAC{ align-items: center }
-.flexJustifyCenter,.flJC{ justify-content: center }
-.mr,.marginRight,.mw{ margin-right: .5em }
-.ml,.marginLeft,.mw{ margin-left: .5em }
-.mt,.marginTop,.mh{ margin-top: .5em }
-.mb,.marginBottom,.mh{ margin-bottom: .5em }
+.fI,.fR,.fC{ display:flex }
+.fR{ flex-direction:row }
+.fC{ flex-direction:column }
+.flAC{ align-items:center }
+.flJC{ justify-content:center }
+.mr,.mw{ margin-right:.5em }
+.ml,.mw{ margin-left:.5em }
+.mt,.mh{ margin-top:.5em }
+.mb,.mh{ margin-bottom:.5em }
 .m0{ margin:0 }
 @media only screen and (orientation:portrait){
     .wrapper{ flex-direction: column }
