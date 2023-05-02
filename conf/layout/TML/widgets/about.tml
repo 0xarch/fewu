@@ -1,0 +1,19 @@
+<div'[widget about]>
+    <div'[centered]>
+        !img'[avatar].src(@info.avatar@);
+        <h3>!a.href(@info.url@).in(@info.name@);</h3>
+        !h5.in(@info.note@);
+    </div>
+    <div'[centered info-data]>
+        <div'[counting-post fR flJC]>
+            <div'[postCount mr]>
+                !span.in(文章);;
+                !span'[count].in(@ginfo.postCount@);
+            </div>
+            <div'[cateCount ml]>
+                !span.in(分类);;
+                !span'[count].in(@ginfo.cateCount@);
+            </div>
+        </div>
+    </div>
+</div>

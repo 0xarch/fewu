@@ -1,0 +1,18 @@
+<header'[shrinked]>
+    !include.src(widgets/nav);
+    <div'[centerArea]>
+        !h1.in(归档);
+        !h3.in(共 @ginfo.postCount@ 篇文章);
+    </div>
+</header>
+<div'[wrapper]>
+    <div'[wrapperItem wrapperMain]>
+        <div'[widget nohover postList]>
+            !h2.in(文章总览);
+            <each:DATE_POSTS:item>
+                !include.src(widgets/postlisting);
+            </each>
+        </div>
+    </div>
+    !include.src(widgets/rightbar);
+</div>

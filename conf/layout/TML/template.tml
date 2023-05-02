@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%link#rel[stylesheet]#href[https://use.fontawesome.com/releases/v5.7.1/css/all.css]>
+        <link rel="stylesheet" href="/css/main.css">
+        !link.rel(shortcut icon).href(@info.avatar@);
+    </head>
+    <body>
+        &layout::body;
+        <footer>
+            <div'[footer fI flJC]>
+                <div'[mw]>
+                    !h3'[m0].in(网站);
+                    !a.href(https://github.com/).in(Github);;
+                    !a.href(https://netlify.com/).in(Netlify);;
+                    !a.href(https://gnome.org/).in(GNOME);;
+                </div>
+                <div'[mw]>
+                    !h3'[m0].in(关于Hogger);
+                    !a.href(https://github.com/0xarch/0xarch.github.io/).in(源代码);;
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>

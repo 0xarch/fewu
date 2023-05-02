@@ -1,4 +1,5 @@
 const fs = require("fs");
+const copy = require("node-fs-extra").copy;
 const date = new Date();
 const y=date.getFullYear(),m=("0" + (date.getMonth() + 1)).slice(-2),d=("0" + date.getDate()).slice(-2);
 
@@ -43,20 +44,20 @@ ${lines.join("\n\n")}`;
     });
 }
 function build(){
-    const STATIC=require("./static");
+    const proc = require("./proc");
 
-    const PUBLIC_DIR=STATIC.PUBLIC_DIR;
+    const PublicDir=proc.PublicDir;
 
-    STATIC.BUILD("index",{},`${PUBLIC_DIR}/index.html`);
-    STATIC.BUILD("archive",{},`${PUBLIC_DIR}/archive/index.html`);
-    STATIC.BUILD("category",{},`${PUBLIC_DIR}/category/index.html`);
-    STATIC.BUILD("about",{post:STATIC.ABOUT},`${PUBLIC_DIR}/about/index.html`);
+    proc.build("index",{},`${PublicDir}/index.html`);
+    proc.build("archive",{},`${PublicDir}/archive/index.html`);
+    proc.build("category",{},`${PublicDir}/category/index.html`);
+    proc.build("about",{post:proc.about},`${PublicDir}/about/index.html`);
     
-    STATIC.POSTS.forEach(item => {
-        STATIC.BUILD("post",{post:item},`${PUBLIC_DIR}/${item.path}`);
+    proc.posts.forEach(item => {
+        proc.build("post",{post:item},`${PublicDir}/${item.path}`);
     });
     
-    STATIC.ENDING;
+    copy(proc.ThemeDir,`${PublicDir}/css`,(err)=>{if(err)throw err});
 }
 function helpme(){
     console.log(`

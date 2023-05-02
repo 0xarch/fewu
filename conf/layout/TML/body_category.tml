@@ -1,0 +1,23 @@
+<header'[shrinked]>
+    !include.src(widgets/nav);
+    <div'[centerArea]>
+        !h1.in(分类);
+        !h3.in(共 @ginfo.cateCount@ 个分类);
+    </div>
+</header>
+<div'[wrapper]>
+    <div'[wrapperItem wrapperMain]>
+        <div'[widget nohover postList]>
+            !h2.in(分类总览);
+            <each:CATEGORY_POSTS:Category>
+                <div'[inPostList]>
+                    !h3'[m0].in(@Category.cate@);
+                    <each:Category.incl:item>
+                        !include.src(widgets/postlisting);
+                    </each>
+                </div>
+            </each>
+        </div>
+    </div>
+    !include.src(widgets/rightbar);
+</div>

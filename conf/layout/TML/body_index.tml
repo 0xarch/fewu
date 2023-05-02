@@ -1,0 +1,22 @@
+<%link#rel[stylesheet]#href[/css/index.css]>
+<header>
+    !include.src(widgets/nav);
+    <div'[centerArea]>
+        !h1.in( &builtin::siteTitle );
+        <div'[fC flJC]>
+            !div.in( !img'[avatar].src(@info.avatar@); );
+            <div>
+                !a.href(@info.url@).in(@info.name@);;
+                <p style="font-size:large"> @info.note@ </p>
+            </div>
+        </div>
+    </div>
+</header>
+<main'[wrapper]>
+    <div'[wrapperItem wrapperMain]>
+        <each:RECENT_POSTS:item>
+            !include.src(widgets/postcard);
+        </each>
+    </div>
+    !include.src(widgets/rightbar);
+</main>

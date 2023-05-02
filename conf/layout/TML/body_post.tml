@@ -1,0 +1,15 @@
+<header'[shrinked]>
+    !include.src(widgets/nav);
+    <div'[centerArea]>
+        !h1.in(@post.title@);
+        !h3.in(发布于 @post.date@);
+    </div>
+</header>
+<div'[wrapper]>
+    <div'[wrapperItem wrapperMain]>
+        <div'[widget nohover postContent]>
+            @post.content@
+        </div>
+    </div>
+    !include.src(widgets/rightbar);
+</div>

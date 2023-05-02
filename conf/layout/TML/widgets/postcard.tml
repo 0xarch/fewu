@@ -1,0 +1,10 @@
+<div'[postCard widget fR flAC flJC]>
+    <div'[postCardInfoContainer]>
+        !a'[postCardTitle].href(@item.src@).in(@item.title@);
+        <if:item.top>
+            !span'[ontop].in();
+        </if>
+        !div'[meta].in( !span.in(发布于); !span.in(@item.date@); );
+        !div'[lessContentItem].in(@item.less@);
+    </div>
+</div>
