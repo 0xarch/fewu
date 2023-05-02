@@ -12,7 +12,7 @@
     "lookAndFeel":{
         "background":"",
         "customSiteTitle":"Hello! 0xarch",
-        "customSeperator":"| ",
+        "customSeperator":"|",
         "theme":"GNOML",
         "layout":"TML"
     }
