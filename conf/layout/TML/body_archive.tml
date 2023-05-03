@@ -8,7 +8,7 @@
     !div'[wrapperItem wrapperMain]{
         !div'[widget nohover postList]{
             !h2{ 文章总览 };
-            !each.from(DATE_POSTS).as(item){
+            !each.from(DefaultPosts).as(item){
                 !include.src(widgets/postlisting);
             }
         }

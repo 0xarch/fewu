@@ -8,7 +8,7 @@
     <div'[wrapperItem wrapperMain]>
         <div'[widget nohover postList]>
             !h2.in(分类总览);
-            <each:CATEGORY_POSTS:Category>
+            <each:categoryPosts:Category>
                 <div'[inPostList]>
                     !h3'[m0].in(@Category.cate@);
                     <each:Category.incl:item>

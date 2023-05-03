@@ -12,10 +12,10 @@
     </div>
 );
 <main'[wrapper]>
-    !div'[wrapperItem wrapperMain].in(
-        <each:RECENT_POSTS:item>
+    !div'[wrapperItem wrapperMain]{
+        !each.from(RecentPosts).as(item){
             !include.src(widgets/postcard);
-        </each>
-    );
+        }
+    }
     !include.src(widgets/rightbar);
 </main>

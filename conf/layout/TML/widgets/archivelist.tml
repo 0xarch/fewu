@@ -6,7 +6,7 @@
     );
     <div'[content]>
         !h3'[m0].in(最近的文章);
-        <each:RECENT_POSTS:item>
+        <each:RecentPosts:item>
             !div'[listItem lp].in(!a.href(@item.src@).in(@item.title@););
         </each>
     </div>
