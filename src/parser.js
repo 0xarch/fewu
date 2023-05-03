@@ -10,10 +10,12 @@ const includeRegExp = /<include src="([\w\.\/\+\-\:\!]+?)"\s*>/g;
 const macroExp = /!([\w'\[\] \-]+)((\.(?:[\w]+)\([^;!]*?\))*);/g;
 const macroArgExp = /\.(\w+)\(([^;()]+)\)/g;
 const innerMacroExp = /\.in\(([^;()]*)\)/;
+const contentMacroExp = /!([\w'\[\] \-]+)((?:\.(?:[\w]+)\([^;!]*?\))*)\{([^{}]*?)\};?/g;
 
 const fs = require("fs");
 const path = require("path");
 
+// eval变量
 const POST= require("./post");
 const SORT = require("./sorter");
 const info = require("./conf").CONF;
@@ -71,7 +73,13 @@ function percentMacro(contentToParse){
 function deMacro(contentToParse){
     let content = contentToParse;
     content.match(macroExp); // 我不知道为什么要有这个，但是没有这个跑不起来
+
+    // ;; 宏结尾 => ;<br/>
     content = content.replace(/;;/g,";<br/>");
+
+    // {}宏
+    content = content.replace(contentMacroExp,"!$1$2;$3</$1>");
+
     let matches_macro = content.matchAll(macroExp);
     for (let match of matches_macro){
         let text = `<${match[1]}`;
@@ -85,11 +93,14 @@ function deMacro(contentToParse){
         text += '>';
         if(inner_contains!=null){
             text += inner_contains[1];
-            text += `</${match[1].replace(/'\[[\w -]+?\]/g,"")}>`;
+            text += `</${match[1]}>`;
         }
         content = content.replace(match[0],text);
     }
-    if(macroExp.test(content)){
+
+    content = content.replace(/<\/([\w]+?)'\[[\w -]+?\]>/g,"</$1>");
+
+    if(macroExp.test(content) || contentMacroExp.test(content)){
         content = deMacro(content);
     }
 

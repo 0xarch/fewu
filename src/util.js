@@ -25,7 +25,7 @@ function log2md(){
     }).toString();
     let lines = content.replace(/\*/g,"\*").split("\n");
     content = 
-    `---
+`---
 title: ${filePath.name}
 date: ${y}-${m}-${d}
 category: 日志

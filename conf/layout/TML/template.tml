@@ -1,37 +1,37 @@
 <!DOCTYPE html>
-<html>
-    <head>
+!html{
+    !head{
         !link.rel(stylesheet).href(https://use.fontawesome.com/releases/v5.7.1/css/all.css);
         !link.rel(stylesheet).href(/css/main.css);
         !link.rel(shortcut icon).href(@info.avatar@);
         &builtin::title
         &builtin::features
-    </head>
-    <body>
-    <nav'[fI flAC]>
-        !span'[l].in( &builtin::siteTitle );
-            !span'[navItem].in(
-                !div'[nbButton lp mr].in(!a.href(/).in(!i'[fa-fw fas fa-home].in();首页););
-                !div'[nbButton lp mr].in(!a.href(/archive/).in(!i'[fa-fw fas fa-archive].in();归档););
-                !div'[nbButton lp mr].in(!a.href(/category/).in(!i'[fa-fw fas fa-folder-open].in();分类););
-                !div'[nbButton lp mr].in(!a.href(/about/).in(!i'[fa-fw fas fa-heart].in();关于););
-            );
-            !span'[navButton mh mw].in(!i'[fas fa-fw fa-bars].in(););
-    </nav>
+    }
+    !body{
+        !nav'[fI flAC]{
+            !span'[l]{ &builtin::siteTitle }
+                !span'[navItem]{
+                    !div'[nbButton lp mr]{!a.href(/){!i'[fa-fw fas fa-home]{}首页}}
+                    !div'[nbButton lp mr]{!a.href(/archive/){!i'[fa-fw fas fa-archive]{}归档}}
+                    !div'[nbButton lp mr]{!a.href(/category/){!i'[fa-fw fas fa-folder-open]{}分类}}
+                    !div'[nbButton lp mr]{!a.href(/about/){!i'[fa-fw fas fa-heart]{}关于}}
+                }
+                !span'[navButton mh mw]{!i'[fas fa-fw fa-bars]{}}
+        }
         &layout::body;
-        !footer.in(
-            !div'[footer fI flJC].in(
-                !div'[mw].in(
-                    !h3'[m0].in(网站);
-                    !a.href(https://github.com/).in(Github);;
-                    !a.href(https://netlify.com/).in(Netlify);;
-                    !a.href(https://gnome.org/).in(GNOME);;
-                );
-                !div'[mw].in(
-                    !h3'[m0].in(关于Hogger);
-                    !a.href(https://github.com/0xarch/blog).in(源代码);;
-                );
-            );
-        );
-    </body>
-</html>
+        !footer{
+            !div'[footer fI flJC]{
+                !div'[mw]{
+                    !h3'[m0]{网站}
+                    !a.href(https://github.com/){Github};;
+                    !a.href(https://netlify.com/){Netlify};;
+                    !a.href(https://gnome.org/){GNOME};;
+                }
+                !div'[mw]{
+                    !h3'[m0]{关于Hogger}
+                    !a.href(https://github.com/0xarch/blog){源代码};;
+                }
+            }
+        }
+    }
+}

@@ -1,17 +1,17 @@
-!header'[shrinked].in(
-    <div'[centerArea]>
-        !h1.in(归档);
-        !h3.in(共 @ginfo.postCount@ 篇文章);
-    </div>
-);
-<div'[wrapper]>
-    <div'[wrapperItem wrapperMain]>
-        <div'[widget nohover postList]>
+!header'[shrinked]{
+    !div'[centerArea]{
+        !h1{归档};
+        !h3{共 @ginfo.postCount@ 篇文章};
+    }
+};
+!div'[wrapper]{
+    !div'[wrapperItem wrapperMain]{
+        !div'[widget nohover postList]{
             !h2.in(文章总览);
-            <each:DATE_POSTS:item>
+            !each.from(DATE_POSTS).as(item){
                 !include.src(widgets/postlisting);
-            </each>
-        </div>
-    </div>
+            };
+        };
+    };
     !include.src(widgets/rightbar);
-</div>
+};

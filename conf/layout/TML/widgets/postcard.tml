@@ -1,10 +1,10 @@
-<div'[postCard widget fR flAC flJC]>
-    !div'[postCardInfoContainer].in(
-        !a'[postCardTitle].href(@item.src@).in(@item.title@);
-        <if:item.top>
-            !span'[ontop].in();
-        </if>
-        !div'[meta].in( !span.in(发布于); !span.in(@item.date@); );
-        !div'[lessContentItem].in(@item.less@);
-    );
-</div>
+!div'[postCard widget fR flAC flJC]{
+    !div'[postCardInfoContainer]{
+        !a'[postCardTitle].href(@item.src@){@item.title@}
+        if.condition(item.top){
+            !span'[ontop]{}
+        };
+        !div'[meta]{ !span{发布于} !span{@item.date@} }
+        !div'[lessContentItem]{@item.less@}
+    }
+}
