@@ -6,6 +6,7 @@ const y = date.getFullYear(),
   d = ("0" + date.getDate()).slice(-2);
 
 import * as proc from "./proc.ts";
+import { copy } from "https://deno.land/std@0.185.0/fs/copy.ts";
 
 function main() {
   if (args[0] == "new") newPost();
@@ -36,6 +37,7 @@ function build() {
   proc.Posts.forEach(item=>{
     proc.build("post",{post:item},`${PublicDir}/${item.path}`);
   });
+  copy(proc.ThemeDir,`${PublicDir}/css`,{overwrite:true});
 }
 function helpme() {}
 

@@ -3,6 +3,7 @@ import * as Path from "https://deno.land/std/path/mod.ts";
 import * as tml from "./tml.ts";
 import * as match from "./match.ts";
 import * as Sort from "./sort.ts";
+import { ensureDir } from "https://deno.land/std/fs/mod.ts";
 const Posts = Sort.DefaultPosts;
 const About = Sort.About;
 const info = Config;
@@ -17,7 +18,7 @@ async function build(type:string,extra,path:string){
     content = tml.parseVar(content,extra);
     if(extra.post==undefined)content = match.parseBuiltin(content,type,undefined);
     else content = match.parseBuiltin(content,type,extra.post.title);
-    Deno.mkdir(Path.dirname(path), { recursive: true }, () => { });
+    ensureDir(Path.dirname(path));
     Deno.writeTextFile(`${path}`,content);
 }
 
