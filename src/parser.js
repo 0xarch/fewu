@@ -19,17 +19,16 @@ const path = require("path");
 const POST= require("./post");
 const SORT = require("./sorter");
 const info = require("./conf").CONF;
-const ABOUT = POST.ABOUT;
-const POSTS = SORT.DEFAULT_POSTS;
-const DATE_POSTS = SORT.DATE_POSTS;
-const RECENT_POSTS = SORT.RECENT_POSTS;
-const CATEGORY_POSTS= SORT.CATEGORY_POSTS;
+const DefaultPosts = SORT.DefaultPosts;
+const Posts = SORT.Posts;
+const RecentPosts = SORT.RecentPosts;
+const categoryPosts= SORT.categoryPosts;
 var cateArr = Array();
-POSTS.forEach(item=>{
+Posts.forEach(item=>{
     if (!cateArr.includes(item.category)) cateArr.push(item.category);
 });
 const ginfo = {
-    postCount:POSTS.length,
+    postCount:Posts.length,
     cateCount:cateArr.length,
     cateArr
 };

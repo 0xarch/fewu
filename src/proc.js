@@ -6,7 +6,7 @@ const Fs = require("fs");
 const Path = require("path");
 
 const SORT = require("./sorter");
-const POSTS = SORT.DEFAULT_POSTS;
+const POSTS = SORT.DefaultPosts;
 
 const Layouts = {
     index: tml.parseTml("index"),

@@ -65,8 +65,8 @@ categories.forEach(item=>{
 LOG("<Success> Sort by category");
 
 // ________ EXPORT ________
-exports.TOP_POSTS=topPosts;
-exports.CATEGORY_POSTS=categoryPosts;
-exports.RECENT_POSTS=POSTS.slice(0,5);
-exports.DEFAULT_POSTS=DEFAULT_POSTS;
-exports.DATE_POSTS=POSTS;
+exports.topPosts=topPosts;
+exports.categoryPosts=categoryPosts;
+exports.RecentPosts=POSTS.slice(0,5);
+exports.DefaultPosts=DEFAULT_POSTS;
+exports.Posts=POSTS;
