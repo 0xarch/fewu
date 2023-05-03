@@ -47,7 +47,7 @@ const layout_dir=`./conf/layout/${info.lookAndFeel.layout}`;
 const base_template=parseFile(`${layout_dir}/template.tml`);
 
 function parseFile(filePath){
-    var content = fs.readFileSync(filePath).toString();
+    let content = fs.readFileSync(filePath).toString();
     content = parse(content,path.parse(filePath).dir);
     return content;
 }

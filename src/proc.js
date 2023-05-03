@@ -25,7 +25,7 @@ async function build(type,extra,path){
     var content = Layouts[type];
     content = tml.parseVar(content,extra);
     content = matcher.parseBuiltin(content,type,extra.post);
-    Fs.mkdirSync(Path.dirname(path),{recursive:true},()=>{});
+    Fs.mkdir(Path.dirname(path), { recursive: true }, () => { });
     Fs.writeFile(`${path}`,content,err=>{
         if(err) throw err;
         else console.log(`<Success> built ${path}`);
