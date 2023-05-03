@@ -1,9 +1,9 @@
-!header'[shrinked].in(
-    <div'[centerArea]>
-        !h1.in(分类);
-        !h3.in(共 @ginfo.cateCount@ 个分类);
-    </div>
-);
+!header'[shrinked]{
+    !div'[centerArea]{
+        !h1{分类}
+        !h3{共 @ginfo.cateCount@ 个分类}
+    }
+}
 <div'[wrapper]>
     <div'[wrapperItem wrapperMain]>
         <div'[widget nohover postList]>

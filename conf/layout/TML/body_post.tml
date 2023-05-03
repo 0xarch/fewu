@@ -1,14 +1,14 @@
 !header'[shrinked]{
     !div'[centerArea]{
-        !h1{ @post.title@ };
-        !h3{ 发布于 @post.date@ };
-    };
-};
+        !h1{@post.title@}
+        !h3{发布于 @post.date@}
+    }
+}
 !div'[wrapper]{
     !div'[wrapperItem wrapperMain]{
         !div'[widget nohover postContent]{
             @post.content@
-        };
-    };
+        }
+    }
     !include.src(widgets/rightbar);
-};
+}

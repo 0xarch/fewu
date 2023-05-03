@@ -1,17 +1,17 @@
 !header'[shrinked]{
     !div'[centerArea]{
-        !h1{归档};
-        !h3{共 @ginfo.postCount@ 篇文章};
+        !h1{归档}
+        !h3{共 @ginfo.postCount@ 篇文章}
     }
-};
+}
 !div'[wrapper]{
     !div'[wrapperItem wrapperMain]{
         !div'[widget nohover postList]{
-            !h2.in(文章总览);
+            !h2{ 文章总览 };
             !each.from(DATE_POSTS).as(item){
                 !include.src(widgets/postlisting);
-            };
-        };
-    };
+            }
+        }
+    }
     !include.src(widgets/rightbar);
-};
+}
