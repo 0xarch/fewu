@@ -1,6 +1,6 @@
 import Config from "./conf.ts";
 import * as Path from "https://deno.land/std/path/mod.ts";
-import * as tml from "./tml.ts";
+import * as tml2 from "./tml2.ts";
 import * as match from "./match.ts";
 import * as Sort from "./sort.ts";
 import { ensureDir } from "https://deno.land/std/fs/mod.ts";
@@ -14,8 +14,9 @@ const LayoutDir=`./conf/layout/${info.lookAndFeel.layout}`;
 
 async function build(type:string,extra,path:string){
     console.log(`<Progress> Building [${type}] to ${path}`);
-    var content = tml.parseTml(type);
-    content = tml.parseVar(content,extra);
+    //var content = tml.parseTml(type);
+    //content = tml.parseVar(content,extra);
+    let content = tml2.parseTml(type,extra);
     if(extra.post==undefined)content = match.parseBuiltin(content,type,undefined);
     else content = match.parseBuiltin(content,type,extra.post.title);
     ensureDir(Path.dirname(path));

@@ -66,4 +66,10 @@ categories.forEach((item) => {
 
 const RecentPosts=Posts.slice(0,5);
 
+const Sorts = {
+  categories,categoryPosts,DefaultPosts,RecentPosts,Posts,topPosts,About
+};
+
 export { categories, categoryPosts, DefaultPosts, RecentPosts, Posts, topPosts, About };
+
+export { Sorts };
