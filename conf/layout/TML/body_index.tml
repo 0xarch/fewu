@@ -1,21 +1,21 @@
 !link.rel(stylesheet).href(/css/index.css);
-!header.in(
-    <div'[centerArea]>
-        !h1.in( &builtin::siteTitle );
-        !div'[fC flJC].in(
-            !div.in( !img'[avatar].src(@info.avatar@); );
-            !div.in(
-                !a.href(@info.url@).in(@info.name@);;
-                !p.style(font-size:large).in(@info.note@);
-            );
-        );
-    </div>
-);
-<main'[wrapper]>
+!header{
+    !div'[centerArea]{
+        !h1{ &builtin::siteTitle }
+        !div'[fC flJC]{
+            !div{ !img'[avatar].src(@info.avatar@); }
+            !div{
+                !a.href(@info.url@){@info.name@};
+                !p.style(font-size:large){@info.note@}
+            }
+        }
+    }
+}
+!main'[wrapper]{
     !div'[wrapperItem wrapperMain]{
-        !each.from(RecentPosts).as(item){
+        !each.from(Sorts.RecentPosts).as(item){
             !include.src(widgets/postcard);
         }
     }
     !include.src(widgets/rightbar);
-</main>
+}

@@ -1,7 +1,7 @@
 !div'[postCard widget fR flAC flJC]{
     !div'[postCardInfoContainer]{
         !a'[postCardTitle].href(@item.src@){@item.title@}
-        !if.condition(item.top){
+        !if.is(item.top){
             !span'[ontop]{}
         };
         !div'[meta]{ !span{发布于} !span{@item.date@} }

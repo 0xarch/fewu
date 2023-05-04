@@ -4,19 +4,19 @@
         !h3{共 @ginfo.cateCount@ 个分类}
     }
 }
-<div'[wrapper]>
-    <div'[wrapperItem wrapperMain]>
-        <div'[widget nohover postList]>
-            !h2.in(分类总览);
-            <each:categoryPosts:Category>
-                <div'[inPostList]>
+!div'[wrapper]{
+    !div'[wrapperItem wrapperMain]{
+        !div'[widget nohover postList]{
+            !h2{分类总览}
+            <each:Sorts.categoryPosts:Category>
+                !div'[inPostList]{
                     !h3'[m0].in(@Category.cate@);
                     <each:Category.incl:item>
                         !include.src(widgets/postlisting);
                     </each>
-                </div>
+                }
             </each>
-        </div>
-    </div>
+        }
+    }
     !include.src(widgets/rightbar);
-</div>
+}

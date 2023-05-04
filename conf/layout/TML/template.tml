@@ -18,7 +18,7 @@
                 }
                 !span'[navButton mh mw]{!i'[fas fa-fw fa-bars]{}}
         }
-        &layout::body;
+        &layout::body
         !footer{
             !div'[footer fI flJC]{
                 !div'[mw]{

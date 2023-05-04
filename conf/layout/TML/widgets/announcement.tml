@@ -1,6 +1,6 @@
 <if:info.features.hasAnnouncement>
-    <div'[widget announcement]>
-        !div'[header].in( !i'[fas fa-bullhorn].in(); !span.in(公告); );
-        !div'[content].in( !span.in(@info.features.announcementText@); );
-    </div>
+    !div'[widget announcement]{
+        !div'[header]{ !i'[fas fa-bullhorn]{} !span{公告} }
+        !div'[content]{ !span{@info.features.announcementText@} }
+    }
 </if>
