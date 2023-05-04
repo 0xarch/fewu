@@ -1,4 +1,5 @@
-const POSTS=require("./post").POSTS.sort(sortByDate); // 按时间排序
+const POST=require("./post");
+const POSTS = POST.POSTS.sort(sortByDate); // 按时间排序
 const LOG=console.log;
 
 // ____ 比较函数 ____
@@ -70,3 +71,12 @@ exports.categoryPosts=categoryPosts;
 exports.RecentPosts=POSTS.slice(0,5);
 exports.DefaultPosts=DEFAULT_POSTS;
 exports.Posts=POSTS;
+exports.Sorts={
+    categories,
+    categoryPosts,
+    DefaultPosts:DEFAULT_POSTS,
+    RecentPosts:POSTS.slice(0,5),
+    Posts:POSTS,
+    topPosts,
+    About:POST.ABOUT
+};

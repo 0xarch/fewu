@@ -23,6 +23,7 @@ const DefaultPosts = SORT.DefaultPosts;
 const Posts = SORT.Posts;
 const RecentPosts = SORT.RecentPosts;
 const categoryPosts= SORT.categoryPosts;
+const Sorts = SORT.Sorts;
 var cateArr = Array();
 Posts.forEach(item=>{
     if (!cateArr.includes(item.category)) cateArr.push(item.category);
