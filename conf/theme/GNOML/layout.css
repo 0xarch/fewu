@@ -26,4 +26,7 @@
     nav .navButton{ display: block }
     nav .navItem{ display: none }
     nav:hover .navItem{ display: block }
+    :root{
+        --rounded-corner:24px !important;
+    }
 }
