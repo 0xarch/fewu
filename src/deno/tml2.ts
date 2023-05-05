@@ -84,8 +84,6 @@ function deFunction(templateContent:string){
     content = content.replace(/#/g,"\u2005");
     content = content.replace(/\u8199\.Number/g,"\\#");
 
-    console.log(content);
-
     let returnContent = `${content}`;
     return returnContent;
 }

@@ -1,3 +1,3 @@
-import main from "./util.ts";
+import {main} from "./proc.ts";
 
 main();
