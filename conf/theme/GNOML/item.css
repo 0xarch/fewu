@@ -33,5 +33,6 @@
     color:white;
     background:var(--blue3);
 }
-.count{ font-size: larger; font-weight: bold }
 .centered{ text-align: center }
+.fsl{ font-size: larger }
+.fb{ font-size:bold }
