@@ -1,7 +1,7 @@
 ---
 title: 什么是TML?
 date: 2023-05-03
-category: 暂无
+category: TML
 ---
 # TML : 模板标记语言
 
@@ -42,30 +42,36 @@ TML**可以将两种格式混合起来**，比如：
 
 # 指令
 
-通过对几个主题的分析，我们为 TML 引入了三个基本指令：**if**，**each**，**include**。
+TML2 引入了三个基本指令：**if**，**each**，**include**。
 
 ## if
 
 对于if，有以下合法格式：
 
-```
-!if.is(true){
+```tml
+if.is(true){
     ...
 }
-/* 下面是旧写法，但仍然受解析支持 */
+
 !if.condition(true){
     ...
-}
+} /* 过时的写法，来自TML1 */
 ```
 
 您也可以使用标准标签的形式书写if语句。
+```html
+<if is="true">
+    <blocks>
+</if>
+```
 
+这种带有:分割的简单标签是**宏标签**，它们会在解析时被替换为标准标签。
 ```
 <if:true>
     <blocks>
 </if>
 ```
-这中带有:分割的简单标签是**宏标签**，它们会在解析时被替换为标准标签。
+
 
 等价于
 ```js
@@ -86,7 +92,7 @@ if(true){
 ```
 
 函数：
-!each.from(array).as(item){
+each.from(array).as(item){
     ....
 }
 
@@ -105,16 +111,13 @@ if(true){
 <include src="foo/bar">
 ```
 ```
-!include.src(foo/bar);
+!include.src(foo/bar); /* 过时的写法，来自TML1 */
 ```
 ```
 include(foo/bar);
 ```
-**注：第三种写法仅在v2.0支持**
 
 这代表解析时，他将被替换为(相对于根模板所在目录)./foo/bar.tml
-
-```include```同样可以被替换为混合或函数格式。
 
 # 变量
 
