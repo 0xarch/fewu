@@ -7,12 +7,12 @@
     !div'[centered info-data]{
         !div'[counting-post fR flJC]{
             !div'[postCount mr]{
-                !span{文章}
-                !span'[count]{@ginfo.postCount@}
+                !p{文章}
+                !p'[m0 fsl fb]{@ginfo.postCount@}
             }
             !div'[cateCount ml]{
-                !span{分类}
-                !span'[count]{@ginfo.cateCount@}
+                !p{分类}
+                !p'[m0 fsl fb]{@ginfo.cateCount@}
             }
         }
     }
