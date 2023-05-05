@@ -61,8 +61,8 @@ function parseMarkdown(content) {
     }
     i++;
   }
-  data.path=`${data.date.replace(/-/g,"/")}/${data.title.replace(/ /g,"-")}/index.html`;
-  data.src=`/${data.date.replace(/-/g,"/")}/${data.title.replace(/ /g,"-")}/`;
+  data.path=`${data.date.replace(/-/g,"/")}/${data.title.replace(/[ ?!]/g,"-")}/index.html`;
+  data.src=`/${data.date.replace(/-/g,"/")}/${data.title.replace(/[ ?!]/g,"-")}/`;
 
   const markdownContent = lines.slice(i).join("\n");
 
