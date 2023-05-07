@@ -8,10 +8,10 @@
     !div'[wrapperItem wrapperMain]{
         !div'[widget nohover postList]{
             !h2{分类总览}
-            <each:Sorts.categoryPosts:Category>
+            <each:Sorts.categoryPosts:Cg>
                 !div'[inPostList]{
-                    !h3'[m0].in(@Category.cate@);
-                    <each:Category.incl:item>
+                    !h3'[m0]{@Cg.cate@}
+                    <each:Cg.incl:item>
                         !include.src(widgets/postlisting);
                     </each>
                 }
