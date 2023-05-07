@@ -42,7 +42,7 @@ div{
 
 # 指令
 
-通过对几个主题的分析，我们为 TML 引入了三个基本指令：**if**，**each**，**include**。
+通过对几个主题的分析，我们为 TML 引入了四个基本指令：**if**，**each**，**include**,**use**。
 
 ## if
 
@@ -86,9 +86,11 @@ if(true){
 ```
 
 函数：
+```
 !each.from(array).as(item){
     ....
 }
+```
 
 宏标签：
 ```
@@ -108,13 +110,29 @@ if(true){
 !include.src(foo/bar);
 ```
 ```
-include(foo/bar);
+include(foo/bar); /* 推荐的 /
 ```
-**注：第三种写法仅在v2.0支持**
 
 这代表解析时，他将被替换为(相对于根模板所在目录)./foo/bar.tml
 
-```include```同样可以被替换为混合或函数格式。
+## use
+
+```use```允许在模板中将长变量改写为短变量。
+
+标准标签：
+```html
+<use from="foobar" as="fb">
+```
+
+函数：
+```tml
+use.from(foobar).as(fb);
+```
+
+宏：
+```tml
+<use:foobar:fb>
+```
 
 # 变量
 
