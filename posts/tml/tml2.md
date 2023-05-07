@@ -1,14 +1,14 @@
 ---
-title: TML2
+title: TML
 date: 2023-05-05
 category: TML
 ---
 
-# TML : 模板标记语言
+# TML : 模板混合语言
 
-TML ，即Template Markup Language，是一种**自适应**的模板标记语言。
+TML ，即Template Mixed Language，是一种**混合语法**的模板语言。
 
-你可以直接将html嵌入tml中而不需要任何转义，你也可以用类似函数的方式书写模板。
+你可以直接将HTML嵌入TML中而不需要任何转义，你也可以用类似函数的方式书写模板。
 
 当前版本：2.0
 
@@ -23,7 +23,7 @@ TML ，即Template Markup Language，是一种**自适应**的模板标记语言
 ```
 
 2.(推荐的)函数格式
-```
+```tml
 div{
     span'[hello]{ Hello! }
     a.href(/about){ About }
