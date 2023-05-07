@@ -7,7 +7,6 @@ const tagExp_Include = /<include src="([\w\/\\\-.]+)"\s*?>/g;
 
 const macroExp_All = /!?(\w+)((?:'\[[\w \-]*?\])?)((?:\.\w+?\([^()]+?\))*?)((?:{[^{};]*?};?)|;)/g;
 
-//import * as path from "https://deno.land/std/path/mod.ts";
 import Config from "./conf.ts";
 
 import * as Sort from "./sort.ts";
@@ -20,7 +19,7 @@ const ginfo = {
 };
 
 const includePath = `./conf/layout/${Config.lookAndFeel.layout}`;
-const base_template = parseFile(`${includePath}/template.tml`,{});
+const base_template = renderFile(`${includePath}/template.tml`,{});
 
 function include(templateContent:string,includesPath:string){
     let content = new String(templateContent);
@@ -72,13 +71,15 @@ function deFunction(templateContent:string){
     // 解析宏
     content = content.replace(/<each:([\w.\-]+?):([\w\-]+?)>/g,"#$1.forEach($2=>{");
     content = content.replace(/<if:([\w.\-]+?)>/g,"#if($1){");
+    content = content.replace(/<use:([\w.\-]+?):([\w\-]+?)>/g,"#var $2=$1;");
 
     // 解析函数
     content = content.replace(/<each from="([\w.\-]+?)" as="([\w\-]+?)">/g,"#$1.forEach($2=>{");
-    content = content.replace(/<\/each>/g,"#});");
+    content = content.replace(/(?:<\/each>)|(?:<\/hcae>)/g,"#});");
     content = content.replace(/<if is="([\w.\-]+?)"\s*>/g,"#if($1){");
     content = content.replace(/<if condition="([\w.\-]+?)"\s*>/g,"#if($1){");
-    content = content.replace(/<\/if>/g,"#}");
+    content = content.replace(/(?:<\/if>)|(?:<\/fi>)/g,"#}");
+    content = content.replace(/<use from="([\w.\-]+?)" as="([\w\-]+?)">/g,"#var $2=$1;");
 
     content = content.replace(/\\#/g,"\u8199.Number");
     content = content.replace(/#/g,"\u2005");
@@ -100,18 +101,16 @@ function render(templateContent:string,extra){
     eval(`${content}`);
     return str;
 }
-
-function parseFile(filePath: string,extra) {
-    let content = Deno.readTextFileSync(filePath);
-    content = render(content, extra);
-    return content;
-  }
   
 function parseTml(name: string,extra) {
-    const layout = parseFile(`${includePath}/body_${name}.tml`,extra);
+    const layout = renderFile(`${includePath}/body_${name}.tml`,extra);
     return `${base_template}`.replace(/&layout::body;?/g, layout);
 }
 
-//render(Deno.args[0],{});
+function renderFile(filePath:string,extra){
+    let content = Deno.readTextFileSync(filePath);
+    content = render(content, extra);
+    return content;
+}
 
-export { render, parseFile, parseTml };
+export { render, parseTml ,renderFile};
