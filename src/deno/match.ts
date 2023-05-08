@@ -37,6 +37,20 @@ function parseBuiltin(content: string, layoutType: string, postTitle) {
       "<script src='//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js'></script>" +
       "<script>hljs.highlightAll()</script>";
   }
+  if (Config.features.enablePostToc && (layoutType== "post" || layoutType == "about")){
+    Features += 
+    `<script>
+      window.onload=()=>{
+        let toc_div=document.querySelector("#toc_div");
+        document.querySelectorAll("div.postContent h1").forEach(item=>{
+        let a=document.createElement('a');
+        a.href=\`#\${item.id}\`;
+        a.innerHTML=item.innerHTML;
+        a.className="linker";
+        toc_div.appendChild(a);toc_div.appendChild(document.createElement("br"))});
+      }
+    </script>`;
+  }
   content = content
     .replace(
       /&builtin::title/g,
