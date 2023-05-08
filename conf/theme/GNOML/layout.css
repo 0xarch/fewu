@@ -7,7 +7,7 @@
 }
 .wrapperMain{ flex:3 }
 .wrapperRight{ padding-left:15px; flex:1 }
-.wrapperItem>*:not(:first-child){ margin-top: 1em }
+.wrapsFather>*:not(:first-child){ margin-top: 1em }
 .fI,.fR,.fC{ display:flex }
 .fR{ flex-direction:row }
 .fC{ flex-direction:column }
@@ -18,6 +18,7 @@
 .mt,.mh{ margin-top:.5em }
 .mb,.mh{ margin-bottom:.5em }
 .m0{ margin:0 }
+.sticky{ position: sticky; top:5rem }
 @media only screen and (orientation:portrait){
     .wrapper{ flex-direction: column }
     .wrapperRight{ padding-left: 0; margin-top: 1em }
@@ -26,7 +27,6 @@
     nav .navButton{ display: block }
     nav .navItem{ display: none }
     nav:hover .navItem{ display: block }
-    :root{
-        --rounded-corner:24px !important;
-    }
+    :root{ --rounded-corner:2rem !important }
+    .sticky{ position: relative;top:0 }
 }

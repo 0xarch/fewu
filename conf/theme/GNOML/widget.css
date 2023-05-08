@@ -26,3 +26,5 @@
 .nbButton{ padding:.35em; display: inline-block; cursor: default;font-size:1em }
 .nbButton.lp{ font-size: .8em; padding:.25em }
 .nbButton:hover{ background:rgba(255,255,255,0.2) }
+.label{ margin-bottom: 0.3em;font-size: 2rem; line-height: 1.4; color:var(--default-color); font-weight: bold }
+.label.small{ font-size:1.5rem }

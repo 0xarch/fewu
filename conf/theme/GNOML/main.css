@@ -37,8 +37,7 @@ nav{
     flex-wrap: wrap;
     padding:0 36px;
     width: 100%;
-    min-height: 60px;
-    height: max-content;
+    height: 5rem;
     font-size: 1.3rem;
     color:white;
     background-color: rgb(36,31,49);
@@ -51,3 +50,4 @@ nav .l{ flex:1 }
 .navButton{ display: none }
 footer{ position: relative; background-color: rgb(20,22,23); padding:2rem 1rem; text-align: center }
 footer h3 { color:#858585 }
+div.postContent:target{ padding-top:5rem !important }
