@@ -1,13 +1,13 @@
-!div'[widget cardArchives]{
-    !a'[header].href(/archive/){
-        !i'[fa-fw fas fa-archive]{}
-        !span{归档}
-        !span'[widgetHeaderLink]{!i'[fas fa-angle-right]{}}
+div'[widget cardArchives]{
+    a'[header].href(/archive/){
+        i'[fa-fw fas fa-archive]{}
+        span{归档}
+        span'[widgetHeaderLink]{i'[fas fa-angle-right]{}}
     }
-    !div'[content]{
-        !h3'[m0]{最近的文章}
+    div'[content]{
+        h3'[m0]{最近的文章}
         <each:Sorts.RecentPosts:item>
-            !div'[listItem lp]{!a.href(@item.src@){@item.title@}}
+            div'[listItem lp]{a.href(@item.src@){@item.title@}}
         </each>
     }
 }

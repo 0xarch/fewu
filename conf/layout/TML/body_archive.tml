@@ -1,17 +1,22 @@
-!header'[shrinked]{
-    !div'[centerArea]{
-        !h1{归档}
-        !h3{共 @ginfo.postCount@ 篇文章}
+header'[shrinked]{
+    div'[centerArea]{
+        h1{归档}
+        h3{共 @ginfo.postCount@ 篇文章}
     }
 }
-!div'[wrapper]{
-    !div'[wrapperItem wrapperMain]{
-        !div'[widget nohover postList]{
-            !h2{ 文章总览 };
+div'[wrapper]{
+    div'[wrapperItem wrapperMain]{
+        div'[widget nohover postList]{
+            h2{ 文章总览 }
             each.from(Sorts.Posts).as(item){
-                !include.src(widgets/postlisting);
+                include(widgets/postlisting);
             }
         }
     }
-    !include.src(widgets/rightbar);
+    div'[wrapperItem wrapperRight]{
+        div'[sticky wrapsFather]{
+            include(widgets/about);
+            include(widgets/announcement);
+        }
+    }
 }

@@ -1,0 +1,10 @@
+if.is(info.features.enablePostToc){
+    div'[widget toc]{
+        div'[header]{
+            目录
+        }
+        div'[content]{
+            div.id(toc_div){}
+        }
+    }
+}

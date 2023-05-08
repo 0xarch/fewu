@@ -1,10 +1,10 @@
-!div'[postCard widget fR flAC flJC]{
-    !div'[postCardInfoContainer]{
-        !a'[postCardTitle].href(@item.src@){@item.title@}
-        !if.is(item.top){
-            !span'[ontop]{}
+div'[postCard widget fR flAC flJC]{
+    div'[postCardInfoContainer]{
+        a'[label].href(@item.src@){@item.title@}
+        if.is(item.top){
+            span'[ontop]{}
         };
-        !div'[meta]{ !span{发布于} !span{@item.date@} }
-        !div'[lessContentItem]{@item.less@}
+        div'[meta]{ span{发布于} span{@item.date@} }
+        div'[lessContentItem]{@item.less@}
     }
 }

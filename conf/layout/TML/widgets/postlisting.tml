@@ -1,4 +1,4 @@
-!div'[listItem]{
-    !span'[meta]{@item.date@};;
-    !a'[postCardTitle small].href(@item.src@){@item.title@}
+div'[listItem]{
+    span'[meta]{@item.date@};;
+    a'[label small].href(@item.src@){@item.title@}
 }

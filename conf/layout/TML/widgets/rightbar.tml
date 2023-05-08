@@ -1,5 +1,0 @@
-!div'[wrapperItem wrapperRight]{
-    !include.src(widgets/about);
-    !include.src(widgets/announcement);
-    !include.src(widgets/archivelist);
-}

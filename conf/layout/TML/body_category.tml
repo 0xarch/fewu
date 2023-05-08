@@ -1,22 +1,28 @@
-!header'[shrinked]{
-    !div'[centerArea]{
-        !h1{分类}
-        !h3{共 @ginfo.cateCount@ 个分类}
+header'[shrinked]{
+    div'[centerArea]{
+        h1{分类}
+        h3{共 @ginfo.cateCount@ 个分类}
     }
 }
-!div'[wrapper]{
-    !div'[wrapperItem wrapperMain]{
-        !div'[widget nohover postList]{
-            !h2{分类总览}
+div'[wrapper]{
+    div'[wrapperItem wrapperMain]{
+        div'[widget nohover postList]{
+            h2{分类总览}
             <each:Sorts.categoryPosts:Cg>
-                !div'[inPostList]{
-                    !h3'[m0]{@Cg.cate@}
+                div'[inPostList]{
+                    h3'[m0]{@Cg.cate@}
                     <each:Cg.incl:item>
-                        !include.src(widgets/postlisting);
+                        include(widgets/postlisting);
                     </each>
                 }
             </each>
         }
     }
-    !include.src(widgets/rightbar);
+    div'[wrapperItem wrapperRight]{
+        div'[sticky wrapsFather]{
+            include(widgets/about);
+            include(widgets/announcement);
+            include(widgets/archivelist);
+        }
+    }
 }
