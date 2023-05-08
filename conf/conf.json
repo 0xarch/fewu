@@ -6,8 +6,9 @@
     "location":"Xvd 114514",
     "features":{
         "hasAnnouncement":true,
-        "announcementText":"欢迎来到我的博客!",
-        "enableCodeHighlight":true
+        "enableCodeHighlight":true,
+        "enablePostToc":true,
+        "announcementText":"欢迎来到我的博客!"
     },
     "lookAndFeel":{
         "background":"",
