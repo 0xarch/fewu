@@ -87,7 +87,7 @@ if(true){
 
 函数：
 ```
-!each.from(array).as(item){
+each.from(array).as(item){
     ....
 }
 ```
@@ -104,13 +104,13 @@ if(true){
 ```include```实际上是一个**替换宏**，格式为
 
 ```
+include(foo/bar); /* 推荐的 /
+```
+```
 <include src="foo/bar">
 ```
 ```
-!include.src(foo/bar);
-```
-```
-include(foo/bar); /* 推荐的 /
+include.src(foo/bar);
 ```
 
 这代表解析时，他将被替换为(相对于根模板所在目录)./foo/bar.tml
