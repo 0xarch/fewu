@@ -7,7 +7,7 @@
 }
 .wrapperMain{ flex:3 }
 .wrapperRight{ padding-left:15px; flex:1 }
-.wrapsFather>*:not(:first-child){ margin-top: 1em }
+.wrapsFather>*{ margin-top: 1em }
 .fI,.fR,.fC{ display:flex }
 .fR{ flex-direction:row }
 .fC{ flex-direction:column }
