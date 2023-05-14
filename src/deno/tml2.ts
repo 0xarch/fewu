@@ -94,8 +94,8 @@ function render(templateContent:string,extra){
     content = content.replace(/(?:\n|^)([^\u2005{}]*)/g,"\nstr+=`$1`;");
     content = content.replace(/\u2005/g,"");
     content = content.replace(/@([\w.\-]+?)@/g,"\${$1}");
-    if (extra.post!=undefined){
-    content = `const post=${JSON.stringify(extra.post)};` + content;
+    for(let json in extra){
+        content = `const ${json}=${JSON.stringify(extra[json])};` + content;
     }
     let str="";
     eval(`${content}`);

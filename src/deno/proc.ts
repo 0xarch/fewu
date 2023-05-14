@@ -11,7 +11,6 @@ const info = Config;
 
 const PublicDir="./public";
 const ThemeDir=`./conf/theme/${info.lookAndFeel.theme}`;
-const LayoutDir=`./conf/layout/${info.lookAndFeel.layout}`;
 
 async function build(type:string,extra,path:string){
     console.log(`<Progress> Building [${type}] to ${path}`);
@@ -23,14 +22,15 @@ async function build(type:string,extra,path:string){
 }
 
 function main() {
-    build("index",{},`${PublicDir}/index.html`);
-    build("archive",{},`${PublicDir}/archive/index.html`);
-    build("category",{},`${PublicDir}/category/index.html`);
-    build("post",{post:About},`${PublicDir}/about/index.html`);
-    Posts.forEach(item=>{
-      build("post",{post:item},`${PublicDir}/${item.path}`);
-    });
-    copy(ThemeDir,`${PublicDir}/css`,{overwrite:true});
-  }
+  copy(ThemeDir,`${PublicDir}/css`,{overwrite:true});
+  build("index",{},`${PublicDir}/index.html`);
+  build("archive",{},`${PublicDir}/archive/index.html`);
+  build("category",{},`${PublicDir}/category/index.html`);
+  build("post",{post:About},`${PublicDir}/about/index.html`);
+  Posts.forEach(item=>{
+    build("post",{post:item},`${PublicDir}/${item.path}`);
+  });
+  match.buildJS();
+}
 
-export{PublicDir,ThemeDir,LayoutDir,build,Posts,About,main};
+export{main};
