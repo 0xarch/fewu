@@ -9,8 +9,8 @@ div'[wrapper]{
         div'[widget nohover postList]{
             h2{分类总览}
             <each:Sorts.categoryPosts:Cg>
-                div'[inPostList]{
-                    h3'[m0]{@Cg.cate@}
+                h3'[m0]{@Cg.cate@}
+                listBox{
                     <each:Cg.incl:item>
                         include(widgets/postlisting);
                     </each>
@@ -19,7 +19,7 @@ div'[wrapper]{
         }
     }
     div'[wrapperItem wrapperRight]{
-        div'[sticky wrapsFather]{
+        list'[sticky wrapsFather]{
             include(widgets/about);
             include(widgets/announcement);
             include(widgets/archivelist);

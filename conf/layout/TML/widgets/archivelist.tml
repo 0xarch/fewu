@@ -1,4 +1,4 @@
-div'[widget cardArchives]{
+widget'[cardArchives]{
     a'[header].href(/archive/){
         i'[fa-fw fas fa-archive]{}
         span{归档}
@@ -6,8 +6,10 @@ div'[widget cardArchives]{
     }
     div'[content]{
         h3'[m0]{最近的文章}
-        <each:Sorts.RecentPosts:item>
-            div'[listItem lp]{a.href(@item.src@){@item.title@}}
-        </each>
+        listBox{
+            <each:Sorts.RecentPosts:item>
+                div'[lp]{a.href(@item.src@){@item.title@}}
+            </each>
+        }
     }
 }

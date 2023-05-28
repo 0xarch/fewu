@@ -14,7 +14,7 @@ div'[wrapper]{
         }
     }
     div'[wrapperItem wrapperRight]{
-        div'[sticky wrapsFather]{
+        list'[sticky wrapsFather]{
             include(widgets/about);
             include(widgets/announcement);
         }

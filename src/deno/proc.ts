@@ -3,7 +3,7 @@ import * as Path from "https://deno.land/std/path/mod.ts";
 import * as tml2 from "./tml2.ts";
 import * as match from "./match.ts";
 import * as Sort from "./sort.ts";
-import { ensureDirSync } from "https://deno.land/std/fs/mod.ts";
+import { ensureDirSync,ensureFileSync } from "https://deno.land/std/fs/mod.ts";
 import { copy } from "https://deno.land/std@0.185.0/fs/copy.ts";
 const Posts = Sort.DefaultPosts;
 const About = Sort.About;
@@ -30,6 +30,7 @@ function main() {
   Posts.forEach(item=>{
     build("post",{post:item},`${PublicDir}/${item.path}`);
   });
+  ensureFileSync(`${PublicDir}/css/features.js`);
   match.buildJS();
 }
 

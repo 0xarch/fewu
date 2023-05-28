@@ -1,18 +1,18 @@
 .widgetHeaderLink{ float: right; color: var(--deafault-color) }
-.widget .header{
+.widget .header,widget .header{
     font-size: 1.2em;
     padding-bottom: .3em;
     color:var(--default-color);
     display: block;
 }
-.widget{
+.widget,widget{
     border-radius: var(--rounded-corner);
     background-color: var(--widget-bg);
     padding:1rem 1.2rem;
     transition: box-shadow .3s;
     border:1px solid var(--border-color);
 }
-.widget:not(.nohover):hover{ box-shadow: var(--card-box-shadow-hover) }
+.widget:not(.nohover):hover,widget:not(.nohover):hover{ box-shadow: var(--card-box-shadow-hover) }
 .avatar{
     height:8em;
     width: 8em;

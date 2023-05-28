@@ -1,4 +1,4 @@
-div'[postCard widget fR flAC flJC]{
+widget'[postCard fR flAC flJC]{
     div'[postCardInfoContainer]{
         a'[label].href(@item.src@){@item.title@}
         if.is(item.top){

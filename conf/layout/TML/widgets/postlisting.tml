@@ -1,4 +1,4 @@
-div'[listItem]{
+div{
     span'[meta]{@item.date@};;
     a'[label small].href(@item.src@){@item.title@}
 }

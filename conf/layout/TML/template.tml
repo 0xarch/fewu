@@ -22,13 +22,13 @@ html{
         &layout::body
         footer{
             div'[footer fI flJC]{
-                div'[mw]{
+                list'[mw]{
                     h3'[m0]{网站}
                     a.href(https://github.com/){Github};;
                     a.href(https://netlify.com/){Netlify};;
                     a.href(https://gnome.org/){GNOME};;
                 }
-                div'[mw]{
+                list'[mw]{
                     h3'[m0]{关于Hogger}
                     a.href(https://github.com/0xarch/blog){源代码};;
                 }

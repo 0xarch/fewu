@@ -32,7 +32,11 @@ themeName
 
 规范定义的其他控件有：
 
-.listItem 列表项
-
 .wrapperItem 布局项，标准布局包括 .wrapperItem.wrapperLeft , .wrapperItem.wrapperRight , .wrapperItem.wrapperMain 三个类
 
+## GTK 控件
+
+来自 GTK 推荐的控件。
+
+listItem(.listItem)
+listBox(.list)

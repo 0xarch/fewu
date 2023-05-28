@@ -3,3 +3,4 @@ public/
 package-lock.json
 conf/layout/Preview/
 src/Trashed/
+src/Next/
