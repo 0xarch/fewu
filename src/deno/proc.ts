@@ -30,7 +30,7 @@ function main() {
   Posts.forEach(item=>{
     build("post",{post:item},`${PublicDir}/${item.path}`);
   });
-  ensureFileSync(`${PublicDir}/css/features.js`);
+  ensureFileSync(`./public/css/features.js`);
   match.buildJS();
 }
 
