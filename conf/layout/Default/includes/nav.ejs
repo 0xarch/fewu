@@ -1,0 +1,33 @@
+<Nav>
+    <% if(Left!='none'){ -%>
+    <Left>
+        <% if(Left!='stand'){ -%>
+        <% if(Left.type=='text'){ -%>
+        <%= Left.value -%>
+        <% } -%>
+        <% if(Left.type=='element'){ -%>
+        <%- Left.value -%>
+        <% } -%>
+        <%}-%>
+    </Left>
+    <% } -%>
+    <% if(Center!='none'){ -%>
+    <Center>
+        <% if(Center!='stand') {-%>
+        <% if(Center.type=='text'){ -%>
+        <%= Center.value -%>
+        <% } -%>
+        <% if(Center.type=='element'){ -%>
+        <%- Center.value -%>
+        <% } -%>
+        <%}-%>
+    </Center>
+    <% } -%>
+    <% if(Left!='none' || Center!='none'){ -%><Right><%}-%>
+        <Action disable=shadow onclick="window.open('/')">首页</Action>
+        <Action disable=shadow onclick="window.open('/archive')">归档</Action>
+        <Action disable=shadow onclick="window.open('/category')">分类</Action>
+        <Action disable=shadow onclick="window.open('/about')">关于</Action>
+        <% if(Left!='none' || Center!='none'){ -%>
+    </Right><%}-%>
+</Nav>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<%- include("includes/head.ejs",{title:{title:"分类",titleType:"function"}}) %>
+
+<body>
+    <Header>
+        <%- include("includes/nav.ejs",{Left:{type:'text',value:'共'+categoryPosts.length+'个分类'},Center:{type:'text',value:'分类总览'}}) -%>
+    </Header>
+    <FlexMain>
+        <Article direct="Column">
+            <Shell>
+                <Widget direct="Column">
+                    <% categoryPosts.forEach(Cg=>{ -%>
+                    <h2> <%= Cg.cate -%> </h2>
+                    <FBox direct="Column">
+                        <% Cg.incl.forEach(item=>{ -%>
+                        <div style="width:100%">
+                            <Action onclick="window.open('/<%= item.path -%>')"><%= item.title -%></Action>
+                            <small>发布于<%= item.date -%></small>
+                            <Text>
+                                <%- item.less -%>
+                            </Text>
+                        </div>
+                        <hr>
+                        <% }) -%>
+                    </FBox>
+                    <%})-%>
+                </Widget>
+            </Shell>
+        </Article>
+        <Aside>
+            <Box>
+                <%- include("includes/about.ejs") %>
+            </Box>
+        </Aside>
+    </FlexMain>
+</body>
+
+</html>

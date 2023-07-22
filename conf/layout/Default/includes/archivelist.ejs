@@ -1,0 +1,12 @@
+<Widget>
+    <Action Rounded onclick="window.open('/archive')" style="padding:.5rem">
+        <h2 space=NoMargin>归档</h2>
+    </Action>
+    <hr>
+    <div !center>
+        <h3 space=NoMargin>最近的文章</h3>
+        <% RecentPosts.forEach(item=>{ -%>
+        <Action Outline onclick="window.open('<%= item.src -%>')"><%= item.title -%></Action>
+        <% }) -%>
+    </div>
+</Widget>

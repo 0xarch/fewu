@@ -1,0 +1,19 @@
+<head>
+    <link rel="stylesheet" href="https://0xarch.github.io/mata-toolkit/mata-css/mata.css">
+    <script src="https://cdn.jsdelivr.net/gh/0xarch/mata-toolkit/mata-js/mata.js"></script>
+    <script src="/theme/colors.js"></script>
+    <link rel="stylesheet" href="/theme/main.css">
+
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css'>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js'></script>
+    <script>
+        hljs.highlightAll()
+    </script>
+    <script>
+        const Palette = new MPaletteProcesser(Colors);
+        Palette.setPaletteFrom("primary", "GREEN", 500);
+        Palette.setPaletteFrom("secondary", "BROWN", 500);
+    </script>
+    <title><%= title.title -%> <%= lookAndFeel.separator-%> <% if(title.titleType){ %><%= !["",undefined].includes(lookAndFeel.custom_site_title[title.titleType])?lookAndFeel.custom_site_title[title.titleType]:lookAndFeel.custom_site_title.index -%><%}else{-%><%= lookAndFeel.custom_site_title.index -%><%}-%></title>
+</head>

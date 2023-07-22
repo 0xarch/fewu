@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<%- include("includes/head.ejs",{title:{title:post.title,titleType:"read"}}) %>
+
+<body>
+    <Header>
+        <Banner>
+            发布于 <%= post.date -%>, 作者： <%= post.author?post.author:user.name -%>
+        </Banner>
+        <%- include("includes/nav.ejs",{Left:'stand',Center:{type:'element',value:'<b style="font-size:larger;font-weight:bolder">'+post.title+'</b>'}}) -%>
+    </Header>
+    <FlexMain>
+        <article direct="Column">
+            <Shell>
+                <Widget o-display="block">
+                    <%- post.content -%>
+                </Widget>
+            </Shell>
+        </article>
+        <aside>
+            <Box>
+                <%- include("includes/about.ejs") %>
+                <%- include("includes/cc.ejs",{cc:post.cc?post.cc:"BY-SA"}) %>
+            </Box>
+        </aside>
+    </FlexMain>
+</body>
+
+</html>

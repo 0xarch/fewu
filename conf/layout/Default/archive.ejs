@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<%- include("includes/head.ejs",{title:{title:"归档",titleType:"function"}}) %>
+
+<body>
+    <Header>
+        <%- include("includes/nav.ejs",{Left:{type:'text',value:'共'+Posts.length+'篇文章'},Center:{type:'text',value:'归档总览'}}) -%>
+    </Header>
+    <FlexMain>
+        <Article direct="Column">
+            <Shell>
+                <% Posts.forEach(item=>{ -%>
+                <%- include("includes/postcard.ejs",{item}) %>
+                <%})-%>
+            </Shell>
+        </Article>
+        <Aside>
+            <Box>
+                <%- include("includes/about.ejs") %>
+                <%- include("includes/announcement.ejs") %>
+            </Box>
+        </Aside>
+    </FlexMain>
+</body>
+
+</html>

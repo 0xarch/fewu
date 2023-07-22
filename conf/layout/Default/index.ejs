@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<%- include("includes/head.ejs",{title:{title:"首页",titleType:"index"}}) %>
+
+<body>
+    <Header>
+        <%- include("includes/nav.ejs",{Left:{type:'text','value':user.name},Center:'none'}) -%>
+    </Header>
+    <FlexMain>
+        <Article direct="Column">
+            <Shell>
+                <% RecentPosts.forEach(item=>{ -%>
+                <%- include("includes/postcard.ejs",{item}) %>
+                <%})-%>
+            </Shell>
+        </Article>
+        <Aside>
+            <Box>
+                <%- include("includes/about.ejs") %>
+                <%- include("includes/announcement.ejs") %>
+                <%- include("includes/archivelist.ejs") %>
+            </Box>
+        </Aside>
+    </FlexMain>
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+<Widget>
+    <h3>Creative Commons</h3>
+    <hr>
+    <% if(cc!='0') {-%>
+    <% if(cc.includes("BY")){ -%>
+    <b>BY</b> 你需要在分享此文章时注明原作者.
+    <%} -%>
+    <% if(cc.includes("SA")){ -%>
+    <b>SA</b> 你需要在分享此文章时采用与此文章相同的协议.
+    <%} -%>
+    <% if(cc.includes("NC")){ -%>
+    <b>NC</b> 你不能将此文章用于商业用途.
+    <%} -%>
+    <% if(cc.includes("ND")){ -%>
+    <b>ND</b> 你不能在分享此文章时进行演绎.
+    <%} -%>
+    <%} -%>
+</Widget>

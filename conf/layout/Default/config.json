@@ -1,0 +1,38 @@
+{
+    "name": "Brandarial Layout",
+    "author": "oxArch",
+    "description": "A brand new layout based on Mata Toolkit. Requires Brandarial Theme",
+    "pages": [{
+            "name": "archive",
+            "build": {
+                "filename": "archive.ejs",
+                "destname": "archive"
+            }
+        },
+        {
+            "name": "archive",
+            "build": {
+                "filename": "category.ejs",
+                "destname": "category"
+            }
+        },
+        {
+            "name": "index",
+            "build": {
+                "filename": "index.ejs",
+                "destname": ""
+            }
+        },
+        {
+            "name": "about",
+            "build": {
+                "filename": "post.ejs",
+                "destname": "about",
+                "extras": "{post:Specials['about.md']}"
+            }
+        }
+    ],
+    "blog_page": {
+        "filename": "post.ejs"
+    }
+}
