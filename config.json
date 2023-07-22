@@ -1,0 +1,25 @@
+{
+    "user": {
+        "name": "oxArch",
+        "url": "https://github.com/0xarch",
+        "avatar": "https://avatars.githubusercontent.com/u/89088411?v=4",
+        "note": "We won't be disturbed!",
+        "location": "Xvd 114514",
+        "announcement": ""
+    },
+    "look_and_feel": {
+        "layout_dir": "conf/layout/Default/",
+        "theme_dir": "conf/theme/Default/",
+        "separator": "|",
+        "custom_site_title": {
+            "function": "",
+            "read": "",
+            "index": "Hello! oxArch"
+        }
+    },
+    "build": {
+        "post_dir": "posts",
+        "public_dir": "public",
+        "special_posts": ["about.md"]
+    }
+}
