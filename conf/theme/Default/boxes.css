@@ -1,0 +1,64 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    min-height: 4.5rem;
+}
+
+nav:first-child:last-child {
+    flex: 1;
+}
+
+box {
+    display: block;
+}
+
+widget {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20vw;
+    margin: 1.25rem;
+    background: var(--widget-bg);
+    flex-direction: column;
+}
+
+widget[tag=PostCard]>container {
+    display: flex;
+}
+
+widget:hover {
+    box-shadow: var(--card-box-shadow-hover);
+}
+
+aside {
+    min-width: 22vw;
+    display: block;
+    flex: 1.2 !important;
+}
+
+article {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+aside>box {
+    position: sticky;
+    top: 8rem;
+}
+
+flexmain {
+    align-items: unset;
+    max-width: 1200px;
+    margin: 0px auto;
+    padding: 2rem 15px;
+    width: 100vw;
+    height: 100%;
+}
+
+shell {
+    width: 100%;
+}

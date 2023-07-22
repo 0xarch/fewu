@@ -1,0 +1,19 @@
+*[disable~=shadow] {
+    box-shadow: none !important;
+}
+
+hr {
+    width: 80%;
+}
+
+a {
+    color: var(--color);
+}
+
+code.hljs {
+    border-radius: var(--rounded-corner);
+}
+
+*[\!center] {
+    text-align: center;
+}

@@ -1,0 +1,36 @@
+@import url("boxes.css");
+@import url("widgets.css");
+
+*[o-width=infi] {
+    max-width: unset;
+}
+
+*[o-display=block] {
+    display: block;
+}
+
+:root {
+    --rounded-corner: 12px;
+}
+
+@media (prefers-color-scheme:light) {
+    :root {
+        --bg: #ffffff;
+        --widget-bg: #fafafa;
+        --color: #111;
+        --card-box-shadow-hover: 0px 3px 8px 6px rgba(7, 17, 27, 0.15);
+    }
+}
+
+@media (prefers-color-scheme:dark) {
+    :root {
+        --bg: #1e1e1e;
+        --widget-bg: #242424;
+        --color: #b9b9b9;
+        --card-box-shadow-hover: 0px 3px 8px 6px rgba(67, 77, 87, 0.2);
+    }
+}
+
+code.hljs {
+    background-color: var(--bg)
+}
