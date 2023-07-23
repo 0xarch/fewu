@@ -42,20 +42,24 @@ function extractLess(content) {
     }
 }
 
+function readDirectoryRecursive(Directory) {
+    let returns = new Array;
+    for (let item of FS.readdirSync(Directory)) {
+        let path = PATH.join(Directory, item);
+        let stat = FS.statSync(path);
+        if (stat.isDirectory()) returns.push(...readDirectoryRecursive(path));
+        else returns.push(path);
+    }
+    return returns;
+}
+
 function ReadPosts(POST_DIR, SPECIAL_POSTS) {
     console.log('[Picking up] ReadPosts() Reading directory from param POST_DIR: ' + POST_DIR);
     let Posts = new Array,
         Specials = {};
-    console.log(FS.readdirSync(POST_DIR), {
-        recursive: true
-    });
-    for (let item of FS.readdirSync(POST_DIR, {
-            recursive: true
-        })) {
+    for (let path of readDirectoryRecursive(POST_DIR)) {
 
-        let path = PATH.join(POST_DIR, item);
-        let stat = FS.statSync(path);
-        if (stat.isDirectory()) continue;
+        let item = PATH.basename(path, POST_DIR);
         console.log('   [Parsing] Reading File: ' + path);
         let file_text = FS.readFileSync(path).toString();
         let file_data = ReadData(file_text);
