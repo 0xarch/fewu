@@ -43,16 +43,17 @@ function extractLess(content) {
 }
 
 function ReadPosts(POST_DIR, SPECIAL_POSTS) {
+    console.log('[Picking up] ReadPosts() Reading directory from param POST_DIR: ' + POST_DIR);
     let Posts = new Array,
         Specials = {};
     for (let item of FS.readdirSync(POST_DIR, {
             recursive: true
         })) {
-        // if (SPECIAL_POSTS.includes(item)) continue;
+
         let path = PATH.join(POST_DIR, item);
         let stat = FS.statSync(path);
         if (stat.isDirectory()) continue;
-
+        console.log('   [Parsing] Reading File: ' + path);
         let file_text = FS.readFileSync(path).toString();
         let file_data = ReadData(file_text);
         let markdown_content = MARKED.parse(file_data.content);
@@ -60,22 +61,10 @@ function ReadPosts(POST_DIR, SPECIAL_POSTS) {
         if (SPECIAL_POSTS.includes(item)) Specials[item] = file_data;
         else Posts.push(file_data);
     }
+    console.log('[Finish Task] Read directory:' + POST_DIR);
     return {
         Posts,
         Specials
     };
 }
-
-function ReadSpecials(POST_DIR, SPECIAL_POSTS) {
-    let Specials = {};
-    for (let item of SPECIAL_POSTS) {
-        let path = PATH.join(POST_DIR, item);
-        let file_text = FS.readFileSync(path).toString();
-        let file_data = ReadData(file_text);
-        let markdown_content = MARKED.parse(file_data.content);
-        file_data.content = markdown_content;
-        Specials[item] = file_data;
-    }
-}
 exports.ReadPosts = (POST_DIR, SPECIAL_POSTS) => ReadPosts(POST_DIR, SPECIAL_POSTS);
-exports.ReadSpecials = (POST_DIR, SPECIAL_POSTS) => ReadSpecials(POST_DIR, SPECIAL_POSTS);

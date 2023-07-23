@@ -1,3 +1,4 @@
+console.log('[Starting up] Hogger 0.0.1');
 const EJS = require("ejs");
 const FS_EXTRA = require("node-fs-extra");
 const FS = require("fs");
@@ -6,6 +7,7 @@ const PATH = require("path");
 const ARGS = process.argv;
 const CONFIG = JSON.parse(FS.readFileSync(ARGS[2]).toString());
 const EMPTY_FN = () => {};
+console.log('[10%] Read Config');
 
 const LAYOUT = CONFIG.look_and_feel.layout_dir,
     THEME = CONFIG.look_and_feel.theme_dir,
@@ -20,6 +22,7 @@ let RawPosts = require("./post").ReadPosts(POST_DIR, SPECIAL_POSTS);
 const Posts = RawPosts.Posts,
     Specials = RawPosts.Specials;
 const Sorts = require("./sort").getSort(Posts);
+console.log('[25%] Read Posts');
 
 const TemplateVariables = {
     Posts,
@@ -39,6 +42,7 @@ for (let item of LAYOUT_CONFIG.pages) {
         ...inconf_extra
     }, destname);
 }
+console.log('[50%] Build Pages');
 let post_filename = PATH.join(LAYOUT, 'post.ejs');
 let post_file = FS.readFileSync(post_filename).toString();
 Posts.forEach(item => {
@@ -50,9 +54,12 @@ Posts.forEach(item => {
         ...Sorts
     }, destname);
 })
+console.log('[90%] Build Blogs');
 FS_EXTRA.copy(THEME, PATH.join(PUBLIC_DIR, 'theme'), EMPTY_FN);
+console.log('[100%] Finished!');
 
 async function build_file(ejs_template, ejs_extra_json, path) {
+    console.log('   [In Progress] Building file to path from param path: ' + path);
     let content = EJS.render(ejs_template, ejs_extra_json);
     FS_EXTRA.mkdirsSync(PATH.resolve(path, '..'));
     FS.writeFile(path, content, EMPTY_FN);
