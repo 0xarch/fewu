@@ -40,11 +40,34 @@ for (let item of LAYOUT_CONFIG.pages) {
         destname = PATH.join(PUBLIC_DIR, item.build.destname, 'index.html');
     let inconf_extra = {};
     if (item.build.extras) inconf_extra = eval('let _intpvar=' + item.build.extras + ';_intpvar');
+    
+    // --- CYCLE ---
+    if(item.build.cycle&&item.build.cyclebuild){
+        let CYCLE = {};
+        let _var = item.build.cyclebuild.var;
+        let father=eval(_var.father),every=_var.every;
+        CYCLE.Enabled=true;
+        CYCLE.Total = Math.ceil(father.length / every);
+        for(let i=0;i*every<=father.length;++i){
+            destname = PATH.join(PUBLIC_DIR, item.build.destname, 'index'+(i+1)+'.html');
+            CYCLE[_var.varname]=father.slice(i*every,(i+1)*every);
+            CYCLE.Time = i+1;
+            CYCLE.PrevPage = PATH.join(item.build.destname,'index'+i+'.html');
+            CYCLE.NextPage = PATH.join(item.build.destname,'index'+(i+2)+'.html');
+            build_file(FS.readFileSync(filename).toString(), {
+                filename,
+                ...TemplateVariables,
+                ...Sorts,
+                ...inconf_extra,
+                CYCLE
+            }, destname);
+        }
+    } else
     build_file(FS.readFileSync(filename).toString(), {
         filename,
         ...TemplateVariables,
         ...Sorts,
-        ...inconf_extra
+        ...inconf_extra,
     }, destname);
 }
 UTILS.Log.FINISH_TASK("Built Pages Included in Theme",1);

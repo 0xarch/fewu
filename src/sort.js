@@ -22,7 +22,16 @@ function getSort(POSTS) {
     const SortedPosts = POSTS.sort(Sort);
     UTILS.Log.PICKING_UP("Sorting Posts",1);
 
-    // _______ 按置顶排序 _______
+    // ______ BID & 最近 & 默认 ______
+    const BID = {};
+    for (let item of POSTS) {
+        BID[item.bid] = item;
+    }
+    const RecentPosts = SortedPosts.slice(0, 5);
+    const Sorted = [];
+    for(let item of SortedPosts)Sorted.push(item.bid);
+
+    // _______ 置顶 _______
     var topPosts = Array();
     var untopPosts = Array();
 
@@ -38,7 +47,8 @@ function getSort(POSTS) {
 
     // _________ 分类 _________
     const categories = new Array;
-    DefaultPosts.forEach((item) => {
+    DefaultPosts.forEach(item => {
+        item=BID[item];
         if (!categories.includes(item.category)) {
             categories.push(item.category);
         }
@@ -69,11 +79,18 @@ function getSort(POSTS) {
     });
     UTILS.Log.PROGRESS("Sorted by category",2);
 
-    const BID = {};
-    for (let item of POSTS) {
-        BID[item.bid] = item;
+    // ______ 日期 ______
+    const SortedByDate = {};
+    for(let item of POSTS){
+        let date = new Date(item.date);
+        let year = date.getFullYear(),month=date.getMonth()+1,day=date.getDate();
+        if(!SortedByDate[year])SortedByDate[year]={};
+        if(!SortedByDate[year][month])SortedByDate[year][month]={};
+        if(!SortedByDate[year][month][day])SortedByDate[year][month][day]=new Array;
+        SortedByDate[year][month][day].push(item.bid);
     }
-    const RecentPosts = SortedPosts.slice(0, 5);
+    UTILS.Log.PROGRESS("Sorted by date",2);
+
     UTILS.Log.FINISH_TASK("Sorted Posts",1);
 
     return {
@@ -81,6 +98,8 @@ function getSort(POSTS) {
         DefaultPosts,
         CategoryPosts,
         RecentPosts,
+        SortedByDate,
+        Sorted,
         BID
     }
 }
