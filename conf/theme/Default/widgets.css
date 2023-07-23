@@ -1,4 +1,5 @@
-*[disable~=shadow] {
+*[disable~=shadow],
+*.\!shadow {
     box-shadow: none !important;
 }
 
@@ -15,5 +16,23 @@ code.hljs {
 }
 
 *[\!center] {
+    text-align: center;
+}
+
+action,
+.action {
+    white-space: nowrap;
+    padding: .5rem;
+}
+
+.action {
+    text-decoration: none;
+}
+
+.action[Outline] {
+    color: var(--primary-color-2);
+}
+
+table {
     text-align: center;
 }

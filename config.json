@@ -20,6 +20,7 @@
     "build": {
         "post_dir": "posts",
         "public_dir": "public",
-        "special_posts": ["about.md"]
+        "special_posts": ["about.md"],
+        "site_root": "/"
     }
 }

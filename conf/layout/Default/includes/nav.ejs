@@ -24,10 +24,10 @@
     </Center>
     <% } -%>
     <% if(Left!='none' || Center!='none'){ -%><Right><%}-%>
-        <Action disable=shadow onclick="window.open('/')">首页</Action>
-        <Action disable=shadow onclick="window.open('/archive')">归档</Action>
-        <Action disable=shadow onclick="window.open('/category')">分类</Action>
-        <Action disable=shadow onclick="window.open('/about')">关于</Action>
+        <a class="action !shadow" href="<%=ROOT-%>/">首页</a>
+        <a class="action !shadow" href="<%=ROOT-%>/archive">归档</a>
+        <a class="action !shadow" href="<%=ROOT-%>/category">分类</a>
+        <a class="action !shadow" href="<%=ROOT-%>/about">关于</a>
         <% if(Left!='none' || Center!='none'){ -%>
     </Right><%}-%>
 </Nav>

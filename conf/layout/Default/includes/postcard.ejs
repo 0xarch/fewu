@@ -1,15 +1,15 @@
 <Widget direct="Column" space="Margin Padding" tag="PostCard">
-    <Action onclick="window.open('/<%= item.path -%>')" style="width:90%">
+    <a class=action href="<%=ROOT-%>/<%= item.path -%>" style="width:90%">
         <h3><%= item.title -%></h3>
-    </Action>
-    <hr/>
+    </a>
+    <hr />
     <Container>
         <TextLabel>发布于<%= item.date -%></TextLabel>
-<% if(item.top){ -%>
+        <% if(item.top){ -%>
         <Small>Topped</Small>
-<% } -%>
+        <% } -%>
     </Container>
-    <hr/>
+    <hr />
     <Text>
         <%- item.less -%>
     </Text>

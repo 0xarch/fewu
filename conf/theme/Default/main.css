@@ -13,6 +13,10 @@
     --rounded-corner: 12px;
 }
 
+body {
+    font-size: 12pt;
+}
+
 @media (prefers-color-scheme:light) {
     :root {
         --bg: #ffffff;
@@ -28,6 +32,12 @@
         --widget-bg: #242424;
         --color: #b9b9b9;
         --card-box-shadow-hover: 0px 3px 8px 6px rgba(67, 77, 87, 0.2);
+    }
+}
+
+@media only screen and (orientation:portrait) {
+    flexmain {
+        flex-direction: column;
     }
 }
 

@@ -27,7 +27,9 @@ console.log('[25%] Read Posts');
 const TemplateVariables = {
     Posts,
     user: CONFIG.user,
-    lookAndFeel: LOOK_AND_FEEL
+    lookAndFeel: LOOK_AND_FEEL,
+    build: CONFIG.build,
+    ROOT: !["/", "", undefined].includes(CONFIG.build.site_root) ? CONFIG.build.site_root : ""
 };
 
 for (let item of LAYOUT_CONFIG.pages) {
