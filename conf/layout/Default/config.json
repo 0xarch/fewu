@@ -10,7 +10,7 @@
             }
         },
         {
-            "name": "archive",
+            "name": "category",
             "build": {
                 "filename": "category.ejs",
                 "destname": "category"
