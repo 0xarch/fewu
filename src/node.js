@@ -1,13 +1,14 @@
-console.log('[Starting up] Hogger 0.0.1');
 const EJS = require("ejs");
 const FS_EXTRA = require("node-fs-extra");
 const FS = require("fs");
 const PATH = require("path");
+const UTILS = require("./utils");
+UTILS.Log.PICKING_UP("Starting Building");
 
 const ARGS = process.argv;
 const CONFIG = JSON.parse(FS.readFileSync(ARGS[2]).toString());
 const EMPTY_FN = () => {};
-console.log('[10%] Read Config');
+UTILS.Log.SUCCESS("Read Configuation File",1);
 
 const LAYOUT = CONFIG.look_and_feel.layout_dir,
     THEME = CONFIG.look_and_feel.theme_dir,
@@ -22,7 +23,7 @@ let RawPosts = require("./post").ReadPosts(POST_DIR, SPECIAL_POSTS);
 const Posts = RawPosts.Posts,
     Specials = RawPosts.Specials;
 const Sorts = require("./sort").getSort(Posts);
-console.log('[25%] Read Posts');
+UTILS.Log.SUCCESS("Read Post Information",1);
 
 const TemplateVariables = {
     Posts,
@@ -33,6 +34,7 @@ const TemplateVariables = {
     CUSTOM_TITLE: LOOK_AND_FEEL.custom_site_title
 };
 
+UTILS.Log.PICKING_UP("Build Pages Included in Theme",1);
 for (let item of LAYOUT_CONFIG.pages) {
     let filename = PATH.join(LAYOUT, item.build.filename),
         destname = PATH.join(PUBLIC_DIR, item.build.destname, 'index.html');
@@ -45,7 +47,8 @@ for (let item of LAYOUT_CONFIG.pages) {
         ...inconf_extra
     }, destname);
 }
-console.log('[50%] Build Pages');
+UTILS.Log.FINISH_TASK("Built Pages Included in Theme",1);
+UTILS.Log.PICKING_UP("Starting Building Blogs",1);
 let post_filename = PATH.join(LAYOUT, 'post.ejs');
 let post_file = FS.readFileSync(post_filename).toString();
 Posts.forEach(item => {
@@ -57,13 +60,14 @@ Posts.forEach(item => {
         ...Sorts
     }, destname);
 })
-console.log('[90%] Build Blogs');
+UTILS.Log.FINISH_TASK("Built Blogs",1);
 FS_EXTRA.copy(THEME, PATH.join(PUBLIC_DIR, 'theme'), EMPTY_FN);
-console.log('[100%] Finished!');
+UTILS.Log.FINISH_TASK("Successfully Built!");
 
 async function build_file(ejs_template, ejs_extra_json, path) {
-    console.log('   [In Progress] build_file() Building file to path from param path: ' + path);
+    UTILS.Log.PROCESSING('Building File to Path: '+path,2);
     let content = EJS.render(ejs_template, ejs_extra_json);
     FS_EXTRA.mkdirsSync(PATH.resolve(path, '..'));
     FS.writeFile(path, content, EMPTY_FN);
+    UTILS.Log.PROGRESS('Built File: '+path,2);
 }

@@ -1,6 +1,7 @@
 const PATH = require("path");
 const FS = require("fs");
 const MARKED = require("marked");
+const UTILS = require("./utils");
 
 /**
  * 
@@ -55,22 +56,22 @@ function readDirectoryRecursive(Directory) {
 
 function ReadPosts(POST_DIR, SPECIAL_POSTS) {
     let bid = 0;
-    console.log('[Picking up] ReadPosts() Reading directory from param POST_DIR: ' + POST_DIR);
+    UTILS.Log.PICKING_UP("Reading directoty: "+POST_DIR,1);
     let Posts = new Array,
         Specials = {};
     for (let path of readDirectoryRecursive(POST_DIR)) {
 
         let item = PATH.basename(path, POST_DIR);
-        console.log('   [Parsing] Reading File: ' + path);
         let file_text = FS.readFileSync(path).toString();
         let file_data = ReadData(file_text);
         file_data.content = MARKED.parse(file_data.content);
         file_data.bid = bid;
+        UTILS.Log.PROGRESS("Read File: "+path,2);
         if (SPECIAL_POSTS.includes(item)) Specials[item] = file_data;
         else Posts.push(file_data);
         bid += 1;
     }
-    console.log('[Finish Task] Read directory:' + POST_DIR);
+    UTILS.Log.FINISH_TASK("Read directory",1);
     return {
         Posts,
         Specials

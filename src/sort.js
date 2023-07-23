@@ -1,3 +1,5 @@
+const UTILS=require("./utils");
+
 function Sort(a, b) {
     const A = a.date,
         B = b.date;
@@ -18,7 +20,7 @@ function Sort(a, b) {
 
 function getSort(POSTS) {
     const SortedPosts = POSTS.sort(Sort);
-    console.log('[Picking up] Got Posts from param POSTS');
+    UTILS.Log.PICKING_UP("Sorting Posts",1);
 
     // _______ 按置顶排序 _______
     var topPosts = Array();
@@ -32,7 +34,7 @@ function getSort(POSTS) {
         }
     });
     const DefaultPosts = topPosts.concat(untopPosts);
-    console.log('   [Progress] Sorted by default');
+    UTILS.Log.PROGRESS("Sorted by default",2);
 
     // _________ 分类 _________
     const categories = new Array;
@@ -65,14 +67,14 @@ function getSort(POSTS) {
         });
         CategoryPosts.push(incl);
     });
-    console.log('   [Progress] Sorted by category');
+    UTILS.Log.PROGRESS("Sorted by category",2);
 
     const BID = {};
     for (let item of POSTS) {
         BID[item.bid] = item;
     }
     const RecentPosts = SortedPosts.slice(0, 5);
-    console.log('   [Finish Task] Sorted Posts');
+    UTILS.Log.FINISH_TASK("Sorted Posts",1);
 
     return {
         Posts: SortedPosts,
