@@ -15,6 +15,7 @@
 
 body {
     font-size: 12pt;
+    --padding: .5rem;
 }
 
 @media (prefers-color-scheme:light) {
@@ -42,6 +43,7 @@ body {
 
     body {
         font-size: 15.5pt;
+        --padding: .25rem;
     }
 }
 

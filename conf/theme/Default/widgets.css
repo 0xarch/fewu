@@ -22,7 +22,7 @@ code.hljs {
 action,
 .action {
     white-space: nowrap;
-    padding: .5rem;
+    padding: var(--padding);
 }
 
 .action {
