@@ -46,6 +46,9 @@ function ReadPosts(POST_DIR, SPECIAL_POSTS) {
     console.log('[Picking up] ReadPosts() Reading directory from param POST_DIR: ' + POST_DIR);
     let Posts = new Array,
         Specials = {};
+    console.log(FS.readdirSync(POST_DIR), {
+        recursive: true
+    });
     for (let item of FS.readdirSync(POST_DIR, {
             recursive: true
         })) {
