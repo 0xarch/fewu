@@ -26,9 +26,9 @@ function getSort(POSTS) {
 
     SortedPosts.forEach((item) => {
         if (item.top == "true") {
-            topPosts.push(item);
+            topPosts.push(item.bid);
         } else {
-            untopPosts.push(item);
+            untopPosts.push(item.bid);
         }
     });
     const DefaultPosts = topPosts.concat(untopPosts);
@@ -41,14 +41,14 @@ function getSort(POSTS) {
             categories.push(item.category);
         }
     });
-    const categoryPosts = new Array;
+    const CategoryPosts = new Array;
     categories.forEach((item) => {
         /*
                 categoryPosts的结构比较特殊：
                 [
                     {
                         cate:分类名,
-                        incl:[ ...包含在该分类中的博客... ]
+                        incl:[ ...包含在该分类中的博客BID... ]
                     },
                     { ... },
                     ...
@@ -60,21 +60,26 @@ function getSort(POSTS) {
         };
         SortedPosts.forEach((item2) => {
             if (item2.category == item) {
-                incl.incl.push(item2);
+                incl.incl.push(item2.bid);
             }
         });
-        categoryPosts.push(incl);
+        CategoryPosts.push(incl);
     });
     console.log('   [Progress] Sorted by category');
 
+    const BID = {};
+    for (let item of POSTS) {
+        BID[item.bid] = item;
+    }
     const RecentPosts = SortedPosts.slice(0, 5);
     console.log('   [Finish Task] Sorted Posts');
 
     return {
         Posts: SortedPosts,
         DefaultPosts,
-        categoryPosts,
-        RecentPosts
+        CategoryPosts,
+        RecentPosts,
+        BID
     }
 }
 

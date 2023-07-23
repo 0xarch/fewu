@@ -54,6 +54,7 @@ function readDirectoryRecursive(Directory) {
 }
 
 function ReadPosts(POST_DIR, SPECIAL_POSTS) {
+    let bid = 0;
     console.log('[Picking up] ReadPosts() Reading directory from param POST_DIR: ' + POST_DIR);
     let Posts = new Array,
         Specials = {};
@@ -63,10 +64,11 @@ function ReadPosts(POST_DIR, SPECIAL_POSTS) {
         console.log('   [Parsing] Reading File: ' + path);
         let file_text = FS.readFileSync(path).toString();
         let file_data = ReadData(file_text);
-        let markdown_content = MARKED.parse(file_data.content);
-        file_data.content = markdown_content;
+        file_data.content = MARKED.parse(file_data.content);
+        file_data.bid = bid;
         if (SPECIAL_POSTS.includes(item)) Specials[item] = file_data;
         else Posts.push(file_data);
+        bid += 1;
     }
     console.log('[Finish Task] Read directory:' + POST_DIR);
     return {
