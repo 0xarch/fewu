@@ -1,12 +1,12 @@
 <Widget direct="Column" space="Margin Padding" tag="PostCard">
-    <a class=action href="<%=ROOT-%>/<%= item.path -%>" style="width:90%">
+    <a class=action href="<%=ROOT-%><%= item.src -%>" style="width:90%">
         <h3><%= item.title -%></h3>
     </a>
     <hr />
     <Container>
         <TextLabel>发布于<%= item.date -%></TextLabel>
         <% if(item.top){ -%>
-        <Small>Topped</Small>
+        <Small>置顶文章</Small>
         <% } -%>
     </Container>
     <hr />

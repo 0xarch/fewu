@@ -4,19 +4,20 @@
 
 <body>
     <Header>
-        <%- include("includes/nav.ejs",{Left:{type:'text',value:'共'+categoryPosts.length+'个分类'},Center:{type:'text',value:'分类总览'}}) -%>
+        <%- include("includes/nav.ejs",{Left:{type:'text',value:'共'+CategoryPosts.length+'个分类'},Center:{type:'text',value:'分类总览'}}) -%>
     </Header>
     <FlexMain>
         <Article direct="Column">
             <Shell>
                 <Widget direct="Column">
-                    <% categoryPosts.forEach(Cg=>{ -%>
+                    <% CategoryPosts.forEach(Cg=>{ -%>
                     <h2> <%= Cg.cate -%> </h2>
                     <FBox direct="Column">
                         <% Cg.incl.forEach(item=>{ -%>
+                        <% item = BID[item] -%>
                         <div style="width:100%">
                             <Action onclick="window.open('/<%= item.path -%>')"><%= item.title -%></Action>
-                            <small>发布于<%= item.date -%></small>
+                            <small>发布于<%= item.date -%>，共享协议: CC-<%= item.cc?item.cc:"BY-SA" -%></small>
                             <Text>
                                 <%- item.less -%>
                             </Text>
