@@ -4,7 +4,7 @@
 
 <body>
     <Header>
-        <%- include("includes/nav.ejs",{Left:{type:'text','value':user.name},Center:'none'}) -%>
+        <%- include("includes/nav.ejs",{Left:{type:'text','value':user.name},Center:'none'}) %>
     </Header>
     <FlexMain>
         <Article dirC>
@@ -19,6 +19,7 @@
                 <%- include("includes/about.ejs") %>
                 <%- include("includes/announcement.ejs") %>
                 <%- include("includes/archivelist.ejs") %>
+                <%- include("includes/calendar.ejs") %>
             </Box>
         </Aside>
     </FlexMain>

@@ -6,7 +6,16 @@
             "name": "archive",
             "build": {
                 "filename": "archive.ejs",
-                "destname": "archive"
+                "destname": "archive",
+                "cycle": true,
+                "cyclebuild":{
+                    "var":
+                        {
+                            "father":"Sorts.Sorted",
+                            "every":5,
+                            "varname":"PostsThisPage"
+                        }
+                }
             }
         },
         {

@@ -1,5 +1,6 @@
 *[disable~=shadow],
-*.\!shadow {
+*.\!shadow,
+*[\!shadow] {
     box-shadow: none !important;
 }
 
@@ -35,6 +36,17 @@ action,
 
 table {
     text-align: center;
+}
+
+calendar{
+    width: 100%;
+    align-items: center;
+}
+calendar>label{
+    width: 100%;
+}
+calendar>label>fbox[FullWidth]{
+    width: calc(3.5rem * 7);
 }
 
 *[m0]{

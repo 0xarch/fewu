@@ -18,6 +18,7 @@ body {
     :root {
         --bg: #ffffff;
         --widget-bg: #fafafa;
+        --code-bg: #eff0fa;
         --color: #111;
         --card-box-shadow-hover: 0px 3px 8px 6px rgba(7, 17, 27, 0.15);
     }
@@ -27,6 +28,7 @@ body {
     :root {
         --bg: #1e1e1e;
         --widget-bg: #242424;
+        --code-bg: #353535;
         --color: #b9b9b9;
         --card-box-shadow-hover: 0px 3px 8px 6px rgba(67, 77, 87, 0.2);
     }
@@ -43,6 +45,6 @@ body {
     }
 }
 
-code.hljs {
-    background-color: var(--bg)
+code.hljs,code {
+    background-color: var(--code-bg);padding:.15rem;border-radius: var(--m-medium-round);
 }

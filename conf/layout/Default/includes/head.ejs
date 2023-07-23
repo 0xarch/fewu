@@ -1,7 +1,7 @@
 <head>
     <link rel="stylesheet" href="https://0xarch.github.io/mata-toolkit/mata-css/mata.css">
     <script src="https://cdn.jsdelivr.net/gh/0xarch/mata-toolkit/mata-js/mata.js"></script>
-    <script src="<%=ROOT-%>/theme/colors.js"></script>
+    <script src="<%=ROOT-%>/theme/main.js"></script>
     <link rel="stylesheet" href="<%=ROOT-%>/theme/main.css">
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css'>
@@ -12,5 +12,6 @@
         Palette.setPaletteFrom("primary", "GREEN", 500);
         Palette.setPaletteFrom("secondary", "BROWN", 500);
     </script>
-    <title><%= title.title -%> <%= lookAndFeel.separator-%> <%= title.titleType&&!["",undefined].includes(CUSTOM_TITLE[title.titleType])?CUSTOM_TITLE[title.titleType]:CUSTOM_TITLE.index -%></title>
+<% let Type = title.titleType -%>
+    <title><%= title.title -%> <%= lookAndFeel.separator-%> <%= Type&&!["",undefined].includes(CUSTOM_TITLE[Type])?CUSTOM_TITLE[Type]:CUSTOM_TITLE.index -%></title>
 </head>

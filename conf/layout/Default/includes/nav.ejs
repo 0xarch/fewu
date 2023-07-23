@@ -3,10 +3,10 @@
     <Left>
 <% if(Left!='stand'){ -%>
 <% if(Left.type=='text'){ -%>
-        <%= Left.value -%>
+        <%= Left.value %>
 <% } -%>
 <% if(Left.type=='element'){ -%>
-        <%- Left.value -%>
+        <%- Left.value %>
 <% } -%>
 <%}-%>
     </Left>
@@ -15,18 +15,18 @@
     <Center>
     <% if(Center!='stand') {-%>
 <% if(Center.type=='text'){ -%>
-        <%= Center.value -%>
+        <%= Center.value %>
 <% } -%>
 <% if(Center.type=='element'){ -%>
-        <%- Center.value -%>
+        <%- Center.value %>
 <% } -%>
 <%}-%>
     </Center>
 <% } -%>
-    <% if(Left!='none' || Center!='none'){ -%><Right><%}-%>
+    <% if(Left!='none' || Center!='none'){ -%><Right><%}%>
         <a class="action !shadow" href="<%=ROOT-%>/">首页</a>
         <a class="action !shadow" href="<%=ROOT-%>/archive">归档</a>
         <a class="action !shadow" href="<%=ROOT-%>/category">分类</a>
         <a class="action !shadow" href="<%=ROOT-%>/about">关于</a>
-    <% if(Left!='none' || Center!='none'){ -%></Right><%}-%>
+    <% if(Left!='none' || Center!='none'){ -%></Right><%}%>
 </Nav>
