@@ -39,6 +39,10 @@ body {
     flexmain {
         flex-direction: column;
     }
+
+    body {
+        font-size: 15.5pt;
+    }
 }
 
 code.hljs {
