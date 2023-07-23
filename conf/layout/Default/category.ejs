@@ -7,15 +7,15 @@
         <%- include("includes/nav.ejs",{Left:{type:'text',value:'共'+CategoryPosts.length+'个分类'},Center:{type:'text',value:'分类总览'}}) -%>
     </Header>
     <FlexMain>
-        <Article direct="Column">
+        <Article dirC>
             <Shell>
-                <Widget direct="Column">
+                <Widget dirC>
                     <% CategoryPosts.forEach(Cg=>{ -%>
                     <h2> <%= Cg.cate -%> </h2>
-                    <FBox direct="Column">
+                    <FBox dirC>
                         <% Cg.incl.forEach(item=>{ -%>
                         <% item = BID[item] -%>
-                        <div style="width:100%">
+                        <div wt1>
                             <Action onclick="window.open('/<%= item.path -%>')"><%= item.title -%></Action>
                             <small>发布于<%= item.date -%>，共享协议: CC-<%= item.cc?item.cc:"BY-SA" -%></small>
                             <Text>

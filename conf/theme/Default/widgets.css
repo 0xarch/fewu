@@ -36,3 +36,25 @@ action,
 table {
     text-align: center;
 }
+
+*[m0]{
+    margin: 0;
+}
+*[p0]{
+    padding: 0;
+}
+*[wt1]{
+    width: 100%;
+}
+*[wt\.9]{
+    width: 90%;
+}
+*[wt\.8]{
+    width: 80%;
+}
+*[dirC]{
+    flex-direction: column;
+}
+*[dirR]{
+    flex-direction: row;
+}

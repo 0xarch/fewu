@@ -7,7 +7,7 @@
         <%- include("includes/nav.ejs",{Left:{type:'text',value:'共'+Posts.length+'篇文章'},Center:{type:'text',value:'归档总览'}}) -%>
     </Header>
     <FlexMain>
-        <Article direct="Column">
+        <Article dirC>
             <Shell>
                 <% Posts.forEach(item=>{ -%>
                 <%- include("includes/postcard.ejs",{item}) %>
