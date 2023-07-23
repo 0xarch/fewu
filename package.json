@@ -1,10 +1,10 @@
 {
-  "name": "Hogger",
-  "dependencies": {
-    "ejs": "^3.1.9",
-    "fs": "^0.0.1-security",
-    "node-fs-extra": "*",
-    "marked": "^4.3.0",
-    "os": "^0.1.2"
-  }
+    "name": "Hogger",
+    "dependencies": {
+        "ejs": "^3.1.9",
+        "fs": "^0.0.1-security",
+        "node-fs-extra": "^0.8.2",
+        "marked": "^4.3.0",
+        "os": "^0.1.2"
+    }
 }
