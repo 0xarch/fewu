@@ -59,7 +59,7 @@ FS_EXTRA.copy(THEME, PATH.join(PUBLIC_DIR, 'theme'), EMPTY_FN);
 console.log('[100%] Finished!');
 
 async function build_file(ejs_template, ejs_extra_json, path) {
-    console.log('   [In Progress] Building file to path from param path: ' + path);
+    console.log('   [In Progress] build_file() Building file to path from param path: ' + path);
     let content = EJS.render(ejs_template, ejs_extra_json);
     FS_EXTRA.mkdirsSync(PATH.resolve(path, '..'));
     FS.writeFile(path, content, EMPTY_FN);
