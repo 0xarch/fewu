@@ -32,6 +32,7 @@ widget[tag=PostCard]>container {
 widget[tag=PostCard]>a.action, nav>* {
     text-overflow: ellipsis;
     overflow: hidden;
+    display:flex;
 }
 
 widget:hover {
