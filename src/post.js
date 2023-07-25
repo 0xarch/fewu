@@ -24,6 +24,7 @@ function ReadData(content) {
         }
         i++;
     }
+    data.title = data.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'\～\·\「\」\；\：\‘\’\“\”\，\。\《\》\？\！\￥\…\、\（\）]/g,'_');
     data.path = `${data.date.replace(/-/g,"/")}/${data.title.replace(/[ ?!]/g,"-")}/index.html`;
     data.src = `/${data.date.replace(/-/g,"/")}/${data.title.replace(/[ ?!]/g,"-")}/`;
     data.top = data.top ? true : false;
