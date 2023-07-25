@@ -24,9 +24,9 @@ function ReadData(content) {
         }
         i++;
     }
-    data.title = data.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'\～\·\「\」\；\：\‘\’\“\”\，\。\《\》\？\！\￥\…\、\（\）]/g,'_');
-    data.path = `${data.date.replace(/-/g,"/")}/${data.title.replace(/[ ?!]/g,"-")}/index.html`;
-    data.src = `/${data.date.replace(/-/g,"/")}/${data.title.replace(/[ ?!]/g,"-")}/`;
+    data.transformed_title = data.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'\～\·\「\」\；\：\‘\’\“\”\，\。\《\》\？\！\￥\…\、\（\）]/g,'_');
+    data.path = `${data.date.replace(/-/g,"/")}/${data.transformed_title}/index.html`;
+    data.src = `/${data.date.replace(/-/g,"/")}/${data.transformed_title}/`;
     data.top = data.top ? true : false;
     data.content = lines.slice(i).join("\n");
     data.less = extractLess(data.content);
