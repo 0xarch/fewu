@@ -48,6 +48,9 @@ calendar>label{
 calendar>label>fbox[FullWidth]{
     width: calc(3.5rem * 7);
 }
+.gt-header-controls-tip{
+    display: block;
+}
 
 *[m0]{
     margin: 0;
