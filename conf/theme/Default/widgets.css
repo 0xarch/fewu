@@ -70,3 +70,7 @@ calendar>label>fbox[FullWidth]{
 *[dirR]{
     flex-direction: row;
 }
+*[o-text=c1]{
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

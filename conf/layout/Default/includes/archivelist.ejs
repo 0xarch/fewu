@@ -3,10 +3,10 @@
         <h2 m0>归档</h2>
     </a>
     <hr>
-    <div !center>
+    <div !center wt1>
         <h3 m0>最近的文章</h3>
         <% RecentPosts.forEach(item=>{ -%>
-        <a class=action Outline href="<%=ROOT-%><%= item.src -%>"><%= item.title -%></a>
+        <a class=action o-text=c1 Outline href="<%=ROOT-%><%= item.src -%>"><%= item.title -%></a>
         <% }) -%>
     </div>
 </Widget>

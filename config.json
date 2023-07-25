@@ -15,6 +15,14 @@
             "function": "",
             "read": "",
             "index": "Hello! oxArch"
+        },
+        "comment":{
+            "gitalk":{
+                "clientID": "160886aaa4510c613f1a",
+                "clientSecret": "e82e14f3759fb600bdf7afab5fd424d12a2250c1",
+                "repo": "suchathing",
+                "owner": "0xarch"
+            }
         }
     },
     "build": {

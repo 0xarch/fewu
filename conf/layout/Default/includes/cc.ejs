@@ -1,7 +1,12 @@
 <Widget>
     <h3>Creative Commons</h3>
     <hr>
-    <% if(cc!='0') {-%>
+    <% if(cc.includes("PRIVATE")){ -%>
+        <b>私有</b> 这篇文章的版权归原作者所有！
+    <%}else -%>
+    <% if(cc.includes("0")){ -%>
+        <b>0</b> 这篇文章的版权归属于公众领域！
+    <%}else{ -%>
     <% if(cc.includes("BY")){ -%>
     <b>BY</b> 你需要在分享此文章时注明原作者.
     <%} -%>
@@ -13,9 +18,6 @@
     <%} -%>
     <% if(cc.includes("ND")){ -%>
     <b>ND</b> 你不能在分享此文章时进行演绎.
-    <%} -%>
-    <% if(cc.includes("PRIVATE")){ -%>
-    <b>私有</b> 这篇文章的版权归原作者所有！
     <%} -%>
     <%} -%>
 </Widget>

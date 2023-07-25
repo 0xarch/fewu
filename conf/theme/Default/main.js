@@ -7,3 +7,9 @@ const Colors = {
     "PURPLE": [285, 45.1],
     "BROWN": [27, 38.2]
 }
+
+window.onload=()=>{
+    for(let item of SelectAll("action,.action")){
+        item.setAttribute("title",item.textContent);
+    }
+}
