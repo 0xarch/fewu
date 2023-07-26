@@ -8,7 +8,12 @@
 :root {
     --rounded-corner: 12px;
 }
-
+/* M3TK Experimental */
+:root {
+    --m-large-round: 22px;
+    --m-medium-round: 18px;
+    --m-small-round: 12px;
+}
 body {
     font-size: 12pt;
     --padding: .5rem;

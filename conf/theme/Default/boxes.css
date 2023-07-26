@@ -19,10 +19,10 @@ widget {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 20vw;
+    min-width: 23vw;
     margin: 1.25rem;
     background: var(--widget-bg);
-    flex-direction: column;
+    border-radius: var(--m-large-round);
 }
 
 widget[tag=PostCard]>container {
