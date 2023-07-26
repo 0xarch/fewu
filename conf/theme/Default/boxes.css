@@ -42,7 +42,7 @@ widget:hover {
 aside {
     min-width: 22vw;
     display: block;
-    flex: 1.2 !important;
+    flex: 1.5 !important;
 }
 
 article {

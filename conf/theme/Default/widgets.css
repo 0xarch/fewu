@@ -67,6 +67,15 @@ calendar>label>fbox[FullWidth]{
 *[wt\.8]{
     width: 80%;
 }
+.f-1{
+    flex:1;
+}
+.f-5{
+    flex:.5;
+}
+.f-75{
+    flex:.75;
+}
 *[dirC]{
     flex-direction: column;
 }
@@ -86,9 +95,16 @@ calendar>label>fbox[FullWidth]{
 *[mr=1]{
     border-radius: var(--m-small-round);
 }
-*[\!bg]{
+*[bg=none]{
     background: transparent;
+}
+*[bg=color]{
+    background-color: var(--background-colored);
 }
 *[\!br]{
     border: none;
+}
+img[tag=Avatar]{
+    object-fit: fill;
+    border-radius: 18pt;
 }

@@ -9,7 +9,10 @@ const Colors = {
 }
 
 window.onload=()=>{
-    for(let item of SelectAll("action,.action")){
-        item.setAttribute("title",item.textContent);
-    }
+    MInitSet.ActionTitle();
+    MInitSet.Wind();
+    hljs.highlightAll();
+    const Palette = new MPaletteProcesser(Colors);
+    Palette.setPaletteFrom("primary", "GREEN", 500,true);
+    Palette.setPaletteFrom("secondary", "BROWN", 500);
 }

@@ -7,7 +7,7 @@
         <%- include("includes/nav.ejs",{Left:{type:'text','value':user.name},Center:'none'}) %>
     </Header>
     <FlexMain>
-        <Article dirC>
+        <Article>
             <Shell>
                 <% RecentPosts.forEach(item=>{ -%>
                 <%- include("includes/postcard.ejs",{item}) %>
