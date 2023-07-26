@@ -52,7 +52,9 @@ body {
     nav {
         display: grid;
         grid-template-columns: repeat(2,50%);
+        padding: 10pt;
     }
+    nav>*{ margin:0 }
 
     nav>left{ order: 1 }
     nav>right{ order:2 }
