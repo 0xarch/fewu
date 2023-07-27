@@ -1,6 +1,6 @@
-<Widget>
+<Widget bg="color">
     <Container dirC>
-        <img src="<%=user.avatar-%>" wt.8 style="object-fit: fill;" tag="Avatar">
+        <img src="<%=user.avatar-%>" wt.8 tag="Avatar">
         <h3>
             <a class=action href="<%=user.url-%>"><%=user.name-%></a>
         </h3>
@@ -12,7 +12,7 @@
             <p><%= Posts.length -%></p>
         </div>
         <hr type=Blank class="f-5">
-        <div class="f-75">
+        <div class="f-1">
             <p>分类</p>
             <p><%= CategoryPosts.length -%></p>
         </div>
