@@ -7,7 +7,9 @@
         <Banner>
             发布于 <%= post.date -%>, 作者： <%= post.author?post.author:user.name -%>
         </Banner>
-        <%- include("includes/nav.ejs",{Left:'stand',Center:{type:'element',value:'<b style="font-size:larger;font-weight:bolder">'+post.title+'</b>'}}) -%>
+        <%#- include("includes/nav.ejs",{Left:'stand',Center:{type:'element',value:'<b style="font-size:larger;font-weight:bolder">'+post.title+'</b>'}}) -%>
+        <%-include("includes/nav.ejs",{Left:'_LOK_STAND',Center:'<b style="font-size:larger;font-weight:bolder">'+post.title+'</b>'}) -%>
+    </Header>
     </Header>
     <FlexMain>
         <article>

@@ -1,11 +1,7 @@
 <Widget>
     <h2 m0>公告</h2>
     <Text>
-<% if(user.announcement==""){ -%>
-        暂无公告！
-<% }else{ -%>
-        <%= user.announcement -%>
-<% } -%>
+        <%= user.announcement==""?"暂无公告！":user.announcement -%>
     </Text>
     <hr type=Blank>
 </Widget>

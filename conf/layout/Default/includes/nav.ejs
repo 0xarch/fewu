@@ -1,26 +1,12 @@
 <Nav>
-<% if(Left!='none'){ -%>
+<% if(Left!='_LOK_NONE'){ -%>
     <Left>
-<% if(Left!='stand'){ -%>
-<% if(Left.type=='text'){ -%>
-        <%= Left.value %>
-<% } -%>
-<% if(Left.type=='element'){ -%>
-        <%- Left.value %>
-<% } -%>
-<%}-%>
+        <%-Left!='_LOK_STAND'?Left:''-%>
     </Left>
 <% } -%>
-<% if(Center!='none'){ -%>
+<% if(Center!='_LOK_NONE'){ -%>
     <Center>
-    <% if(Center!='stand') {-%>
-<% if(Center.type=='text'){ -%>
-        <%= Center.value %>
-<% } -%>
-<% if(Center.type=='element'){ -%>
-        <%- Center.value %>
-<% } -%>
-<%}-%>
+        <%-Center!='_LOK_STAND'?Center:''-%>
     </Center>
 <% } -%>
     <% if(Left!='none' || Center!='none'){ -%><Right><%}%>

@@ -4,7 +4,7 @@
 
 <body>
     <Header>
-        <%- include("includes/nav.ejs",{Left:{type:'text',value:'共'+Posts.length+'篇文章'},Center:{type:'text',value:'归档总览'}}) -%>
+        <%- include("includes/nav.min.ejs",{Left:'共'+Posts.length+'篇文章',Center:'归档总览'}) -%>
     </Header>
     <FlexMain>
         <Article>
