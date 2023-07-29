@@ -50,7 +50,7 @@ for (let item of LAYOUT_CONFIG.pages) {
         CYCLE.Total = Math.ceil(father.length / every);
         for(let i=0;i*every<=father.length;++i){
             destname = PATH.join(PUBLIC_DIR, item.build.destname, 'index'+(i+1)+'.html');
-            CYCLE[_var.varname]=father.slice(i*every,(i+1)*every);
+            CYCLE[_var.name]=father.slice(i*every,(i+1)*every);
             CYCLE.Time = i+1;
             CYCLE.PrevPage = PATH.join(item.build.destname,'index'+i+'.html');
             CYCLE.NextPage = PATH.join(item.build.destname,'index'+(i+2)+'.html');

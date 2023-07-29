@@ -10,7 +10,7 @@
         <Article>
             <Shell>
                 <% CYCLE.PostsThisPage.forEach(item=>{ -%>
-                    <%- include("includes/postcard.ejs",{item:BID[item]}) %>
+                    <%- include("includes/postcard.min.ejs",{item:BID[item]}) %>
                 <%})-%>
                 <Widget direct="Row">
                     <%if(CYCLE.Time!=1){%><a class=action href="<%=ROOT-%>/<%=CYCLE.PrevPage-%>">上一页</a><%}%>

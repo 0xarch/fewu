@@ -12,12 +12,12 @@
                 <Widget>
                     <% CategoryPosts.forEach(Cg=>{ -%>
                     <h2> <%= Cg.cate -%> </h2>
-                    <FBox dirC>
+                    <FBox dirC wt.9>
                         <% Cg.incl.forEach(item=>{ -%>
                         <% item = BID[item] -%>
                         <div wt1>
                             <Action onclick="window.open('/<%= item.path -%>')"><%= item.title -%></Action>
-                            <small>发布于<%= item.date -%>，共享协议: CC-<%= item.cc?item.cc:"BY-SA" -%></small>
+                            <small>发布于<%= item.date -%>，共享协议: <%= item.cc?(item.cc!="PRIVATE"?"CC-"+item.cc:"私有"):"CC-BY-SA" -%></small>
                             <Text>
                                 <%- item.less -%>
                             </Text>

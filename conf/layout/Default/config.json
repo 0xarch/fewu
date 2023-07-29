@@ -13,7 +13,7 @@
                         {
                             "father":"Sorts.Sorted",
                             "every":5,
-                            "varname":"PostsThisPage"
+                            "name":"PostsThisPage"
                         }
                 }
             }
