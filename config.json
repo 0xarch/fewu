@@ -5,7 +5,10 @@
         "avatar": "/theme/default_avatar.png",
         "note": "We won't be disturbed!",
         "location": "Xvd 114514",
-        "announcement": ""
+        "data":{
+            "announcement": "",
+            "friend_links":[]
+        }
     },
     "look_and_feel": {
         "layout_dir": "conf/layout/Default/",
@@ -15,7 +18,9 @@
             "function": "",
             "read": "",
             "index": "Hello! oxArch"
-        },
+        }
+    },
+    "widgets": {
         "comment":{
             "gitalk":{
                 "clientID": "160886aaa4510c613f1a",

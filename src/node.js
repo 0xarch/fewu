@@ -29,6 +29,7 @@ const TemplateVariables = {
     Posts,
     user: CONFIG.user,
     lookAndFeel: LOOK_AND_FEEL,
+    widgets: CONFIG.widgets,
     build: CONFIG.build,
     ROOT: !["/", "", undefined].includes(CONFIG.build.site_root) ? CONFIG.build.site_root : "",
     CUSTOM_TITLE: LOOK_AND_FEEL.custom_site_title
