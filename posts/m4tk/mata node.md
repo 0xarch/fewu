@@ -6,7 +6,7 @@ top: false
 ---
 ```Mata Toolkit```(m4tk) 对于 ```Node.js``` 的拓展包：```m4nugs```（尚未上传）
 
-m4nugs是 ```Hogger/utils.js``` 的分支，支持颜色输出等功能
+m4nugs是 ```Hogger/utils.js``` 的分支，支持颜色输出/Em3et等功能
 
 <!--more-->
 # 颜色输出
@@ -24,3 +24,13 @@ const M4NU = require("m4nugs");
 console.log(M4NU.Colorize('Output Text','GREEN BOLD'));
 ```
 这段代码将输出绿色加粗的 "Output Text" 文字.
+
+# Em3et
+
+关于 Em3et 详见关于 Em3et 的文章.
+```js
+const M4NU = require("m4nugs");
+
+console.log(M4NU.Em3et.parse("div{ul{li{}}})"));
+```
+这段代码将输出 <div><ul><li></li></ul></div>

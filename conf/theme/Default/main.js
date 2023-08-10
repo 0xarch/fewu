@@ -15,5 +15,8 @@ Palette.setPaletteFrom("secondary", "BROWN", 500);
 window.onload=()=>{
     MInitSet.ActionTitle();
     MInitSet.Wind();
+    for(let item of SelectAll("*[Em3et]")){
+        Em3et.render(item);
+    }
     hljs.highlightAll();
 }

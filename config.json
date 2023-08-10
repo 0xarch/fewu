@@ -7,7 +7,10 @@
         "location": "Xvd 114514",
         "data":{
             "announcement": "",
-            "friend_links":[]
+            "friend_links":[
+                ["王深蹲的博客","wangyuzhen666.github.io"],
+                ["Twitter","x.com"]
+            ]
         }
     },
     "look_and_feel": {

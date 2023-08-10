@@ -32,7 +32,8 @@ const TemplateVariables = {
     widgets: CONFIG.widgets,
     build: CONFIG.build,
     ROOT: !["/", "", undefined].includes(CONFIG.build.site_root) ? CONFIG.build.site_root : "",
-    CUSTOM_TITLE: LOOK_AND_FEEL.custom_site_title
+    CUSTOM_TITLE: LOOK_AND_FEEL.custom_site_title,
+    F:(text)=>text.replace(/([\:\/])/g,'\\$1').replace(/</g,"&lt;").replace(/>/g,"&gt;")
 };
 
 UTILS.Log.PICKING_UP("Build Pages Included in Theme",1);

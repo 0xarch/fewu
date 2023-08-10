@@ -1,0 +1,8 @@
+<Widget Em3et bg="color">
+    h2(m0){:链接:}
+    Box{
+        <% user.data.friend_links.forEach(item=>{ -%>
+            a.action(href="<%=F(!item[1].includes("://")?"https://":""+item[1])-%>"){:<%=F(item[0])-%>:}
+        <% }) -%>
+    }
+</Widget>
