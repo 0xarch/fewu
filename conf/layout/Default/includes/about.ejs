@@ -6,13 +6,13 @@
         </h3>
     </Container>
     <Container !center wt1 Em3et>
-        div.f-1{
-            p{:文章:}
-            p{:<%= Posts.length -%>:}
-        }
-        div.f-1{
-            p{:分类:}
-            p{:<%= CategoryPosts.length -%>:}
-        }
+        div.f-1,
+            p,:文章:.
+            p,:<%= Posts.length -%>:.
+        .
+        div.f-1,
+            p,:分类:.
+            p,:<%= CategoryPosts.length -%>:.
+        .
     </Container>
 </Widget>
