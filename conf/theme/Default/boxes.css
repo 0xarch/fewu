@@ -25,11 +25,18 @@ widget {
     border-radius: var(--m-large-round);
 }
 
-widget[tag=PostCard]>container {
-    display: flex;
+widget[tag=PostCard]{
+    & container{
+        display:flex;
+    }
+    & a.action{
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display:flex;
+    }
 }
 
-widget[tag=PostCard]>a.action, nav>* {
+nav>* {
     text-overflow: ellipsis;
     overflow: hidden;
     display:flex;
@@ -43,17 +50,16 @@ aside {
     min-width: 22vw;
     display: block;
     flex: 1.5 !important;
+    & box{
+        position: sticky;
+        top: 8rem;
+    }
 }
 
 article {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-aside>box {
-    position: sticky;
-    top: 8rem;
 }
 
 flexmain {

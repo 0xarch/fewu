@@ -12,7 +12,7 @@
                 <% CYCLE.PostsThisPage.forEach(item=>{ -%>
                     <%- include("includes/postcard.min.ejs",{item:BID[item]}) %>
                 <%})-%>
-                <Widget direct="Row">
+                <Widget class="fo_fd0">
                     <%if(CYCLE.Time!=1){%><a class=action href="<%=ROOT-%>/<%=CYCLE.PrevPage-%>">上一页</a><%}%>
                     <textlabel>第<%=CYCLE.Time-%>页，共<%=CYCLE.Total-%>页</textlabel>
                     <%if(CYCLE.Time!=CYCLE.Total){%><a class=action href="<%=ROOT-%>/<%=CYCLE.NextPage-%>">下一页</a><%}%>
@@ -21,7 +21,7 @@
         </Article>
         <Aside>
             <Box>
-                <%- include("includes/about.ejs") %>
+                <%- include("includes/about.min.ejs") %>
                 <%- include("includes/announcement.ejs") %>
             </Box>
         </Aside>

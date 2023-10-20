@@ -1,18 +1,18 @@
 <Widget bg="color">
-    <Container dirC>
-        <img src="<%=user.avatar-%>" wt.8 tag="Avatar">
+    <Container class="fo_fd1">
+        <img src="<%=user.avatar-%>" width="80" tag="Avatar">
         <h3>
             <a class=action href="<%=user.url-%>"><%=user.name-%></a>
         </h3>
     </Container>
-    <Container !center wt1 Em3et>
-        div.f-1,
-            p,:文章:.
-            p,:<%= Posts.length -%>:.
-        .
-        div.f-1,
-            p,:分类:.
-            p,:<%= CategoryPosts.length -%>:.
-        .
+    <Container !center width="full" Em3et>
+        div.f-1[
+            p[:文章:]
+            p[:<%= Posts.length -%>:]
+        ]
+        div.f-1[
+            p[:分类:]
+            p[:<%= CategoryPosts.length -%>:]
+        ]
     </Container>
 </Widget>
