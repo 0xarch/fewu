@@ -56,6 +56,7 @@ for (let item of LAYOUT_CONFIG.pages) {
             CYCLE.Time = i+1;
             CYCLE.PrevPage = PATH.join(item.build.destname,'index'+i+'.html');
             CYCLE.NextPage = PATH.join(item.build.destname,'index'+(i+2)+'.html');
+            CYCLE.PageDestinationPrefix = PATH.join(TemplateVariables.ROOT,item.build.destname);
             build_file(FS.readFileSync(filename).toString(), {
                 filename,
                 ...TemplateVariables,

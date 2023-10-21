@@ -9,14 +9,14 @@
     <FlexMain>
         <Article>
             <Shell>
-                <Widget>
-                    <% CategoryPosts.forEach(Cg=>{ -%>
+            <% CategoryPosts.forEach(Cg=>{ -%>
+                <Component class="fo_fd1">
                     <h2> <%= Cg.cate -%> </h2>
                     <FBox class="fo_fd1 w_90">
                         <% Cg.incl.forEach(item=>{ -%>
                         <% item = BID[item] -%>
                         <div wt1>
-                            <Action onclick="window.open('/<%= item.path -%>')"><%= item.title -%></Action>
+                            <a class="button" href="<%=ROOT-%>/<%=item.path-%>"><%=item.title-%></a>
                             <small>发布于<%= item.date -%>，共享协议: <%= item.cc?(item.cc!="PRIVATE"?"CC-"+item.cc:"私有"):"CC-BY-SA" -%></small>
                             <Text>
                                 <%- item.less -%>
@@ -25,8 +25,8 @@
                         <hr>
                         <% }) -%>
                     </FBox>
-                    <%})-%>
-                </Widget>
+                </Component>
+            <%})-%>
             </Shell>
         </Article>
         <Aside>

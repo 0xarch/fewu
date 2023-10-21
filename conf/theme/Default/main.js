@@ -8,13 +8,13 @@ const Colors = {
     "BROWN": [27, 38.2]
 }
 
-const Palette = new MPaletteProcesser(Colors);
+const Palette = new PaletteController(Colors);
 Palette.setPaletteFrom("primary", "GREEN", 500,true);
 Palette.setPaletteFrom("secondary", "BROWN", 500);
 
 window.onload=()=>{
-    MInitSet.ActionTitle();
-    MInitSet.Wind();
+    WidgetConstructor.ActionTitle();
+    WidgetConstructor.Wind();
     for(let item of SelectAll("*[Em3et]")){
         Em3et.render(item);
     }

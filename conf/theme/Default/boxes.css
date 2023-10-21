@@ -15,7 +15,7 @@ box {
     display: block;
 }
 
-widget {
+widget,component {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -23,9 +23,10 @@ widget {
     margin: 1.25rem;
     background: var(--widget-bg);
     border-radius: var(--m-large-round);
+    box-shadow:var(--m-medium-shadow);
 }
 
-widget[tag=PostCard]{
+widget[tag=PostCard],component.postcard{
     & container{
         display:flex;
     }
@@ -42,7 +43,7 @@ nav>* {
     display:flex;
 }
 
-widget:hover {
+widget:hover,component:hover {
     box-shadow: var(--card-box-shadow-hover);
 }
 
