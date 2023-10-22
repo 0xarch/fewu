@@ -58,7 +58,7 @@ function readDirectoryRecursive(Directory) {
 
 function ReadPosts(POST_DIR, SPECIAL_POSTS) {
     let bid = 0;
-    UTILS.Log.PICKING_UP("Reading directoty: "+POST_DIR,1);
+    UTILS.Log.PickingUp("Reading directoty: "+POST_DIR,1);
     let Posts = new Array,
         Specials = {};
     for (let path of readDirectoryRecursive(POST_DIR)) {
@@ -68,12 +68,12 @@ function ReadPosts(POST_DIR, SPECIAL_POSTS) {
         let file_data = ReadData(file_text);
         file_data.content = MARKED.parse(file_data.content);
         file_data.bid = bid;
-        UTILS.Log.PROGRESS("Read File: "+path,2);
+        UTILS.Log.Progress("Read File: "+path,2);
         if (SPECIAL_POSTS.includes(item)) Specials[item] = file_data;
         else Posts.push(file_data);
         bid += 1;
     }
-    UTILS.Log.FINISH_TASK("Read directory",1);
+    UTILS.Log.FinishTask("Read directory",1);
     return {
         Posts,
         Specials

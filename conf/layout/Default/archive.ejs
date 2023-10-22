@@ -9,14 +9,14 @@
     <FlexMain>
         <Article>
             <Shell>
-                <% CYCLE.PostsThisPage.forEach(item=>{ -%>
+                <% Cycling.PostsThisPage.forEach(item=>{ -%>
                     <%- include("includes/postcard2.ejs",{item:BID[item]}) %>
                 <%})-%>
                 <Pagination id="e_page">
                     {
-                        "page":"<%=CYCLE.Total-%>",
-                        "now":"<%=CYCLE.Time-%>",
-                        "link":"<%=ROOT-%>/<%=CYCLE.PageDestinationPrefix-%>/index${i}.html"
+                        "page":"<%=Cycling.TotalCount-%>",
+                        "now":"<%=Cycling.LoopTime-%>",
+                        "link":"<%=ROOT-%>/<%=Cycling.FileLocationPrefix-%>/index${i}.html"
                     }
                 </Pagination>
                 <script>buildPaginationJSON("e_page")</script>

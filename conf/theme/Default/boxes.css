@@ -15,7 +15,7 @@ box {
     display: block;
 }
 
-widget,component {
+widget,component,card {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,7 +26,8 @@ widget,component {
     box-shadow:var(--m-medium-shadow);
 }
 
-widget[tag=PostCard],component.postcard{
+card.postCard{
+    flex-direction: column;
     & container{
         display:flex;
     }
@@ -43,7 +44,7 @@ nav>* {
     display:flex;
 }
 
-widget:hover,component:hover {
+widget:hover,component:hover,card:hover {
     box-shadow: var(--card-box-shadow-hover);
 }
 

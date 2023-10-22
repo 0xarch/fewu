@@ -19,15 +19,11 @@ code.hljs {
 *[\!center] {
     text-align: center;
 }
-
-action,
-.action {
-    white-space: nowrap;
-    padding: var(--padding);
-}
-
 .button {
     text-decoration: none;
+}
+.dp_b{
+    display: block;
 }
 
 
@@ -105,27 +101,14 @@ img[tag=Avatar],img.avatar{
     object-fit: fill;
     border-radius: 18pt;
 }
-pagination{
+collapse{
+    margin: 1.25rem;
+}
+.postText{
+    width: 60vw;
+}
+.f_eaj{
     display: flex;
-    justify-content: center;
     align-items: center;
-    & >a.next,& >a.prev,& >a.page{
-        text-decoration: none;
-        font-weight: bold;
-        line-height: 1.12rem;
-        padding: .5rem;
-        margin: .25rem;
-        border-radius: var(--m-small-round);
-    }
-    & >a.disabled,& >a.disabled{
-        opacity: .5;
-    }
-    & >a.page:hover{
-        color:var(--primary-text-3);
-        background-color:var(--primary-color-3);
-    }
-    & >a.page.this{
-        color:var(--primary-text-1);
-        background-color: var(--primary-color-1);
-    }
+    justify-content: center;
 }

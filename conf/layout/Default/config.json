@@ -15,6 +15,11 @@
                             "every":5,
                             "name":"PostsThisPage"
                         }
+                },
+                "option":{
+                    "father":"Sorts.Sorted",
+                    "every":5,
+                    "name":"PostsThisPage"
                 }
             }
         },

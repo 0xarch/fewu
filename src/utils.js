@@ -14,22 +14,22 @@ exports.CCE=(Color,Effect)=>CCE(Color,Effect);
 exports.CEN=TermEnd;
 exports.CTX=(Text,Color,Effect)=>CTX(Text,Color,Effect);
 exports.Log={
-    PICKING_UP(text,tab){
-        console.log('\t'.repeat(tab)+CTX('[Picking up]','MAGENTA','BOLD')+' '+text);
-    },
-    PROCESSING(text,tab){
+    Processing(text,tab){
         console.log('\t'.repeat(tab)+CTX('[Processing]','YELLOW','BOLD')+' '+text);
     },
-    PROGRESS(text,tab){
+    Progress(text,tab){
         console.log('\t'.repeat(tab)+CTX('[Progress]','BLUE','BOLD')+' '+text);
     },
-    SUCCESS(text,tab){
+    Success(text,tab){
         console.log('\t'.repeat(tab)+CTX('[Success]','GREEN','BOLD')+' '+text);
     },
-    FINISH_TASK(text,tab){
+    FinishTask(text,tab){
         console.log('\t'.repeat(tab)+CTX('[Finish Task]','MAGENTA','BOLD')+' '+text);
     },
-    ERROR(text,tab){
+    Error(text,tab){
         console.log('\t'.repeat(tab)+CTX('[Error]','RED','BOLD')+' '+text);
+    },
+    PickingUp(text,tab){
+        console.log('\t'.repeat(tab)+CTX('[Picking up]','MAGENTA','BOLD')+' '+text);
     }
 }

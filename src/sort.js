@@ -20,7 +20,7 @@ function Sort(a, b) {
 
 function getSort(POSTS) {
     const SortedPosts = POSTS.sort(Sort);
-    UTILS.Log.PICKING_UP("Sorting Posts",1);
+    UTILS.Log.PickingUp("Sorting Posts",1);
 
     // ______ BID & 最近 & 默认 ______
     const BID = {};
@@ -43,7 +43,7 @@ function getSort(POSTS) {
         }
     });
     const DefaultPosts = topPosts.concat(untopPosts);
-    UTILS.Log.PROGRESS("Sorted by default",2);
+    UTILS.Log.Progress("Sorted by default",2);
 
     // _________ 分类 _________
     const categories = new Array;
@@ -77,7 +77,7 @@ function getSort(POSTS) {
         });
         CategoryPosts.push(incl);
     });
-    UTILS.Log.PROGRESS("Sorted by category",2);
+    UTILS.Log.Progress("Sorted by category",2);
 
     // ______ 日期 ______
     const SortedByDate = {};
@@ -89,9 +89,9 @@ function getSort(POSTS) {
         if(!SortedByDate[year][month][day])SortedByDate[year][month][day]=new Array;
         SortedByDate[year][month][day].push(item.bid);
     }
-    UTILS.Log.PROGRESS("Sorted by date",2);
+    UTILS.Log.Progress("Sorted by date",2);
 
-    UTILS.Log.FINISH_TASK("Sorted Posts",1);
+    UTILS.Log.FinishTask("Sorted posts by specfic orders",1);
 
     return {
         Posts: SortedPosts,
