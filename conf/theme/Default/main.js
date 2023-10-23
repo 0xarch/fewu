@@ -17,5 +17,6 @@ window.onload=()=>{
         Em3et.render(item);
     }
     renderAllCollapse();
+    renderAllCalendar();
     hljs.highlightAll();
 }

@@ -79,13 +79,13 @@ calendar{
     text-overflow: ellipsis;
     overflow: hidden;
 }
-*[mr="3"]{
+*[mr="3"],.mr_3{
     border-radius: var(--m-large-round);
 }
-*[mr="2"]{
+*[mr="2"],.mr_2{
     border-radius: var(--m-medium-round);
 }
-*[mr="1"]{
+*[mr="1"],.mr_1{
     border-radius: var(--m-small-round);
 }
 *[bg=none]{

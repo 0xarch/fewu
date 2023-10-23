@@ -8,14 +8,6 @@
                 "filename": "archive.ejs",
                 "destname": "archive",
                 "cycle": true,
-                "cyclebuild":{
-                    "var":
-                        {
-                            "father":"Sorts.Sorted",
-                            "every":5,
-                            "name":"PostsThisPage"
-                        }
-                },
                 "option":{
                     "father":"Sorts.Sorted",
                     "every":5,
