@@ -1,11 +1,11 @@
 <Card class="sp_mp postCard" tag="PostCard">
     <h3 m0><%= item.title -%></h3>
     <Container class="fo_fd0 w_100">
-        <Text wt1>
+        <Text class="w_75">
             <%- item.less -%>
         </Text>
         <Container class="fo_fd1" style="right:0">
-            <TextLabel>发布于<%= item.date -%></TextLabel>
+            <TextLabel><i class="fa-regular fa-calendar"></i> <%= item.date -%></TextLabel>
             <% if(item.top){ -%>
                 <Small>置顶文章</Small>
             <% } -%>

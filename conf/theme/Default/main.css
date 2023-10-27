@@ -10,9 +10,9 @@
 }
 /* M3TK Experimental */
 :root {
-    --m-large-round: 22px;
-    --m-medium-round: 18px;
-    --m-small-round: 12px;
+    --m-large-round: 18px;
+    --m-medium-round: 12px;
+    --m-small-round: 8px;
 }
 body {
     font-size: 12pt;
@@ -62,6 +62,9 @@ body {
         order:0;
         grid-column-start: 1;
         grid-column-end: 3;
+    }
+    .postText{
+        width: 90vw;
     }
 }
 

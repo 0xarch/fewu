@@ -104,6 +104,9 @@ img[tag=Avatar],img.avatar{
 collapse{
     margin: 1.25rem;
 }
+calendar,calendar>label>label.fo_fd0{
+    border-radius: var(--m-large-round);
+}
 .postText{
     width: 60vw;
 }
