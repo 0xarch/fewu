@@ -9,24 +9,20 @@
     <FlexMain>
         <Article>
             <Shell>
-            <% CategoryPosts.forEach(Cg=>{ -%>
-                <Component class="fo_fd1">
-                    <h2> <%= Cg.cate -%> </h2>
-                    <FBox class="fo_fd1 w_90">
-                        <% Cg.incl.forEach(item=>{ -%>
-                        <% item = BID[item] -%>
-                        <div wt1>
-                            <a class="button" href="<%=ROOT-%>/<%=item.path-%>"><%=item.title-%></a>
-                            <small>发布于<%= item.date -%>，共享协议: <%= item.cc?(item.cc!="PRIVATE"?"CC-"+item.cc:"私有"):"CC-BY-SA" -%></small>
-                            <Text>
-                                <%- item.less -%>
-                            </Text>
-                        </div>
-                        <hr>
-                        <% }) -%>
-                    </FBox>
-                </Component>
-            <%})-%>
+            <% for(let item in Sorts.byCategory){ -%>
+                <Card class="fo_fd1 sp_m">
+                    <h3><%=item-%></h3>
+                    <Container class="fo_fd0 w_100">
+                        <Container class="w_50 fo_fd1">
+                            <small>共<%=Sorts.byCategory[item].length-%>篇文章</small>
+                            <small>最近发布于<%=BID[Sorts.byCategory[item][0]].date-%></small>
+                        </Container>
+                        <Container class="fo_fd1" style="right:0">
+                            <a class="button w_90" href="<%=ROOT-%>/category/index_<%=item-%>.html">查看</a>
+                        </Container>
+                    </Container>
+                </Card>
+            <% } -%>
             </Shell>
         </Article>
         <Aside>

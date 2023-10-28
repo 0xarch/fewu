@@ -44,11 +44,11 @@ for (let item of LAYOUT_CONFIG.pages) {
     if (item.build.extras) inconf_extra = eval('let _intpvar=' + item.build.extras + ';_intpvar');
     
     // --- Cycle Building ---
-    if(item.build.cycle&&item.build.option){
-        UTILS.Log.Processing(`Doing Cycling Building for ${item.build.filename}`,2);
+    if( item.build.cycling&&item.build.option ){
+        UTILS.Log.Processing(`Doing Cycl-building for ${item.build.filename}`,2);
         let Cycling = {};
         let option = item.build.option;
-        let father_array = eval(option.father), every = option.every;
+        let father_array = eval(option.parent), every = option.every;
         Cycling.Enabled = true;
         Cycling.TotalCount = Math.ceil(father_array.length / every);
         for(let i=0;i*every<=father_array.length;++i){
@@ -62,15 +62,56 @@ for (let item of LAYOUT_CONFIG.pages) {
                 filename,
                 ...TemplateVariables,
                 ...Sorts,
+                Sorts,
                 ...inconf_extra,
                 Cycling
             }, destname);
+        }
+    } else
+    /**
+     * Varia-Building(Varias)
+     * To Enable, set build.varias: true
+     * Required configuration statements:
+     *  build.option: {
+     *      parent: <variable name> // this must be {} (paired object)
+     * }
+     * 
+     * Offers:
+     *  Varias:{
+     *      enabled: boolean, // true
+     *      keyName: string, // pair key
+     *      value: any, // pair value
+     * }
+     * 
+     * Changes:
+     *  destnation -> $(build.destname)/index_${Varias.keyName}.html
+     */
+    if( item.build.varias && item.build.option ){
+        UTILS.Log.Processing(`Doing Varia-building for ${item.build.filename}`,2);
+        let Varias = {};
+        let option = item.build.option;
+        let parent_var = eval(option.parent);
+        Varias.enabled = true;
+        for(let var_name in parent_var){
+            destname = PATH.join(PUBLIC_DIR, item.build.destname, 'index_'+var_name+'.html');
+            Varias.keyName = var_name;
+            Varias.value = parent_var[var_name];
+            console.log(Varias,"\n",parent_var,"\n",parent_var[item]);
+            build_file(FS.readFileSync(filename).toString(), {
+                filename,
+                ...TemplateVariables,
+                ...Sorts,
+                Sorts,
+                ...inconf_extra,
+                Varias
+            },destname);
         }
     } else
     build_file(FS.readFileSync(filename).toString(), {
         filename,
         ...TemplateVariables,
         ...Sorts,
+        Sorts,
         ...inconf_extra,
     }, destname);
 }

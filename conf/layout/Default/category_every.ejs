@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<%- include("includes/head.ejs",{title:{title:"分类",titleType:"function"}}) %>
+
+<body>
+    <Header>
+        <%- include("includes/nav.ejs",{Left:'共'+Varias.value.length+'篇文章',Center:'分类:'+Varias.keyName}) -%>
+    </Header>
+    <FlexMain>
+        <Article>
+            <Shell>
+                <% Varias.value.forEach(item=>{ -%>
+                    <%- include("includes/postcard2.ejs",{item:BID[item]}) -%>
+                <%})-%>
+            </Shell>
+        </Article>
+        <Aside>
+            <Box>
+                <%- include("includes/about.ejs") %>
+            </Box>
+        </Aside>
+    </FlexMain>
+</body>
+
+</html>

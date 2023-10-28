@@ -30,6 +30,11 @@ function ReadData(content) {
     data.top = data.top ? true : false;
     data.content = lines.slice(i).join("\n");
     data.less = extractLess(data.content);
+    if(data.category!=undefined){
+        data.category = data.category.split(" ");
+    }else{
+        data.category=[];
+    }
     return data;
 }
 

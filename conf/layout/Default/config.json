@@ -7,9 +7,9 @@
             "build": {
                 "filename": "archive.ejs",
                 "destname": "archive",
-                "cycle": true,
+                "cycling": true,
                 "option":{
-                    "father":"Sorts.Sorted",
+                    "parent":"Sorts.Sorted",
                     "every":5,
                     "name":"PostsThisPage"
                 }
@@ -20,6 +20,17 @@
             "build": {
                 "filename": "category.ejs",
                 "destname": "category"
+            }
+        },
+        {
+            "name": "category_every",
+            "build": {
+                "filename": "category_every.ejs",
+                "destname": "category",
+                "varias": true,
+                "option":{
+                    "parent":"Sorts.byCategory"
+                }
             }
         },
         {

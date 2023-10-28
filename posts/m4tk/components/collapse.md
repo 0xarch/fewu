@@ -73,6 +73,26 @@ Collapse可以实现对大量信息的折叠显示.
     </Panel>
 </Collapse>
 
+## 尺寸
+
+支持通过```size```设定大小。
+
+<Collapse size="1">
+    <Panel header="Default(Medium)">
+        size = 1
+    </Panel>
+</Collapse>
+<Collapse size="0">
+    <Panel header="Small">
+        size = 0
+    </Panel>
+</Collapse>
+<Collapse size="2">
+    <Panel header="Large">
+        size = 2
+    </Panel>
+</Collapse>
+
 ## 对于JS：
 
 提供 CollapseComponent 类用于构建 Collapse 标签.

@@ -49,9 +49,10 @@ function getSort(POSTS) {
     const categories = new Array;
     DefaultPosts.forEach(item => {
         item=BID[item];
-        if (!categories.includes(item.category)) {
-            categories.push(item.category);
-        }
+        for(let category of item.category)
+            if (!categories.includes(category)) {
+                categories.push(category);
+            }
     });
     const CategoryPosts = new Array;
     categories.forEach((item) => {
@@ -71,11 +72,27 @@ function getSort(POSTS) {
             "incl": new Array,
         };
         SortedPosts.forEach((item2) => {
-            if (item2.category == item) {
+            if (item2.category.includes(item)) {
                 incl.incl.push(item2.bid);
             }
         });
         CategoryPosts.push(incl);
+    });
+    // new
+    const byCategory = {};
+    categories.forEach(item=>{
+        /*
+            新的 Sorts.byCategory 的结构：
+            {
+                "分类名" : [ ...包含在该分类中的博客BID... ],
+                ...
+            }
+        */
+        byCategory[item] = [];
+        SortedPosts.forEach(item2=>{
+            if(item2.category.includes(item))
+                byCategory[item].push(item2.bid);
+        });
     });
     UTILS.Log.Progress("Sorted by category",2);
 
@@ -97,6 +114,7 @@ function getSort(POSTS) {
         Posts: SortedPosts,
         DefaultPosts,
         CategoryPosts,
+        byCategory,
         RecentPosts,
         SortedByDate,
         Sorted,

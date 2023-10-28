@@ -92,7 +92,7 @@ calendar{
     background: transparent;
 }
 *[bg=color],.bg_cld{
-    background-color: var(--background-colored);
+    background-color: var(--primary-background);
 }
 *[\!br]{
     border: none;
