@@ -9,9 +9,11 @@
                 "destname": "archive",
                 "cycling": true,
                 "option":{
-                    "parent":"Sorts.Sorted",
-                    "every":5,
-                    "name":"PostsThisPage"
+                    "cycling":{
+                        "parent":"Sorts.Sorted",
+                        "every":5,
+                        "name":"PostsThisPage"
+                    }
                 }
             }
         },
@@ -29,7 +31,9 @@
                 "destname": "category",
                 "varias": true,
                 "option":{
-                    "parent":"Sorts.byCategory"
+                    "varias":{
+                        "parent":"Sorts.byCategory"
+                    }
                 }
             }
         },

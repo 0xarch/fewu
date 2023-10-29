@@ -43,20 +43,42 @@ for (let item of LAYOUT_CONFIG.pages) {
     let inconf_extra = {};
     if (item.build.extras) inconf_extra = eval('let _intpvar=' + item.build.extras + ';_intpvar');
     
-    // --- Cycle Building ---
-    if( item.build.cycling&&item.build.option ){
+    /**
+     * Cycl-building(Cycling)
+     * To Enable, set build.cycling: true
+     * Required configuration statements:
+     *  build.option.cycling: {
+     *      parent: <variable name>, // this must be [] (Array-like)
+     *      every: number // integer, slice count
+     *      name: string // the name for child variable to use
+     * }
+     * 
+     * Offers:
+     *  Cycling: {
+     *      enabled: boolean, // true
+     *      TotalCount: number,
+     *      LoopTime: number,
+     *      FileLocationPrefix: string,
+     *      PreviousFile: string,
+     *      NextFile: string
+     * }
+     * 
+     * Changes:
+     *  destnation -> ${build.destname}/index_${Cycling.LoopTime}.html
+     */
+    if( item.build.cycling&&item.build.option.cycling ){
         UTILS.Log.Processing(`Doing Cycl-building for ${item.build.filename}`,2);
         let Cycling = {};
-        let option = item.build.option;
+        let option = item.build.option.cycling;
         let father_array = eval(option.parent), every = option.every;
-        Cycling.Enabled = true;
+        Cycling.enabled = true;
         Cycling.TotalCount = Math.ceil(father_array.length / every);
         for(let i=0;i*every<=father_array.length;++i){
-            destname = PATH.join(PUBLIC_DIR, item.build.destname, 'index'+(i+1)+'.html');
+            destname = PATH.join(PUBLIC_DIR, item.build.destname, 'index_'+(i+1)+'.html');
             Cycling[option.name] = father_array.slice(i*every,(i+1)*every);
             Cycling.LoopTime = i+1;
-            Cycling.PreviousFile = PATH.join(item.build.destname,'index'+i+'.html');
-            Cycling.NextFile = PATH.join(item.build.destname,'index'+(i+2)+'.html');
+            Cycling.PreviousFile = PATH.join(item.build.destname,'index_'+i+'.html');
+            Cycling.NextFile = PATH.join(item.build.destname,'index_'+(i+2)+'.html');
             Cycling.FileLocationPrefix = PATH.join(TemplateVariables.ROOT,item.build.destname);
             build_file(FS.readFileSync(filename).toString(), {
                 filename,
@@ -69,10 +91,10 @@ for (let item of LAYOUT_CONFIG.pages) {
         }
     } else
     /**
-     * Varia-Building(Varias)
+     * Varia-building(Varias)
      * To Enable, set build.varias: true
      * Required configuration statements:
-     *  build.option: {
+     *  build.option.varias: {
      *      parent: <variable name> // this must be {} (paired object)
      * }
      * 
@@ -84,19 +106,18 @@ for (let item of LAYOUT_CONFIG.pages) {
      * }
      * 
      * Changes:
-     *  destnation -> $(build.destname)/index_${Varias.keyName}.html
+     *  destnation -> ${build.destname}/index_${Varias.keyName}.html
      */
-    if( item.build.varias && item.build.option ){
+    if( item.build.varias && item.build.option.varias ){
         UTILS.Log.Processing(`Doing Varia-building for ${item.build.filename}`,2);
         let Varias = {};
-        let option = item.build.option;
+        let option = item.build.option.varias;
         let parent_var = eval(option.parent);
         Varias.enabled = true;
         for(let var_name in parent_var){
             destname = PATH.join(PUBLIC_DIR, item.build.destname, 'index_'+var_name+'.html');
             Varias.keyName = var_name;
             Varias.value = parent_var[var_name];
-            console.log(Varias,"\n",parent_var,"\n",parent_var[item]);
             build_file(FS.readFileSync(filename).toString(), {
                 filename,
                 ...TemplateVariables,
