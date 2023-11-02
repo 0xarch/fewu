@@ -82,7 +82,7 @@ function getSort(POSTS) {
     const byCategory = {};
     categories.forEach(item=>{
         /*
-            新的 Sorts.byCategory 的结构：
+            Sorts.byCategory：
             {
                 "分类名" : [ ...包含在该分类中的博客BID... ],
                 ...

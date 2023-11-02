@@ -4,25 +4,33 @@
 
 <body>
     <Header>
-        <%- include("includes/nav.ejs",{Left:'共'+CategoryPosts.length+'个分类',Center:'分类总览'}) -%>
+        <%- include("includes/nav.min.ejs",{Left:'共'+CategoryPosts.length+'个分类',Center:'分类总览'}) -%>
     </Header>
     <FlexMain>
         <Article>
             <Shell>
-            <% for(let item in Sorts.byCategory){ -%>
+            <% for(let item of Cycling.value){ -%>
                 <Card class="fo_fd1 sp_m">
-                    <h3><%=item-%></h3>
+                    <h3><%=item.key-%></h3>
                     <Container class="fo_fd0 w_100">
                         <Container class="w_50 fo_fd1">
-                            <small>共<%=Sorts.byCategory[item].length-%>篇文章</small>
-                            <small>最近发布于<%=BID[Sorts.byCategory[item][0]].date-%></small>
+                            <small>共<%=item.value.length-%>篇文章</small>
+                            <small>最近发布于<%=BID[item.value[0]].date-%></small>
                         </Container>
                         <Container class="fo_fd1" style="right:0">
-                            <a class="button w_90" href="<%=ROOT-%>/category/index_<%=item-%>.html">查看</a>
+                            <a class="button w_90" href="<%=ROOT-%>/category/s/index_<%=item.key-%>_1.html">查看</a>
                         </Container>
                     </Container>
                 </Card>
             <% } -%>
+            <Pagination id="e_page">
+                {
+                    "page":"<%=Cycling.TotalCount-%>",
+                    "now":"<%=Cycling.LoopTime-%>",
+                    "link":"<%=ROOT-%>/<%=Cycling.FileLocationPrefix-%>/index_${i}.html"
+                }
+            </Pagination>
+            <script>buildPaginationJSON("e_page")</script>
             </Shell>
         </Article>
         <Aside>

@@ -21,18 +21,32 @@
             "name": "category",
             "build": {
                 "filename": "category.ejs",
-                "destname": "category"
+                "destname": "category",
+                "cycling":true,
+                "option":{
+                    "cycling":{
+                        "parent":"Sorts.byCategory",
+                        "every":5,
+                        "name":"value"
+                    }
+                }
             }
         },
         {
             "name": "category_every",
             "build": {
                 "filename": "category_every.ejs",
-                "destname": "category",
+                "destname": "category/s",
                 "varias": true,
+                "cycling": true,
                 "option":{
                     "varias":{
                         "parent":"Sorts.byCategory"
+                    },
+                    "cycling":{
+                        "parent":"Varias.value",
+                        "every":5,
+                        "name":"value"
                     }
                 }
             }

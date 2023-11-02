@@ -31,5 +31,8 @@ exports.Log={
     },
     PickingUp(text,tab){
         console.log('\t'.repeat(tab)+CTX('[Picking up]','MAGENTA','BOLD')+' '+text);
+    },
+    out(text1,color1,text2,tab){
+        console.log('\t'.repeat(tab)+CTX(text1,color1,'BOLD')+' '+text2);
     }
 }

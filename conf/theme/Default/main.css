@@ -33,7 +33,7 @@ body {
     :root {
         --bg: #1e1e1e;
         --widget-bg: #242424;
-        --code-bg: #353535;
+        --code-bg: #151515;
         --color: #b9b9b9;
         --card-box-shadow-hover: 0px 3px 8px 6px rgba(67, 77, 87, 0.2);
     }

@@ -10,8 +10,16 @@
         <Article>
             <Shell>
                 <% Varias.value.forEach(item=>{ -%>
-                    <%- include("includes/postcard2.ejs",{item:BID[item]}) -%>
+                    <%- include("includes/postcard2.min.ejs",{item:BID[item]}) -%>
                 <%})-%>
+                <Pagination id="e_page">
+                    {
+                        "page":"<%=Cycling.TotalCount-%>",
+                        "now":"<%=Cycling.LoopTime-%>",
+                        "link":"<%=ROOT-%>/<%=Cycling.FileLocationPrefix-%>/index_<%=Varias.keyName-%>_${i}.html"
+                    }
+                </Pagination>
+                <script>buildPaginationJSON("e_page")</script>
             </Shell>
         </Article>
         <Aside>
