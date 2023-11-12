@@ -7,7 +7,6 @@
         <%-include("includes/toolbar.ejs")%>
     </UIHeader>
     <Paper>
-        <hr type="Blank">
         <% RecentPosts.forEach(item=>{ -%>
             <%- include("includes/postcard.ejs",{item}) %>
         <%})-%>

@@ -3,16 +3,11 @@ body {
     padding: 0;
 }
 
-header {
-    min-height: 4.5rem;
-}
-
-nav:first-child:last-child {
-    flex: 1;
-}
-
-box {
-    display: block;
+rbtn.MC-RB{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
 }
 
 widget,component,card {
@@ -37,42 +32,6 @@ card.postCard{
         display:flex;
     }
 }
-
-nav>* {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    display:flex;
-}
-
 widget:hover,component:hover,card:hover {
     box-shadow: var(--card-box-shadow-hover);
-}
-
-aside {
-    min-width: 22vw;
-    display: block;
-    flex: 1.5 !important;
-    & box{
-        position: sticky;
-        top: 8rem;
-    }
-}
-
-article {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-flexmain {
-    align-items: unset;
-    max-width: 1200px;
-    margin: 0px auto;
-    padding: 2rem 15px;
-    width: 100vw;
-    height: 100%;
-}
-
-shell {
-    width: 100%;
 }

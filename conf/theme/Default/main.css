@@ -14,6 +14,8 @@
 body {
     font-size: 12pt;
     --padding: .5rem;
+    --m-banner-h: 0px;
+    --m-toolbar-h: 0px;
 }
 
 @media (prefers-color-scheme:light) {
@@ -33,35 +35,6 @@ body {
         --code-bg: #151515;
         --color: #b9b9b9;
         --card-box-shadow-hover: 0px 3px 8px 6px rgba(67, 77, 87, 0.2);
-    }
-}
-
-@media only screen and (orientation:portrait) {
-    flexmain {
-        flex-direction: column;
-    }
-
-    body {
-        font-size: 15.5pt;
-        --padding: .25rem;
-    }
-
-    nav {
-        display: grid;
-        grid-template-columns: repeat(2,50%);
-        padding: 10pt;
-    }
-    nav>*{ margin:0 }
-
-    nav>left{ order: 1 }
-    nav>right{ order:2 }
-    nav>center{
-        order:0;
-        grid-column-start: 1;
-        grid-column-end: 3;
-    }
-    .postText{
-        width: 90vw;
     }
 }
 

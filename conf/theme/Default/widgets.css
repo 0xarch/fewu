@@ -16,7 +16,7 @@ code.hljs {
     border-radius: var(--rounded-corner);
 }
 
-*[\!center] {
+*[\!center],.MA-ta_center {
     text-align: center;
 }
 .button {
