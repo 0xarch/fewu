@@ -3,14 +3,14 @@
 <%- include("includes/head.ejs",{title:{title:"分类",titleType:"function"}}) %>
 
 <body>
-    <Header>
-        <%- include("includes/nav.ejs",{Left:'共'+Varias.value.length+'篇文章',Center:'分类:'+Varias.keyName}) -%>
-    </Header>
-    <FlexMain>
-        <Article>
-            <Shell>
+    <UIHeader>
+        <Banner>共<%=Varias.value.length-%>篇文章的分类为<%=Varias.keyName-%></Banner>
+        <%- include("includes/toolbar.ejs") -%>
+        <%#- include("includes/nav.ejs",{Left:'共'+Varias.value.length+'篇文章',Center:'分类:'+Varias.keyName}) -%>
+    </UIHeader>
+        <Paper>
                 <% Varias.value.forEach(item=>{ -%>
-                    <%- include("includes/postcard2.min.ejs",{item:BID[item]}) -%>
+                    <%- include("includes/postcard.ejs",{item:BID[item]}) -%>
                 <%})-%>
                 <Pagination id="e_page">
                     {
@@ -20,14 +20,12 @@
                     }
                 </Pagination>
                 <script>buildPaginationJSON("e_page")</script>
-            </Shell>
-        </Article>
-        <Aside>
+        </Paper>
+        <PaperContent>
             <Box>
                 <%- include("includes/about.ejs") %>
             </Box>
-        </Aside>
-    </FlexMain>
+        </PaperContent>
 </body>
 
 </html>

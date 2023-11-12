@@ -3,9 +3,10 @@
 <%- include("includes/head.ejs",{title:{title:"归档",titleType:"function"}}) %>
 
 <body>
-    <Header>
-        <%- include("includes/nav.min.ejs",{Left:'共'+Posts.length+'篇文章',Center:'归档总览'}) -%>
-    </Header>
+    <UIHeader>
+        <%- include("includes/toolbar.ejs") -%>
+        <%#- include("includes/nav.min.ejs",{Left:'共'+Posts.length+'篇文章',Center:'归档总览'}) -%>
+    </UIHeader>
     <FlexMain>
         <Article>
             <Shell>

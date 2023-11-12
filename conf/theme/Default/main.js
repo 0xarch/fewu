@@ -13,10 +13,10 @@ Palette.setPaletteFrom("primary", "GREEN", 500,true);
 Palette.setPaletteFrom("secondary", "BROWN", 500);
 
 window.onload=()=>{
-    for(let item of SelectAll("*[Em3et]")){
+    /*for(let item of SelectAll("*[Em3et]")){
         Em3et.render(item);
-    }
+    }*/
     renderAllCollapse();
-    renderAllCalendar();
+    $.loadAll();
     hljs.highlightAll();
 }

@@ -1,8 +1,9 @@
-<Component class="fo_fd1">
-    <h3 class="sp_m0">链接</h3>
-    <div class="fo_fd1 f_eaj">
-        <% user.data.friend_links.forEach(item=>{ -%>
-            <a href='<%=!item[1].includes("://")?"https://":""+item[1]-%>'><%=item[0]-%></a>
-        <% }) -%>
-    </div>
-</Component>
+<Collapse>
+    <Panel header="链接">
+        <div class="fo_fd1 f_eaj">
+            <% user.data.friend_links.forEach(item=>{ -%>
+                <a href='<%=!item[1].includes("://")?"https://":""+item[1]-%>'><%=item[0]-%></a>
+            <% }) -%>
+        </div>
+    </Panel>
+</Collapse>

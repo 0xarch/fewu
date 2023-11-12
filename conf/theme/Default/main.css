@@ -5,9 +5,6 @@
     display: block;
 }
 
-:root {
-    --rounded-corner: 12px;
-}
 /* M3TK Experimental */
 :root {
     --m-large-round: 18px;

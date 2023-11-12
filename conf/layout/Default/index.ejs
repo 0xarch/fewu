@@ -3,25 +3,22 @@
 <%- include("includes/head.ejs",{title:{title:"首页",titleType:"index"}}) %>
 
 <body>
-    <Header>
-        <%-include("includes/nav.ejs",{Left:user.name,Center:"_LOK_NONE"})%>
-    </Header>
-    <FlexMain>
-        <Article>
-            <Shell>
-                <% RecentPosts.forEach(item=>{ -%>
-                <%- include("includes/postcard2.ejs",{item}) %>
-                <%})-%>
-            </Shell>
-        </Article>
-        <Aside>
-            <Box>
-                <%- include("includes/about2.ejs") %>
-                <%- include("includes/announcement.ejs") %>
-                <%- include("includes/calendar.ejs") %>
-            </Box>
-        </Aside>
-    </FlexMain>
+    <UIHeader>
+        <%-include("includes/toolbar.ejs")%>
+    </UIHeader>
+    <Paper>
+        <hr type="Blank">
+        <% RecentPosts.forEach(item=>{ -%>
+            <%- include("includes/postcard.ejs",{item}) %>
+        <%})-%>
+    </Paper>
+    <PaperContent>
+        <%- include("includes/about.ejs") %>
+        <%- include("includes/announcement.ejs") %>
+        <%- include("includes/calendar.ejs") %>
+    </PaperContent>
 </body>
-
+    <script>
+        $.loadAll();
+    </script>
 </html>
