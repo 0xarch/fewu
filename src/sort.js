@@ -20,7 +20,7 @@ function Sort(a, b) {
 
 function getSort(POSTS) {
     const SortedPosts = POSTS.sort(Sort);
-    UTILS.Log.PickingUp("Sorting Posts",1);
+    UTILS.console.log("开始 - 排序 & 分类");
 
     // ______ BID & 最近 & 默认 ______
     const BID = {};
@@ -30,6 +30,7 @@ function getSort(POSTS) {
     const RecentPosts = SortedPosts.slice(0, 5);
     const Sorted = [];
     for(let item of SortedPosts)Sorted.push(item.bid);
+    const byDate = Array.from(Sorted);
 
     // _______ 置顶 _______
     var topPosts = Array();
@@ -43,6 +44,7 @@ function getSort(POSTS) {
         }
     });
     const DefaultPosts = topPosts.concat(untopPosts);
+    const byDefault = topPosts.concat(untopPosts);
     UTILS.Log.Progress("Sorted by default",2);
 
     // _________ 分类 _________
@@ -106,18 +108,43 @@ function getSort(POSTS) {
         if(!SortedByDate[year][month][day])SortedByDate[year][month][day]=new Array;
         SortedByDate[year][month][day].push(item.bid);
     }
-    UTILS.Log.Progress("Sorted by date",2);
 
-    UTILS.Log.FinishTask("Sorted posts by specfic orders",1);
+    // *** 更新日期 & 按更新日期归分
+    const UpdateDates = {};
+    const byUpdateDate = {};
+    for(let item of POSTS){
+        let date = new Date(item.date);
+        let y = date.getFullYear(), m = date.getMonth()+1, d = date.getDate();
+        if(! byUpdateDate[y]){
+            UpdateDates[y] = {};
+            byUpdateDate[y] = {};
+        }
+        if(! byUpdateDate[y][m]){
+            UpdateDates[y][m] = [];
+            byUpdateDate[y][m] = {};
+        }
+        if(! byUpdateDate[y][m][d]){
+            UpdateDates[y][m].push(d);
+            byUpdateDate[y][m][d] = [];
+        }
+        byUpdateDate[y][m][d].push(item.bid);
+    }
+    UTILS.console.log(JSON.stringify(byUpdateDate));
+    // UTILS.Log.Progress("Sorted by date",2);
+
+    // UTILS.Log.FinishTask("Sorted posts by specfic orders",1);
 
     return {
         Posts: SortedPosts,
         DefaultPosts,
         CategoryPosts,
         byCategory,
+        byUpdateDate,
+        byDate,
         RecentPosts,
         SortedByDate,
         Sorted,
+        UpdateDates,
         BID
     }
 }

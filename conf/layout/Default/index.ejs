@@ -3,9 +3,9 @@
 <%- include("includes/head.ejs",{title:{title:"首页",titleType:"index"}}) %>
 
 <body>
-    <UIHeader>
+    <header class="M3tk-E-RootBar ME-RootBar">
         <%-include("includes/toolbar.ejs")%>
-    </UIHeader>
+    </header>
     <Paper>
         <% RecentPosts.forEach(item=>{ -%>
             <%- include("includes/postcard.ejs",{item}) %>
@@ -13,7 +13,9 @@
     </Paper>
     <PaperContent>
         <%- include("includes/about.ejs") %>
+        <hr>
         <%- include("includes/announcement.ejs") %>
+        <hr>
         <%- include("includes/calendar.ejs") %>
     </PaperContent>
 </body>

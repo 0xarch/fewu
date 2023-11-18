@@ -10,7 +10,7 @@
                 "cycling": true,
                 "option":{
                     "cycling":{
-                        "parent":"Sorts.Sorted",
+                        "parent":"Sorts.byDate",
                         "every":5,
                         "name":"PostsThisPage"
                     }

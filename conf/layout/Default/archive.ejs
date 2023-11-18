@@ -10,7 +10,7 @@
     <FlexMain>
         <Article>
             <Shell>
-                <% Cycling.PostsThisPage.forEach(item=>{ -%>
+                <% Cycling.value.forEach((item)=>{ -%>
                     <%- include("includes/postcard2.ejs",{item:BID[item]}) %>
                 <%})-%>
                 <Pagination id="e_page">

@@ -34,5 +34,16 @@ exports.Log={
     },
     out(text1,color1,text2,tab){
         console.log('\t'.repeat(tab)+CTX(text1,color1,'BOLD')+' '+text2);
+    },
+}
+exports.console={
+    log:(...text)=>{
+        console.log(CTX('LOG','GREEN','BOLD'),'   - ',text.join(" "));
+    },
+    dbg:(...text)=>{
+        console.log(CTX('DEBUG','RED','BOLD'),' - ',text.join(" "));
+    },
+    warn:(...text)=>{
+        console.log(CTX('WARN','YELLOW','BOLD'),'  - ',text.join(" "));
     }
 }

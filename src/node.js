@@ -3,13 +3,13 @@ const FS_EXTRA = require("node-fs-extra");
 const FS = require("fs");
 const PATH = require("path");
 const UTILS = require("./utils");
-UTILS.Log.PickingUp("Starting Building");
+UTILS.console.log("开始 - 主任务");
 
 const ARGS = process.argv;
 const CONFIG = JSON.parse(FS.readFileSync(ARGS[2]).toString());
 const EMPTY_FN = () => {};
-const dbg=(...text)=>UTILS.Log.out('DEBUG MESSAGE','RED',text.join(" "));
-UTILS.Log.Success("Read Configuation File",1);
+const dbg=(...text)=>UTILS.console.dbg(text.join(" "));
+UTILS.console.log("完成 - 读取配置文件");
 
 const LAYOUT = CONFIG.look_and_feel.layout_dir,
     THEME = CONFIG.look_and_feel.theme_dir,
@@ -73,17 +73,16 @@ for (let item of LAYOUT_CONFIG.pages) {
             destname = PATH.join(PUBLIC_DIR, item.build.destname, 'index'+destSuffix+'.html');
             Varias.keyName = var_name;
             Varias.value = parent_var[var_name];
-
             const _W_vars = {Varias};
             BF_with(_W_vars,item,filename,destname,inconf_extra,destSuffix);
         }
     } else
     BF_with({},item,filename,destname,inconf_extra);
 }
-UTILS.Log.FinishTask("Built Pages Included in Theme",0);
-UTILS.Log.out("STARTING",'RED',"Building blogs",0);
+UTILS.console.log("开始 - 搭建所有文件");
 let post_filename = PATH.join(LAYOUT, 'post.ejs');
 let post_file = FS.readFileSync(post_filename).toString();
+
 Posts.forEach(item => {
     let destname = PATH.join(PUBLIC_DIR, item.path);
     build_file(post_file, {
@@ -96,13 +95,13 @@ Posts.forEach(item => {
 FS_EXTRA.copy(THEME, PATH.join(PUBLIC_DIR, 'theme'), EMPTY_FN);
 
 async function build_file(ejs_template, ejs_extra_json, path) {
-    UTILS.Log.out('PASSING','YELLOW',path,0);
+    UTILS.console.log('搭建文件',path);
     let content = EJS.render(ejs_template, ejs_extra_json);
     FS_EXTRA.mkdirsSync(PATH.resolve(path, '..'));
     FS.writeFile(path, content, (err)=>{
         if(err)throw err;
         else 
-        UTILS.Log.out('PASSED','GREEN',path,0);
+        UTILS.Log.out('完成 - 搭建文件',path);
     });
 }
 
@@ -131,8 +130,9 @@ async function BF_with(vars,item,filename,destname,inconf_extra,destSuffix){
      * Changes:
      *  destnation -> ${build.destname}/index_${Cycling.LoopTime}.html
      */
-    if( item.build.cycling&&item.build.option.cycling ){
-        UTILS.Log.Processing(`Doing Cycl-building for ${item.name}`,2);
+    if( item.build.cycling && item.build.option.cycling ){
+        // UTILS.Log.Processing(`Doing Cycl-building for ${item.name}`,2);
+        UTILS.console.log('Cycl - ',item.name);
         let Cycling = {};
         let option = item.build.option.cycling;
         // aro stands for "array or object"
@@ -155,11 +155,12 @@ async function BF_with(vars,item,filename,destname,inconf_extra,destSuffix){
             let _destPrePath = PATH.join(PUBLIC_DIR,item.build.destname);
             destname = PATH.join(_destPrePath, 'index'+destSuffix+'_'+(i+1)+'.html');
             Cycling[option.name] = father_aro.slice(i*every,(i+1)*every);
+            Cycling.value = father_aro.slice(i* every, (i+1)* every);
             Cycling.LoopTime = i+1;
             Cycling.PreviousFile = PATH.join(_destPrePath,'index'+destSuffix+'_'+i+'.html');
             Cycling.NextFile = PATH.join(_destPrePath,'index'+destSuffix+'_'+(i+2)+'.html');
             Cycling.FileLocationPrefix = PATH.join(TemplateVariables.ROOT,item.build.destname);
-            dbg(item.name,JSON.stringify(Cycling[option.name]));
+            dbg('Cycl',item.name,JSON.stringify(Cycling[option.name]));
             build_file(FS.readFileSync(filename).toString(), {
                 filename,
                 ...TemplateVariables,

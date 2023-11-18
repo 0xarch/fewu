@@ -22,25 +22,37 @@ code.hljs {
 .button {
     text-decoration: none;
 }
-.dp_b{
-    display: block;
+.TA-flexColCentered{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.TE-poCard-right{
+    right: 0;
+    justify-content: center;
+}
+.TE-poCard-imain{
+    display: flex;
+    margin: var(--g-margin);
+    min-height: calc(20* var(--g-unit));
+    justify-content: center;
+    width: 100%;
+}
+.ME-TRBtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
 }
 
 
 table {
     text-align: center;
 }
-
-calendar{
-    width: 100%;
-    align-items: center;
-    & label{
-        width: 100%;
-        & fbox[FullWidth]{
-            width: calc(3.5rem * 7);
-        }
-    }
+hr {
+    opacity: .25;
 }
+
 .gt-header-controls-tip{
     display: block;
 }
@@ -103,9 +115,6 @@ img[tag=Avatar],img.avatar{
 }
 collapse{
     margin: 1.25rem;
-}
-calendar,calendar>label>label.fo_fd0{
-    border-radius: var(--m-large-round);
 }
 .postText{
     width: 60vw;
