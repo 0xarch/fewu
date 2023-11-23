@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<%- include("includes/head.ejs",{title:{title:post.title,titleType:"read"}}) %>
+
+<body>
+    <UIHeader>
+        <Banner>
+            发布于 <%= post.date -%>, 作者： <%= post.author?post.author:user.name -%>
+        </Banner>
+        <%- include("includes/toolbar.ejs") -%>
+    </UIHeader>
+        <Paper class="ME-Paper">
+            <div class="M3tk-ContentBox HJ-gMdR">
+                <%- post.textContent %>
+            </div>
+        </Paper>
+        <PaperContent class="ME-Sidebar">
+            <h3 m0>目录</h3>
+            <div class="M3tk-R-Content"></div>
+            <hr>
+            <%- include("includes/about.ejs") %>
+            <hr>
+            <%- include("includes/friendlink.ejs") %>
+            <%- include("includes/cc2.ejs",{cc:post.cc?post.cc:"BY-SA"}) %>
+        </PaperContent>
+        <script>
+            $.loadAll(true);
+            let contentBox = jMata.select('.HJ-gMdR');
+            contentBox.innerHTML = marked.parse(contentBox.innerHTML);
+        </script>
+</body>
+</html>

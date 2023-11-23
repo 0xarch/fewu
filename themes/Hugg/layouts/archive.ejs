@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<%- include("includes/head.ejs",{title:{title:"归档",titleType:"function"}}) %>
+
+<body>
+    <UIHeader>
+        <%- include("includes/toolbar.ejs") -%>
+    </UIHeader>
+    <Paper class="ME-Paper">
+        <% Cycling.value.forEach((item)=>{ -%>
+            <%- include("includes/postcard.ejs",{item:BID[item]}) %>
+        <%})-%>
+        <Pagination class="ME-Pagination" id="e_page">
+            {
+                "page":"<%=Cycling.TotalCount-%>",
+                "now":"<%=Cycling.LoopTime-%>",
+                "link":"<%=ROOT-%>/<%=Cycling.FileLocationPrefix-%>/index_${i}.html"
+            }
+        </Pagination>
+        <script>buildPaginationJSON("e_page")</script>
+    </Paper>
+    <PaperContent class="ME-Sidebar">
+        <%- include("includes/about.ejs") %>
+        <%- include("includes/announcement.ejs") %>
+    </PaperContent>
+</body>
+
+</html>

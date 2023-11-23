@@ -1,0 +1,18 @@
+<Toolbar>
+<% if(Left!='_LOK_NONE'){ -%>
+    <Left>
+        <%-Left!='_LOK_STAND'?Left:''-%>
+    </Left>
+<% } -%>
+<% if(Center!='_LOK_NONE'){ -%>
+    <Center>
+        <%-Center!='_LOK_STAND'?Center:''-%>
+    </Center>
+<% } -%>
+    <% if(Left!='none' || Center!='none'){ -%><Right><%}%>
+        <a class="button !shadow" href="<%=ROOT-%>/">首页</a>
+        <a class="button !shadow" href="<%=ROOT-%>/archive/index_1.html">归档</a>
+        <a class="button !shadow" href="<%=ROOT-%>/category/index_1.html">分类</a>
+        <a class="button !shadow" href="<%=ROOT-%>/about">关于</a>
+    <% if(Left!='none' || Center!='none'){ -%></Right><%}%>
+</Toolbar>

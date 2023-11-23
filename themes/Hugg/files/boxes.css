@@ -1,0 +1,25 @@
+widget,component,card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 23vw;
+    margin: 1.25rem;
+    background: var(--widget-bg);
+    border-radius: var(--m-large-round);
+    box-shadow:var(--m-medium-shadow);
+}
+
+card.postCard{
+    flex-direction: column;
+    & container{
+        display:flex;
+    }
+    & a.action{
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display:flex;
+    }
+}
+widget:hover,component:hover,card:hover {
+    box-shadow: var(--card-box-shadow-hover);
+}
