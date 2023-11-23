@@ -2,14 +2,26 @@ const EJS = require("ejs");
 const FS_EXTRA = require("node-fs-extra");
 const FS = require("fs");
 const PATH = require("path");
+const Path = require('path');
 const UTILS = require("./utils");
-UTILS.console.log("开始 - 主任务");
+const FileSys = require('./modules/lib/filesys');
+const Hug = require('./modules/app/hug');
+const Optam = require('./modules/app/optam');
+Hug.log("开始","主任务");
+Hug.log(JSON.stringify(Hug.gopt(process.argv)));
 
+const argv = Hug.gopt(process.argv);
 const ARGS = process.argv;
-const CONFIG = JSON.parse(FS.readFileSync(ARGS[2]).toString());
+const CONFIG = JSON.parse(FS.readFileSync(argv['config']).toString());
+const GlobalConfig = JSON.parse(FileSys.readFile(argv['config']));
 const EMPTY_FN = () => {};
 const dbg=(...text)=>UTILS.console.dbg(text.join(" "));
-UTILS.console.log("完成 - 读取配置文件");
+
+Hug.log("完成","读取配置文件");
+
+if(argv['dry-run'] == 'null'){
+    process.exit();
+}
 
 const LAYOUT = CONFIG.look_and_feel.layout_dir,
     THEME = CONFIG.look_and_feel.theme_dir,
@@ -18,13 +30,25 @@ const LAYOUT = CONFIG.look_and_feel.layout_dir,
     PUBLIC_DIR = CONFIG.build.public_dir,
     SPECIAL_POSTS = CONFIG.build.special_posts;
 
+const PostDir = GlobalConfig.build.post_directory,
+      ThemeDir = Path.join('themes',GlobalConfig.theme.name);
+const ThemeName = GlobalConfig.theme.name;
+const ThemeConfig = JSON.parse(FileSys.readFile(ThemeDir,'config.json'));
+
+if(PostDir == undefined ) PostDir = "posts";
+
+if(argv['dry-run'] == 'config'){
+    Hug.log(JSON.stringify(GlobalConfig));
+    Hug.nextline();
+    Hug.log(JSON.stringify(ThemeConfig));
+    process.exit();
+}
+
 const LAYOUT_CONFIG = JSON.parse(FS.readFileSync(PATH.join(LAYOUT, 'config.json')).toString());
 
-let RawPosts = require("./post").ReadPosts(POST_DIR, SPECIAL_POSTS);
-const Posts = RawPosts.Posts,
-    Specials = RawPosts.Specials;
+const {Posts,Specials} = Optam.ReadPosts(PostDir,GlobalConfig.excluded_posts);
 const Sorts = require("./sort").getSort(Posts);
-UTILS.Log.Success("Read Post Information",1);
+// UTILS.Log.Success("Read Post Information",1);
 
 const TemplateVariables = {
     Posts,
@@ -37,7 +61,19 @@ const TemplateVariables = {
     F:(text)=>text.replace(/([\:\/])/g,'\\$1').replace(/</g,"&lt;").replace(/>/g,"&gt;")
 };
 
-UTILS.Log.PickingUp("Build Pages Included in Theme",1);
+const BuildVariables = {
+    Posts,
+    Sorts,
+    config: GlobalConfig
+}
+
+if(argv['test-parse'] == 'jsx'){
+    if(argv['test-file'] != 'null' ){
+        Hug.log(renderJSX(FileSys.readFile(argv['test-file']),BuildVariables));
+    }
+    process.exit();
+}
+
 for (let item of LAYOUT_CONFIG.pages) {
     let filename = PATH.join(LAYOUT, item.build.filename),
         destname = PATH.join(PUBLIC_DIR, item.build.destname, 'index.html');
@@ -95,14 +131,10 @@ Posts.forEach(item => {
 FS_EXTRA.copy(THEME, PATH.join(PUBLIC_DIR, 'theme'), EMPTY_FN);
 
 async function build_file(ejs_template, ejs_extra_json, path) {
-    UTILS.console.log('搭建文件',path);
+    Hug.log('搭建文件',path);
     let content = EJS.render(ejs_template, ejs_extra_json);
     FS_EXTRA.mkdirsSync(PATH.resolve(path, '..'));
-    FS.writeFile(path, content, (err)=>{
-        if(err)throw err;
-        else 
-        UTILS.Log.out('完成 - 搭建文件',path);
-    });
+    FileSys.writeFile(content,path);
 }
 
 async function BF_with(vars,item,filename,destname,inconf_extra,destSuffix){
@@ -161,7 +193,7 @@ async function BF_with(vars,item,filename,destname,inconf_extra,destSuffix){
             Cycling.NextFile = PATH.join(_destPrePath,'index'+destSuffix+'_'+(i+2)+'.html');
             Cycling.FileLocationPrefix = PATH.join(TemplateVariables.ROOT,item.build.destname);
             dbg('Cycl',item.name,JSON.stringify(Cycling[option.name]));
-            build_file(FS.readFileSync(filename).toString(), {
+            build_file(FileSys.readFile(filename), {
                 filename,
                 ...TemplateVariables,
                 ...Sorts,
@@ -172,7 +204,7 @@ async function BF_with(vars,item,filename,destname,inconf_extra,destSuffix){
             }, destname);
         }
     } else
-    build_file(FS.readFileSync(filename).toString(), {
+    build_file(FileSys.readFile(filename), {
         filename,
         ...TemplateVariables,
         ...Sorts,

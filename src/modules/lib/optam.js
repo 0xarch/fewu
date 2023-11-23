@@ -1,7 +1,7 @@
 const PATH = require("path");
-const FS = require("fs");
 const MARKED = require("marked");
-const UTILS = require("./utils");
+const Hug = require('./hug');
+const Hail = require('./hail');
 
 /**
  * 
@@ -24,12 +24,16 @@ function ReadData(content) {
         }
         i++;
     }
-    data.transformed_title = data.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'\～\·\「\」\；\：\‘\’\“\”\，\。\《\》\？\！\￥\…\、\（\）]/g,'_');
-    data.path = `${data.date.replace(/-/g,"/")}/${data.transformed_title}/index.html`;
-    data.src = `/${data.date.replace(/-/g,"/")}/${data.transformed_title}/`;
-    data.top = data.top=="true" ? true : false;
-    data.content = lines.slice(i).join("\n");
-    data.less = extractLess(data.content);
+    try{
+        data.transformed_title = data.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'\～\·\「\」\；\：\‘\’\“\”\，\。\《\》\？\！\￥\…\、\（\）]/g,'_'); 
+        data.path = `${data.date.replace(/-/g,"/")}/${data.transformed_title}/index.html`;
+        data.src = `/${data.date.replace(/-/g,"/")}/${data.transformed_title}/`;
+        data.top = data.top=="true" ? true : false;
+    }catch(_) {}
+    // data.content = lines.slice(i).join("\n");
+    data.textContent = lines.slice(i).join('\n');
+    data.less = extractLess(data.textContent);
+    data.lessContent = findLessContent(lines);
     if(data.category!=undefined){
         data.category = data.category.split(" ");
     }else{
@@ -50,38 +54,31 @@ function extractLess(content) {
     }
 }
 
-function readDirectoryRecursive(Directory) {
-    let returns = new Array;
-    for (let item of FS.readdirSync(Directory)) {
-        let path = PATH.join(Directory, item);
-        let stat = FS.statSync(path);
-        if (stat.isDirectory()) returns.push(...readDirectoryRecursive(path));
-        else returns.push(path);
-    }
-    return returns;
+function findLessContent(lines) {
+    const moreIndex = lines.indexOf('<!--more-->');
+    return lines.slice(0, (moreIndex !== -1) ?moreIndex :5) .join('n').replace(/\#*/g,'');
 }
 
-function ReadPosts(POST_DIR, SPECIAL_POSTS) {
+function ReadPosts(PostDir, SPECIAL_POSTS) {
     let bid = 0;
-    UTILS.Log.PickingUp("Reading directoty: "+POST_DIR,1);
+    Hug.log("读取目录",PostDir);
     let Posts = new Array,
         Specials = {};
-    for (let path of readDirectoryRecursive(POST_DIR)) {
-
-        let item = PATH.basename(path, POST_DIR);
-        let file_text = FS.readFileSync(path).toString();
+    for (let path of Hail.traverse(PostDir)) {
+        let item = PATH.basename(path, PostDir);
+        let file_text = Hail.readFile(path);
         let file_data = ReadData(file_text);
-        file_data.content = MARKED.parse(file_data.content);
+        // file_data.content = MARKED.parse(file_data.content);
         file_data.bid = bid;
-        UTILS.Log.Progress("Read File: "+path,2);
+        
         if (SPECIAL_POSTS.includes(item)) Specials[item] = file_data;
         else Posts.push(file_data);
         bid += 1;
     }
-    UTILS.Log.FinishTask("Read directory",1);
     return {
         Posts,
         Specials
     };
 }
+
 exports.ReadPosts = (POST_DIR, SPECIAL_POSTS) => ReadPosts(POST_DIR, SPECIAL_POSTS);
