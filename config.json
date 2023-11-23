@@ -2,17 +2,29 @@
     "user": {
         "name": "oxArch",
         "url": "https://github.com/0xarch",
-        "avatar": "/theme/default_avatar.png",
+        "avatar": "/files/default_avatar.png",
         "note": "We won't be disturbed!",
         "location": "Xvd 114514",
         "data":{
             "announcement": "",
             "friend_links":[
-                ["王深蹲的博客","wangyuzhen666.github.io"],
-                ["Twitter","x.com"]
+                "王深蹲的博客 | wangyuzhen666.github.io",
+                "Twitter | x.com"
             ]
         }
     },
+    "appearance":{
+        "title":{
+            "separator": "|",
+            "function": "",
+            "read": "",
+            "index": "Hello! oxArch"
+        }
+    },
+    "theme":{
+        "name":"Hugg"
+    },
+    "excluded_posts": ["about.md","news.md"],
     "look_and_feel": {
         "layout_dir": "conf/layout/Default/",
         "theme_dir": "conf/theme/Default/",
@@ -34,9 +46,11 @@
         }
     },
     "build": {
+        "post_directory":"posts",
         "post_dir": "posts",
         "public_dir": "public",
-        "special_posts": ["about.md"],
+        "public_directory": "public",
+        "special_posts": ["about.md","news.md"],
         "site_root": "/"
     }
 }
