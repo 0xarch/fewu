@@ -2,7 +2,6 @@ const Path = require('path');
 const Hail = require('../modules/lib/hail');
 const Hug = require('../modules/lib/hug');
 const Optam = require('../modules/lib/optam');
-const Sort = require('../sort'); // 过时的
 const builder = require('../modules/app/builder');
 Hug.log("开始","主任务");
 
@@ -37,7 +36,7 @@ function main(){
     }
 
     const {Posts,Specials} = Optam.ReadPosts(PostDir,GlobalConfig.excluded_posts);
-    const Sorts = Sort.getSort(Posts);
+    const Sorts = Optam.getSort(Posts);
 
     const BuildVariables = {
         Posts,
@@ -99,7 +98,7 @@ function main(){
             filename: postFilename,
             ...BuildVariables,
             ...Sorts
-        },destname);
+        },destname,ThemeConfig);
     })
     Hail.copyFile(ThemeFilesDir,Path.join(PublicDir,'files'));
     
@@ -165,7 +164,7 @@ function main(){
                     ...inconf_extra,
                     ...vars,
                     Cycling
-                },destname);
+                },destname,ThemeConfig);
             }
         } else
         builder.build(ThemeLayoutType,Hail.readFile(filename),{
@@ -174,7 +173,7 @@ function main(){
             ...Sorts,
             ...inconf_extra,
             ...vars
-        }, destname)
+        }, destname,ThemeConfig)
     }
 }
 

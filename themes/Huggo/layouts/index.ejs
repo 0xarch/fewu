@@ -1,0 +1,24 @@
+<html>
+<%- include("includes/head.ejs",{title:{title:"首页",titleType:"index"}}) %>
+
+<body>
+    <UIHeader class="ME-RootBar">
+        <%-include("includes/toolbar.ejs")%>
+    </UIHeader>
+    <Paper>
+        <% Sorts.RecentPosts.forEach((item)=>{ -%>
+            <%- include("includes/postcard.ejs",{item:BID[item]}) %>
+        <%})-%>
+    </Paper>
+    <Sidebar>
+<%- include("includes/components/about.ejs") %>
+        <Divider />
+<%- include("includes/announcement.ejs") %>
+        <Divider />
+<%- include("includes/calendar.ejs") %>
+    </Sidebar>
+</body>
+    <script>
+        $.loadAll();
+    </script>
+</html>

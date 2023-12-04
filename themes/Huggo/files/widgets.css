@@ -38,7 +38,7 @@ code.hljs {
     justify-content: center;
     width: 100%;
 }
-.ME-TRBtn{
+.ME-RBtn{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -106,12 +106,24 @@ hr {
 *[bg=color],.bg_cld{
     background-color: var(--primary-background);
 }
-*[\!br]{
-    border: none;
+.ME-Container{
+    display: flex;
 }
-img[tag=Avatar],img.avatar{
+.ME-CardBody{
+    border-radius: 0.4rem;
+    overflow: hidden;
+}
+.ME-C,.MA-C{
+    text-align: center;
+}
+.MA-noRound{
+    border-radius: 0px !important;
+}
+img.avatar{
     object-fit: fill;
-    border-radius: 18pt;
+}
+.button{
+    border-radius: 0.4rem;
 }
 collapse{
     margin: 1.25rem;

@@ -3,7 +3,7 @@
         <div class="fo_fd1 f_eaj">
             <% user.data.friend_links.forEach((item)=>{ -%>
                 <% item = item.split(" | "); -%>
-                <a href='<%=!item[1].includes("://")?"https://":""+item[1]-%>'><%=item[0]-%></a>
+                <a href="<%=!item[1].includes("://")?"https://":""+item[1]-%>"><%=item[0]-%></a>
             <% }) -%>
         </div>
     </Panel>

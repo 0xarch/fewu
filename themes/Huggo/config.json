@@ -1,14 +1,14 @@
 {
     "name": "Hugg Theme",
     "author": "Hogger team",
-    "description": "Default Theme for Hogger",
-    "lib_used":[
+    "description": "Default Theme in Hogger",
+    "lib":[
         "@github:0xarch/mata-toolkit",
         "@github:markedjs/marked",
         "@github:highlightjs/highlight.js"
     ],
     "layout":{
-        "type":"EJS",
+        "type":"G-EJS",
         "post_layout":"post.ejs",
         "layouts":[{
             "name": "archive",
@@ -79,5 +79,14 @@
     },
     "files":{
 
+    },
+    "EJSX":{
+        "removeLineBreak":false,
+        "skipWhitespace":false,
+        "replaceVariables":true,
+        "elementReplace":{
+            "Divider":"hr"
+        },
+        "classPrefix":"ME-"
     }
 }

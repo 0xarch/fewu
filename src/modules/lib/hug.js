@@ -13,23 +13,12 @@ const CTX=(Text,Color,Effect)=>CCE(Color,Effect)+Text+TermEnd;
 exports.CCE=CCE;
 exports.CEN=TermEnd;
 exports.CTX=CTX;
-exports.console={
-    log:(...text)=>{
-        console.log(CTX('LOG','GREEN','BOLD'),'   - ',text.join(" "));
-    },
-    dbg:(...text)=>{
-        console.log(CTX('DEBUG','RED','BOLD'),' - ',text.join(" "));
-    },
-    warn:(...text)=>{
-        console.log(CTX('WARN','YELLOW','BOLD'),'  - ',text.join(" "));
-    }
-}
 exports.log = (...text) => 
-    console.log(CTX('LOG','GREEN','BOLD')+'   '+text.join(" - "));
+    console.log('LOG'+'   '+text.join(" - "));
 exports.dbg = (...text) =>
-    console.log(CTX('DBG','ORANGE','BOLD')+'   '+text.join(" - "));
+    console.log('DBG'+'   '+text.join(" - "));
 exports.err = (...text) =>
-    console.error(CTX('ERR','RED','BOLD')+'   '+text.join(" - "));
+    console.error('ERR'+'   '+text.join(" - "));
 exports.nextline = () =>console.log('\n');
 
 /**

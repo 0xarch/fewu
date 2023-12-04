@@ -9,7 +9,7 @@ widget,component,card {
     box-shadow:var(--m-medium-shadow);
 }
 
-card.postCard{
+.ME-Card.postCard{
     flex-direction: column;
     & container{
         display:flex;

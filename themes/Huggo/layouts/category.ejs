@@ -1,12 +1,10 @@
-<!DOCTYPE html>
 <html>
 <%- include("includes/head.ejs",{title:{title:"分类",titleType:"function"}}) %>
 
 <body>
     <UIHeader>
-        <Banner>共<%=CategoryPosts.length-%>个分类</Banner>
+        <Banner>共<%=Sorts.byCategory.length-%>个分类</Banner>
         <%- include("includes/toolbar.ejs") -%>
-        <%#- include("includes/nav.min.ejs",{Left:'共'+CategoryPosts.length+'个分类',Center:'分类总览'}) -%>
     </UIHeader>
         <Paper>
             <% for(let item of Cycling.value){ -%>
@@ -33,11 +31,9 @@
             </Pagination>
             <script>buildPaginationJSON("e_page")</script>
         </Paper>
-        <PaperContent>
-            <Box>
-                <%- include("includes/about.ejs") %>
-            </Box>
-        <PaperContent>
+        <Sidebar>
+            <%- include("includes/components/about.ejs") %>
+        <Sidebar>
 </body>
 
 </html>

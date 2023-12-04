@@ -11,7 +11,6 @@ const Colors = {
 window.onload=()=>{
     jMata.setPalette("primary",Colors.GREEN,500);
     renderAllCollapse();
-    renderToolbar(jMata.select('Toolbar'));
-    // $.loadAll();
+    renderToolbar(jMata.select('.ME-Toolbar'));
     hljs.highlightAll();
 }

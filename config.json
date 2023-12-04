@@ -22,7 +22,7 @@
         }
     },
     "theme":{
-        "name":"Hugg"
+        "name":"Huggo"
     },
     "excluded_posts": ["about.md","news.md"],
     "look_and_feel": {

@@ -3,6 +3,15 @@ const MARKED = require("marked");
 const Hug = require('./hug');
 const Hail = require('./hail');
 
+class JPassage{
+    content;
+    author;
+    license;
+    category;
+    id;
+    foreword;
+}
+
 /**
  * 
  * @param { string } content 
@@ -30,7 +39,6 @@ function ReadData(content) {
         data.src = `/${data.date.replace(/-/g,"/")}/${data.transformed_title}/`;
         data.top = data.top=="true" ? true : false;
     }catch(_) {}
-    // data.content = lines.slice(i).join("\n");
     data.textContent = lines.slice(i).join('\n');
     data.less = extractLess(data.textContent);
     data.lessContent = findLessContent(lines);
@@ -68,7 +76,6 @@ function ReadPosts(PostDir, SPECIAL_POSTS) {
         let item = PATH.basename(path, PostDir);
         let file_text = Hail.readFile(path);
         let file_data = ReadData(file_text);
-        // file_data.content = MARKED.parse(file_data.content);
         file_data.bid = bid;
         
         if (SPECIAL_POSTS.includes(item)) Specials[item] = file_data;
@@ -82,3 +89,149 @@ function ReadPosts(PostDir, SPECIAL_POSTS) {
 }
 
 exports.ReadPosts = (POST_DIR, SPECIAL_POSTS) => ReadPosts(POST_DIR, SPECIAL_POSTS);
+
+function Sort(a, b) {
+    const A = a.date,
+        B = b.date;
+    const Ay = A.slice(0, 4),
+        By = B.slice(0, 4);
+    if (Ay > By) return -1;
+    else if (Ay < By) return 1;
+    else { // Ay = By
+        const Am = A.slice(5, 7),
+            Bm = B.slice(5, 7);
+        if (Am > Bm) return -1;
+        else if (Am < Bm) return 1;
+        else { // Am = Bm
+            return B.slice(8, 10) - A.slice(8, 10);
+        }
+    }
+}
+
+const _SortPassage = (a,b) =>{
+    const A = a.date,
+        B = b.date;
+    const Ay = A.slice(0, 4),
+        By = B.slice(0, 4);
+    if (Ay > By) return -1;
+    else if (Ay < By) return 1;
+    else { // Ay = By
+        const Am = A.slice(5, 7),
+            Bm = B.slice(5, 7);
+        if (Am > Bm) return -1;
+        else if (Am < Bm) return 1;
+        else { // Am = Bm
+            return B.slice(8, 10) - A.slice(8, 10);
+        }
+    }
+}
+
+function getSort(POSTS) {
+    const SortedPosts = POSTS.sort(Sort);
+    const rawByDate = POSTS.sort(_SortPassage);
+    Hug.log("开始","排序 & 分类");
+
+    // ______ BID & 最近 & 默认 ______
+    const BID = {};
+    const byDate = [];
+    for (let item of rawByDate) {
+        BID[item.bid] = item;
+        byDate.push(item.bid);
+    }
+    const Sorted = Array.from(byDate);
+    const RecentPosts = Sorted.slice(0, 5);
+
+    // _______ 置顶 _______
+    var topPosts = [];
+    var untopPosts = [];
+
+    /*SortedPosts.forEach((item) => {
+        if (item.top == "true") {
+            topPosts.push(item.bid);
+        } else {
+            untopPosts.push(item.bid);
+        }
+    });*/
+    for(let item of rawByDate){
+        if(item.top){
+            topPosts.push(item.bid);
+        }else{
+            untopPosts.push(item.bid);
+        }
+    }
+    const DefaultPosts = topPosts.concat(untopPosts);
+    const byDefault = topPosts.concat(untopPosts);
+
+    // _________ 分类 _________
+    const categories = [];
+    DefaultPosts.forEach(item => {
+        item=BID[item];
+        for(let category of item.category)
+            if (!categories.includes(category)) {
+                categories.push(category);
+            }
+    });
+    const byCategory = {};
+    categories.forEach(item=>{
+        /*
+            Sorts.byCategory：
+            {
+                "分类名" : [ ...包含在该分类中的博客BID... ],
+                ...
+            }
+        */
+        byCategory[item] = [];
+        SortedPosts.forEach(item2=>{
+            if(item2.category.includes(item))
+                byCategory[item].push(item2.bid);
+        });
+    });
+    console.log(byCategory);
+
+    // ______ 日期 ______
+    const SortedByDate = {};
+    for(let item of POSTS){
+        let date = new Date(item.date);
+        let year = date.getFullYear(),month=date.getMonth()+1,day=date.getDate();
+        if(!SortedByDate[year])SortedByDate[year]={};
+        if(!SortedByDate[year][month])SortedByDate[year][month]={};
+        if(!SortedByDate[year][month][day])SortedByDate[year][month][day]=new Array;
+        SortedByDate[year][month][day].push(item.bid);
+    }
+
+    // *** 更新日期 & 按更新日期归分
+    const UpdateDates = {};
+    const byUpdateDate = {};
+    for(let item of POSTS){
+        let date = new Date(item.date);
+        let y = date.getFullYear(), m = date.getMonth()+1, d = date.getDate();
+        if(! byUpdateDate[y]){
+            UpdateDates[y] = {};
+            byUpdateDate[y] = {};
+        }
+        if(! byUpdateDate[y][m]){
+            UpdateDates[y][m] = [];
+            byUpdateDate[y][m] = {};
+        }
+        if(! byUpdateDate[y][m][d]){
+            UpdateDates[y][m].push(d);
+            byUpdateDate[y][m][d] = [];
+        }
+        byUpdateDate[y][m][d].push(item.bid);
+    }
+
+    return {
+        Posts: SortedPosts,
+        byDefault,
+        byCategory,
+        categories,
+        byUpdateDate,
+        byDate,
+        RecentPosts,
+        Sorted,
+        UpdateDates,
+        BID
+    }
+}
+
+exports.getSort = (POSTS) => getSort(POSTS);
