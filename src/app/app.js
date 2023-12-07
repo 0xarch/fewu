@@ -8,6 +8,7 @@ Hug.log("开始","主任务");
 function main(){
     const argv = Hug.gopt(process.argv);
     const GlobalConfig = JSON.parse(Hail.readFile(argv['config']));
+    const isDebugMode = argv['debug'];
 
     Hug.log("完成","读取配置文件");
     if(argv['dry-run'] == 'null'){
@@ -47,6 +48,9 @@ function main(){
         ROOT: !["/", "", undefined].includes(GlobalConfig.build.site_root) ? GlobalConfig.build.site_root : ''
     }
 
+    if(isDebugMode){
+        Hug.log("All Layouts: \n",JSON.stringify(ThemeConfig.layout.layouts));
+    }
     for (let item of ThemeConfig.layout.layouts) {
         let filename = Path.join(ThemeLayoutDir, item.build.filename),
             destname = Path.join(PublicDir, item.build.destname, 'index.html');
@@ -103,6 +107,7 @@ function main(){
     Hail.copyFile(ThemeFilesDir,Path.join(PublicDir,'files'));
     
     async function BF_with(vars,item,filename,destname,inconf_extra,destSuffix=''){
+        if(isDebugMode) Hug.log("Building","from",filename,"to",destname);
         /**
          * Cycl-building(Cycling)
          * To Enable, set build.cycling: true
@@ -127,8 +132,6 @@ function main(){
          *  destnation -> ${build.destname}/index_${Cycling.LoopTime}.html
          */
         if( item.build.cycling && item.build.option.cycling ){
-            
-            Hug.log('Cycl',item.name);
             let Cycling = {};
             let option = item.build.option.cycling;
             // aro stands for "array or object"

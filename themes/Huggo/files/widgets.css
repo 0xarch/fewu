@@ -119,11 +119,48 @@ hr {
 .MA-noRound{
     border-radius: 0px !important;
 }
+.ME-Toolbar>.ME-Space{
+    margin: auto;
+}
+:is(.ME-LBTN,.ME-RBTN){
+    align-items: center;
+    justify-content: center;
+}
+.MA-maxWidth{
+    width: 100% !important;
+}
+.MA-maxHeight{
+    height: 100% !important;
+}
+.ME-Paper{
+    scroll-snap-type: y mandatory;
+}
+.ME-Paper>*{
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+}
+.ME-CardBody>.ME-Title{
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+    margin:0.4rem;
+}
+.ME-CardFrame{
+    margin: 0.4rem;
+}
+.M3tk-HlClick,.MA-HlClick{
+    overflow: hidden;
+}
+.ME-GridLayout{
+    display: grid;
+}
+.atLB{
+    position: absolute;
+    bottom:0px;
+    left:0px;
+}
 img.avatar{
     object-fit: fill;
-}
-.button{
-    border-radius: 0.4rem;
 }
 collapse{
     margin: 1.25rem;

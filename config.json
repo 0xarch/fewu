@@ -17,7 +17,7 @@
         "title":{
             "separator": "|",
             "function": "",
-            "read": "",
+            "read": "文章",
             "index": "Hello! oxArch"
         }
     },
@@ -25,16 +25,7 @@
         "name":"Huggo"
     },
     "excluded_posts": ["about.md","news.md"],
-    "look_and_feel": {
-        "layout_dir": "conf/layout/Default/",
-        "theme_dir": "conf/theme/Default/",
-        "separator": "|",
-        "custom_site_title": {
-            "function": "",
-            "read": "",
-            "index": "Hello! oxArch"
-        }
-    },
+    "override": [],
     "widgets": {
         "comment":{
             "gitalk":{

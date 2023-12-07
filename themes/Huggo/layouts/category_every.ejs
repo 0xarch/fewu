@@ -14,15 +14,13 @@
                     {
                         "page":"<%=Cycling.TotalCount-%>",
                         "now":"<%=Cycling.LoopTime-%>",
-                        "link":"<%=ROOT-%>/<%=Cycling.FileLocationPrefix-%>/index_<%=Varias.keyName-%>_${i}.html"
+                        "link":"<%=ROOT-%>/<%=Cycling.FileLocationPrefix-%>/index_<%=Varias.keyName-%>_\\${i}.html"
                     }
                 </Pagination>
                 <script>buildPaginationJSON("e_page")</script>
         </Paper>
         <Sidebar>
-            <Box>
-                <%- include("includes/about.ejs") %>
-            </Box>
+            <%- include("includes/components/about.ejs") %>
         </Sidebar>
 </body>
 

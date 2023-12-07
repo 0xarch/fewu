@@ -14,7 +14,9 @@ exports.readFile = (...path) =>{
  */
 exports.writeFile = async (content,...path) =>{
     let file_path = Path.join(...path);
-    Fs.writeFile(file_path,content,()=>{});
+    FsExtra.mkdirp(Path.dirname(file_path),function(){
+        Fs.writeFile(file_path,content,()=>{});
+    });
 }
 
 exports.copyFile = async (path_from,path_to) =>{
@@ -23,6 +25,14 @@ exports.copyFile = async (path_from,path_to) =>{
 
 exports.mkdir = async (...path) =>{
     FsExtra.mkdirpSync(Path.join(...path));
+}
+
+exports.isDirectory = (path) =>{
+    return Fs.statSync(path).isDirectory();
+}
+
+exports.dirname = (path) =>{
+    return Path.dirname(path);
 }
 
 function readDirectoryRecursive(Directory) {

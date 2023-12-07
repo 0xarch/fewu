@@ -2,7 +2,7 @@
 <%- include("includes/head.ejs",{title:{title:"首页",titleType:"index"}}) %>
 
 <body>
-    <UIHeader class="ME-RootBar">
+    <UIHeader>
         <%-include("includes/toolbar.ejs")%>
     </UIHeader>
     <Paper>
@@ -15,7 +15,6 @@
         <Divider />
 <%- include("includes/announcement.ejs") %>
         <Divider />
-<%- include("includes/calendar.ejs") %>
     </Sidebar>
 </body>
     <script>

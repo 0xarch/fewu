@@ -1,3 +1,6 @@
 {
-    
+    "version":"1.0",
+    "parsers":["EJS","RJS"],
+    "modules":["Hail","Hug","Optam"],
+    "author":["0xarch"]
 }

@@ -109,7 +109,8 @@ function AST(text, removeLineBreak, skipWhitespace) {
                                             i++;
                                             if (!single_quote) {
                                                 dual_quote = !dual_quote;
-                                            }
+                                            }else
+                                            is_val ? (attr_val += '"') : (attr_key += '"');
                                             string_started = single_quote || dual_quote;
                                             continue;
                                         }
@@ -117,7 +118,8 @@ function AST(text, removeLineBreak, skipWhitespace) {
                                             i++;
                                             if (!dual_quote) {
                                                 single_quote = !single_quote;
-                                            }
+                                            }else
+                                            is_val ? (attr_val += '\'') : (attr_key += '\'');
                                             string_started = single_quote || dual_quote;
                                             continue;
                                         }
@@ -199,6 +201,16 @@ function AST(text, removeLineBreak, skipWhitespace) {
     return processed;
 }
 
+function parseAttr(attrs){
+    let str = '';
+    for (let attr in attrs) {
+        if(attrs[attr]!='')
+        str += ' ' + attr + '="' + attrs[attr] + '"';
+        else str += ' ' + attr;
+    }
+    return str;
+}
+
 function parseToJS(tokenArray, config, debug = false) {
     let i = 0, len = tokenArray.length;
     let processed = '', element_stack = [];
@@ -220,9 +232,7 @@ function parseToJS(tokenArray, config, debug = false) {
                     attrs['class'] = (attrs['class'] != undefined ? attrs['class'] + ' ' : '') + class_prefix + token_1.symbol;
                 } else symbol = token_1.symbol;
                 str = '<' + symbol;
-                for (let attr in attrs) {
-                    str += ' ' + attr + '="' + attrs[attr] + '"';
-                }
+                str += parseAttr(attrs);
                 str += '>';
                 element_stack.push(symbol);
                 break;
@@ -238,9 +248,7 @@ function parseToJS(tokenArray, config, debug = false) {
                     attrs['class'] = (attrs['class'] != undefined ? attrs['class'] + ' ' : '') + class_prefix + token_1.symbol;
                 } else symbol = token_1.symbol;
                 str = '<' + symbol;
-                for (let attr in attrs) {
-                    str += ' ' + attr + '="' + attrs[attr] + '"';
-                }
+                str += parseAttr(attrs);
                 if (!SelfCloseTags.includes(symbol)) {
                     str += '></' + symbol + '>';
                 } else

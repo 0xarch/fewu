@@ -1,5 +1,6 @@
 {
-    "name": "Hogger",
+    "name": "hogger",
+    "version": "0.1.2",
     "dependencies": {
         "ejs": "^3.1.9",
         "fs": "^0.0.1-security",

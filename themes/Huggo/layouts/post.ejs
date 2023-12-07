@@ -10,7 +10,7 @@
         </UIHeader>
         <Paper>
             <div class="M3tk-ContentBox HJ-gMdR">
-                <% post.textContent %>
+                <%= post.textContent %>
             </div>
         </Paper>
         <Sidebar>
@@ -20,12 +20,13 @@
             <%- include("includes/components/about.ejs")%>
             <Divider />
             <%-include("includes/friendlink.ejs")%>
-            <%-include("includes/cc2.ejs",{cc:post.cc?post.cc:"BY-SA"})%>
+            <Divider />
+            <%-include("includes/components/cc.ejs",{cc:post.cc?post.cc:"BY-SA"})%>
         </Sidebar>
         <script>
-            $.loadAll(true);
             let contentBox = jMata.select('.HJ-gMdR');
             contentBox.innerHTML = marked.parse(contentBox.innerHTML);
+            $.loadAll(true);
         </script>
     </body>
 
