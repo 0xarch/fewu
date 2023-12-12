@@ -4,6 +4,7 @@
     "description": "Default Theme in Hogger",
     "lib":[
         "@github:0xarch/mata-toolkit",
+        "@github:0xarch/meui",
         "@github:markedjs/marked",
         "@github:highlightjs/highlight.js"
     ],
