@@ -92,22 +92,3 @@ Collapse可以实现对大量信息的折叠显示.
         size = 2
     </Panel>
 </Collapse>
-
-## 对于JS：
-
-提供 CollapseComponent 类用于构建 Collapse 标签.
-
-**NOTE** 此选项暂不可用，因为关于 Collapse 的构建函数正在重写.
-
-```js
-let collapsecomponent = new CollapseComponent([{"title":"标题","content":"内容"}]);
-let collapse = collapsecomponent.renderHTMLElement();
-```
-
-<Anchor anchor="md_anchor"></Anchor>
-
-<script>
-let collapsecomponent = new CollapseComponent([{"header":"标题","content":"内容"}]);
-let collapse = collapsecomponent.renderHTMLElement();
-ReplaceAnchorWith("md_anchor",collapse);
-</script>

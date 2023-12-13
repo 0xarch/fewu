@@ -1,0 +1,35 @@
+<html>
+<%- include("includes/head.ejs",{title:{title:post.title,titleType:"read"}}) %>
+
+    <body>
+        <%-include("includes/drawer.ejs")-%>
+        <Toolbar>
+            <button id="binding-d1" class="icon-button hide-on-wide">
+                <icon>menu</icon>
+            </button>
+            <h3><%= post.title -%></h3>
+        </Toolbar>
+        <Paper>
+            <div class="M3tk-ContentBox HJ-gMdR">
+                <%- post.textContent %>
+            </div>
+        </Paper>
+        <script type="module">
+            import MEUI from 'https://0xarch.github.io/meui/js/main/main.js';
+            MEUI.components.drawer.create(document.getElementById('binding-d0'),document.getElementById('binding-d1'));
+            MEUI.browse.darkModeSettings.setMode();
+            const detectShrink = 
+                MEUI.util.debounce(MEUI.browse.windowSettings.detectShrink,500)
+            window.onresize = function(){
+                detectShrink();
+            }
+            detectShrink();
+            hljs.highlightAll();
+        </script>
+        <script>
+            let contentBox = document.querySelector('.HJ-gMdR');
+            contentBox.innerHTML = marked.parse(contentBox.innerHTML);
+        </script>
+    </body>
+
+</html>

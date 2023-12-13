@@ -1,0 +1,12 @@
+<head>
+    <link rel="stylesheet" href="https://0xarch.github.io/meui/css/main/import.css">
+    <script src="<%=ROOT-%>/files/main.js"></script>
+    <link rel="stylesheet" href="<%=ROOT-%>/files/main.css">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script> 
+    <script src="https://cdn.bootcdn.net/ajax/libs/marked/9.0.0/marked.min.js"></script>
+<% let Type = title.titleType -%>
+<% let appTitle = Appearance.title -%>
+    <title><%= title.title -%><%= appTitle.separator-%><%= Type&&!["",undefined].includes(appTitle[Type])?appTitle[Type]:appTitle.index -%></title>
+</head>

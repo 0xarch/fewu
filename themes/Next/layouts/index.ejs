@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<%- include("includes/head.ejs",{title:{title:"首页",titleType:"index"}}) %>
+<body>
+    <%-include("includes/drawer.ejs")-%>
+    <Toolbar>
+        <button id="binding-d1" class="icon-button hide-on-wide">
+            <icon>menu</icon>
+        </button>
+    </Toolbar>
+    <Paper>
+        <div class="d-post-container">
+            <% Sorts.RecentPosts.forEach((item)=>{ -%>
+                <%- include("includes/components/postcard.ejs",{item:BID[item]}) %>
+            <%})-%>
+        </div>
+    </Paper>
+</body>
+    <script type="module">
+        import MEUI from 'https://0xarch.github.io/meui/js/main/main.js';
+        MEUI.components.drawer.create(document.getElementById('binding-d0'),document.getElementById('binding-d1'));
+        MEUI.browse.darkModeSettings.setMode();
+        const detectShrink = 
+            MEUI.util.debounce(MEUI.browse.windowSettings.detectShrink,500)
+        window.onresize = function(){
+            detectShrink();
+        }
+        detectShrink();
+    </script>
+</html>

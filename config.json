@@ -22,7 +22,7 @@
         }
     },
     "theme":{
-        "name":"Huggo"
+        "name":"Next"
     },
     "excluded_posts": ["about.md","news.md"],
     "override": [],

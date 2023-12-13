@@ -1,0 +1,37 @@
+<html>
+<%- include("includes/head.ejs",{title:{title:"统计",titleType:"index"}}) %>
+
+<body>
+    <UIHeader>
+        <%-include("includes/toolbar.ejs")%>
+    </UIHeader>
+    <Sidebar>
+        <img src="<%=user.avatar-%>" class="w_100 avatar"/>
+        <h3><%=user.name-%></h3>
+    </Sidebar>
+    <Paper>
+        <GridLayout style="grid:auto-flow / repeat(2,calc(50%));grid-gap:0.8rem">
+            <CardBody style="width:calc(100% - 0.4rem)">
+                <Title>归档</Title>
+                <h4>共更新<%=Sorts.byDefault.length-%>篇博客</h4>
+                <a class="button atLB" href="<%=ROOT-%>/archive/index_1.html">前往归档</a>
+            </CardBody>
+            <CardBody style="width:calc(100% - 0.4rem)">
+                <Title>分类</Title>
+                <h4>共包含<%=Sorts.categories.length-%>个分类</h4>
+                <a class="button atLB" href="<%=ROOT-%>/category/index_1.html">前往分类</a>
+            </CardBody>
+            <CardBody style="width:calc(100% - 0.4rem)">
+                <Title>更新</Title>
+                <h4>构建时间：<br/><%=date-%></h4>
+            </CardBody>
+            <CardBody style="width:calc(100% - 0.4rem)">
+                <Title>广告位招租</Title>
+            </CardBody>
+        </GridLayout>
+    </Paper>
+</body>
+    <script>
+        $.loadAll();
+    </script>
+</html>

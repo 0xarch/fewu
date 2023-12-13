@@ -1,0 +1,39 @@
+@import url("boxes.css");
+@import url("widgets.css");
+
+*[o-display=block] {
+    display: block;
+}
+
+/* M3TK Experimental */
+:root {
+    --m-large-round: 18px;
+    --m-medium-round: 12px;
+    --m-small-round: 8px;
+}
+body {
+    font-size: 12pt;
+    --padding: .5rem;
+    --m-banner-h: 0px;
+    --m-toolbar-h: 0px;
+}
+
+@media (prefers-color-scheme:light) {
+    :root {
+        --bg: #ffffff;
+        --widget-bg: #fafafa;
+        --code-bg: #eff0fa;
+        --color: #111;
+        --card-box-shadow-hover: 0px 3px 8px 6px rgba(7, 17, 27, 0.15);
+    }
+}
+
+@media (prefers-color-scheme:dark) {
+    :root {
+        --bg: #1e1e1e;
+        --widget-bg: #242424;
+        --code-bg: #151515;
+        --color: #b9b9b9;
+        --card-box-shadow-hover: 0px 3px 8px 6px rgba(67, 77, 87, 0.2);
+    }
+}
