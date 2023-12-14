@@ -2,9 +2,12 @@
 <%- include("includes/head.ejs",{title:{title:"归档",titleType:"function"}}) %>
 
 <body>
-    <UIHeader class="ME-RootBar">
-        <%- include("includes/toolbar.ejs") -%>
-    </UIHeader>
+    <%-include("includes/drawer.ejs")-%>
+    <Toolbar>
+        <button id="binding-d1" class="icon-button hide-on-wide">
+            <icon>menu</icon>
+        </button>
+    </Toolbar>
     <Paper>
         <% Cycling.value.forEach((item)=>{ -%>
             <%- include("includes/postcard.ejs",{item:BID[item]}) %>
@@ -16,13 +19,7 @@
                 "link":"<%=ROOT-%>/<%=Cycling.FileLocationPrefix-%>/index_\\${i}.html"
             }
         </Pagination>
-        <script>buildPaginationJSON("e_page")</script>
     </Paper>
-    <Sidebar>
-        <%- include("includes/components/about.ejs") %>
-        <Divider />
-        <%- include("includes/announcement.ejs") %>
-    </Sidebar>
 </body>
-
+<script type="module" src="<%=ROOT-%>/files/meui.js"></script>
 </html>

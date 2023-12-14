@@ -35,11 +35,12 @@ function ReadData(content) {
     }
     try{
         data.transformed_title = data.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'\～\·\「\」\；\：\‘\’\“\”\，\。\《\》\？\！\￥\…\、\（\）]/g,'_'); 
-        data.path = `${data.date.replace(/-/g,"/")}/${data.transformed_title}/index.html`;
-        data.src = `/${data.date.replace(/-/g,"/")}/${data.transformed_title}/`;
+        data.path = `${data.date.replace(/[\-\.]/g,"/")}/${data.transformed_title}/index.html`;
+        data.src = `/${data.date.replace(/[\-\.]/g,"/")}/${data.transformed_title}/`;
         data.top = data.top=="true" ? true : false;
     }catch(_) {}
     data.textContent = lines.slice(i).join('\n');
+    data.parsedContent = MARKED.parse(data.textContent);
     data.less = extractLess(data.textContent);
     data.lessContent = findLessContent(lines);
     if(data.category!=undefined){
@@ -47,6 +48,7 @@ function ReadData(content) {
     }else{
         data.category=[];
     }
+    data.JSDate = new Date(data.date);
     return data;
 }
 

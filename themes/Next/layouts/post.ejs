@@ -11,25 +11,12 @@
         </Toolbar>
         <Paper>
             <div class="M3tk-ContentBox HJ-gMdR">
-                <%- post.textContent %>
+                <%- post.parsedContent %>
             </div>
         </Paper>
-        <script type="module">
-            import MEUI from 'https://0xarch.github.io/meui/js/main/main.js';
-            MEUI.components.drawer.create(document.getElementById('binding-d0'),document.getElementById('binding-d1'));
-            MEUI.browse.darkModeSettings.setMode();
-            const detectShrink = 
-                MEUI.util.debounce(MEUI.browse.windowSettings.detectShrink,500)
-            window.onresize = function(){
-                detectShrink();
-            }
-            detectShrink();
+        <script>
             hljs.highlightAll();
         </script>
-        <script>
-            let contentBox = document.querySelector('.HJ-gMdR');
-            contentBox.innerHTML = marked.parse(contentBox.innerHTML);
-        </script>
     </body>
-
+    <script type="module" src="<%=ROOT-%>/files/meui.js"></script>
 </html>

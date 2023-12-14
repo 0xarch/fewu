@@ -1,7 +1,5 @@
-*[disable~=shadow],
-*.\!shadow,
-*[\!shadow] {
-    box-shadow: none !important;
+body{
+    font-family: 'Google Sans Text';
 }
 
 hr {
@@ -179,9 +177,10 @@ collapse{
 }
 .d-post-card{
     display: block;
-    height: 45vmin;
-    padding: 8px;
+    break-inside: avoid;
+    padding: 16px;
     background-color: transparent;
+    margin-bottom: 16px;
 }
 .d-post-card-a{
     display: flex;
@@ -189,16 +188,20 @@ collapse{
     text-decoration: none;
 }
 .d-post-title{
-    height: 23vmin;
-    font-size: 24px;
+    line-height: 1.2;
+    font-size: 32px;
+    font-weight: lighter;
+    margin-bottom: 16px;
 }
 .d-post-detail{
-    height: 22vmin;
     display: flex;
 }
 .d-post-container{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    column-count: 2;
+    column-gap: 24px;
+}
+.d-post-less{
+    opacity: .78;
 }
 .d-post-less>*{
     margin: 4px;
@@ -209,4 +212,29 @@ collapse{
 .d-post-date{
     font-weight: bolder;
     padding: 8px;
+}
+.d-status-grid{
+    display: grid;
+    grid:auto-flow / repeat(2,calc(50% - 16px));
+    grid-gap: 16px;
+}
+.d-status-grid>card{
+    position: relative;
+}
+.d-status-grid card span.atRB{
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+}
+.d-status-a{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 32px;
+    text-decoration: none;
+}
+.d-status-c-np{
+    padding: 0px;
 }
