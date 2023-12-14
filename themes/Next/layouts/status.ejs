@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <%- include("includes/head.ejs",{title:{title:"统计",titleType:"index"}}) %>
 
@@ -9,7 +10,7 @@
         </button>
     </Toolbar>
     <Paper>
-        <div class="d-status-grid">
+        <layout grid col="2 50%">
             <card class="d-status-c-np">
                 <a class="d-status-a" href="<%=ROOT-%>/archive/index_1.html">
                     <h3>归档</h3>
@@ -35,8 +36,9 @@
             <card>
                 <h3>广告位招租</h3>
             </card>
-        </div>
+        </layout>
     </Paper>
 </body>
 <script type="module" src="<%=ROOT-%>/files/meui.js"></script>
+<script type="module">MEUI.widgets.layout.resolveGrid()</script>
 </html>

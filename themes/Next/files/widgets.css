@@ -7,7 +7,7 @@ hr {
 }
 
 a {
-    color: var(--color);
+    color: inherit;
 }
 
 code.hljs {
@@ -15,8 +15,12 @@ code.hljs {
     display: block;
     padding: 8px;
     margin: 8px;
-    background-color: var(--me-color-surface);
     color: var(--me-color-surface-outline)
+}
+
+code, code.hljs {
+    background-color: var(--me-color-surface);
+    padding: 4px;
 }
 
 toolbar{
@@ -25,10 +29,22 @@ toolbar{
     z-index: 1000;
 }
 
-*[\!center],.MA-ta_center {
-    text-align: center;
+pagination>*{
+    margin: 8px;
+    padding: 8px;
+    text-decoration: none;
 }
-.button {
+
+pagination .this{
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+pagination .disabled{
+    visibility: hidden;
+}
+
+.button,button {
     text-decoration: none;
 }
 .TA-flexColCentered{
@@ -54,54 +70,6 @@ table {
 hr {
     opacity: .25;
 }
-
-.gt-header-controls-tip{
-    display: block;
-}
-
-*[m0]{
-    margin: 0;
-}
-*[p0]{
-    padding: 0;
-}
-*[wt1]{
-    width: 100%;
-}
-*[wt\.9]{
-    width: 90%;
-}
-*[wt\.8]{
-    width: 80%;
-}
-.f-1{
-    flex:1;
-}
-.f-5{
-    flex:.5;
-}
-.f-75{
-    flex:.75;
-}
-*[dirC]{
-    flex-direction: column;
-}
-*[dirR]{
-    flex-direction: row;
-}
-*[o-text=c1]{
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-*[mr="3"],.mr_3{
-    border-radius: var(--m-large-round);
-}
-*[mr="2"],.mr_2{
-    border-radius: var(--m-medium-round);
-}
-*[mr="1"],.mr_1{
-    border-radius: var(--m-small-round);
-}
 *[bg=none]{
     background: transparent;
 }
@@ -120,13 +88,6 @@ hr {
 }
 .MA-noRound{
     border-radius: 0px !important;
-}
-.ME-Toolbar>.ME-Space{
-    margin: auto;
-}
-:is(.ME-LBTN,.ME-RBTN){
-    align-items: center;
-    justify-content: center;
 }
 .MA-maxWidth{
     width: 100% !important;
@@ -161,26 +122,23 @@ hr {
     bottom:0px;
     left:0px;
 }
-img.avatar{
-    object-fit: fill;
-}
-collapse{
-    margin: 1.25rem;
-}
-.postText{
-    width: 60vw;
-}
 .f_eaj{
     display: flex;
     align-items: center;
     justify-content: center;
 }
+body[shrink="false"] .mId0-hl{
+    background: transparent;
+}
+body[shrink="false"] .mId0-hl>icon{
+    background: var(--me-color-secondary-container);
+}
 .d-post-card{
     display: block;
     break-inside: avoid;
-    padding: 16px;
+    padding: 48px;
     background-color: transparent;
-    margin-bottom: 16px;
+    margin-bottom: 64px;
 }
 .d-post-card-a{
     display: flex;
@@ -198,7 +156,10 @@ collapse{
 }
 .d-post-container{
     column-count: 2;
-    column-gap: 24px;
+    column-gap: 48px;
+}
+body[shrink="false"] .d-post-container{
+    column-count: 3;
 }
 .d-post-less{
     opacity: .78;

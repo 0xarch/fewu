@@ -49,6 +49,7 @@ function ReadData(content) {
         data.category=[];
     }
     data.JSDate = new Date(data.date);
+    data.Date = data.JSDate.toDateString();
     return data;
 }
 
@@ -141,19 +142,12 @@ function getSort(POSTS) {
         byDate.push(item.bid);
     }
     const Sorted = Array.from(byDate);
-    const RecentPosts = Sorted.slice(0, 5);
+    const RecentPosts = Sorted.slice(0, 10);
 
     // _______ 置顶 _______
     var topPosts = [];
     var untopPosts = [];
 
-    /*SortedPosts.forEach((item) => {
-        if (item.top == "true") {
-            topPosts.push(item.bid);
-        } else {
-            untopPosts.push(item.bid);
-        }
-    });*/
     for(let item of rawByDate){
         if(item.top){
             topPosts.push(item.bid);

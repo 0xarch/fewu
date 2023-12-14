@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <%- include("includes/head.ejs",{title:{title:"分类",titleType:"function"}}) %>
 
@@ -8,18 +9,20 @@
             <icon>menu</icon>
         </button>
     </Toolbar>
-        <Paper>
-                <% Varias.value.forEach(item=>{ -%>
-                    <%- include("includes/postcard.ejs",{item:BID[item]}) -%>
-                <%})-%>
-                <Pagination id="e_page">
-                    {
-                        "page":"<%=Cycling.TotalCount-%>",
-                        "now":"<%=Cycling.LoopTime-%>",
-                        "link":"<%=ROOT-%>/<%=Cycling.FileLocationPrefix-%>/index_<%=Varias.keyName-%>_\\${i}.html"
-                    }
-                </Pagination>
-        </Paper>
+    <Paper>
+            <% Varias.value.forEach(item=>{ -%>
+                <%- include("includes/postcard.ejs",{item:BID[item]}) -%>
+            <%})-%>
+            <Pagination id="e_page">
+                {
+                    "page":"<%=Cycling.TotalCount-%>",
+                    "now":"<%=Cycling.LoopTime-%>",
+                    "link":"<%=ROOT-%>/<%=Cycling.FileLocationPrefix-%>/index_<%=Varias.keyName-%>_${i}.html"
+                }
+            </Pagination>
+    </Paper>
 </body>
 <script type="module" src="<%=ROOT-%>/files/meui.js"></script>
+<script src="<%=ROOT-%>/files/pagination.js"></script>
+<script>renderPaginationJSON(document.getElementById('e_page'))</script>
 </html>

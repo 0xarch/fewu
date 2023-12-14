@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <%- include("includes/head.ejs",{title:{title:"归档",titleType:"function"}}) %>
 
@@ -11,16 +12,18 @@
     </Toolbar>
     <Paper>
         <% Cycling.value.forEach((item)=>{ -%>
-            <%- include("includes/postcard.ejs",{item:BID[item]}) %>
+            <%- include("includes/components/postcard.ejs",{item:BID[item]}) %>
         <%})-%>
-        <Pagination id="e_page" style="display: none;">
+        <Pagination id="e_page">
             {
                 "page":"<%=Cycling.TotalCount-%>",
                 "now":"<%=Cycling.LoopTime-%>",
-                "link":"<%=ROOT-%>/<%=Cycling.FileLocationPrefix-%>/index_\\${i}.html"
+                "link":"<%=ROOT-%>/<%=Cycling.FileLocationPrefix-%>/index_${i}.html"
             }
         </Pagination>
     </Paper>
 </body>
 <script type="module" src="<%=ROOT-%>/files/meui.js"></script>
+<script src="<%=ROOT-%>/files/pagination.js"></script>
+<script>renderPaginationJSON(document.getElementById('e_page'))</script>
 </html>
