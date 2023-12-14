@@ -2,10 +2,12 @@
 <%- include("includes/head.ejs",{title:{title:"分类",titleType:"function"}}) %>
 
 <body>
-    <UIHeader>
-        <Banner>共<%=Varias.value.length-%>篇文章的分类为<%=Varias.keyName-%></Banner>
-        <%- include("includes/toolbar.ejs") -%>
-    </UIHeader>
+    <%-include("includes/drawer.ejs")-%>
+    <Toolbar>
+        <button id="binding-d1" class="icon-button hide-on-wide">
+            <icon>menu</icon>
+        </button>
+    </Toolbar>
         <Paper>
                 <% Varias.value.forEach(item=>{ -%>
                     <%- include("includes/postcard.ejs",{item:BID[item]}) -%>

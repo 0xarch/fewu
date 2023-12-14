@@ -7,12 +7,13 @@
         <button id="binding-d1" class="icon-button hide-on-wide">
             <icon>menu</icon>
         </button>
+        <p class="text-button" style="padding:0px 8px">归档</p>
     </Toolbar>
     <Paper>
         <% Cycling.value.forEach((item)=>{ -%>
             <%- include("includes/postcard.ejs",{item:BID[item]}) %>
         <%})-%>
-        <Pagination id="e_page">
+        <Pagination id="e_page" style="display: none;">
             {
                 "page":"<%=Cycling.TotalCount-%>",
                 "now":"<%=Cycling.LoopTime-%>",

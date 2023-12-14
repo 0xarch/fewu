@@ -14,21 +14,21 @@
     <Paper>
         <div class="d-post-container">
             <% for(let item of Cycling.value){ -%>
-                <div class="fo_fd1 sp_m">
+                <div class="d-post-card">
                     <h2 class="f_eaj"><%=item.key-%></h2>
-                    <div class="MA-display_flex fo_fd0 w_100">
+                    <div>
                         <Container class="w_50 fo_fd1 fo_ai0">
                             <p m0>共<%=item.value.length-%>篇文章</p>
                             <p m0>最近发布于<%=BID[item.value[0]].date-%></p>
                         </Container>
-                        <div class="fo_fd1 f_eaj f-1" style="right:0">
-                            <a class="button w_90" href="<%=ROOT-%>/category/s/index_<%=item.key-%>_1.html">查看</a>
+                        <div class="fo_fd1 f_eaj f-1">
+                            <a class="text-button" href="<%=ROOT-%>/category/s/index_<%=item.key-%>_1.html">查看</a>
                         </div>
                     </div>
                 </div>
             <% } -%>
         </div>
-        <Pagination id="e_page">
+        <Pagination id="e_page" style="display: none;">
             {
                 "page":"<%=Cycling.TotalCount-%>",
                 "now":"<%=Cycling.LoopTime-%>",
