@@ -133,44 +133,41 @@ body[shrink="false"] .mId0-hl{
 body[shrink="false"] .mId0-hl>icon{
     background: var(--me-color-secondary-container);
 }
-.d-post-card{
+.d-post-card,.dIp0-c{
     display: block;
     break-inside: avoid;
     padding: 48px;
     background-color: transparent;
     margin-bottom: 64px;
 }
-.d-post-card-a{
+.d-post-card-a,.dIp0-a{
     display: flex;
     flex-direction: column;
     text-decoration: none;
 }
-.d-post-title{
+.d-post-title,.dIp0-t{
     line-height: 1.2;
     font-size: 32px;
     font-weight: lighter;
     margin-bottom: 16px;
 }
-.d-post-detail{
+.d-post-detail,.dIp0-de{
     display: flex;
 }
-.d-post-container{
+.d-post-container,.dIp0-con{
     column-count: 2;
     column-gap: 48px;
 }
-body[shrink="false"] .d-post-container{
-    column-count: 3;
-}
-.d-post-less{
+.d-post-less,.dIp0-l{
     opacity: .78;
 }
-.d-post-less>*{
+.d-post-less>*,.dIp0-l>*{
     margin: 4px;
 }
 .d-post-less>*:first-child{
     margin-top: 0px;
 }
-.d-post-date{
+.d-post-date,.dIp0-da{
     font-weight: bolder;
     padding: 8px;
 }
@@ -179,10 +176,10 @@ body[shrink="false"] .d-post-container{
     grid:auto-flow / repeat(2,calc(50% - 16px));
     grid-gap: 16px;
 }
-.d-status-grid>card{
+card.d-status-c-np{
     position: relative;
 }
-.d-status-grid card span.atRB{
+.d-status-a span.atRB{
     position: absolute;
     bottom: 16px;
     right: 16px;
