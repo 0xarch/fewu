@@ -1,5 +1,8 @@
 body{
     font-family: 'Google Sans Text';
+    overflow: hidden;
+    height: 100vh;
+    margin: 0px;
 }
 
 hr {
@@ -9,7 +12,15 @@ hr {
 a {
     color: inherit;
 }
+toolbar{
+    color:var(--basisTextColor);
+}
+paper{
+    overflow: auto;
+    height: calc(100% - var(--toolbarHeight));
+    background-color: var(--me-color-surface-0);
 
+}
 code.hljs {
     border-radius: 8px;
     display: block;
@@ -21,12 +32,6 @@ code.hljs {
 code, code.hljs {
     background-color: var(--me-color-surface);
     padding: 4px;
-}
-
-toolbar{
-    background: var(--me-color-surface-0);
-    align-items: center;
-    z-index: 1000;
 }
 
 pagination>*{
@@ -44,6 +49,12 @@ pagination .disabled{
     visibility: hidden;
 }
 
+.p8{
+    padding: 8px;
+}
+.f1{
+    flex: 1;
+}
 .button,button {
     text-decoration: none;
 }
@@ -95,55 +106,24 @@ hr {
 .MA-maxHeight{
     height: 100% !important;
 }
-.ME-Paper{
-    scroll-snap-type: y mandatory;
-}
-.ME-Paper>*{
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-}
-.ME-CardBody>.ME-Title{
-    text-align: center;
-    font-size: large;
-    font-weight: bold;
-    margin:0.4rem;
-}
-.ME-CardFrame{
-    margin: 0.4rem;
-}
-.M3tk-HlClick,.MA-HlClick{
-    overflow: hidden;
-}
-.ME-GridLayout{
-    display: grid;
-}
-.atLB{
-    position: absolute;
-    bottom:0px;
-    left:0px;
-}
 .f_eaj{
     display: flex;
     align-items: center;
     justify-content: center;
 }
-body[shrink="false"] .mId0-hl{
-    background: transparent;
-}
-body[shrink="false"] .mId0-hl>icon{
-    background: var(--me-color-secondary-container);
-}
-.d-post-card,.dIp0-c{
+card.d-post-card,.dIp0-c{
     display: block;
     break-inside: avoid;
-    padding: 48px;
+    padding: 0px;
     background-color: transparent;
     margin-bottom: 64px;
+    overflow: hidden;
 }
 .d-post-card-a,.dIp0-a{
     display: flex;
     flex-direction: column;
     text-decoration: none;
+    height: 100%;
 }
 .d-post-title,.dIp0-t{
     line-height: 1.2;
@@ -169,7 +149,6 @@ body[shrink="false"] .mId0-hl>icon{
 }
 .d-post-date,.dIp0-da{
     font-weight: bolder;
-    padding: 8px;
 }
 .d-status-grid{
     display: grid;
@@ -195,4 +174,11 @@ card.d-status-c-np{
 }
 .d-status-c-np{
     padding: 0px;
+}
+.d-post-image{
+    height: 256px;
+    width: 100%;
+}
+.d-post-image img{
+    width: 100%;
 }

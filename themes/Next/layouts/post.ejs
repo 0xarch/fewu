@@ -1,23 +1,17 @@
 <!DOCTYPE html>
 <html>
 <%- include("includes/head.ejs",{title:{title:post.title,titleType:"read"}}) %>
-
-    <body>
-        <%-include("includes/drawer.ejs")-%>
-        <Toolbar>
-            <button id="binding-d1" class="icon-button hide-on-wide">
-                <icon>menu</icon>
-            </button>
-            <h3><%= post.title -%></h3>
-        </Toolbar>
-        <Paper>
+    <body style="background-image: url(<%-ROOT-%><%- post.imageUrl -%>)" @bg.fit>
+        <%-include("includes/macros/compkit_dwtp.ejs",{toolbar:{content:post.title}})-%>
+        <Paper @bg.acrylic>
             <div class="M3tk-ContentBox HJ-gMdR">
                 <%- post.parsedContent %>
             </div>
         </Paper>
-        <script>
-            hljs.highlightAll();
-        </script>
     </body>
     <script type="module" src="<%=ROOT-%>/files/meui.js"></script>
+    <script type="module">
+        MEUI.compkits.dwt();
+        hljs.highlightAll();
+    </script>
 </html>

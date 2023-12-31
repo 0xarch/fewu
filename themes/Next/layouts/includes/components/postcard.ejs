@@ -1,14 +1,19 @@
 <card class="d-post-card dIp0-c">
     <a class="d-post-card-a dIp0-a" href="<%=ROOT-%><%= item.src -%>">
-        <div class="d-post-title dIp0-t">
-            <%= item.title -%>
+        <div class="d-post-image">
+            <img src="<%- item.imageUrl -%>">
         </div>
-        <div class="d-post-detail dIp0-de">
-            <div class="d-post-date dIp0-da">
-                <%- item.Date -%>
+        <div @bg.acrylic class="p8 f1">
+            <div class="d-post-detail dIp0-de">
+                <div class="d-post-date dIp0-da">
+                    <%- item.Date -%>
+                </div>
+                <div class="d-post-less dIp0-l">
+                    <%- item.less -%>
+                </div>
             </div>
-            <div class="d-post-less dIp0-l">
-                <%- item.less -%>
+            <div class="d-post-title dIp0-t">
+                <%= item.title -%>
             </div>
         </div>
     </a>

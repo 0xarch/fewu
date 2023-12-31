@@ -1,4 +1,4 @@
-<drawer id="binding-d0" @fluent>
+<drawer @Mr="@c:drawer" @fluent>
     {
         "open":"false",
         "hideButton":"true",
@@ -26,3 +26,6 @@
             }
     ]}
 </drawer>
+<toolbar @Mr="@c:toolbar">
+    <%-toolbar.content?toolbar.content:''-%>
+</toolbar>

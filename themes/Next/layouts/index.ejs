@@ -2,25 +2,18 @@
 <html>
 <%- include("includes/head.ejs",{title:{title:"首页",titleType:"index"}}) %>
 <body>
-    <%-include("includes/drawer.ejs")-%>
-    <Toolbar>
-        <button id="binding-d1" class="icon-button hide-on-wide">
-            <icon>menu</icon>
-        </button>
-    </Toolbar>
+    <%-include("includes/macros/compkit_dwt.ejs")-%>
     <Paper>
-        <div class="d-post-container">
+        <layout @grid col="2 50%" colM="1">
             <% Sorts.RecentPosts.forEach((item)=>{ -%>
                 <%- include("includes/components/postcard.ejs",{item:BID[item]}) %>
             <%})-%>
-        </div>
+        </layout>
     </Paper>
 </body>
     <script type="module" src="<%=ROOT-%>/files/meui.js"></script>
-    <script>
-        document.querySelectorAll(".d-post-date").forEach((i)=>{
-            let date = new Date(i.innerHTML);
-            i.innerHTML = date.toLocaleDateString();
-        });
+    <script type="module">
+        MEUI.compkits.dwt();
+        MEUI.widgets.layout.resolveGrid();
     </script>
 </html>
