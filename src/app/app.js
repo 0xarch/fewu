@@ -105,6 +105,7 @@ function main(){
         },destname,ThemeConfig);
     })
     Hail.copyFile(ThemeFilesDir,Path.join(PublicDir,'files'));
+    Hail.copyFile('sources',Path.join(PublicDir,'sources'));
     
     async function BF_with(vars,item,filename,destname,inconf_extra,destSuffix=''){
         if(isDebugMode) Hug.log("Building","from",filename,"to",destname);
