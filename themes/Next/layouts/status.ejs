@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html>
-<%- include("includes/head.ejs",{title:{title:"统计",titleType:"index"}}) %>
-
-<body>
-    <%-include("includes/drawer.ejs")-%>
-    <Toolbar>
-        <button id="binding-d1" class="icon-button hide-on-wide">
-            <icon>menu</icon>
-        </button>
-    </Toolbar>
+    <head>
+        <%-include("includes/macros/meta.ejs")-%>
+        <%-include("includes/macros/imports.ejs",{title:{title:"首页",titleType:"index"}}) %>
+    </head>
+<body>=
+    <%-include("includes/macros/compkit_dwtp.ejs",{toolbar:{content:'统计'}})-%>
     <Paper>
         <layout grid col="2 50%" colM="1">
             <card class="d-status-c-np">
