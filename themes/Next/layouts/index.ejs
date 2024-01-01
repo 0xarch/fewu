@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
-<%- include("includes/head.ejs",{title:{title:"首页",titleType:"index"}}) %>
+    <head>
+        <%-include("includes/macros/meta.ejs")-%>
+        <%-include("includes/macros/imports.ejs",{title:{title:"首页",titleType:"index"}}) %>
+    </head>
 <body>
     <script type="module" src="<%=ROOT-%>/files/meui.js"></script>
     <script type="module">

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
-<%- include("includes/head.ejs",{title:{title:"归档",titleType:"function"}}) %>
-
+<head>
+    <%-include("includes/macros/meta.ejs")-%>
+    <%-include("includes/macros/imports.ejs",{title:{title:"首页",titleType:"index"}}) %>
+</head>
 <body>
     <%-include("includes/drawer.ejs")-%>
     <Toolbar>

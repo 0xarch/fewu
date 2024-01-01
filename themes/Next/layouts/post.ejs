@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
-<%- include("includes/head.ejs",{title:{title:post.title,titleType:"read"}}) %>
+    <head>
+        <%-include("includes/macros/meta.ejs")-%>
+        <%-include("includes/macros/imports.ejs",{title:{title:"首页",titleType:"index"}}) %>
+    </head>
     <body style="background-image: url(<%-ROOT-%><%- post.imageUrl -%>)" @bg.fit>
         <%-include("includes/macros/compkit_dwtp.ejs",{toolbar:{content:post.title}})-%>
         <Paper @bg.acrylic>
@@ -11,7 +14,6 @@
     </body>
     <script type="module" src="<%=ROOT-%>/files/meui.js"></script>
     <script type="module">
-        MEUI.compkits.dwt();
         hljs.highlightAll();
     </script>
 </html>
