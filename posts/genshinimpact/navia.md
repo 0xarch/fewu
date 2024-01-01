@@ -68,7 +68,7 @@ imageUrl: https://patchwiki.biligame.com/images/ys/a/ad/jez0piggyfkes3s4kgqyz8dd
 
 理论上不应该把这个算进倍率
 
-0~3命0%,
+0\~3命0%,
 4~6命额外减抗 20%.
 
 ## 加成
