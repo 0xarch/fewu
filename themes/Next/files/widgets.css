@@ -118,6 +118,8 @@ card.d-post-card,.dIp0-c{
     background-color: transparent;
     margin-bottom: 64px;
     overflow: hidden;
+    background-position: center;
+    border: none;
 }
 .d-post-card-a,.dIp0-a{
     display: flex;

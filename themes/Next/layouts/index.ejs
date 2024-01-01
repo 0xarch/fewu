@@ -2,6 +2,10 @@
 <html>
 <%- include("includes/head.ejs",{title:{title:"首页",titleType:"index"}}) %>
 <body>
+    <script type="module" src="<%=ROOT-%>/files/meui.js"></script>
+    <script type="module">
+        MEUI.widgets.layout.resolveGrid();
+    </script>
     <%-include("includes/macros/compkit_dwt.ejs")-%>
     <Paper>
         <layout @grid col="2 50%" colM="1">
@@ -11,9 +15,4 @@
         </layout>
     </Paper>
 </body>
-    <script type="module" src="<%=ROOT-%>/files/meui.js"></script>
-    <script type="module">
-        MEUI.compkits.dwt();
-        MEUI.widgets.layout.resolveGrid();
-    </script>
 </html>

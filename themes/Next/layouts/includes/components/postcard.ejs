@@ -1,7 +1,6 @@
-<card class="d-post-card dIp0-c">
+<card class="d-post-card dIp0-c" <%-item.imageUrl?`style="background-image:url(${item.imageUrl})" @bg.fit`:''-%>>
     <a class="d-post-card-a dIp0-a" href="<%=ROOT-%><%= item.src -%>">
         <div class="d-post-image">
-            <img src="<%- item.imageUrl -%>">
         </div>
         <div @bg.acrylic class="p8 f1">
             <div class="d-post-detail dIp0-de">
