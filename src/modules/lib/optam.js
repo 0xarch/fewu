@@ -3,26 +3,79 @@ const MARKED = require("marked");
 const Hug = require('./hug');
 const Hail = require('./hail');
 
-class JPassage{
+class HPassage{
+    raw_string;
     content;
+    html;
     author;
     license;
     category;
     id;
+    date;
+    isTopped;
     foreword;
+    prev_passage;
+    next_passage;
+    constructor(raw_string){
+        this.raw_string = raw_string;
+        const lines = raw_string.split("\n");
+        let data = '';
+        let i = 0;
+        if (lines[i] === "---") {
+            i++;
+            while (lines[i] !== "---") {
+                data += lines[i];
+                i++;
+            }
+            i++;
+        }
+        let json = JSON.parse(data);
+        this.content = lines.slice(i).join('\n');
+        this.foreword = findLessContent(lines);
+        this.html = MARKED.parse(this.content);
+        if(json.date)
+            this.date = json.date;
+        else this.date = '1970-01-01';
+        if(json.top)
+            this.isTopped = true;
+        else this.isTopped = false;
+        if(json.category instanceof Array)
+            this.category = json.category.split(" ");
+        else this.category = [];
+        let transformed_title = data.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'\～\·\「\」\；\：\‘\’\“\”\，\。\《\》\？\！\￥\…\、\（\）]/g,'_');
+        try{ 
+            data.path = `${data.date.replace(/[\-\.]/g,"/")}/${transformed_title}/index.html`;
+            data.src = `/${data.date.replace(/[\-\.]/g,"/")}/${transformed_title}/`;
+        }catch(_) {}
+        data.JSDate = new Date(data.date);
+        data.Date = data.JSDate.toDateString();
+    }
+}
+
+class HDate {
+    constructor(y, m, d) {
+        this.y = y;
+        this.m = m;
+        this.d = d;
+    }
+
+    toString(){
+        return this.y + '-' + this.m + '-' + this.d;
+    }
 }
 
 /**
  * 
  * @param { string } content 
- * @returns {{title:string,date:string,category:string,path:string,src:string,content:string,top:boolean}}
+ * 
  */
 function ReadData(content) {
+    content = content.replace(/\r/g,'');
     const lines = content.split("\n");
     const data = {};
     let i = 0;
 
-    if (lines[i] === "---") {
+    if (lines[i] === '---') {
         i++;
         while (lines[i] !== "---") {
             const match = lines[i].match(/^(\w+):\s*(.*)/);
@@ -33,12 +86,13 @@ function ReadData(content) {
         }
         i++;
     }
+    if(!data.date) data.date='1970-01-01';
     try{
         data.transformed_title = data.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'\～\·\「\」\；\：\‘\’\“\”\，\。\《\》\？\！\￥\…\、\（\）]/g,'_'); 
         data.path = `${data.date.replace(/[\-\.]/g,"/")}/${data.transformed_title}/index.html`;
         data.src = `/${data.date.replace(/[\-\.]/g,"/")}/${data.transformed_title}/`;
         data.top = data.top=="true" ? true : false;
-    }catch(_) {}
+    }catch(e) { throw e}
     data.textContent = lines.slice(i).join('\n');
     data.parsedContent = MARKED.parse(data.textContent);
     data.less = extractLess(data.textContent);
@@ -94,8 +148,8 @@ function ReadPosts(PostDir, SPECIAL_POSTS) {
 exports.ReadPosts = (POST_DIR, SPECIAL_POSTS) => ReadPosts(POST_DIR, SPECIAL_POSTS);
 
 function Sort(a, b) {
-    const A = a.date,
-        B = b.date;
+    const A = a.date ?a.date :'1970-01-01',
+        B = b.date ?b.date :'1970-01-01';
     const Ay = A.slice(0, 4),
         By = B.slice(0, 4);
     if (Ay > By) return -1;
@@ -112,8 +166,8 @@ function Sort(a, b) {
 }
 
 const _SortPassage = (a,b) =>{
-    const A = a.date,
-        B = b.date;
+    const A = a.date ?a.date :'1970-01-01',
+        B = b.date ? b.date :'1970-01-01';
     const Ay = A.slice(0, 4),
         By = B.slice(0, 4);
     if (Ay > By) return -1;
