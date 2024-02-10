@@ -1,4 +1,5 @@
 @import url("widgets.css");
+@import url("location.css");
 
 /* M3TK Experimental */
 :root {
@@ -79,6 +80,7 @@ body {
     padding: 0;
     display: flex;
     flex-direction: column;
+    align-items: center;
     color: var(--text-foreground);
     background-color: var(--bg);
     font-size: 1em;
@@ -136,10 +138,8 @@ body[debug='true'] .content {
 }
 
 .topbar-container {
-    top: 0;
-    left: 0;
-    right: 0;
-    min-height: 96px;
+    width: 100%;
+    min-height: 8rem;
     z-index: 100;
     box-shadow: 0px 4px 10px var(--shadow-1);
     background: var(--text-background);
@@ -180,13 +180,8 @@ body[debug='true'] .content {
 }
 
 #main {
-    padding: 3rem .75rem;
+    padding: 3rem 1.5rem;
     display: flex;
-}
-
-html[isMobile='false'] 
-:is(.sidebar-l,.sidebar-r){
-    max-width: 16rem;
 }
 
 .sidebar-l,
@@ -226,6 +221,7 @@ html[isMobile='false']
 
 html[isMobile='true'] #main{
     flex-direction: column;
+    padding: 1.5rem 1rem;
 }
 
 html[isMobile='true'] #main>*{

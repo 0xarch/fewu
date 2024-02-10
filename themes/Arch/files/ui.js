@@ -9,7 +9,7 @@ function debug() {
 
 function mobile(){
     __isMobile = !__isMobile;
-    document.body.setAttribute('isMobile',__isMobile);
+    document.documentElement.setAttribute('isMobile',__isMobile);
 }
 
 function throttle(func, delay) {
