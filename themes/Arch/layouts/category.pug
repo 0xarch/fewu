@@ -1,0 +1,36 @@
+doctype html
+html 
+    head 
+        include /includes/base_script.pug
+        include /includes/css_iac.pug
+        title= __title__('Categories',user.name)
+    body(OCP='OVERRIDE') 
+        nav.topbar-container
+            include /includes/topbar.pug
+        #main.flex
+            - let c = 0
+            if theme['side_position']=='right'
+                - c = 1
+            div(class='sidebar-'+['l','r'][c])
+                include /includes/announcement.pug
+                include /includes/components/about.pug
+            if theme['3rd_bar']
+                div(class='sidebar-'+['r','l'][c])
+            .content
+                each item in Cycling.value
+                    .card
+                        text= item.key
+                        text= item.value.length
+                        text= 'LAST POST:'+ID[item.value[0]].Date
+                        a.readmore(href=file(`/category/s/index_${item.key}_1.html`))= 'GO'
+                .pagination
+                    - let _page_total = Cycling.TotalCount
+                    - let _page_now = Cycling.LoopTime
+                    .total= _page_total+'TOTAL'
+                    | ,
+                    .now= _page_now+'NOW'
+                    unless _page_total!=1
+                        if _page_now!=1
+                            a.prev(href=file(`/category/index_${_page_now-1}.html`))= `PREV<${_page_now-1}>`
+                        unless _page_now==_page_total
+                            a.next(href=file(`/category/index_${_page_now+1}.html`))= `NEXT<${_page_now+1}>`

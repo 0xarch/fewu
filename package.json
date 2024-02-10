@@ -2,10 +2,20 @@
     "name": "hogger",
     "version": "0.1.2",
     "dependencies": {
+        "@types/marked": "^6.0.0",
         "ejs": "^3.1.9",
         "fs": "^0.0.1-security",
-        "node-fs-extra": "^0.8.2",
         "marked": "^4.3.0",
-        "os": "^0.1.2"
+        "node-fs-extra": "^0.8.2",
+        "pug": "^3.0.2"
+    },
+    "scripts": {
+        "start": "node src/main.js --config config.json",
+        "test": " node src/test.js",
+        "update-theme": "node src/main.js --config config.json --only updateTheme"
+    },
+    "type": "module",
+    "devDependencies": {
+        "@types/ejs": "^3.1.5"
     }
 }

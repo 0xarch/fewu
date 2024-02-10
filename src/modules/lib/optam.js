@@ -1,7 +1,7 @@
-const PATH = require("path");
-const MARKED = require("marked");
-const Hug = require('./hug');
-const Hail = require('./hail');
+import { basename } from "path";
+import { parse } from "marked";
+import { log } from './hug.js';
+import { traverse, readFile } from './hail.js';
 
 class HPassage{
     raw_string;
@@ -32,7 +32,7 @@ class HPassage{
         let json = JSON.parse(data);
         this.content = lines.slice(i).join('\n');
         this.foreword = findLessContent(lines);
-        this.html = MARKED.parse(this.content);
+        this.html = parse(this.content);
         if(json.date)
             this.date = json.date;
         else this.date = '1970-01-01';
@@ -69,7 +69,7 @@ class HDate {
  * @param { string } content 
  * 
  */
-function ReadData(content) {
+function ReadData(content,pathto=undefined) {
     content = content.replace(/\r/g,'');
     const lines = content.split("\n");
     const data = {};
@@ -94,7 +94,7 @@ function ReadData(content) {
         data.top = data.top=="true" ? true : false;
     }catch(e) { throw e}
     data.textContent = lines.slice(i).join('\n');
-    data.parsedContent = MARKED.parse(data.textContent);
+    data.parsedContent = parse(data.textContent);
     data.less = extractLess(data.textContent);
     data.lessContent = findLessContent(lines);
     if(data.category!=undefined){
@@ -104,6 +104,7 @@ function ReadData(content) {
     }
     data.JSDate = new Date(data.date);
     data.Date = data.JSDate.toDateString();
+    if(pathto) data.pathto = pathto;
     return data;
 }
 
@@ -113,9 +114,9 @@ function extractLess(content) {
     const moreIndex = lines.indexOf("<!--more-->");
 
     if (moreIndex !== -1) {
-        return MARKED.parse(lines.slice(0, moreIndex).join("\n").replace(/\#*/g, ""));
+        return parse(lines.slice(0, moreIndex).join("\n").replace(/\#*/g, ""));
     } else {
-        return MARKED.parse(lines.slice(0, 5).join("\n").replace(/\#*/g, ""));
+        return parse(lines.slice(0, 5).join("\n").replace(/\#*/g, ""));
     }
 }
 
@@ -126,13 +127,13 @@ function findLessContent(lines) {
 
 function ReadPosts(PostDir, SPECIAL_POSTS) {
     let bid = 0;
-    Hug.log("读取目录",PostDir);
+    log("读取目录",PostDir);
     let Posts = new Array,
         Specials = {};
-    for (let path of Hail.traverse(PostDir)) {
-        let item = PATH.basename(path, PostDir);
-        let file_text = Hail.readFile(path);
-        let file_data = ReadData(file_text);
+    for (let path of traverse(PostDir)) {
+        let item = basename(path, PostDir);
+        let file_text = readFile(path);
+        let file_data = ReadData(file_text,path);
         file_data.bid = bid;
         
         if (SPECIAL_POSTS.includes(item)) Specials[item] = file_data;
@@ -145,7 +146,8 @@ function ReadPosts(PostDir, SPECIAL_POSTS) {
     };
 }
 
-exports.ReadPosts = (POST_DIR, SPECIAL_POSTS) => ReadPosts(POST_DIR, SPECIAL_POSTS);
+const _ReadPosts = (POST_DIR, SPECIAL_POSTS) => ReadPosts(POST_DIR, SPECIAL_POSTS);
+export { _ReadPosts as ReadPosts };
 
 function Sort(a, b) {
     const A = a.date ?a.date :'1970-01-01',
@@ -186,7 +188,7 @@ const _SortPassage = (a,b) =>{
 function getSort(POSTS) {
     const SortedPosts = POSTS.sort(Sort);
     const rawByDate = POSTS.sort(_SortPassage);
-    Hug.log("开始","排序 & 分类");
+    log("开始","排序 & 分类");
 
     // ______ BID & 最近 & 默认 ______
     const BID = {};
@@ -196,7 +198,7 @@ function getSort(POSTS) {
         byDate.push(item.bid);
     }
     const Sorted = Array.from(byDate);
-    const RecentPosts = Sorted.slice(0, 10);
+    const RecentPosts = rawByDate.slice(0, 10);
 
     // _______ 置顶 _______
     var topPosts = [];
@@ -271,7 +273,8 @@ function getSort(POSTS) {
     }
 
     return {
-        Posts: SortedPosts,
+        Posts: rawByDate,
+        recently: RecentPosts,
         byDefault,
         byCategory,
         categories,
@@ -284,4 +287,4 @@ function getSort(POSTS) {
     }
 }
 
-exports.getSort = (POSTS) => getSort(POSTS);
+export { getSort };

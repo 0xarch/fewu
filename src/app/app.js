@@ -1,13 +1,22 @@
-const Path = require('path');
-const Hail = require('../modules/lib/hail');
-const Hug = require('../modules/lib/hug');
-const Optam = require('../modules/lib/optam');
-const builder = require('../modules/app/builder');
-Hug.log("开始","主任务");
-
-function main(){
+import * as Hail from '../modules/lib/hail.js';
+import * as Hug from '../modules/lib/hug.js';
+import * as Optam from '../modules/lib/optam.js';
+import * as fs from 'fs';
+import * as Path from 'path';
+import { errno,run } from '../lib/mod.js';
+import { build_and_write } from '../modules/app/builder.js';
+import { Worker } from 'worker_threads';
+/**
+ * @DOCUMENT_OF_APP
+ * @argument config Configuration file for Nexo.
+ * @argument theme Use specified theme.
+ * 
+ * **NOTE** Working in progress
+ */
+async function App(){
     const argv = Hug.gopt(process.argv);
-    const GlobalConfig = JSON.parse(Hail.readFile(argv['config']));
+    let config_raw_text = fs.readFileSync(argv['config'] || 'config.json').toString();
+    const GlobalConfig = JSON.parse(config_raw_text);
     const isDebugMode = argv['debug'];
 
     Hug.log("完成","读取配置文件");
@@ -15,7 +24,7 @@ function main(){
         process.exit();
     }
 
-    const ThemeName = GlobalConfig.theme.name;
+    const ThemeName = argv['theme'] || GlobalConfig.theme.name;
 
     const PostDir = GlobalConfig.build.post_directory,
         ThemeDir = Path.join('themes',ThemeName),
@@ -26,31 +35,118 @@ function main(){
     const ThemeConfig = JSON.parse(Hail.readFile(ThemeDir,'config.json'));
     const ThemeLayoutType = ThemeConfig.layout.type;
 
-    if(PostDir == undefined ) PostDir = "posts";
-    if(PublicDir == undefined) PublicDir = "public";
+    if(!PostDir) PostDir = "posts";
+    if(!PublicDir) PublicDir = "public";
 
     if(argv['dry-run'] == 'config'){
-        Hug.log(JSON.stringify(GlobalConfig));
+        console.log(JSON.stringify(GlobalConfig));
         Hug.nextline();
-        Hug.log(JSON.stringify(ThemeConfig));
+        console.log(JSON.stringify(ThemeConfig));
+        process.exit();
+    }
+
+    if(argv['only'] == 'updateTheme'){
+        let _ = await part_copyfiles(ThemeFilesDir,PublicDir,ThemeConfig);
+        console.log(_);
         process.exit();
     }
 
     const {Posts,Specials} = Optam.ReadPosts(PostDir,GlobalConfig.excluded_posts);
     const Sorts = Optam.getSort(Posts);
 
+    Specials;
+
+    let __public_root = !["/", "", undefined].includes(GlobalConfig.build.site_root) ? GlobalConfig.build.site_root : '';
+
     const BuildVariables = {
         Posts,
         Sorts,
         GlobalConfig,
         user: GlobalConfig.user,
+        theme: GlobalConfig.theme.options,
         Appearance: GlobalConfig.appearance,
-        ROOT: !["/", "", undefined].includes(GlobalConfig.build.site_root) ? GlobalConfig.build.site_root : ''
+        ROOT: __public_root
     }
 
-    if(isDebugMode){
-        Hug.log("All Layouts: \n",JSON.stringify(ThemeConfig.layout.layouts));
+    let __plugin;
+    let __get_title = (function(){
+        let sep = '|';
+        if(GlobalConfig.theme.title){
+            if(GlobalConfig.theme.title.separator)
+                sep = GlobalConfig.theme.title.separator;
+            return (fix,type)=>{
+                let suffix=type;
+                if(GlobalConfig.theme.title[type])
+                    suffix = GlobalConfig.theme.title[type];
+                return fix+' '+sep+' '+suffix;
+            }
+        }
+        return (fix,type)=>{
+            return fix+' '+sep+' '+type;
+        }
+    })();
+
+    /**
+     * @param { string } file_dir 
+     * @returns string
+     */
+    function __get_file_relative_dir(file_dir){
+        if(!file_dir) return __public_root+'/';
+        if(file_dir[0]=='/')
+            file_dir = file_dir.substring(1)
+        return __public_root+"/"+file_dir;
     }
+
+    if(ThemeConfig.API){
+        /**
+         * @DOCUMENT_OF_PLUGIN
+         * set %ThemeConfig.API.hasPlugin% to true to enable plugin
+         * The plugin must be located at% Theme%/extra/plugin.js 
+         * and provide a plugin() method. 
+         * The App will call the plugin() method
+         * and pass the result to the template with the name 'Plugin'
+         * 
+         * @example const plugin = () => '000' ; EJS'<%=Plugin-%>' ~> 000
+         */
+        if(ThemeConfig.API.hasPlugin){
+            let __plugin_file = fs.readFileSync(Path.join(ThemeDir,'extra/plugin.js'));
+            let __plugin_script = 'try{\n'+__plugin_file.toString()+'\nplugin()}catch(e){errno(20202);console.error(e);"NULL"}';
+            __plugin = eval(__plugin_script);
+        }
+    }
+
+    function resolve(filename){
+        if(ThemeConfig.API && ThemeConfig.API.provideWith && ThemeConfig.API.provideWith!="v1"){
+            switch(ThemeConfig.API.provideWith){
+                case "v2":
+                    return {
+                        Plugin:__plugin,
+                        allArticles: Posts,
+                        sortArticle: Sorts,
+                        ID: Sorts.BID,
+                        settings: GlobalConfig,
+                        theme: GlobalConfig.theme.options,
+                        user: GlobalConfig.user,
+                        __root_directory__: __public_root,
+                        __filename__: filename,
+                        __title__: __get_title,
+                        file: __get_file_relative_dir,
+                    }
+            }
+        } else {
+            return {
+                Posts,
+                Sorts,
+                GlobalConfig,
+                user: GlobalConfig.user,
+                theme: GlobalConfig.theme.options,
+                Appearance: GlobalConfig.appearance,
+                ROOT: __public_root,
+                ...Sorts
+            }
+        }
+    }
+
     for (let item of ThemeConfig.layout.layouts) {
         let filename = Path.join(ThemeLayoutDir, item.build.filename),
             destname = Path.join(PublicDir, item.build.destname, 'index.html');
@@ -75,7 +171,6 @@ function main(){
          *  destnation -> ${build.destname}/index_${Varias.keyName}.html
          */
         if( item.build.varias && item.build.option.varias ){
-            Hug.dbg('Varia',item.name);
             let Varias = {};
             let option = item.build.option.varias;
             let parent_var = eval(option.parent);
@@ -86,29 +181,25 @@ function main(){
                 Varias.keyName = var_name;
                 Varias.value = parent_var[var_name];
                 const _W_vars = {Varias};
+                inconf_extra['Varias'] = Varias;
                 BF_with(_W_vars,item,filename,destname,inconf_extra,destSuffix);
             }
         } else
         BF_with({},item,filename,destname,inconf_extra);
     }
-    Hug.log("开始","搭建所有文件");
     let postFilename = Path.join(ThemeLayoutDir,ThemeConfig.layout.post_layout);
-    let postTemplate = Hail.readFile(ThemeLayoutDir,ThemeConfig.layout.post_layout);
+    let postTemplate = fs.readFileSync(postFilename).toString();
     
-    Posts.forEach(item => {
-        let destname = Path.join(PublicDir, item.path);
-        builder.build(ThemeLayoutType,postTemplate,{
-            post: item,
-            filename: postFilename,
-            ...BuildVariables,
-            ...Sorts
-        },destname,ThemeConfig);
-    })
-    Hail.copyFile(ThemeFilesDir,Path.join(PublicDir,'files'));
-    Hail.copyFile('sources',Path.join(PublicDir,'sources'));
-    
+    part_build_page(ThemeLayoutType,postTemplate,Posts,PublicDir,ThemeConfig,{
+        basedir:ThemeLayoutDir,
+        filename:postFilename
+    },{
+        ...resolve(postFilename)
+    });
+    part_copyfiles(ThemeFilesDir,PublicDir,ThemeConfig);
+
+
     async function BF_with(vars,item,filename,destname,inconf_extra,destSuffix=''){
-        if(isDebugMode) Hug.log("Building","from",filename,"to",destname);
         /**
          * Cycl-building(Cycling)
          * To Enable, set build.cycling: true
@@ -137,9 +228,26 @@ function main(){
             let option = item.build.option.cycling;
             // aro stands for "array or object"
             let father_aro = [], every = option.every;
-            with(vars){
-                father_aro = eval(option.parent);
-            }
+            (function(){
+                let __splited = option.parent.split(".");
+                if(__splited.length == 1) father_aro = eval(__splited[0]);
+                else {
+                    let __tempor_val;
+                    try{
+                        __tempor_val = eval(__splited[0]);
+                    }catch(_){
+                        try{
+                            __tempor_val = inconf_extra[__splited[0]];
+                        }catch(_){
+                            errno('30001');
+                        }
+                    }
+                    for(let z=1;z<__splited.length;z++){
+                        __tempor_val = __tempor_val[__splited[z]];
+                    }
+                    father_aro = __tempor_val;
+                }
+            }());
             if(! Array.isArray(father_aro)){
                 let _arr = [];
                 for(let objKey in father_aro){
@@ -160,25 +268,49 @@ function main(){
                 Cycling.PreviousFile = Path.join(_destPrePath,'index'+destSuffix+'_'+i+'.html');
                 Cycling.NextFile = Path.join(_destPrePath,'index'+destSuffix+'_'+(i+2)+'.html');
                 Cycling.FileLocationPrefix = Path.join(BuildVariables.ROOT,item.build.destname);
-                Hug.dbg('Cycl',item.name,JSON.stringify(Cycling.value));
-                builder.build(ThemeLayoutType,Hail.readFile(filename),{
-                    filename,
-                    ...BuildVariables,
-                    ...Sorts,
+                build_and_write(ThemeLayoutType,Hail.readFile(filename),{
+                    basedir:ThemeLayoutDir,
+                    filename
+                },{
+                    ...resolve(),
                     ...inconf_extra,
                     ...vars,
                     Cycling
-                },destname,ThemeConfig);
+                },ThemeConfig,destname);
             }
         } else
-        builder.build(ThemeLayoutType,Hail.readFile(filename),{
-            filename,
-            ...BuildVariables,
-            ...Sorts,
+        build_and_write(ThemeLayoutType,fs.readFileSync(filename).toString(),{
+            basedir: ThemeLayoutDir,
+            filename
+        },{
+            ...resolve(),
             ...inconf_extra,
             ...vars
-        }, destname,ThemeConfig)
+        },ThemeConfig,destname);
     }
 }
 
-exports.App = main;
+async function part_copyfiles(themeFileDir,publicDir,ThemeConfig){
+    await Hail.copyFile(themeFileDir,Path.join(publicDir,'files'));
+    await Hail.copyFile('sources',Path.join(publicDir,'sources'));
+    if(ThemeConfig.rawPosts && ThemeConfig.rawPosts.copy){
+        if(ThemeConfig.rawPosts.copyTo){
+            Hail.copyFile('posts',Path.join(publicDir,ThemeConfig.rawPosts.copyTo));
+        } else {
+            errno('20101');
+        }
+    }
+    console.log('Copy Complete');
+}
+
+async function part_build_page(layoutType,template,Posts,publicDir,ThemeConfig,options,GivenVariables){
+    Posts.forEach(item => {
+        let destname = Path.join(publicDir, item.path);
+        build_and_write(layoutType,template,options,{
+            post:item,
+            ...GivenVariables
+        },ThemeConfig,destname);
+    })
+}
+
+export default App;

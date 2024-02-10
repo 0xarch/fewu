@@ -10,22 +10,20 @@ const TermEffect={
 const TermEnd=`\x1b[0m`;
 const CCE=(Color,Effect)=>`\x1b[${TermColor[Color]};${Effect?TermEffect[Effect]:""}m`;
 const CTX=(Text,Color,Effect)=>CCE(Color,Effect)+Text+TermEnd;
-exports.CCE=CCE;
-exports.CEN=TermEnd;
-exports.CTX=CTX;
-exports.log = (...text) => 
+const CEN=TermEnd;
+const log = (...text) => 
     console.log('LOG'+'   '+text.join(" - "));
-exports.dbg = (...text) =>
+const dbg = (...text) =>
     console.log('DBG'+'   '+text.join(" - "));
-exports.err = (...text) =>
+const err = (...text) =>
     console.error('ERR'+'   '+text.join(" - "));
-exports.nextline = () =>console.log('\n');
+const nextline = () =>console.log('\n');
 
 /**
  * 
  * @param { string[] } argv 
  */
-exports.gopt = (argv) =>{
+const gopt = (argv) =>{
     let len = argv.length;
     let args = {};
     for(let i = 1;i<len;i++){
@@ -48,4 +46,15 @@ exports.gopt = (argv) =>{
         }
     }
     return args;
+}
+
+export {
+    gopt,
+    CCE,
+    CEN,
+    CTX,
+    log,
+    dbg,
+    err,
+    nextline
 }

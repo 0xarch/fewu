@@ -1,0 +1,31 @@
+doctype html 
+html(lang="zh")
+    head 
+        include /includes/base_script.pug
+        include /includes/post_prelude.pug
+        include /includes/post_script.html
+        title= __title__(post.title,'read')
+    body(OCP='OVERRIDE')
+        #url= file('/'+post.pathto)
+        .topbar-container 
+            include /includes/topbar.pug
+        #main(class=theme['3rd-bar']&&'multi')
+            - let c = 0
+            if theme['side_position']=='right'
+                - c = 1
+            div(class='sidebar-'+['l','r'][c])
+                include /includes/components/about.pug
+                include /includes/components/toc.pug
+                include /includes/recent.pug
+            if theme['3rd_bar']
+                div(class='sidebar-'+['r','l'][c])
+            .content
+                .card
+                    .meta
+                    #markdown_fillContent
+                .readnext.flex
+                    - let __prev = ID[post.prevBID] || {}
+                    - let __next = ID[post.nextBID] || {}
+                    a.prev(href=__prev.src&&file(__prev.src))=__prev.title || 'ALREADY EARLIEST'
+                    a.next(href=__next.src&&file(__next.src))=__next.title || 'NOT UPDATED'
+                    

@@ -273,8 +273,8 @@ function parseToJS(tokenArray, config, debug = false) {
     return processed;
 }
 
-exports.AST = AST;
-exports.parseToJS = parseToJS;
-exports.parse = function (content, config) {
+export { AST };
+export { parseToJS };
+export function parse (content, config) {
     return parseToJS(AST(content, config.removeLineBreak, config.skipWhitespace), config);
 }

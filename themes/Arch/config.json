@@ -1,0 +1,95 @@
+{
+    "name": "Arch Advyzon",
+    "author": "Hogger team",
+    "description": "Adv style theme for Hogger",
+    "lib": [
+        "@:rsms:markdown-wasm:jsdelivr",
+        "@:highlightjs:&&:jsdelivr"
+    ],
+    "API": {
+        "hasPlugin": true,
+        "provideWith":"v2"
+    },
+    "rawPosts": {
+        "copy": true,
+        "copyTo": "posts"
+    },
+    "layout": {
+        "type": "PUG",
+        "post_layout": "post.pug",
+        "layouts": [
+            {
+                "name": "index",
+                "build": {
+                    "filename": "index.pug",
+                    "destname": ""
+                }
+            },
+            {
+                "name": "archive",
+                "build": {
+                    "filename": "archive.pug",
+                    "destname": "archive",
+                    "cycling": true,
+                    "option": {
+                        "cycling": {
+                            "parent": "Sorts.byDate",
+                            "every": 5,
+                            "name": "PostsThisPage"
+                        }
+                    }
+                }
+            },
+            {
+                "name": "category",
+                "build": {
+                    "filename": "category.pug",
+                    "destname": "category",
+                    "cycling": true,
+                    "option": {
+                        "cycling": {
+                            "parent": "Sorts.byCategory",
+                            "every": 5,
+                            "name": "value"
+                        }
+                    }
+                }
+            },
+            {
+                "name": "category_every",
+                "build": {
+                    "filename": "category_every.pug",
+                    "destname": "category/s",
+                    "varias": true,
+                    "cycling": true,
+                    "option": {
+                        "varias": {
+                            "parent": "Sorts.byCategory"
+                        },
+                        "cycling": {
+                            "parent": "Varias.value",
+                            "every": 5,
+                            "name": "value"
+                        }
+                    }
+                }
+            },
+            {
+                "name": "status",
+                "build": {
+                    "filename": "status.pug",
+                    "destname": "status",
+                    "extras": "{date:new Date()}"
+                }
+            },
+            {
+                "name": "about",
+                "build": {
+                    "filename": "post.pug",
+                    "destname": "about",
+                    "extras": "{post:Specials['about.md']}"
+                }
+            }
+        ]
+    }
+}

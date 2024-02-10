@@ -1,0 +1,12 @@
+.card.post
+    if item.imageUrl
+        .image-fill
+            img(src=item.imageUrl)
+    .detail
+        .meta
+            span= item.Date
+            span= item.category
+            span= item.strLength+' '+'Characters'
+        a.onbrand.title(href=file(item.src))= item.title
+        .less!= item.less
+        a.onbrand.readmore(href=file(item.src))= 'Read more'

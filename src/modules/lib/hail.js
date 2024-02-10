@@ -1,10 +1,11 @@
-const Fs = require('fs');
-const FsExtra = require('node-fs-extra');
-const Path = require('path');
+import * as fs from 'fs';
+import pkg from 'node-fs-extra';
+const { mkdirp, copy, mkdirpSync } = pkg;
+import * as nodepath from 'path';
 
-exports.readFile = (...path) =>{
-    let file_path = Path.join(...path);
-    return Fs.readFileSync(file_path).toString();
+function readFile(...path){
+    let file_path = nodepath.join(...path);
+    return fs.readFileSync(file_path).toString();
 }
 
 /**
@@ -12,38 +13,48 @@ exports.readFile = (...path) =>{
  * @param { string } content 
  * @param  {...PathLike } path 
  */
-exports.writeFile = async (content,...path) =>{
-    let file_path = Path.join(...path);
-    FsExtra.mkdirp(Path.dirname(file_path),function(){
-        Fs.writeFile(file_path,content,()=>{});
+async function writeFile(content,...path){
+    let file_path = nodepath.join(...path);
+    mkdirp(nodepath.dirname(file_path),function(){
+        fs.writeFile(file_path,content,()=>{});
     });
 }
 
-exports.copyFile = async (path_from,path_to) =>{
-    FsExtra.copy(path_from,path_to,()=>{});
+async function copyFile(path_from,path_to){
+    copy(path_from,path_to,()=>{});
 }
 
-exports.mkdir = async (...path) =>{
-    FsExtra.mkdirpSync(Path.join(...path));
+async function mkdir(...path){
+    mkdirpSync(nodepath.join(...path));
 }
 
-exports.isDirectory = (path) =>{
-    return Fs.statSync(path).isDirectory();
+function isDirectory(path){
+    return fs.statSync(path).isDirectory();
 }
 
-exports.dirname = (path) =>{
-    return Path.dirname(path);
+function dirname(path){
+    return nodepath.dirname(path);
 }
 
 function readDirectoryRecursive(Directory) {
     let returns = [];
-    for (let item of Fs.readdirSync(Directory)) {
-        let path = Path.join(Directory, item);
-        let stat = Fs.statSync(path);
+    for (let item of fs.readdirSync(Directory)) {
+        let path = nodepath.join(Directory, item);
+        let stat = fs.statSync(path);
         if (stat.isDirectory()) returns.push(...readDirectoryRecursive(path));
         else returns.push(path);
     }
     return returns;
 }
 
-exports.traverse = (directory) => readDirectoryRecursive(directory);
+function traverse(directory) { return readDirectoryRecursive(directory); }
+
+export {
+    readFile,
+    writeFile,
+    copyFile,
+    mkdir,
+    isDirectory,
+    dirname,
+    traverse
+}

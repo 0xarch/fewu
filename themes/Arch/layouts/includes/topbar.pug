@@ -1,0 +1,12 @@
+.topbar(style=(!theme.verticalNavbar)?'flex-direction:column':'')
+    a.brand(href=file('/'))
+        .logo
+            if user.logo
+                = user.logo
+            else
+                .logo-of-nexo
+    .flex
+        a.go-link(href=file('/archive/index_1.html'))= 'ARCHIVE'
+        a.go-link(href=file('/category/index_1.html'))= 'CATEGORY'
+        a.go-link(href=file('/about'))= 'ABOUT'
+        a.go-link(href=file('/status'))= 'STATUS'

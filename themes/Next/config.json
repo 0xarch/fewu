@@ -1,12 +1,17 @@
 {
     "name": "Next Theme",
     "author": "Hogger team",
-    "description": "Theme for testing MEUI",
+    "description": "Next theme for Hogger",
     "lib":[
         "@github:0xarch/mata-toolkit",
         "@github:markedjs/marked",
-        "@github:highlightjs/highlight.js"
+        "@:rsms:markdown-wasm:jsdelivr",
+        "@:highlightjs:&&:jsdelivr"
     ],
+    "rawPosts":{
+        "copy":true,
+        "copyTo":"posts"
+    },
     "layout":{
         "type":"EJS",
         "post_layout":"post.ejs",

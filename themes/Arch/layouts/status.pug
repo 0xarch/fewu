@@ -1,0 +1,38 @@
+doctype html
+html
+    head 
+        include /includes/base_script.pug
+        include /includes/css_iac.pug
+        title= __title__('STATUS',user.name)
+    body(OCP='OVERRIDE')
+        .topbar-container
+            include /includes/topbar.pug
+        #main.flex
+            - let c = 0
+            if theme['side_position']=='right'
+                - c = 1
+            div(class='sidebar-'+['l','r'][c])
+                include /includes/announcement.pug
+                include /includes/components/about.pug
+                include /includes/recent.pug
+            if theme['3rd_bar']
+                div(class='sidebar-'+['r','l'][c])
+            .content
+                .card.archive.column
+                    .heading| Articles
+                    = Plugin.postCount
+                .card.category.column
+                .card.update.column
+                    .heading| Update
+                    .plain| Build time
+                    .plain= date
+                .card.theme.column
+                    .heading| Theme
+                    .plain| Nexo with Arch Theme v0.1
+                    .flex.alc.fgap
+                        .logo-of-theme
+                        .logo-of-nexo
+                .card.plugin.column
+                    .heading| Plugin
+                    .plain!=JSON.stringify(Plugin)
+            

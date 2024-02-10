@@ -29,6 +29,9 @@ paper{
     background-color: var(--me-color-surface-0);
 
 }
+url{
+    display: none;
+}
 code.hljs {
     border-radius: 8px;
     display: block;

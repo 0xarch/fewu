@@ -1,3 +1,10 @@
-const libGHTML = require('./lib');
+import { parse } from './lib.js';
+/**
+ * @deprecated
+ */
+const __parse = parse;
 
-exports.parse = libGHTML.parse;
+export {
+    __parse,
+}
+

@@ -2,9 +2,9 @@
  * @lib node/ejs
  */
 
-const EJS = require('ejs');
+import { render } from 'ejs';
 
-exports.parse = function(ejs_template, ejs_extra_json) {
-    let content = EJS.render(ejs_template, ejs_extra_json);
+export function parse(ejs_template, ejs_extra_json) {
+    let content = render(ejs_template, ejs_extra_json);
     return content;
 }

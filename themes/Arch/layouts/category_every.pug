@@ -1,0 +1,28 @@
+doctype html
+html 
+    head 
+        include /includes/base_script.pug
+        include /includes/css_iac.pug
+        title= __title__(Varias.keyName,user.name)
+    body(OCP='OVERRIDE')
+        .topabr-container
+            include /includes/topbar.pug
+        #main 
+            - let c = 0
+            if theme['side_position']=='right'
+                - c = 1
+            div(class='sidebar-'+['l','r'][c])
+                include /includes/announcement.pug
+                include /includes/components/about.pug
+            if theme['3rd_bar']
+                div(class='sidebar-'+['r','l'][c])
+            .content
+                each bid in Varias.value
+                    - let item = ID[bid]
+                    include /includes/components/postcard.pug
+        .pagination.
+            {
+                "page": #{Cycling.TotalCount}
+                "now": #{Cycling.LoopTime}
+                "link": #{__root_directory}/#{Cycling.FileLocationPrefix}/index_#{Varias.keyName}_${i}.html
+            }

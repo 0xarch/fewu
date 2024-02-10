@@ -22,9 +22,21 @@
         }
     },
     "theme":{
-        "name":"Next"
+        "name":"Arch",
+        "options":{
+            "3rd_bar":false
+        },
+        "title":{
+            "separator": "|",
+            "function": "",
+            "read": "文章",
+            "index": "Hello! oxArch"
+        }
     },
-    "excluded_posts": ["about.md","news.md"],
+    "api": {
+
+    },
+    "excluded_posts": ["about.md","news.md","links.md"],
     "override": [],
     "widgets": {
         "comment":{

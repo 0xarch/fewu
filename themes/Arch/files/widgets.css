@@ -1,0 +1,160 @@
+body{
+    font-family: 'Google Sans Text';
+    margin: 0px;
+}
+
+hr {
+    width: 80%;
+}
+:is(button,a[\@as=button],.button),
+:is(button,a[\@as=button],.button) *{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+a {
+    color: inherit;
+}
+toolbar{
+    color:var(--basisTextColor);
+}
+paper{
+    overflow: auto;
+    height: calc(100% - var(--toolbarHeight));
+    background-color: var(--me-color-surface-0);
+
+}
+url{
+    display: none;
+}
+code.hljs {
+    border-radius: 8px;
+    display: block;
+    padding: 8px;
+    margin: 8px;
+    color: var(--me-color-surface-outline)
+}
+
+code, code.hljs {
+    background-color: var(--me-color-surface);
+    padding: 4px;
+}
+.p8{
+    padding: 8px;
+}
+.f1{
+    flex: 1;
+}
+table {
+    text-align: center;
+}
+hr {
+    opacity: .25;
+}
+*[bg=none]{
+    background: transparent;
+}
+*[bg=color],.bg_cld{
+    background-color: var(--primary-background);
+}
+.f_eaj{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.card.about>.info-1>img{
+    max-width: min(50%,50vw);
+    object-fit: fill;
+    display:block;
+    border-radius: 999px;
+}
+.card.about>.info-1{
+    align-items:center;
+}
+.card.about>.info-1>.name{
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 2px;
+}
+.card.about>.info-2{
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+}
+.card.about>.info-2>*{
+    align-items:center;
+    display:flex;
+    flex-direction:column;
+}
+.card.about>.info-2>*>span{
+    font-size: .75rem;
+}
+.card.about>.info-2>*>p{
+    margin: 4px;
+    padding: 4px;
+}
+a.followme{
+    border-radius: 1.5rem;
+    background: #3273dc;
+    color: #fff;
+    display: flex;
+    width: 100%;
+    align-items:center;
+    justify-content:center;
+    padding: .25rem;
+    min-height: 2rem;
+    max-height: 3rem;
+    max-width: 50vw;
+}
+.card.recent>a{
+    text-decoration: none;
+}
+.heading{
+    font-size: 1.5rem;
+}
+.logo-of-theme,.logo-of-nexo{
+    --r: 1.75rem;
+    height: calc(2*var(--r));
+    width: calc(1.73205081*var(--r));
+    overflow: hidden;
+}
+.logo-of-theme{
+    background: var(--brand-color);
+    clip-path: polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%, 0 25%);
+}
+.logo-of-theme::after,
+.logo-of-nexo::after{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.logo-of-theme::after{
+    content: 'ARCH';
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logo-of-nexo{
+    --r: 1.75rem;
+    font-size: 1rem;
+    width: calc(2*var(--r));
+    height: calc(1.73205081*var(--r));
+    background: linear-gradient(30deg,#f00,#f0f,#00f);
+    clip-path: polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%, 0 50%);
+}
+.logo-of-nexo::after{
+    content: 'NEXO';
+    color: #fff;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1;
+}

@@ -1,0 +1,4 @@
+.card.recent.column
+    .heading= 'RECENT'
+    each item in sortArticle.recently
+        a.onbrand(href=file(item.src))=item.title
