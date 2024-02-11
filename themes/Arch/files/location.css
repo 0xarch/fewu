@@ -17,4 +17,28 @@
     #main{
         padding: 1.5rem 1rem !important;
     }
+    .nomobile{
+        display: none;
+    }
+}
+@media screen and (min-width: 768px), print {
+    #main{
+        display: flex;
+    }
+    .sidebar-l,.sidebar-r{
+        padding: .75rem;
+        position: sticky;
+        width: 33.34%;
+    }
+    .content{
+        padding: .75rem;
+        width: 66.67%;
+    }
+    #main.multi>.content {
+        width: 50%;
+    }
+    #main.multi>:is(.sidebar-l, .sidebar-r) {
+        width: 25%;
+    }
+
 }

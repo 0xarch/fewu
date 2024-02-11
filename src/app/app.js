@@ -5,7 +5,6 @@ import * as fs from 'fs';
 import * as Path from 'path';
 import { errno,run } from '../lib/mod.js';
 import { build_and_write } from '../modules/app/builder.js';
-import { Worker } from 'worker_threads';
 /**
  * @DOCUMENT_OF_APP
  * @argument config Configuration file for Nexo.
@@ -17,11 +16,10 @@ async function App(){
     const argv = Hug.gopt(process.argv);
     let config_raw_text = fs.readFileSync(argv['config'] || 'config.json').toString();
     const GlobalConfig = JSON.parse(config_raw_text);
-    const isDebugMode = argv['debug'];
 
     Hug.log("完成","读取配置文件");
     if(argv['dry-run'] == 'null'){
-        process.exit();
+        return;
     }
 
     const ThemeName = argv['theme'] || GlobalConfig.theme.name;
@@ -42,13 +40,13 @@ async function App(){
         console.log(JSON.stringify(GlobalConfig));
         Hug.nextline();
         console.log(JSON.stringify(ThemeConfig));
-        process.exit();
+        return;
     }
 
     if(argv['only'] == 'updateTheme'){
-        let _ = await part_copyfiles(ThemeFilesDir,PublicDir,ThemeConfig);
-        console.log(_);
-        process.exit();
+        fs.cp(ThemeFilesDir,Path.join(PublicDir,'files'),{recursive:true},()=>{});
+        fs.cp('sources',Path.join(PublicDir,'sources'),{recursive:true},()=>{});
+        return;
     }
 
     const {Posts,Specials} = Optam.ReadPosts(PostDir,GlobalConfig.excluded_posts);
@@ -198,7 +196,6 @@ async function App(){
     });
     part_copyfiles(ThemeFilesDir,PublicDir,ThemeConfig);
 
-
     async function BF_with(vars,item,filename,destname,inconf_extra,destSuffix=''){
         /**
          * Cycl-building(Cycling)
@@ -291,11 +288,17 @@ async function App(){
 }
 
 async function part_copyfiles(themeFileDir,publicDir,ThemeConfig){
-    await Hail.copyFile(themeFileDir,Path.join(publicDir,'files'));
-    await Hail.copyFile('sources',Path.join(publicDir,'sources'));
+    //await Hail.copyFile(themeFileDir,Path.join(publicDir,'files'));
+    //await Hail.copyFile('sources',Path.join(publicDir,'sources'));
+    //local_copy(themeFileDir,Path.join(publicDir,'files'));
+    //local_copy('sources',Path.join(publicDir,'sources'));
+    fs.cp(themeFileDir,Path.join(publicDir,'files'),{recursive:true},()=>{});
+    fs.cp('sources',Path.join(publicDir,'sources'),{recursive:true},()=>{});
     if(ThemeConfig.rawPosts && ThemeConfig.rawPosts.copy){
         if(ThemeConfig.rawPosts.copyTo){
-            Hail.copyFile('posts',Path.join(publicDir,ThemeConfig.rawPosts.copyTo));
+            //Hail.copyFile('posts',Path.join(publicDir,ThemeConfig.rawPosts.copyTo));
+            //local_copy('posts',Path.join(publicDir,ThemeConfig.rawPosts.copyTo));
+            fs.cp('posts',Path.join(publicDir,ThemeConfig.rawPosts.copyTo),{recursive:true},()=>{});
         } else {
             errno('20101');
         }

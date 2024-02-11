@@ -72,10 +72,12 @@
 
 html {
     overflow: scroll;
-    font-size: calc(10px + 0.875vh);
+    font-size: 14px;
+    text-rendering: optimizeLegibility;
 }
 
 body {
+    min-height: 100%;
     margin: 0;
     padding: 0;
     display: flex;
@@ -113,6 +115,16 @@ body[debug='true'] * {
     border-radius: 0 !important;
 }
 
+body[debug='true'] *::before{
+    background: #0ff !important;
+    color: #000 !important;
+}
+
+body[debug='true'] *::after{
+    background: #ff0 !important;
+    color: #000 !important;
+}
+
 body[debug='true']>* {
     border: 1px solid #f00 !important;
 }
@@ -139,7 +151,7 @@ body[debug='true'] .content {
 
 .topbar-container {
     width: 100%;
-    min-height: 8rem;
+    min-height: 6rem;
     z-index: 100;
     box-shadow: 0px 4px 10px var(--shadow-1);
     background: var(--text-background);
@@ -161,7 +173,7 @@ body[debug='true'] .content {
 }
 
 .topbar>.flex>.go-link {
-    padding: 1rem;
+    padding: .75rem;
     display: block;
     text-decoration: none;
     transition: color .2s ease-in-out;
@@ -181,15 +193,12 @@ body[debug='true'] .content {
 
 #main {
     padding: 3rem 1.5rem;
-    display: flex;
 }
 
 .sidebar-l,
 .sidebar-r {
-    width: 33.33%;
-    position: sticky;
     top: 8px;
-    padding: 0.75rem;
+    padding-top: 0.75rem;
     align-self: flex-start;
 }
 
@@ -202,43 +211,7 @@ body[debug='true'] .content {
 }
 
 .content {
-    width: 66.67%;
-    padding: 0.75rem;
     order: 2;
-}
-
-#main>*{
-    flex-grow: 1;
-}
-
-#main.multi>.content {
-    width: 50%;
-}
-
-#main.multi>:is(.sidebar-l, .sidebar-r) {
-    width: 25%;
-}
-
-html[isMobile='true'] #main{
-    flex-direction: column;
-    padding: 1.5rem 1rem;
-}
-
-html[isMobile='true'] #main>*{
-    position: relative;
-    width: 100% !important;
-}
-
-html[isMobile='true'] .content{
-    order: 1;
-}
-
-html[isMobile='true'] .sidebar-l{
-    order: 2;
-}
-
-html[isMobile='true'] .nomobile{
-    display: none;
 }
 
 .card {

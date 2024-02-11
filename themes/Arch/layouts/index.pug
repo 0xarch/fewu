@@ -7,8 +7,12 @@ html(lang="zh")
     body(OCP='OVERRIDE')
         nav.topbar-container
             include /includes/topbar.pug
-        #main.flex
-            - let c = 0
+        #main
+            .content
+                .post-container
+                    each item in sortArticle.recently
+                        include /includes/components/postcard.pug
+                - let c = 0
             if theme['side_position']=='right'
                 - c = 1
             div(class='sidebar-'+['l','r'][c])
@@ -17,8 +21,4 @@ html(lang="zh")
                 include /includes/recent.pug
             if theme['3rd_bar']
                 div(class='sidebar-'+['r','l'][c])
-            .content
-                .post-container
-                    each item in sortArticle.recently
-                        include /includes/components/postcard.pug
         include /includes/footer.pug

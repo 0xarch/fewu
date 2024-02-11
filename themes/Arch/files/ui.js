@@ -22,4 +22,4 @@ function throttle(func, delay) {
         }, delay);
     }
 }
-document.documentElement.setAttribute('isMobile',__isMobile);
+//document.documentElement.setAttribute('isMobile',__isMobile);

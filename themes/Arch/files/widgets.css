@@ -40,10 +40,10 @@ code.hljs {
 
 code, code.hljs {
     background-color: var(--me-color-surface);
-    padding: 4px;
+    padding: .35rem;
 }
 .p8{
-    padding: 8px;
+    padding: .75rem;
 }
 .f1{
     flex: 1;

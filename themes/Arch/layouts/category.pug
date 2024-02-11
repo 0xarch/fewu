@@ -7,15 +7,7 @@ html
     body(OCP='OVERRIDE') 
         nav.topbar-container
             include /includes/topbar.pug
-        #main.flex
-            - let c = 0
-            if theme['side_position']=='right'
-                - c = 1
-            div(class='sidebar-'+['l','r'][c])
-                include /includes/announcement.pug
-                include /includes/components/about.pug
-            if theme['3rd_bar']
-                div(class='sidebar-'+['r','l'][c])
+        #main
             .content
                 each item in Cycling.value
                     .card
@@ -34,3 +26,12 @@ html
                             a.prev(href=file(`/category/index_${_page_now-1}.html`))= `PREV<${_page_now-1}>`
                         unless _page_now==_page_total
                             a.next(href=file(`/category/index_${_page_now+1}.html`))= `NEXT<${_page_now+1}>`
+            - let c = 0
+            if theme['side_position']=='right'
+                - c = 1
+            div(class='sidebar-'+['l','r'][c])
+                include /includes/announcement.pug
+                include /includes/components/about.pug
+            if theme['3rd_bar']
+                div(class='sidebar-'+['r','l'][c])
+        include /includes/footer.pug

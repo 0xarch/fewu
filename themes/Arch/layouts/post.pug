@@ -10,15 +10,6 @@ html(lang="zh")
         .topbar-container 
             include /includes/topbar.pug
         #main(class=theme['3rd-bar']&&'multi')
-            - let c = 0
-            if theme['side_position']=='right'
-                - c = 1
-            div(class='sidebar-'+['l','r'][c])
-                include /includes/components/about.pug
-                include /includes/components/toc.pug
-                include /includes/recent.pug
-            if theme['3rd_bar']
-                div(class='sidebar-'+['r','l'][c])
             .content
                 .card
                     .meta
@@ -28,4 +19,14 @@ html(lang="zh")
                     - let __next = ID[post.nextBID] || {}
                     a.prev(href=__prev.src&&file(__prev.src))=__prev.title || 'ALREADY EARLIEST'
                     a.next(href=__next.src&&file(__next.src))=__next.title || 'NOT UPDATED'
+            - let c = 0
+            if theme['side_position']=='right'
+                - c = 1
+            div(class='sidebar-'+['l','r'][c])
+                include /includes/components/about.pug
+                include /includes/components/toc.pug
+                include /includes/recent.pug
+            if theme['3rd_bar']
+                div(class='sidebar-'+['r','l'][c])
+        include /includes/footer.pug
                     
