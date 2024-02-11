@@ -51,19 +51,6 @@ class HPassage{
         data.Date = data.JSDate.toDateString();
     }
 }
-
-class HDate {
-    constructor(y, m, d) {
-        this.y = y;
-        this.m = m;
-        this.d = d;
-    }
-
-    toString(){
-        return this.y + '-' + this.m + '-' + this.d;
-    }
-}
-
 /**
  * 
  * @param { string } content 
@@ -148,6 +135,9 @@ function ReadPosts(PostDir, SPECIAL_POSTS) {
 
 const _ReadPosts = (POST_DIR, SPECIAL_POSTS) => ReadPosts(POST_DIR, SPECIAL_POSTS);
 export { _ReadPosts as ReadPosts };
+export {
+    findLessContent
+}
 
 function Sort(a, b) {
     const A = a.date ?a.date :'1970-01-01',

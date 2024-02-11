@@ -11,7 +11,7 @@ html
             .content
                 each bid in Cycling.value
                     - let item = ID[bid]
-                    include /includes/components/postcard.pug
+                    include /components/postcard.pug
                 - let _page_total = Cycling.TotalCount
                 - let _page_now = Cycling.LoopTime
                 - let _name = 'archive'
@@ -20,8 +20,8 @@ html
             if theme['side_position']=='right'
                 - c = 1
             div(class='sidebar-'+['l','r'][c])
+                include /components/about.pug
                 include /includes/announcement.pug
-                include /includes/components/about.pug
             if theme['3rd_bar']
                 div(class='sidebar-'+['r','l'][c])
         include /includes/footer.pug

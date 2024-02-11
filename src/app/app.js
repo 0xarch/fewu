@@ -5,6 +5,7 @@ import * as fs from 'fs';
 import * as Path from 'path';
 import { errno,run } from '../lib/mod.js';
 import { build_and_write } from '../modules/app/builder.js';
+import i18n from '../modules/i18n.js';
 /**
  * @DOCUMENT_OF_APP
  * @argument config Configuration file for Nexo.
@@ -23,15 +24,21 @@ async function App(){
     }
 
     const ThemeName = argv['theme'] || GlobalConfig.theme.name;
-
     const PostDir = GlobalConfig.build.post_directory,
         ThemeDir = Path.join('themes',ThemeName),
         ThemeLayoutDir = Path.join('themes',ThemeName,'layouts'),
         ThemeFilesDir = Path.join('themes',ThemeName,'files'),
         PublicDir = GlobalConfig.build.public_directory;
-
     const ThemeConfig = JSON.parse(Hail.readFile(ThemeDir,'config.json'));
     const ThemeLayoutType = ThemeConfig.layout.type;
+    let language = GlobalConfig.language||'en-US';
+    let lang_file = {};
+    {
+        let lang_file_path = Path.join(ThemeDir,'extra/i18n.'+language+'.json');
+        if(fs.existsSync(lang_file_path)){
+            lang_file = JSON.parse(fs.readFileSync(lang_file_path).toString());
+        }
+    }
 
     if(!PostDir) PostDir = "posts";
     if(!PublicDir) PublicDir = "public";
@@ -83,6 +90,7 @@ async function App(){
             return fix+' '+sep+' '+type;
         }
     })();
+    let __i18n = i18n(lang_file);
 
     /**
      * @param { string } file_dir 
@@ -129,6 +137,7 @@ async function App(){
                         __filename__: filename,
                         __title__: __get_title,
                         file: __get_file_relative_dir,
+                        i18n: __i18n
                     }
             }
         } else {

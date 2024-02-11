@@ -89,12 +89,10 @@ hr {
     display:flex;
     flex-direction:column;
 }
-.card.about>.info-2>*>span{
-    font-size: .75rem;
-}
 .card.about>.info-2>*>p{
-    margin: 4px;
-    padding: 4px;
+    margin: .25rem;
+    padding: .25rem;
+    font-size: 1.1rem;
 }
 a.followme{
     border-radius: 1.5rem;

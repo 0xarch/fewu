@@ -13,14 +13,7 @@
             ]
         }
     },
-    "appearance":{
-        "title":{
-            "separator": "|",
-            "function": "",
-            "read": "文章",
-            "index": "Hello! oxArch"
-        }
-    },
+    "language": "zh-CN",
     "theme":{
         "name":"Arch",
         "options":{

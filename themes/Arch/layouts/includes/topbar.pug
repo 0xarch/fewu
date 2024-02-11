@@ -6,7 +6,8 @@
             else
                 .logo-of-nexo
     .flex
-        a.go-link(href=file('/archive/index_1.html'))= 'ARCHIVE'
-        a.go-link(href=file('/category/index_1.html'))= 'CATEGORY'
-        a.go-link(href=file('/about'))= 'ABOUT'
-        a.go-link(href=file('/status'))= 'STATUS'
+        a.go-link(href=file())= i18n('Home')
+        a.go-link(href=file('/archive/index_1.html'))= i18n('Archives')
+        a.go-link(href=file('/category/index_1.html'))= i18n('Categories')
+        a.go-link(href=file('/about'))= i18n('About')
+        a.go-link(href=file('/status'))= i18n('Status')

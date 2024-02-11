@@ -1,0 +1,15 @@
+.card.about.column
+    .flex.column.info-1
+        img(src=user.avatar)
+        .name=user.name
+        .describe=user.description
+        .location=user.location
+    .flex.p8.jcc
+        a.followme= i18n('Follow')
+    .flex.info-2
+        .posts
+            span= i18n('Articles')
+            p= allArticles.length
+        .categories
+            span= i18n('Categories')
+            p= sortArticle.categories.length

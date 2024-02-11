@@ -43,7 +43,9 @@
                 let top = rect.top + rect.height;
                 if (top > 0) {
                     removeClass();
-                    liList[i].classList.add('active');
+                    let li = liList[i];
+                    li.classList.add('active');
+                    toc.style.background=`linear-gradient(var(--brand-color-25) ${li.offsetTop},transparent ${li.getBoundingClientRect().height})`;
                     break;
                 } else {
                 }
