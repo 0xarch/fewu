@@ -26,10 +26,13 @@
             "index": "Hello! oxArch"
         }
     },
-    "api": {
-
+    "RSSFeed":{
+        "title": "",
+        "link": "",
+        "description":""
     },
     "excluded_posts": ["about.md","news.md","links.md"],
+    "excluded_articles": ["about.md","news.md","links.md"],
     "override": [],
     "widgets": {
         "comment":{

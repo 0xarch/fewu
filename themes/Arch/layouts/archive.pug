@@ -1,3 +1,4 @@
+include /mixins/script.pug
 doctype html
 html 
     head 
@@ -12,16 +13,6 @@ html
                 each bid in Cycling.value
                     - let item = ID[bid]
                     include /components/postcard.pug
-                - let _page_total = Cycling.TotalCount
-                - let _page_now = Cycling.LoopTime
-                - let _name = 'archive'
-                include /includes/pagination.pug
-            - let c = 0
-            if theme['side_position']=='right'
-                - c = 1
-            div(class='sidebar-'+['l','r'][c])
-                include /components/about.pug
-                include /includes/announcement.pug
-            if theme['3rd_bar']
-                div(class='sidebar-'+['r','l'][c])
+                +foot_navigator(Cycling.TotalCount,Cycling.LoopTime,'archive')
+            include /includes/sidebar.pug
         include /includes/footer.pug

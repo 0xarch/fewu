@@ -1,3 +1,4 @@
+include /mixins/script.pug
 doctype html
 html
     head 
@@ -8,15 +9,6 @@ html
         .topbar-container
             include /includes/topbar.pug
         #main
-            - let c = 0
-            if theme['side_position']=='right'
-                - c = 1
-            div(class='sidebar-'+['l','r'][c])
-                include /includes/announcement.pug
-                include /components/about.pug
-                include /includes/recent.pug
-            if theme['3rd_bar']
-                div(class='sidebar-'+['r','l'][c])
             .content
                 .card.archive.column
                     .heading| Articles
@@ -28,11 +20,12 @@ html
                     .plain= date
                 .card.theme.column
                     .heading| Theme
-                    .plain| Nexo with Arch Theme v0.1
+                    .plain| Nexo with Arch Theme v0.2
                     .flex.alc.fgap
                         .logo-of-theme
-                        .logo-of-nexo
+                        != insert_nexo_logo()
                 .card.plugin.column
                     .heading| Plugin
                     .plain!=JSON.stringify(Plugin)
+            include /includes/sidebar.pug
         include /includes/footer.pug

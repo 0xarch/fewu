@@ -13,9 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 function TOC(markdown_content) {
+    let toc = document.querySelector("#toc");
+    if(!toc) return;
     let tocList = markdown_content.querySelectorAll("h1, h2, h3, h4, h5, h6");
     let liList = [];
-    let toc = document.querySelector("#toc");
     tocList.forEach((v, i) => {
         let pid = '_' + Date.now().toString(36) + Math.random().toString(36).replace(/[\s\S]{3}/, '');
         v.id = pid;

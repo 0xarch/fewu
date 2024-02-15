@@ -1,0 +1,19 @@
+include /mixins/script.pug
+- let own = post
+doctype html 
+html(lang="zh")
+    head 
+        include /includes/base_script.pug
+        include /includes/post_prelude.pug
+        title= __title__(post.title,'read')
+    body(OCP='OVERRIDE')
+        #url= file(post.pathto)
+        .topbar-container 
+            include /includes/topbar.pug
+        #main(class=theme['3rd-bar']&&'multi')
+            .content
+                .card
+                    .meta
+                    #markdown_fillContent
+            +sidebar((has_property(theme,'overrideAboutPage.primarySidebarWidgets')?theme.overrideAboutPage:theme).primarySidebarWidgets)
+        include /includes/footer.pug

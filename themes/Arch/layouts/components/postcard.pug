@@ -6,7 +6,7 @@
         .meta
             span= item.Date
             span= item.category
-            span= item.strLength+' '+'Characters'
+            span= item.totalWordCount+' '+'Characters'
         a.onbrand.title(href=file(item.src))= item.title
         .less!= item.less
         a.onbrand.readmore(href=file(item.src))= i18n('Read more')

@@ -1,7 +1,6 @@
 @import url("widgets.css");
 @import url("location.css");
 
-/* M3TK Experimental */
 :root {
     --radius: .5rem;
     --brand-color: #3273dc;
@@ -104,7 +103,8 @@ a {
 }
 
 ::selection,::-moz-selection,::-webkit-selection{
-    background-color: transparent;
+    background-color: var(--brand-color-25);
+    color: var(--brand-color);
 }
 
 body[debug='true'] * {
@@ -151,7 +151,7 @@ body[debug='true'] .content {
 
 .topbar-container {
     width: 100%;
-    min-height: 6rem;
+    height: 8rem;
     z-index: 100;
     box-shadow: 0px 4px 10px var(--shadow-1);
     background: var(--text-background);
@@ -193,6 +193,7 @@ body[debug='true'] .content {
 
 #main {
     padding: 3rem 1.5rem;
+    min-height: calc(100vh - 13rem);
 }
 
 .sidebar-l,
@@ -231,7 +232,7 @@ body[debug='true'] .content {
 
 footer{
     width: 100%;
-    min-height: 3.5rem;
+    height: 5rem;
     box-shadow: 0px -4px 10px var(--shadow-1);
     background: var(--text-background);
     display: flex;

@@ -1,9 +1,10 @@
+include /mixins/script.pug
 doctype html 
 html(lang="zh")
     head 
         include /includes/base_script.pug
         include /includes/css_iac.pug
-        title= __title__('index',user.name)
+        title= __title__(i18n('Index'),user.name)
     body(OCP='OVERRIDE')
         nav.topbar-container
             include /includes/topbar.pug
@@ -12,13 +13,5 @@ html(lang="zh")
                 .post-container
                     each item in sortArticle.recently
                         include /components/postcard.pug
-                - let c = 0
-            if theme['side_position']=='right'
-                - c = 1
-            div(class='sidebar-'+['l','r'][c])
-                include /includes/announcement.pug
-                include /components/about.pug
-                include /includes/recent.pug
-            if theme['3rd_bar']
-                div(class='sidebar-'+['r','l'][c])
+            include /includes/sidebar.pug
         include /includes/footer.pug

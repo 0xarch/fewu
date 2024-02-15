@@ -37,7 +37,6 @@ const build = async function(type,template,json,path,ThemeConfig){
  * @returns void
  */
 async function build_and_write(type,template,options,provide_variables,theme_config,path_write_to){
-    console.log('[ON BUILDING]',path_write_to);
     switch(type){
         case 'EJS':
             Hail.writeFile(EJS.parse(template,{options,provide_variables,theme_config}),path_write_to);

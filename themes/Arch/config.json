@@ -8,11 +8,23 @@
     ],
     "API": {
         "hasPlugin": true,
-        "provideWith":"v2"
+        "searchComponent": ["title","date","id","content"],
+        "provideWith":"v2",
+        "experimentalClassArticle":true
     },
     "rawPosts": {
         "copy": true,
         "copyTo": "posts"
+    },
+    "enableThemeWebsiteIcon":false,
+    "default": {
+        "3rd-bar": false,
+        "primarySidebarWidgets": ["about","announcement","recent"],
+        "secondarySidebarWidgets": [],
+        "overrideIndexPage": {},
+        "overridePostPage": {
+            "primarySidebarWidgets": ["about","toc","recent"]
+        }
     },
     "layout": {
         "type": "PUG",
@@ -85,7 +97,7 @@
             {
                 "name": "about",
                 "build": {
-                    "filename": "post.pug",
+                    "filename": "about.pug",
                     "destname": "about",
                     "extras": "{post:Specials['about.md']}"
                 }

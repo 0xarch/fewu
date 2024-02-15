@@ -1,5 +1,5 @@
 import { parse } from "marked";
-import { word_count } from "./word.js";
+import { word_count } from "./reader.js";
 
 
 class License{

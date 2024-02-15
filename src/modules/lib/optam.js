@@ -2,55 +2,8 @@ import { basename } from "path";
 import { parse } from "marked";
 import { log } from './hug.js';
 import { traverse, readFile } from './hail.js';
-
-class HPassage{
-    raw_string;
-    content;
-    html;
-    author;
-    license;
-    category;
-    id;
-    date;
-    isTopped;
-    foreword;
-    prev_passage;
-    next_passage;
-    constructor(raw_string){
-        this.raw_string = raw_string;
-        const lines = raw_string.split("\n");
-        let data = '';
-        let i = 0;
-        if (lines[i] === "---") {
-            i++;
-            while (lines[i] !== "---") {
-                data += lines[i];
-                i++;
-            }
-            i++;
-        }
-        let json = JSON.parse(data);
-        this.content = lines.slice(i).join('\n');
-        this.foreword = findLessContent(lines);
-        this.html = parse(this.content);
-        if(json.date)
-            this.date = json.date;
-        else this.date = '1970-01-01';
-        if(json.top)
-            this.isTopped = true;
-        else this.isTopped = false;
-        if(json.category instanceof Array)
-            this.category = json.category.split(" ");
-        else this.category = [];
-        let transformed_title = data.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'\～\·\「\」\；\：\‘\’\“\”\，\。\《\》\？\！\￥\…\、\（\）]/g,'_');
-        try{ 
-            data.path = `${data.date.replace(/[\-\.]/g,"/")}/${transformed_title}/index.html`;
-            data.src = `/${data.date.replace(/[\-\.]/g,"/")}/${transformed_title}/`;
-        }catch(_) {}
-        data.JSDate = new Date(data.date);
-        data.Date = data.JSDate.toDateString();
-    }
-}
+import { word_count } from "../word.js";
+import { __TEST01__ } from "../../lib/article.js";
 /**
  * 
  * @param { string } content 
@@ -84,6 +37,7 @@ function ReadData(content,pathto=undefined) {
     data.parsedContent = parse(data.textContent);
     data.less = extractLess(data.textContent);
     data.lessContent = findLessContent(lines);
+    data.totalWordCount = word_count(data.textContent);
     if(data.category!=undefined){
         data.category = data.category.split(" ");
     }else{
@@ -107,9 +61,14 @@ function extractLess(content) {
     }
 }
 
+/**
+ * 
+ * @param {[string]} lines 
+ * @returns string
+ */
 function findLessContent(lines) {
     const moreIndex = lines.indexOf('<!--more-->');
-    return lines.slice(0, (moreIndex !== -1) ?moreIndex :5) .join('n').replace(/\#*/g,'');
+    return lines.slice(0, (moreIndex !== -1) ?moreIndex :5) .join('\n').replace(/\#*/g,'');
 }
 
 function ReadPosts(PostDir, SPECIAL_POSTS) {
@@ -228,7 +187,6 @@ function getSort(POSTS) {
                 byCategory[item].push(item2.bid);
         });
     });
-    console.log(byCategory);
 
     // ______ 日期 ______
     const SortedByDate = {};
