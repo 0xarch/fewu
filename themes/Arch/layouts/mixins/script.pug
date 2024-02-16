@@ -23,6 +23,10 @@ mixin foot_navigator(total,now,name)
             unless now==total
                 a.next(href=file(`/${name}/index_${now+1}.html`))= `NEXT<${now+1}>`
 
+mixin topbar()
+    nav.topbar-container
+            include /includes/topbar.pug
+
 mixin sidebar(primaryWidget=theme.primarySidebarWidgets,secondaryWidget=theme.secondarySidebarWidgets)
     - let c = 0
     if theme['side_position']=='right'

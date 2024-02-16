@@ -132,7 +132,7 @@ class Post{
         this.category = getted.category.split(" ").filter(v=>v!='');
         this.tags = getted.tags.split(" ").filter(v=>v!='');
         this.ECMA262Date = this.date.toDateString();
-        this.transformedTitle = getted.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'\～\·\「\」\；\：\‘\’\“\”\，\。\《\》\？\！\￥\…\、\（\）]/g,'_');
+        this.transformedTitle = getted.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'\～\·\「\」\；\：\‘\’\“\”\，\。\《\》\？\！\￥\…\、\（\）]/g,'');
         this.websitePath = `/${this.datz.toPathString()}/${this.transformedTitle}/`;
         this.publicFilePath = `${this.datz.toPathString()}/${this.transformedTitle}/index.html`;
     }

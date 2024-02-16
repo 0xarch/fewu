@@ -4,10 +4,9 @@ html(lang="zh")
     head 
         include /includes/base_script.pug
         include /includes/css_iac.pug
-        title= __title__(i18n('Index'),user.name)
+        title= __title__(i18n('Home'),user.name)
     body(OCP='OVERRIDE')
-        nav.topbar-container
-            include /includes/topbar.pug
+        +topbar()
         #main
             .content
                 .post-container

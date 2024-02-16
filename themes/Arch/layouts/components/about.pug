@@ -5,7 +5,7 @@
         .describe=user.description
         .location=user.location
     .flex.p8.jcc
-        a.followme= i18n('Follow')
+        a.followme(href=user.url)= i18n('Follow')
     .flex.info-2
         .posts
             span= i18n('Articles')
