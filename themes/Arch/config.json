@@ -1,7 +1,7 @@
 {
     "name": "Arch Advyzon",
     "author": "Hogger team",
-    "description": "Adv style theme for Hogger",
+    "description": "Icarus style theme for Nexo",
     "lib": [
         "@:rsms:markdown-wasm:jsdelivr",
         "@:highlightjs:&&:jsdelivr"
@@ -45,7 +45,7 @@
                     "cycling": true,
                     "option": {
                         "cycling": {
-                            "parent": "Sorts.byDate",
+                            "parent": "sorted_posts.defaultOrder",
                             "every": 5,
                             "name": "PostsThisPage"
                         }

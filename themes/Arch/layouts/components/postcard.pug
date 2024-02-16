@@ -4,9 +4,9 @@
             img(src=item.imageUrl)
     .detail
         .meta
-            span= item.Date
+            span= item.ECMA262Date
             span= item.category
-            span= item.totalWordCount+' '+'Characters'
-        a.onbrand.title(href=file(item.src))= item.title
-        .less!= item.less
-        a.onbrand.readmore(href=file(item.src))= i18n('Read more')
+            span= item.wordCount+i18n('Characters')
+        a.onbrand.title(href=file(item.websitePath))= item.title
+        .less!= item.foreword
+        a.onbrand.readmore(href=file(item.websitePath))= i18n('Read more')

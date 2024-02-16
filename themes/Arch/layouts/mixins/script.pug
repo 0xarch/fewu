@@ -15,9 +15,8 @@ mixin add_widgets(array)
 
 mixin foot_navigator(total,now,name)
     .pagination
-        .total= total+'TOTAL'
-        | ,
-        .now= now+'NOW'
+        .total= i18n(total+' Pages in total')
+        .now= i18n('Page '+now+' now')
         unless total!=1
             if now!=1
                 a.prev(href=file(`/${name}/index_${now-1}.html`))= `PREV<${now-1}>`

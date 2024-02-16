@@ -1,15 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const markdown_raw_file = fetch(document.getElementById('url').textContent);
+    let md_content = document.getElementById('markdown_fillContent')
+    /*const markdown_raw_file = fetch(document.getElementById('url').textContent);
     window['markdown'].ready.then(markdown => {
         markdown_raw_file.then(resp => {
             resp.text().then(data => {
-                let md_content = document.getElementById('markdown_fillContent')
+                
                 md_content.innerHTML = markdown.parse(data.replace(/---\n[\s\S]*?\n---\n/, ''));
-                if(!__isMobile)TOC(md_content)
+                
             })
         });
-    })
-
+    })*/
+    if(!__isMobile)TOC(md_content)
 })
 
 function TOC(markdown_content) {
@@ -17,7 +18,7 @@ function TOC(markdown_content) {
     if(!toc) return;
     let tocList = markdown_content.querySelectorAll("h1, h2, h3, h4, h5, h6");
     let liList = [];
-    tocList.forEach((v, i) => {
+    tocList.forEach((v) => {
         let pid = '_' + Date.now().toString(36) + Math.random().toString(36).replace(/[\s\S]{3}/, '');
         v.id = pid;
         const H = v.nodeName[1];

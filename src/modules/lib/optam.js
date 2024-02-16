@@ -3,7 +3,7 @@ import { parse } from "marked";
 import { log } from './hug.js';
 import { traverse, readFile } from './hail.js';
 import { word_count } from "../word.js";
-import { __TEST01__ } from "../../lib/article.js";
+import { __TEST01__ } from "../../lib/posts.js";
 /**
  * 
  * @param { string } content 

@@ -1,23 +1,22 @@
 include /mixins/script.pug
-- let own = getArticle?getArticle():post
 doctype html 
 html(lang="zh")
     head 
         include /includes/base_script.pug
         include /includes/post_prelude.pug
-        title= __title__(own.title,'read')
+        title= __title__(post.title,'read')
     body(OCP='OVERRIDE')
-        #url= file(own.pathto)
+        #url= file(post.pathto)
         .topbar-container 
             include /includes/topbar.pug
         #main(class=theme['3rd-bar']&&'multi')
             .content
                 .card
                     .meta
-                    #markdown_fillContent
+                    #markdown_fillContent!= post.html
                 .readnext.flex
-                    - let __prev = ID[own.prevArticleID] || {}
-                    - let __next = ID[own.nextArticleID] || {}
+                    - let __prev = ID[post.prevID] || {}
+                    - let __next = ID[post.nextID] || {}
                     a.prev(href=__prev.websitePath&&file(__prev.websitePath))=__prev.title || 'ALREADY EARLIEST'
                     a.next(href=__next.websitePath&&file(__next.websitePath))=__next.title || 'NOT UPDATED'
             +sidebar(has_property(theme,'overridePostPage.primarySidebarWidgets')&&theme.overridePostPage.primarySidebarWidgets)

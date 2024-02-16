@@ -11,7 +11,8 @@ html(lang="zh")
         #main
             .content
                 .post-container
-                    each item in sortArticle.recently
+                    each bid in sort.defaultOrder
+                        - let item = ID[bid]
                         include /components/postcard.pug
             include /includes/sidebar.pug
         include /includes/footer.pug

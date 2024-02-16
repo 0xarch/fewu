@@ -13,6 +13,7 @@
             ]
         }
     },
+    "site_url": "https://0xarch.github.io",
     "language": "zh-CN",
     "theme":{
         "name":"Arch",
@@ -30,6 +31,13 @@
         "title": "",
         "link": "",
         "description":""
+    },
+    "sitemap":{
+        "type": "txt",
+        "name": "sitemap.txt"
+    },
+    "extra_files":{
+        "BingSiteAuth.xml":"/BingSiteAuth.xml"
     },
     "excluded_posts": ["about.md","news.md","links.md"],
     "excluded_articles": ["about.md","news.md","links.md"],

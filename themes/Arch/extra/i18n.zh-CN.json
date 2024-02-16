@@ -10,5 +10,11 @@
     "Recent": "最近",
     "Read more": "阅读全文",
     "Search": "搜索",
-    "Close Panel": "关闭面板"
+    "Close Panel": "关闭面板",
+    "Characters": "字",
+    "Pages": "页",
+    "Total": "共",
+    "Now": "当前",
+    "{NUMBER} Pages in total": "共{NUMBER}页",
+    "Page {NUMBER} now": "当前{NUMBER}页"
 }

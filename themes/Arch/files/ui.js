@@ -11,6 +11,7 @@ function mobile(){
     __isMobile = !__isMobile;
     document.documentElement.setAttribute('isMobile',__isMobile);
 }
+document.documentElement.setAttribute('isMobile',__isMobile);
 
 function throttle(func, delay) {
     let timer;

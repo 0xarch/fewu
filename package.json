@@ -1,5 +1,6 @@
 {
-    "name": "hogger",
+    "name": "nexo-static-generator",
+    "main": "src/main.js",
     "version": "2.0.0",
     "dependencies": {
         "@types/marked": "^6.0.0",

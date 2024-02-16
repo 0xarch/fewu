@@ -1,12 +1,14 @@
-import * as Hail from '../modules/lib/hail.js';
-import * as Hug from '../modules/lib/hug.js';
+import {gopt} from '../modules/lib/hug.js';
 import * as Optam from '../modules/lib/optam.js';
-import * as fs from 'fs';
+import { readFileSync,writeFile,cp,existsSync } from 'fs';
 import * as Path from 'path';
 import { errno, nexo_logo } from '../lib/mod.js';
 import { build_and_write } from '../modules/app/builder.js';
 import i18n from '../modules/i18n.js';
-import { getAllArticles } from '../lib/article.js';
+import { getAllPosts, sort } from '../lib/posts.js';
+import { has_property, mix_object } from '../lib/base_fn.js';
+import { Nil } from '../lib/closures.js';
+import { generateSitemapTxt } from '../modules/sitemap.js';
 /**
  * @DOCUMENT_OF_APP
  * @argument config Configuration file for Nexo.
@@ -15,9 +17,10 @@ import { getAllArticles } from '../lib/article.js';
  * **NOTE** Working in progress
  */
 async function App() {
-    const argv = Hug.gopt(process.argv);
-    let config_raw_text = fs.readFileSync(argv['config'] || 'config.json').toString();
+    const argv = gopt(process.argv);
+    let config_raw_text = readFileSync(argv['config']||'config.json').toString();
     const GlobalConfig = JSON.parse(config_raw_text);
+    if(!GlobalConfig.security)GlobalConfig.security={};
 
     if (argv['dry-run'] == 'null') {
         return;
@@ -29,14 +32,14 @@ async function App() {
         ThemeLayoutDir = Path.join('themes', ThemeName, 'layouts'),
         ThemeFilesDir = Path.join('themes', ThemeName, 'files'),
         PublicDir = GlobalConfig.build.public_directory;
-    const ThemeConfig = JSON.parse(Hail.readFile(ThemeDir, 'config.json'));
+    const ThemeConfig = JSON.parse(readFileSync(Path.join(ThemeDir, 'config.json')).toString());
     const ThemeLayoutType = ThemeConfig.layout.type;
     let language = GlobalConfig.language || 'en-US';
     let lang_file = {};
     {
         let lang_file_path = Path.join(ThemeDir, 'extra/i18n.' + language + '.json');
-        if (fs.existsSync(lang_file_path)) {
-            lang_file = JSON.parse(fs.readFileSync(lang_file_path).toString());
+        if (existsSync(lang_file_path)) {
+            lang_file = JSON.parse(readFileSync(lang_file_path).toString());
         }
     }
 
@@ -45,45 +48,28 @@ async function App() {
 
     if (argv['dry-run'] == 'config') {
         console.log(JSON.stringify(GlobalConfig));
-        Hug.nextline();
         console.log(JSON.stringify(ThemeConfig));
         return;
     }
 
     if (argv['only'] == 'updateTheme') {
-        fs.cp(ThemeFilesDir, Path.join(PublicDir, 'files'), { recursive: true }, () => { });
-        fs.cp('sources', Path.join(PublicDir, 'sources'), { recursive: true }, () => { });
+        cp(ThemeFilesDir, Path.join(PublicDir, 'files'), { recursive: true }, Nil);
+        cp('sources', Path.join(PublicDir, 'sources'), { recursive: true }, Nil);
         return;
     }
 
+
     const { Posts, Specials } = Optam.ReadPosts(PostDir, GlobalConfig.excluded_posts);
-    const { articles: Articles, excluded: ExcludedArticles } = getAllArticles(PostDir, GlobalConfig.excluded_articles);
+    const { posts, excluded_posts } = getAllPosts(PostDir, GlobalConfig.excluded_articles);
+
     const Sorts = Optam.getSort(Posts);
+    const sorted_posts = sort(posts);
+
+    // unmaintained , v2
+    let provision_site = getAllPosts(PostDir, GlobalConfig.excluded_articles);
 
     let __public_root = !["/", "", undefined].includes(GlobalConfig.build.site_root) ? GlobalConfig.build.site_root : '';
 
-    const BuildVariables = {
-        Posts,
-        Sorts,
-        GlobalConfig,
-        user: GlobalConfig.user,
-        theme: GlobalConfig.theme.options,
-        Appearance: GlobalConfig.appearance,
-        ROOT: __public_root
-    }
-
-    /**
-     * @DOCUMENT_OF_PLUGIN
-     * set %ThemeConfig.API.hasPlugin% to true to enable plugin
-     * The plugin must be located at% Theme%/extra/plugin.js 
-     * and provide a plugin() method. 
-     * The App will call the plugin() method
-     * and pass the result to the template with the name 'Plugin'
-     * @since API.v2
-     * @name Plugin (v2)
-     * @type object
-     * @example const plugin = () => '000' ; EJS'<%=Plugin-%>' ~> 000
-     */
     let __plugin;
     let __get_title = (function () {
         let sep = '|';
@@ -110,6 +96,7 @@ async function App() {
     /**
      * @param { string } file_dir 
      * @returns string
+     * @since v2
      */
     function __get_file_relative_dir(file_dir) {
         if (!file_dir) return __public_root + '/';
@@ -117,34 +104,28 @@ async function App() {
             file_dir = file_dir.substring(1)
         return __public_root + "/" + file_dir;
     }
-    function __mix_object(primary, secondary, insert_new_key = false) {
-        let main = primary;
-        for (let key in secondary) {
-            if (main.hasOwnProperty(key) || insert_new_key) {
-                main[key] = secondary[key];
-            }
-        }
-        return main;
-    }
-    function __has_property(object, property_path) {
-        let path = property_path.split(".");
-        let __tempor_val = object;
-        let result = true;
-        for (let i = 0; i < path.length; i++) {
-            if (!__tempor_val[path[i]]) {
-                result = false;
-                break;
-            } else __tempor_val = __tempor_val[path[i]];
-        }
-        return result;
-    }
-    let __provided_theme_config = __mix_object(ThemeConfig.default, GlobalConfig.theme.options);
+    let __provided_theme_config = mix_object(ThemeConfig.default, GlobalConfig.theme.options);
     let __provided_nexo = {};
 
+    if(GlobalConfig.sitemap){
+        if(GlobalConfig.sitemap.type == 'txt'){
+            writeFile(Path.join(PublicDir,GlobalConfig.sitemap.name),generateSitemapTxt(GlobalConfig.site_url,posts,ThemeConfig),Nil)
+        }
+    }
+    if(GlobalConfig.extra_file){
+        for(let k of GlobalConfig.extra_file){
+            cp(Path.join('extra',k),Path.join(PublicDir,GlobalConfig.extra_file[k]),Nil);
+        }
+    }
     if (ThemeConfig.API) {
         if (ThemeConfig.API.hasPlugin) {
-            let __plugin_file = fs.readFileSync(Path.join(ThemeDir, 'extra/plugin.js'));
-            let __plugin_script = 'try{\n' + __plugin_file.toString() + '\nplugin()}catch(e){errno(20202);console.error(e);"NULL"}';
+            // used in eval
+            let sec_gconf = JSON.parse(JSON.stringify(GlobalConfig)); sec_gconf;
+            let insert_code = '';
+            if(GlobalConfig.security.allowFileSystemOperationInPlugin!=true)insert_code+='let fs = null;\n';
+            if(GlobalConfig.security.allowConfiguationChangeInPlugin!=true)insert_code+=`let GlobalConfig = sec_gconf;\n`;
+            let __plugin_file = readFileSync(Path.join(ThemeDir, 'extra/plugin.js'));
+            let __plugin_script = 'try{\n'+ insert_code + __plugin_file.toString() + '\nplugin()}catch(e){errno(20202);console.error(e);"NULL"}';
             __plugin = eval(__plugin_script);
         }
         if (ThemeConfig.API.searchComponent) {
@@ -154,16 +135,16 @@ async function App() {
             id = search_config.includes('id'),
             content = search_config.includes('content'),
             date = search_config.includes('date');
-            for (let article of Articles) {
+            for (let article of posts) {
                 let href = __get_file_relative_dir(article.websitePath);
                 let atitle = article.title;
                 if (title) {arr.push({'content': article.title,'by': 'Title',href,atitle});}
                 if (id) {arr.push({'content': article.id,'by': 'ID',href,atitle});}
                 if (content) {arr.push({'content': article.content.replace(/\n/g,' ').replace('<!--more-->',''),'by': 'Content',href,atitle});}
                 if (date) {arr.push({'content': article.date.toDateString(),'by': 'Date',href,atitle});}
-                __provided_nexo.searchStringUrl = __get_file_relative_dir('searchStrings.json');
-                fs.writeFile(Path.join(PublicDir, 'searchStrings.json'), JSON.stringify(arr),()=>{});
             }
+            __provided_nexo.searchStringUrl = __get_file_relative_dir('searchStrings.json');
+            writeFile(Path.join(PublicDir, 'searchStrings.json'), JSON.stringify(arr),()=>{});
         }
     }
     /**
@@ -178,10 +159,11 @@ async function App() {
                     return {
                         Plugin: __plugin,
                         allArticles: Posts,
-                        Articles,
-                        ExcludedArticles,
+                        posts,
+                        excluded_posts,
+                        sort: sorted_posts,
                         sortArticle: Sorts,
-                        ID: Sorts.BID,
+                        ID: sorted_posts.ID,
                         settings: GlobalConfig,
                         theme: __provided_theme_config,
                         user: GlobalConfig.user,
@@ -190,10 +172,11 @@ async function App() {
                         __title__: __get_title,
                         file: __get_file_relative_dir,
                         i18n: __i18n,
-                        mix: __mix_object,
-                        has_property: __has_property,
+                        mix: mix_object,
+                        has_property,
                         insert_nexo_logo: nexo_logo,
-                        Nexo: __provided_nexo
+                        Nexo: __provided_nexo,
+                        site: provision_site
                     }
             }
         } else {
@@ -216,7 +199,8 @@ async function App() {
         let inconf_extra = {};
         if (item.build.extras) inconf_extra = eval('let _intpvar=' + item.build.extras + ';_intpvar');
         /**
-         * Varia-building(Varias)
+         * @DOCUMENT_OF_VARIAS
+         * @since 0.0.1
          * To Enable, set build.varias: true
          * Required configuration statements:
          *  build.option.varias: {
@@ -251,9 +235,9 @@ async function App() {
             BF_with({}, item, filename, destname, inconf_extra);
     }
     let postFilename = Path.join(ThemeLayoutDir, ThemeConfig.layout.post_layout);
-    let postTemplate = fs.readFileSync(postFilename).toString();
+    let postTemplate = readFileSync(postFilename).toString();
 
-    part_build_page(ThemeLayoutType, postTemplate, Articles, PublicDir, ThemeConfig, {
+    part_build_page(ThemeLayoutType, postTemplate, posts, PublicDir, ThemeConfig, {
         basedir: ThemeLayoutDir,
         filename: postFilename
     }, {
@@ -329,8 +313,8 @@ async function App() {
                 Cycling.LoopTime = i + 1;
                 Cycling.PreviousFile = Path.join(_destPrePath, 'index' + destSuffix + '_' + i + '.html');
                 Cycling.NextFile = Path.join(_destPrePath, 'index' + destSuffix + '_' + (i + 2) + '.html');
-                Cycling.FileLocationPrefix = Path.join(BuildVariables.ROOT, item.build.destname);
-                build_and_write(ThemeLayoutType, Hail.readFile(filename), {
+                Cycling.FileLocationPrefix = Path.join(__public_root, item.build.destname);
+                build_and_write(ThemeLayoutType, readFileSync(filename).toString(), {
                     basedir: ThemeLayoutDir,
                     filename
                 }, {
@@ -341,7 +325,7 @@ async function App() {
                 }, ThemeConfig, destname);
             }
         } else
-            build_and_write(ThemeLayoutType, fs.readFileSync(filename).toString(), {
+            build_and_write(ThemeLayoutType, readFileSync(filename).toString(), {
                 basedir: ThemeLayoutDir,
                 filename
             }, {
@@ -353,19 +337,19 @@ async function App() {
 }
 
 async function part_copyfiles(themeFileDir, publicDir, ThemeConfig) {
-    fs.cp(themeFileDir, Path.join(publicDir, 'files'), { recursive: true }, () => { });
-    fs.cp('sources', Path.join(publicDir, 'sources'), { recursive: true }, () => { });
+    cp(themeFileDir, Path.join(publicDir, 'files'), { recursive: true }, () => { });
+    cp('sources', Path.join(publicDir, 'sources'), { recursive: true }, () => { });
     if (ThemeConfig.rawPosts && ThemeConfig.rawPosts.copy) {
         if (ThemeConfig.rawPosts.copyTo) {
-            fs.cp('posts', Path.join(publicDir, ThemeConfig.rawPosts.copyTo), { recursive: true }, () => { });
+            cp('posts', Path.join(publicDir, ThemeConfig.rawPosts.copyTo), { recursive: true }, () => { });
         } else {
             errno('20101');
         }
     }
     if (ThemeConfig.enableThemeWebsiteIcon){
-        fs.cp(Path.join(themeFileDir,'extra/favicon.ico'),publicDir,()=>{});
+        cp(Path.join(themeFileDir,'extra/favicon.ico'),publicDir,()=>{});
     } else {
-        fs.cp('./nexo_sources/favicon.ico',Path.join(publicDir,'favicon.ico'),(e)=>{if(e)throw e});
+        cp('./nexo_sources/favicon.ico',Path.join(publicDir,'favicon.ico'),(e)=>{if(e)throw e});
     }
     console.log('Copy Complete');
 }
@@ -373,10 +357,9 @@ async function part_copyfiles(themeFileDir, publicDir, ThemeConfig) {
 async function part_build_page(layoutType, template, Articles, publicDir, ThemeConfig, options, GivenVariables) {
     Articles.forEach(item => {
         try {
-            let getArticle = () => item;
             let destname = Path.join(publicDir, item.publicFilePath);
             build_and_write(layoutType, template, options, {
-                getArticle,
+                post: item,
                 ...GivenVariables
             }, ThemeConfig, destname);
         } catch (e) {
