@@ -11,8 +11,8 @@
     },
     "site_url": "https://0xarch.github.io",
     "sitemap":{
-        "type": "txt",
-        "name": "sitemap.txt"
+        "type": "xml",
+        "name": "sitemap.xml"
     },
     "language": "zh-CN",
     "theme":{
@@ -54,6 +54,7 @@
         "public_dir": "public",
         "public_directory": "public",
         "special_posts": ["about.md","news.md"],
-        "site_root": "/"
+        "site_root": "/",
+        "alwaysnew": true
     }
 }

@@ -60,6 +60,9 @@ class Datz {
     toPathString(){
         return this.y+'/'+this.m+'/'+this.d;
     }
+    toString(){
+        return this.y+'-'+this.m+'-'+this.d;
+    }
 }
 
 /**
