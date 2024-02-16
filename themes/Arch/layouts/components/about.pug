@@ -12,4 +12,7 @@
             p= allArticles.length
         .categories
             span= i18n('Categories')
-            p= sortArticle.categories.length
+            p= site.category_count
+        .tags
+            span= i18n('Tags')
+            p= site.tag_count

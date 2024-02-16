@@ -1,12 +1,12 @@
-import {gopt} from '../modules/lib/hug.js';
+import { gopt } from '../modules/lib/hug.js';
 import * as Optam from '../modules/lib/optam.js';
-import { readFileSync,writeFile,cp,existsSync } from 'fs';
+import { readFileSync, writeFile, cp, existsSync } from 'fs';
 import * as Path from 'path';
 import { errno, nexo_logo } from '../lib/mod.js';
 import { build_and_write } from '../modules/app/builder.js';
 import i18n from '../modules/i18n.js';
 import { getAllPosts, sort } from '../lib/posts.js';
-import { has_property, mix_object } from '../lib/base_fn.js';
+import { has_property,get_property, mix_object } from '../lib/base_fn.js';
 import { Nil } from '../lib/closures.js';
 import { generateSitemapTxt } from '../modules/sitemap.js';
 /**
@@ -18,9 +18,9 @@ import { generateSitemapTxt } from '../modules/sitemap.js';
  */
 async function App() {
     const argv = gopt(process.argv);
-    let config_raw_text = readFileSync(argv['config']||'config.json').toString();
+    let config_raw_text = readFileSync(argv['config'] || 'config.json').toString();
     const GlobalConfig = JSON.parse(config_raw_text);
-    if(!GlobalConfig.security)GlobalConfig.security={};
+    if (!GlobalConfig.security) GlobalConfig.security = {};
 
     if (argv['dry-run'] == 'null') {
         return;
@@ -58,15 +58,15 @@ async function App() {
         return;
     }
 
-
+    // deprecated, v2 ~ later
     const { Posts, Specials } = Optam.ReadPosts(PostDir, GlobalConfig.excluded_posts);
-    const { posts, excluded_posts } = getAllPosts(PostDir, GlobalConfig.excluded_articles);
+    const { posts, excluded_posts } = getAllPosts(PostDir, GlobalConfig.excluded_posts);
 
     const Sorts = Optam.getSort(Posts);
     const sorted_posts = sort(posts);
 
     // unmaintained , v2
-    let provision_site = getAllPosts(PostDir, GlobalConfig.excluded_articles);
+    let provision_site = getAllPosts(PostDir, GlobalConfig.excluded_posts);
 
     let __public_root = !["/", "", undefined].includes(GlobalConfig.build.site_root) ? GlobalConfig.build.site_root : '';
 
@@ -107,14 +107,14 @@ async function App() {
     let __provided_theme_config = mix_object(ThemeConfig.default, GlobalConfig.theme.options);
     let __provided_nexo = {};
 
-    if(GlobalConfig.sitemap){
-        if(GlobalConfig.sitemap.type == 'txt'){
-            writeFile(Path.join(PublicDir,GlobalConfig.sitemap.name),generateSitemapTxt(GlobalConfig.site_url,posts,ThemeConfig),Nil)
+    if (GlobalConfig.sitemap) {
+        if (GlobalConfig.sitemap.type == 'txt') {
+            writeFile(Path.join(PublicDir, GlobalConfig.sitemap.name), generateSitemapTxt(GlobalConfig.site_url, posts, ThemeConfig), Nil)
         }
     }
-    if(GlobalConfig.extra_file){
-        for(let k of GlobalConfig.extra_file){
-            cp(Path.join('extra',k),Path.join(PublicDir,GlobalConfig.extra_file[k]),Nil);
+    if (GlobalConfig.extra_file) {
+        for (let k of GlobalConfig.extra_file) {
+            cp(Path.join('extra', k), Path.join(PublicDir, GlobalConfig.extra_file[k]), Nil);
         }
     }
     if (ThemeConfig.API) {
@@ -122,29 +122,29 @@ async function App() {
             // used in eval
             let sec_gconf = JSON.parse(JSON.stringify(GlobalConfig)); sec_gconf;
             let insert_code = '';
-            if(GlobalConfig.security.allowFileSystemOperationInPlugin!=true)insert_code+='let fs = null;\n';
-            if(GlobalConfig.security.allowConfiguationChangeInPlugin!=true)insert_code+=`let GlobalConfig = sec_gconf;\n`;
+            if (GlobalConfig.security.allowFileSystemOperationInPlugin != true) insert_code += 'let fs = null;\n';
+            if (GlobalConfig.security.allowConfiguationChangeInPlugin != true) insert_code += `let GlobalConfig = sec_gconf;\n`;
             let __plugin_file = readFileSync(Path.join(ThemeDir, 'extra/plugin.js'));
-            let __plugin_script = 'try{\n'+ insert_code + __plugin_file.toString() + '\nplugin()}catch(e){errno(20202);console.error(e);"NULL"}';
+            let __plugin_script = 'try{\n' + insert_code + __plugin_file.toString() + '\nplugin()}catch(e){errno(20202);console.error(e);"NULL"}';
             __plugin = eval(__plugin_script);
         }
         if (ThemeConfig.API.searchComponent) {
             let search_config = ThemeConfig.API.searchComponent;
             let arr = [];
             let title = search_config.includes('title'),
-            id = search_config.includes('id'),
-            content = search_config.includes('content'),
-            date = search_config.includes('date');
+                id = search_config.includes('id'),
+                content = search_config.includes('content'),
+                date = search_config.includes('date');
             for (let article of posts) {
                 let href = __get_file_relative_dir(article.websitePath);
                 let atitle = article.title;
-                if (title) {arr.push({'content': article.title,'by': 'Title',href,atitle});}
-                if (id) {arr.push({'content': article.id,'by': 'ID',href,atitle});}
-                if (content) {arr.push({'content': article.content.replace(/\n/g,' ').replace('<!--more-->',''),'by': 'Content',href,atitle});}
-                if (date) {arr.push({'content': article.date.toDateString(),'by': 'Date',href,atitle});}
+                if (title) { arr.push({ 'content': article.title, 'by': 'Title', href, atitle }); }
+                if (id) { arr.push({ 'content': article.id, 'by': 'ID', href, atitle }); }
+                if (content) { arr.push({ 'content': article.content.replace(/\n/g, ' ').replace('<!--more-->', ''), 'by': 'Content', href, atitle }); }
+                if (date) { arr.push({ 'content': article.date.toDateString(), 'by': 'Date', href, atitle }); }
             }
             __provided_nexo.searchStringUrl = __get_file_relative_dir('searchStrings.json');
-            writeFile(Path.join(PublicDir, 'searchStrings.json'), JSON.stringify(arr),()=>{});
+            writeFile(Path.join(PublicDir, 'searchStrings.json'), JSON.stringify(arr), () => { });
         }
     }
     /**
@@ -174,6 +174,7 @@ async function App() {
                         i18n: __i18n,
                         mix: mix_object,
                         has_property,
+                        get_property,
                         insert_nexo_logo: nexo_logo,
                         Nexo: __provided_nexo,
                         site: provision_site
@@ -346,10 +347,10 @@ async function part_copyfiles(themeFileDir, publicDir, ThemeConfig) {
             errno('20101');
         }
     }
-    if (ThemeConfig.enableThemeWebsiteIcon){
-        cp(Path.join(themeFileDir,'extra/favicon.ico'),publicDir,()=>{});
+    if (ThemeConfig.enableThemeWebsiteIcon) {
+        cp(Path.join(themeFileDir, 'extra/favicon.ico'), publicDir, () => { });
     } else {
-        cp('./nexo_sources/favicon.ico',Path.join(publicDir,'favicon.ico'),(e)=>{if(e)throw e});
+        cp('./nexo_sources/favicon.ico', Path.join(publicDir, 'favicon.ico'), (e) => { if (e) throw e });
     }
     console.log('Copy Complete');
 }

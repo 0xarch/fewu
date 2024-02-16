@@ -10,10 +10,10 @@ html
             include /includes/topbar.pug
         #main 
             .content
-                each bid in Varias.value
+                each bid in Varias.value.included_articles
                     - let item = ID[bid]
                     include /components/postcard.pug
-            include /includes/sidebar.pug
+            +sidebar(Plugin.hasPropertyThenOr(theme,'overrideCategoryPage.primarySidebarWidgets',theme.primarySidebarWidgets))
         .pagination.
             {
                 "page": #{Cycling.TotalCount}

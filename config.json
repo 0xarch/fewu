@@ -6,14 +6,14 @@
         "note": "We won't be disturbed!",
         "location": "Xvd 114514",
         "data":{
-            "announcement": "",
-            "friend_links":[
-                "王深蹲的博客 | wangyuzhen666.github.io",
-                "Twitter | x.com"
-            ]
+            "announcement": ""
         }
     },
     "site_url": "https://0xarch.github.io",
+    "sitemap":{
+        "type": "txt",
+        "name": "sitemap.txt"
+    },
     "language": "zh-CN",
     "theme":{
         "name":"Arch",
@@ -31,10 +31,6 @@
         "title": "",
         "link": "",
         "description":""
-    },
-    "sitemap":{
-        "type": "txt",
-        "name": "sitemap.txt"
     },
     "extra_files":{
         "BingSiteAuth.xml":"/BingSiteAuth.xml"

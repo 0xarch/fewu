@@ -33,9 +33,6 @@
 #toc>.li-3{
     padding-left: 1.25rem;
 }
-#toc>li.active{
-    font-weight: 600;
-}
 #toc>li:hover{
     background: var(--brand-color-75);
     color: #fff;

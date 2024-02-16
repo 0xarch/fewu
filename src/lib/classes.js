@@ -177,6 +177,22 @@ class Category{
     }
 }
 
+class Configuration {
+    #base;
+    constructor(base){
+        this.#base = base;
+    }
+    get(relative_key_path){
+        // TODO
+    }
+    set(relative_key_path){
+        // TODO
+    }
+    has(relative_key_path){
+        // TODO
+    }
+}
+
 export {
     Post,
     License,

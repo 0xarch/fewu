@@ -19,5 +19,5 @@ html(lang="zh")
                     - let __next = ID[post.nextID] || {}
                     a.prev(href=__prev.websitePath&&file(__prev.websitePath))=__prev.title || 'ALREADY EARLIEST'
                     a.next(href=__next.websitePath&&file(__next.websitePath))=__next.title || 'NOT UPDATED'
-            +sidebar(has_property(theme,'overridePostPage.primarySidebarWidgets')&&theme.overridePostPage.primarySidebarWidgets)
+            +sidebar(Plugin.hasPropertyThenOr(theme,'overridePostPage.primarySidebarWidgets',theme.primarySidebarWidgets))
         include /includes/footer.pug

@@ -27,5 +27,5 @@ html
                 .card.plugin.column
                     .heading| Plugin
                     .plain!=JSON.stringify(Plugin)
-            include /includes/sidebar.pug
+            +sidebar(Plugin.hasPropertyThenOr(theme,'overrideStatusPage.primarySidebarWidgets',theme.primarySidebarWidgets))
         include /includes/footer.pug
