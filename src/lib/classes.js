@@ -1,7 +1,6 @@
 import { parse } from "marked";
 import { word_count } from "./reader.js";
 
-
 class License{
     #CreativeCommons = {
         BY : false,
@@ -98,7 +97,7 @@ class Post{
         const lines = raw_string.split("\n");
         let getted = {
             title: "Untitled",
-            date: null,
+            date: '1970-1-1',
             category: " ",
             tags: " ",
             license: 'byncsa'
@@ -113,25 +112,26 @@ class Post{
             }
             i++;
         }
+        let gz = getted.date.split(/[\ \-\.]/).filter(v=>v).map(v=>parseInt(v));
+        let moreIndex = lines.indexOf('<!--more-->');
         this.title = getted.title;
         this.content = lines.slice(i).join('\n');
-        const moreIndex = lines.indexOf('<!--more-->');
         this.foreword = lines.slice(i, (moreIndex !== -1) ?moreIndex :5) .join('\n').replace(/\#*/g,'');
         this.parsedForeword = parse(this.foreword);
         this.tags = getted['tags']?getted.tags.split(" "):[];
         this.html = parse(this.content);
         this.isTopped = getted.top?true:false;
         this.date = new Date(getted.date);
+        this.license = new License(getted.license||'');
+        this.datz = new Datz(...gz);
         this.wordCount = word_count(this.content);
         this.imageUrl = getted.imageUrl||'';
         this.category = getted.category.split(" ").filter(v=>v!='');
         this.tags = getted.tags.split(" ").filter(v=>v!='');
-        this.license = new License(getted.license||'');
         this.ECMA262Date = this.date.toDateString();
-        this.datz = new Datz(this.date.getFullYear(),this.date.getMonth()+1,this.date.getDay());
         this.transformedTitle = getted.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'\～\·\「\」\；\：\‘\’\“\”\，\。\《\》\？\！\￥\…\、\（\）]/g,'_');
-        this.websitePath = `/${this.datz.toPathString()}/${this.transformedTitle}.html`;
-        this.publicFilePath = `${this.datz.toPathString()}/${this.transformedTitle}.html`;
+        this.websitePath = `/${this.datz.toPathString()}/${this.transformedTitle}/`;
+        this.publicFilePath = `${this.datz.toPathString()}/${this.transformedTitle}/index.html`;
     }
     setPath(path){
         this.pathto = path;

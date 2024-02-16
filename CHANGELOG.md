@@ -18,6 +18,7 @@
 ### In Progress
     * Sitemap(xml) support
     * new Builder class
+    * new Base class
     * new parser port
     * WebAssembly (rust/c++)
     * Page description support (Function/Variable)

@@ -8,7 +8,7 @@ import i18n from '../modules/i18n.js';
 import { getAllPosts, sort } from '../lib/posts.js';
 import { has_property,get_property, mix_object } from '../lib/base_fn.js';
 import { Nil } from '../lib/closures.js';
-import { generateSitemapTxt } from '../modules/sitemap.js';
+import { generateSitemapTxt,generateSitemapXml } from '../modules/sitemap.js';
 /**
  * @DOCUMENT_OF_APP
  * @argument config Configuration file for Nexo.
@@ -110,6 +110,8 @@ async function App() {
     if (GlobalConfig.sitemap) {
         if (GlobalConfig.sitemap.type == 'txt') {
             writeFile(Path.join(PublicDir, GlobalConfig.sitemap.name), generateSitemapTxt(GlobalConfig.site_url, posts, ThemeConfig), Nil)
+        } else {
+            writeFile(Path.join(PublicDir, GlobalConfig.sitemap.name), generateSitemapXml(GlobalConfig.site_url, posts, ThemeConfig), Nil)
         }
     }
     if (GlobalConfig.extra_file) {

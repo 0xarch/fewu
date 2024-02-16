@@ -2,8 +2,11 @@ include /mixins/script.pug
 doctype html 
 html(lang="zh")
     head 
+
         include /includes/base_script.pug
         include /includes/post_prelude.pug
+        meta(name="keyword",content=post.category.concat(post.tags).join(" "))
+        meta(name="description",content=post.foreword)
         title= __title__(post.title,'read')
     body(OCP='OVERRIDE')
         #url= file(post.pathto)
