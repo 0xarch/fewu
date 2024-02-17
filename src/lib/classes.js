@@ -1,5 +1,6 @@
 import { parse } from "marked";
 import { word_count } from "./reader.js";
+import { get_property } from "./base_fn.js";
 
 class License{
     #CreativeCommons = {
@@ -186,7 +187,13 @@ class Configuration {
         this.#base = base;
     }
     get(relative_key_path){
-        // TODO
+        let call = relative_key_path.split(".");
+        try {
+            let result = this.#base[call.shift()];
+            return get_property(result,call);
+        } catch(e) {
+            return void 0;
+        }
     }
     set(relative_key_path){
         // TODO
@@ -200,5 +207,6 @@ export {
     Post,
     License,
     Tag,
-    Category
+    Category,
+    Configuration
 }

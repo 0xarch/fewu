@@ -24,7 +24,7 @@ function get_property(object,property_path) {
 }
 
 function mix_object(primary, secondary, insert_new_key = false) {
-    let main = primary;
+    let main = primary||{};
     for (let key in secondary) {
         if (main.hasOwnProperty(key) || insert_new_key) {
             main[key] = secondary[key];

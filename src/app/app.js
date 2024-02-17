@@ -2,7 +2,7 @@ import { gopt } from '../modules/lib/hug.js';
 import * as Optam from '../modules/lib/optam.js';
 import { readFileSync, writeFile, cp, existsSync } from 'fs';
 import * as Path from 'path';
-import { errno, nexo_logo } from '../lib/mod.js';
+import { errno, info, nexo_logo,run } from '../lib/mod.js';
 import { build_and_write } from '../modules/app/builder.js';
 import i18n from '../modules/i18n.js';
 import { getAllPosts, sort } from '../lib/posts.js';
@@ -123,7 +123,8 @@ async function App() {
         if (ThemeConfig.API.hasPlugin) {
             // used in eval
             let sec_gconf = JSON.parse(JSON.stringify(GlobalConfig)); sec_gconf;
-            let insert_code = '';
+            let site = JSON.parse(JSON.stringify(provision_site)); site;
+            let insert_code = 'let provision_site = undefined;\n';
             if (GlobalConfig.security.allowFileSystemOperationInPlugin != true) insert_code += 'let fs = null;\n';
             if (GlobalConfig.security.allowConfiguationChangeInPlugin != true) insert_code += `let GlobalConfig = sec_gconf;\n`;
             let __plugin_file = readFileSync(Path.join(ThemeDir, 'extra/plugin.js'));
@@ -164,7 +165,6 @@ async function App() {
                         posts,
                         excluded_posts,
                         sort: sorted_posts,
-                        sortArticle: Sorts,
                         ID: sorted_posts.ID,
                         settings: GlobalConfig,
                         theme: __provided_theme_config,
@@ -277,26 +277,16 @@ async function App() {
             let option = item.build.option.cycling;
             // aro stands for "array or object"
             let father_aro = [], every = option.every;
-            (function () {
+            {
                 let __splited = option.parent.split(".");
-                if (__splited.length == 1) father_aro = eval(__splited[0]);
-                else {
-                    let __tempor_val;
-                    try {
-                        __tempor_val = eval(__splited[0]);
-                    } catch (_) {
-                        try {
-                            __tempor_val = inconf_extra[__splited[0]];
-                        } catch (_) {
-                            errno('30001');
-                        }
-                    }
-                    for (let z = 1; z < __splited.length; z++) {
-                        __tempor_val = __tempor_val[__splited[z]];
-                    }
-                    father_aro = __tempor_val;
+                let __root = __splited.shift();
+                try{
+                    __root = eval(__root);
+                }catch(e){
+                    __root = inconf_extra[__root];
                 }
-            }());
+                father_aro = get_property(__root,__splited.join("."));
+            }
             if (!Array.isArray(father_aro)) {
                 let _arr = [];
                 for (let objKey in father_aro) {
@@ -321,6 +311,7 @@ async function App() {
                     basedir: ThemeLayoutDir,
                     filename
                 }, {
+                    filename,
                     ...resolve(),
                     ...inconf_extra,
                     ...vars,
@@ -332,6 +323,7 @@ async function App() {
                 basedir: ThemeLayoutDir,
                 filename
             }, {
+                filename,
                 ...resolve(),
                 ...inconf_extra,
                 ...vars
@@ -341,34 +333,37 @@ async function App() {
 
 async function part_copyfiles(themeFileDir, publicDir, ThemeConfig) {
     cp(themeFileDir, Path.join(publicDir, 'files'), { recursive: true }, () => { });
-    cp('sources', Path.join(publicDir, 'sources'), { recursive: true }, () => { });
+    cp('resources', Path.join(publicDir, 'resources'), { recursive: true }, () => { });
     if (ThemeConfig.rawPosts && ThemeConfig.rawPosts.copy) {
-        if (ThemeConfig.rawPosts.copyTo) {
+        run(()=>{
+            cp('posts', Path.join(publicDir, ThemeConfig.rawPosts.copyTo), { recursive: true }, Nil);
+        },'20101');
+        /*if (ThemeConfig.rawPosts.copyTo) {
             cp('posts', Path.join(publicDir, ThemeConfig.rawPosts.copyTo), { recursive: true }, () => { });
         } else {
             errno('20101');
-        }
+        }*/
     }
     if (ThemeConfig.enableThemeWebsiteIcon) {
         cp(Path.join(themeFileDir, 'extra/favicon.ico'), publicDir, () => { });
     } else {
         cp('./nexo_sources/favicon.ico', Path.join(publicDir, 'favicon.ico'), (e) => { if (e) throw e });
     }
-    console.log('Copy Complete');
+    info(['OPERATION.COPY','MAGENTA','BOLD'],['COMPLETE','GREEN']);
 }
 
 async function part_build_page(layoutType, template, Articles, publicDir, ThemeConfig, options, GivenVariables) {
     Articles.forEach(item => {
-        try {
+        run(()=>{
             let destname = Path.join(publicDir, item.publicFilePath);
+            info([item.publicFilePath,'MAGENTA','NONE']);
             build_and_write(layoutType, template, options, {
                 post: item,
+                filename: postFilename,
                 ...GivenVariables
             }, ThemeConfig, destname);
-        } catch (e) {
-            console.error(e);
-        }
-    })
+        },9001);
+    });
 }
 
 export default App;

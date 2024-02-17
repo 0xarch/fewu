@@ -8,13 +8,13 @@ const TERMINAL_COLOR={
     WHITE:'39'
 };
 const TERMINAL_EFFECT={
-    BOLD:'1',
-    ITALIC:'3',
-    UNDERLINE:'4',
+    BOLD:';1',
+    ITALIC:';3',
+    UNDERLINE:';4',
     NONE: ''
 };
 function SHELL_STYLE(CONTENT,COLOR='WHITE',EFFECT='NONE'){
-    return `\x1b[${TERMINAL_COLOR[COLOR]};${TERMINAL_EFFECT[EFFECT]}m${CONTENT}${TERMINAL_STYLE_END}`;
+    return `\x1b[${TERMINAL_COLOR[COLOR]}${TERMINAL_EFFECT[EFFECT]}m${CONTENT}${TERMINAL_STYLE_END}`;
 }
 
 /**
@@ -30,7 +30,7 @@ function errno(num){
  * @param  {...[CONTENT:any,COLOR:string,EFFECT:string]} ARG 
  */
 function info(...ARG){
-    console.log(SHELL_STYLE('INFO','GREEN'),...ARG.map(v=>SHELL_STYLE(...v)));
+    console.log(SHELL_STYLE('INFO','GREEN','NONE'),...ARG.map(v=>SHELL_STYLE(...v)));
 }
 
 /**
@@ -44,6 +44,14 @@ function run(fn,err_num){
     } catch(e){
         errno(err_num?err_num:'void');
     }
+}
+
+/**
+ * @param {fs.PathLike} path
+ * @returns {object}
+ */
+function load(path){
+
 }
 
 function nexo_logo(){

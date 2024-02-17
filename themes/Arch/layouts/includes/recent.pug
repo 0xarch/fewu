@@ -1,4 +1,4 @@
 .card.recent.column
     .heading= i18n('Recent')
-    each item in sortArticle.recently
+    each item in sort.defaultOrder.slice(5)
         a.onbrand(href=file(item.src))=item.title

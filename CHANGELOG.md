@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## 2.0.2 - 2024-02-16
+
+### Removed
+
+    * sortArticle in Provision V2
+
+### Changed
+
+    * rename sources to resources
+    * removed useless console.log
+
+### Features
+
+    * <since 2.0.1> Sitemap(Xml) support
+    * <since 2.0.1, continuing> Page description support
+    * <since 2.0.1, experimental, working> RSS support
+
+### Known bugs
+
+    * Error during parsing EJS template <ERROR "Could not find the include file">
+
 ## 2.0.1 - 2024-02-16
 
 ### Features

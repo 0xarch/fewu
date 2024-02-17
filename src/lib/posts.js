@@ -6,7 +6,7 @@ import { PostSortingFunction } from "./closures.js";
 
 function test(string) {
     let a = new Post(string);
-    console.log(a);
+    return a;
 }
 
 /**
@@ -72,7 +72,6 @@ function getAllPosts(PostDir, excluded_filename) {
         prev_id = v.id;
         a[i - 1] && a[i - 1].setNext(v.id);
     });
-    console.log(used_categories, used_tags);
     return {
         posts,
         excluded_posts,

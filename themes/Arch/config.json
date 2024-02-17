@@ -99,7 +99,7 @@
                 "build": {
                     "filename": "about.pug",
                     "destname": "about",
-                    "extras": "{post:Specials['about.md']}"
+                    "extras": "{post:excluded_posts['about.md']}"
                 }
             }
         ]
