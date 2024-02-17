@@ -5,14 +5,14 @@ html
         include /includes/base_script.pug
         include /includes/css_iac.pug
         title= __title__('STATUS',user.name)
-    body(OCP='OVERRIDE')
+    body.mdui-theme-auto(OCP='OVERRIDE')
         .topbar-container
             include /includes/topbar.pug
         #main
             .content
                 .card.archive.column
                     .heading| Articles
-                    = Plugin.postCount
+                    = site.posts.length
                 .card.category.column
                 .card.update.column
                     .heading| Update

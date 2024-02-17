@@ -4,7 +4,8 @@
     "description": "Icarus style theme for Nexo",
     "lib": [
         "@:rsms:markdown-wasm:jsdelivr",
-        "@:highlightjs:&&:jsdelivr"
+        "@:highlightjs:&&:jsdelivr",
+        "@:mdui:&&:unpkg"
     ],
     "API": {
         "hasPlugin": true,

@@ -16,7 +16,7 @@
     },
     "language": "zh-CN",
     "theme":{
-        "name":"Next",
+        "name":"Arch",
         "options":{
             "3rd_bar":false
         },
