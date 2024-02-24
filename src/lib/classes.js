@@ -1,6 +1,7 @@
 import { parse } from "marked";
 import { word_count } from "./reader.js";
 import { get_property } from "./base_fn.js";
+import { notFake } from "./closures.js";
 
 class License{
     #CreativeCommons = {
@@ -78,6 +79,7 @@ class Post{
     license;
     category;
     tags;
+    keywords;
     id;
     date;
     ECMA262Date;
@@ -130,8 +132,10 @@ class Post{
         this.datz = new Datz(...gz);
         this.wordCount = word_count(this.content);
         this.imageUrl = getted.imageUrl||'';
-        this.category = getted.category.split(" ").filter(v=>v!='');
-        this.tags = getted.tags.split(" ").filter(v=>v!='');
+        this.category = getted.category.split(" ").filter(notFake);
+        this.tags = getted.tags.split(" ").filter(notFake);
+        if(!getted.keywords) this.keywords = tags;
+        else this.keywords = getted.keywords.split(" ").filter(notFake);
         this.ECMA262Date = this.date.toDateString();
         this.transformedTitle = getted.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'\～\·\「\」\；\：\‘\’\“\”\，\。\《\》\？\！\￥\…\、\（\）]/g,'');
         this.websitePath = `/${this.datz.toPathString()}/${this.transformedTitle}/`;

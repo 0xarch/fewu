@@ -35,6 +35,14 @@ function info(...ARG){
 
 /**
  * 
+ * @param  {...[CONTENT:any,COLOR:string,EFFECT:string]} ARG 
+ */
+function warn(...ARG){
+    console.log(SHELL_STYLE('WARN','YELLOW','ITALIC'),...ARG.map(v=>SHELL_STYLE(...v)));
+}
+
+/**
+ * 
  * @param { Function } fn 
  * @param { number } err_num 
  */
@@ -61,6 +69,7 @@ function nexo_logo(){
 export {
     errno,
     info,
+    warn,
     run,
     nexo_logo
 }

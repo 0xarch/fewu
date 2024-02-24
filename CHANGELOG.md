@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 2.0.2-3 - 2024-02-24
+
+### Changed
+
+    * `v=>v!=''` closure as `notFake`
+
+### New
+
+    * `warn` function
+    * basic post keyword support
+
 ## 2.0.2-2 - 2024-02-24
 
 ### Changed

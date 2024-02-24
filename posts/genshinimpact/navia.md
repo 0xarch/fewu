@@ -11,7 +11,7 @@ imageUrl: https://patchwiki.biligame.com/images/ys/a/ad/jez0piggyfkes3s4kgqyz8dd
 
 <!--more-->
 
-# 计算
+# 倍率计算
 
 带0/1/5裁断(满被动),10/13级e/q,2命炮击计入倍率.
 
@@ -85,7 +85,7 @@ imageUrl: https://patchwiki.biligame.com/images/ys/a/ad/jez0piggyfkes3s4kgqyz8dd
 非6命: 1 +130% =230%
 6命: 230% +135% =365%
 
-# 结果
+## 结果
 
 |命座|裁断|纯倍率|计入增益|计入增益/暴击|
 |---|---|---|---|---|

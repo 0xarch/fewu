@@ -50,3 +50,11 @@ mixin postcard(item)
             a.onbrand.title(href=file(item.websitePath))= item.title
             .less!= item.parsedForeword
             a.onbrand.readmore(href=file(item.websitePath))= i18n('Read more')
+
+mixin meta(des,key)
+    meta(charset="utf-8")
+    meta(name="viewport",content="width:device-width,initial-scale=1.0")
+    meta(name="author" content=user.name)
+    meta(name="description" content=des)
+    meta(name="keywords" content=key)
+    meta(http-equiv="content-language" content=settings.language)
