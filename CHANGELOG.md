@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2.0.2-2 - 2024-02-24
+
+### Changed
+
+    * update README.md
+
 ## 2.0.2-1 - 2024-02-24
 
 ### Changed
