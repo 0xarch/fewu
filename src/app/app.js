@@ -337,12 +337,7 @@ async function part_copyfiles(themeFileDir, publicDir, ThemeConfig) {
     if (ThemeConfig.rawPosts && ThemeConfig.rawPosts.copy) {
         run(()=>{
             cp('posts', Path.join(publicDir, ThemeConfig.rawPosts.copyTo), { recursive: true }, Nil);
-        },'20101');
-        /*if (ThemeConfig.rawPosts.copyTo) {
-            cp('posts', Path.join(publicDir, ThemeConfig.rawPosts.copyTo), { recursive: true }, () => { });
-        } else {
-            errno('20101');
-        }*/
+        },9004);
     }
     if (ThemeConfig.enableThemeWebsiteIcon) {
         cp(Path.join(themeFileDir, 'extra/favicon.ico'), publicDir, () => { });
@@ -359,7 +354,6 @@ async function part_build_page(layoutType, template, Articles, publicDir, ThemeC
             info([item.publicFilePath,'MAGENTA','NONE']);
             build_and_write(layoutType, template, options, {
                 post: item,
-                filename: postFilename,
                 ...GivenVariables
             }, ThemeConfig, destname);
         },9001);

@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## 2.0.2-1 - 2024-02-24
+
+### Changed
+
+    * use encodeURI for sitemap generation(txt, xml)
+
+### Fixed
+
+    * white background of nexo logo
+    * 9001 error
+
+### Planned
+
+    * remove deprecated codes
+    * cleaner renderer
+    * API v3
+
 ## 2.0.2 - 2024-02-16
 
 ### Removed

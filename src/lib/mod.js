@@ -55,7 +55,7 @@ function load(path){
 }
 
 function nexo_logo(){
-    return `<svg nexo-logo xmlns='http://www.w3.org/2000/svg' width=48 height=48><linearGradient id=nexog1 gradientTransform="rotate(45)"><stop offset=.7 stop-color=#3273d2 /><stop stop-color=#0546a5 /></linearGradient><circle n2 cx=21 cy=27 r=18 /><circle cx=21 cy=27 r=12 /><circle n2 cx=33 cy=15 r=12 /><circle cx=33 cy=15 r=8 /></svg><style>svg[nexo-logo],svg[nexo-logo]>*{background:#fff;fill:#fff}svg[nexo-logo]>*[n2]{fill:url(#nexog1)}</style>`;
+    return `<svg nexo-logo xmlns='http://www.w3.org/2000/svg' width=48 height=48><linearGradient id=nexog1 gradientTransform="rotate(45)"><stop offset=.7 stop-color=#3273d2 /><stop stop-color=#0546a5 /></linearGradient><circle n2 cx=21 cy=27 r=18 /><circle cx=21 cy=27 r=12 /><circle n2 cx=33 cy=15 r=12 /><circle cx=33 cy=15 r=8 /></svg><style>svg[nexo-logo]>*{fill:#fff}svg[nexo-logo]>*[n2]{fill:url(#nexog1)}</style>`;
 }
 
 export {
