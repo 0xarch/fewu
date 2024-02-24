@@ -134,7 +134,7 @@ class Post{
         this.imageUrl = getted.imageUrl||'';
         this.category = getted.category.split(" ").filter(notFake);
         this.tags = getted.tags.split(" ").filter(notFake);
-        if(!getted.keywords) this.keywords = tags;
+        if(!getted.keywords) this.keywords = this.tags;
         else this.keywords = getted.keywords.split(" ").filter(notFake);
         this.ECMA262Date = this.date.toDateString();
         this.transformedTitle = getted.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'\～\·\「\」\；\：\‘\’\“\”\，\。\《\》\？\！\￥\…\、\（\）]/g,'');
