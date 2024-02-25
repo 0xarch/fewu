@@ -131,7 +131,7 @@ class Post{
         this.title = getted.title;
         this.content = lines.slice(i).join('\n');
         this.foreword = lines.slice(i, (moreIndex !== -1) ?moreIndex :5) .join('\n').replace(/(\#*)|\n/g,'');
-        if(this.foreword=="") this.foreword = "<No foreword>";
+        if(this.foreword=="") this.foreword = "No foreword";
         this.parsedForeword = parse(this.foreword);
         this.tags = getted['tags']?getted.tags.split(" "):[];
         this.html = parse(this.content);

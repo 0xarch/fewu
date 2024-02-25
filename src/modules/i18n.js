@@ -4,7 +4,7 @@ function set_i18n_file(json){
     langfile = json;
 }
 
-function i18n_new(json){
+function i18n(json){
     if(!json)json={};
     return function(key){
         if(/[0-9]/.test(key)){
@@ -23,7 +23,7 @@ function i18n_new(json){
     }
 }
 
-function i18n(key){
+function i18n_new(key){
     if(/[0-9]/.test(key)){
         let __tempor_val = [];
         for(let item of /[0-9]/g.exec(key)){
