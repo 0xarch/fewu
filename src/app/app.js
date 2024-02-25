@@ -62,9 +62,12 @@ async function App() {
 
     // deprecated, v2 ~ later
     const { Posts, Specials } = Optam.ReadPosts(PostDir, GlobalConfig.excluded_posts);
+    // since v2
     const { posts, excluded_posts } = getAllPosts(PostDir, GlobalConfig.excluded_posts);
 
+    // deprecated, v2 ~ later
     const Sorts = Optam.getSort(Posts);
+    // since v2
     const sorted_posts = sort(posts);
 
     // unmaintained , v2
@@ -89,10 +92,8 @@ async function App() {
             return fix + ' ' + sep + ' ' + type;
         }
     })();
-    /**
-     * @DOCUMENT_OF_INTERNATIONALIZATION
-     * @since v2
-     */
+    
+    // since v2
     set_i18n_file(lang_file);
 
     /**
@@ -336,10 +337,22 @@ async function App() {
 async function part_copyfiles(themeFileDir, publicDir, ThemeConfig) {
     cp(themeFileDir, Path.join(publicDir, 'files'), { recursive: true }, () => { });
     cp('resources', Path.join(publicDir, 'resources'), { recursive: true }, () => { });
-    if (ThemeConfig.rawPosts && ThemeConfig.rawPosts.copy) {
-        run(()=>{
-            cp('posts', Path.join(publicDir, ThemeConfig.rawPosts.copyTo), { recursive: true }, Nil);
-        },9004);
+    if (ThemeConfig.copy){
+        for(let key in ThemeConfig.copy){
+            if(key.charAt(0) == '@'){
+                switch(key){
+                    case "@posts":
+                            run(()=>{
+                                cp('posts', Path.join(publicDir, ThemeConfig.copy['@posts']), { recursive: true }, Nil);
+                            },9101);
+                        break;
+                }
+            } else {
+                run(()=>{
+                    cp(Path.join(themeFileDir,'extra',key),Path.join(publicDir,ThemeConfig.copy[key]),{recursive:true}, Nil);
+                },9102);
+            }
+        }
     }
     if (ThemeConfig.enableThemeWebsiteIcon) {
         cp(Path.join(themeFileDir, 'extra/favicon.ico'), publicDir, () => { });

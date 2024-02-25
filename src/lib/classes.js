@@ -2,6 +2,20 @@ import { parse } from "marked";
 import { word_count } from "./reader.js";
 import { get_property } from "./base_fn.js";
 import { notFake } from "./closures.js";
+import { warn } from "./mod.js";
+
+class Cachable{
+    #cache={};
+    stored(name){
+        return this.#cache[name] != undefined;
+    }
+    get(name){
+        return this.#cache[name];
+    }
+    set(name,v){
+        this.#cache[name] = v;
+    }
+}
 
 class License{
     #CreativeCommons = {
@@ -94,12 +108,21 @@ class Post{
     wordCount = 0;
     title;
     datz;
+    old = false;
+    #cache = new Cachable();
     getParsed(type){
         switch(type){
             case "foreword":
-                return parse(this.foreword);
             case "content":
-                return parse(this.content);
+                // rp stands for 'result of parsing'
+                let index = 'rp-'+type;
+                if(this.#cache.stored(index))
+                    return this.#cache.get(index);
+                else {
+                    let result = parse(this[type]);
+                    this.#cache.set(index,result);
+                    return result;
+                }
         }
     }
     /**
@@ -128,27 +151,48 @@ class Post{
         }
         let gz = getted.date.split(/[\ \-\.]/).filter(v=>v).map(v=>parseInt(v));
         let moreIndex = lines.indexOf('<!--more-->');
+        /*
+         * Critical change.
+            After 2.0.3, theme should set a part for showing the foreword as it will not be included in the content. 
+         */
+        if(moreIndex == -1){
+            /* No foreword provided */
+            this.content = lines.slice(i).join('\n');
+        } else {
+            this.content = lines.slice(moreIndex).join('\n');
+        }
         this.title = getted.title;
-        this.content = lines.slice(i).join('\n');
-        this.foreword = lines.slice(i, (moreIndex !== -1) ?moreIndex :5) .join('\n').replace(/(\#*)|\n/g,'');
-        if(this.foreword=="") this.foreword = "No foreword";
-        this.parsedForeword = parse(this.foreword);
+        this.category = getted.category.split(" ").filter(notFake);
+        this.tags = getted.tags.split(" ").filter(notFake);
+        this.foreword = lines.slice(i, (moreIndex !== -1) ?moreIndex :5) .join('\n').replace(/\#*/g,'');
+        let fwc = word_count(this.foreword);
+        if(fwc <= 1){
+            warn(['NO FOREWORD','RED'],[this.title,'MAGENTA','NONE']);
+        }else if(fwc < 25){
+            warn(['TOO SHORT FOREWORD','YELLOW'],[this.title,'MAGENTA','NONE']);
+        }else if(fwc > 200){
+            warn(['TOO LONG FOREWORD','RED'],[this.title,'MAGENTA','NONE']);
+        }
+        if(this.foreword=="") this.foreword = "The author of this article has not yet set the foreword.\n\nCategory(ies): "+this.category.join(", ")+"\n\nTag(s): "+this.tags.join(", ");
+        this.parsedForeword = parse(this.foreword); // deprecated since 2.0.2-4, will be removed in 2.1.x
         this.tags = getted['tags']?getted.tags.split(" "):[];
-        this.html = parse(this.content);
+        this.html = parse(this.content); // deprecated since 2.0.2-4, will be removed in 2.1.x
         this.isTopped = getted.top?true:false;
         this.date = new Date(getted.date);
         this.license = new License(getted.license||'');
         this.datz = new Datz(...gz);
         this.wordCount = word_count(this.content);
         this.imageUrl = getted.imageUrl||'';
-        this.category = getted.category.split(" ").filter(notFake);
-        this.tags = getted.tags.split(" ").filter(notFake);
         if(!getted.keywords) this.keywords = this.tags;
         else this.keywords = getted.keywords.split(" ").filter(notFake);
         this.ECMA262Date = this.date.toDateString();
         this.transformedTitle = getted.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'\～\·\「\」\；\：\‘\’\“\”\，\。\《\》\？\！\￥\…\、\（\）]/g,'');
         this.websitePath = `/${this.datz.toPathString()}/${this.transformedTitle}/`;
         this.publicFilePath = `${this.datz.toPathString()}/${this.transformedTitle}/index.html`;
+        if(getted.old){
+            this.old = true;
+            warn(['OLD POST','YELLOW'],[this.title,'MAGENTA']);
+        }
     }
     setPath(path){
         this.pathto = path;
