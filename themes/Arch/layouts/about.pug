@@ -1,5 +1,4 @@
 include /mixins/script.pug
-- let own = post
 doctype html 
 html(lang="zh")
     head 
@@ -14,6 +13,6 @@ html(lang="zh")
             .content
                 .card
                     .meta
-                    #markdown_fillContent
+                    #markdown_fillContent!= post.getParsed('content')
             +sidebar((has_property(theme,'overrideAboutPage.primarySidebarWidgets')?theme.overrideAboutPage:theme).primarySidebarWidgets)
         include /includes/footer.pug

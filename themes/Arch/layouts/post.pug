@@ -12,9 +12,17 @@ html(lang="zh")
             include /includes/topbar.pug
         #main(class=theme['3rd-bar']&&'multi')
             .content
-                .card
-                    .meta
-                    #markdown_fillContent!= post.html
+                if post.old == true
+                    .card
+                        #markdown_fillContent
+                            != post.getParsed('foreword')
+                            != post.getParsed('content')
+                else
+                    .card.foreword.column
+                        .meta= i18n('FOREWORD')
+                        != post.getParsed('foreword')
+                    .card
+                        #markdown_fillContent!= post.getParsed('content')
                 .readnext.flex
                     - let __prev = ID[post.prevID] || {}
                     - let __next = ID[post.nextID] || {}

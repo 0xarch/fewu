@@ -16,6 +16,7 @@
     "Pages": "页",
     "Total": "共",
     "Now": "当前",
+    "Content": "目录",
     "{NUMBER} Pages in total": "共{NUMBER}页",
     "Page {NUMBER} now": "当前{NUMBER}页"
 }

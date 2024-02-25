@@ -10,15 +10,12 @@
     "API": {
         "hasPlugin": true,
         "searchComponent": ["title","date","id","content"],
-        "provideWith":"v2",
-        "experimentalClassArticle":true
-    },
-    "rawPosts": {
-        "copy": true,
-        "copyTo": "posts"
+        "provideWith":"v2"
     },
     "copy": {
+        "@posts": "posts"
     },
+    "enableThemeWebsiteIcon": true,
     "default": {
         "3rd-bar": false,
         "primarySidebarWidgets": ["about","announcement","recent"],

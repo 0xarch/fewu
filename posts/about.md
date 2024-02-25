@@ -2,6 +2,7 @@
 title: 关于我
 date: 2023-04-21
 category: About
+old: true
 ---
 
 # 0xarch.github.io
