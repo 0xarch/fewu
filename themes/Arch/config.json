@@ -17,7 +17,8 @@
         "copy": true,
         "copyTo": "posts"
     },
-    "enableThemeWebsiteIcon":false,
+    "copy": {
+    },
     "default": {
         "3rd-bar": false,
         "primarySidebarWidgets": ["about","announcement","recent"],
