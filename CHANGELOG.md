@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2.0.2-4 - 2024-02-25
+
+### New
+
+    * new `i18n` function (compatible with older for now)
+    * new function to get parsed content(foreword,...) of post(compatible with older for now)
+
 ## 2.0.2-3 - 2024-02-24
 
 ### Changed

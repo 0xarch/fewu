@@ -4,15 +4,17 @@ import { readFileSync, writeFile, cp, existsSync } from 'fs';
 import * as Path from 'path';
 import { errno, info, nexo_logo,run } from '../lib/mod.js';
 import { build_and_write } from '../modules/app/builder.js';
-import i18n from '../modules/i18n.js';
+//import i18n from '../modules/i18n.js';
+import { i18n, set_i18n_file} from '../modules/i18n.js';
 import { getAllPosts, sort } from '../lib/posts.js';
 import { has_property,get_property, mix_object } from '../lib/base_fn.js';
 import { Nil } from '../lib/closures.js';
 import { generateSitemapTxt,generateSitemapXml } from '../modules/sitemap.js';
 /**
  * @DOCUMENT_OF_APP
- * @argument config Configuration file for Nexo.
- * @argument theme Use specified theme.
+ * @argument config [file] Configuration file for Nexo.
+ * @argument theme [string] Use specified theme.
+ * @argument init [void] WIP.
  * 
  * **NOTE** Working in progress
  */
@@ -91,7 +93,7 @@ async function App() {
      * @DOCUMENT_OF_INTERNATIONALIZATION
      * @since v2
      */
-    let __i18n = i18n(lang_file);
+    set_i18n_file(lang_file);
 
     /**
      * @param { string } file_dir 
@@ -173,7 +175,7 @@ async function App() {
                         __filename__: filename,
                         __title__: __get_title,
                         file: __get_file_relative_dir,
-                        i18n: __i18n,
+                        i18n,
                         mix: mix_object,
                         has_property,
                         get_property,

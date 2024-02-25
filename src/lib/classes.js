@@ -94,6 +94,14 @@ class Post{
     wordCount = 0;
     title;
     datz;
+    getParsed(type){
+        switch(type){
+            case "foreword":
+                return parse(this.foreword);
+            case "content":
+                return parse(this.content);
+        }
+    }
     /**
      * 
      * @param {string} raw_string 
@@ -122,7 +130,8 @@ class Post{
         let moreIndex = lines.indexOf('<!--more-->');
         this.title = getted.title;
         this.content = lines.slice(i).join('\n');
-        this.foreword = lines.slice(i, (moreIndex !== -1) ?moreIndex :5) .join('\n').replace(/\#*/g,'');
+        this.foreword = lines.slice(i, (moreIndex !== -1) ?moreIndex :5) .join('\n').replace(/(\#*)|\n/g,'');
+        if(this.foreword=="") this.foreword = "<No foreword>";
         this.parsedForeword = parse(this.foreword);
         this.tags = getted['tags']?getted.tags.split(" "):[];
         this.html = parse(this.content);
