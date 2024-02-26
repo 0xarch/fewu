@@ -117,6 +117,7 @@ class Post{
     title;
     datz;
     old = false;
+    property;
     #cache = new Cachable();
     getParsed(type){
         switch(type){
@@ -165,6 +166,7 @@ class Post{
             }
             i++;
         }
+        this.property = getted;
         let gz = getted.date.split(/[\ \-\.]/).filter(v=>v).map(v=>parseInt(v));
         let moreIndex = lines.indexOf('<!--more-->');
         /*
@@ -190,9 +192,7 @@ class Post{
             warn(['TOO LONG FOREWORD','RED'],[this.title,'MAGENTA','NONE']);
         }
         if(this.foreword=="") this.foreword = "The author of this article has not yet set the foreword.\n\nCategory(ies): "+this.category.join(", ")+"\n\nTag(s): "+this.tags.join(", ");
-        this.parsedForeword = parse(this.foreword); // deprecated since 2.0.2-4, will be removed in 2.1.x
         this.tags = getted['tags']?getted.tags.split(" "):[];
-        this.html = parse(this.content); // deprecated since 2.0.2-4, will be removed in 2.1.x
         this.isTopped = getted.top?true:false;
         this.date = new Date(getted.date);
         this.license = new License(getted.license||'');
@@ -203,8 +203,11 @@ class Post{
         else this.keywords = getted.keywords.split(" ").filter(notFake);
         this.ECMA262Date = this.date.toDateString();
         this.transformedTitle = getted.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'\～\·\「\」\；\：\‘\’\“\”\，\。\《\》\？\！\￥\…\、\（\）]/g,'');
-        this.websitePath = `/${this.datz.toPathString()}/${this.transformedTitle}/`;
-        this.publicFilePath = `${this.datz.toPathString()}/${this.transformedTitle}/index.html`;
+
+        this.websitePath = `/${this.datz.toPathString()}/${this.transformedTitle}/`; // deprecated since 2.0.3-1
+        this.publicFilePath = `${this.datz.toPathString()}/${this.transformedTitle}/index.html`; // deprecated since 2.0.3-1
+        this.html = parse(this.content); // deprecated since 2.0.2-4, will be removed in 2.1.x
+        this.parsedForeword = parse(this.foreword); // deprecated since 2.0.2-4, will be removed in 2.1.x
         if(getted.old){
             this.old = true;
             warn(['OLD POST','YELLOW'],[this.title,'MAGENTA']);

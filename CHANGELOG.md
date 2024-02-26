@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 2.0.3-2 - 2024-02-26
+
+### New
+
+* `property` property for Post class to store post info that not as default (e.g. highlight)
+
+### Fixed
+
+* wrong sort order
+
 ## 2.0.3-1 - 2024-02-26
 
 ### New

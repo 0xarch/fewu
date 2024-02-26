@@ -5,7 +5,7 @@
  * @returns compare
  */
 const PostSortingFunction = (a,b) =>{
-    return a.datz.compareWith(b)?-1:1;
+    return a.datz.compareWith(b.datz)?1:-1;
 }
 
 const Nil = () => {}

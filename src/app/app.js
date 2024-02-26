@@ -29,11 +29,11 @@ async function App() {
     }
 
     const ThemeName = argv['theme'] || GlobalConfig.theme.name;
-    const PostDir = GlobalConfig.build.post_directory,
+    const PostDir = GlobalConfig.build.post_directory||"posts",
         ThemeDir = Path.join('themes', ThemeName),
         ThemeLayoutDir = Path.join('themes', ThemeName, 'layouts'),
         ThemeFilesDir = Path.join('themes', ThemeName, 'files'),
-        PublicDir = GlobalConfig.build.public_directory;
+        PublicDir = GlobalConfig.build.public_directory||"public";
     const ThemeConfig = JSON.parse(readFileSync(Path.join(ThemeDir, 'config.json')).toString());
     const ThemeLayoutType = ThemeConfig.layout.type;
     let language = GlobalConfig.language || 'en-US';
@@ -44,9 +44,6 @@ async function App() {
             lang_file = JSON.parse(readFileSync(lang_file_path).toString());
         }
     }
-
-    if (!PostDir) PostDir = "posts";
-    if (!PublicDir) PublicDir = "public";
 
     if (argv['dry-run'] == 'config') {
         console.log(JSON.stringify(GlobalConfig));
@@ -143,11 +140,11 @@ async function App() {
                 content = search_config.includes('content'),
                 date = search_config.includes('date');
             for (let article of posts) {
-                let href = __get_file_relative_dir(article.websitePath);
+                let href = __get_file_relative_dir(article.path('website'));
                 let atitle = article.title;
                 if (title) { arr.push({ 'content': article.title, 'by': 'Title', href, atitle }); }
                 if (id) { arr.push({ 'content': article.id, 'by': 'ID', href, atitle }); }
-                if (content) { arr.push({ 'content': article.content.replace(/\n/g, ' ').replace('<!--more-->', ''), 'by': 'Content', href, atitle }); }
+                if (content) { arr.push({ 'content': article.content.replace(/\n/g, ' '), 'by': 'Content', href, atitle }); }
                 if (date) { arr.push({ 'content': article.date.toDateString(), 'by': 'Date', href, atitle }); }
             }
             __provided_nexo.searchStringUrl = __get_file_relative_dir('searchStrings.json');
