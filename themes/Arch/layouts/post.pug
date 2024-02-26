@@ -1,12 +1,13 @@
 include /mixins/script.pug
+include /mixins/post_script.pug
 doctype html 
 html(lang="zh")
     head 
         include /includes/base_script.pug
-        include /includes/post_prelude.pug
+        +prelude(post)
         +meta(post.foreword,post.keywords)
         title= __title__(post.title,'read')
-    body(OCP='OVERRIDE')
+    body(OCP='OVERRIDE',style=post.imageUrl?'background-image:url('+post.imageUrl+')':null,class=post.imageUrl?'bg-filter':null)
         #url= file(post.pathto)
         .topbar-container 
             include /includes/topbar.pug
@@ -23,10 +24,10 @@ html(lang="zh")
                         != post.getParsed('foreword')
                     .card
                         #markdown_fillContent!= post.getParsed('content')
-                .readnext.flex
+                .card.readnext
                     - let __prev = ID[post.prevID] || {}
                     - let __next = ID[post.nextID] || {}
-                    a.prev(href=__prev.websitePath&&file(__prev.websitePath))=__prev.title || 'ALREADY EARLIEST'
-                    a.next(href=__next.websitePath&&file(__next.websitePath))=__next.title || 'NOT UPDATED'
+                    a.prev(href=__prev.path&&file(__prev.path('website')))=__prev.title || 'ALREADY EARLIEST'
+                    a.next(href=__next.path&&file(__next.path('website')))=__next.title || 'NOT UPDATED'
             +sidebar(Plugin.hasPropertyThenOr(theme,'overridePostPage.primarySidebarWidgets',theme.primarySidebarWidgets))
         include /includes/footer.pug

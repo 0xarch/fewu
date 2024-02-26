@@ -89,8 +89,7 @@
                 "name": "status",
                 "build": {
                     "filename": "status.pug",
-                    "destname": "status",
-                    "extras": "{date:new Date()}"
+                    "destname": "status"
                 }
             },
             {

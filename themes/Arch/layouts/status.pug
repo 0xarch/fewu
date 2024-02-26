@@ -20,10 +20,10 @@ html
                     .plain= Nexo.deploy_time
                 .card.theme.column
                     .heading| Theme
-                    .plain| Nexo with Arch Theme v0.2
+                    .plain| Nexo with Arch Theme v0.3
                     .flex.alc.fgap
                         .logo-of-theme
-                        != insert_nexo_logo()
+                        != Nexo.logo()
                 .card.plugin.column
                     .heading| Plugin
                     .plain!=JSON.stringify(Plugin)

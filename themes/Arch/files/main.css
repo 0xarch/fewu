@@ -25,6 +25,7 @@
         --card-box-shadow-hover: 0px 3px 8px 6px rgba(7, 17, 27, 0.15);
         --shadow-1: #0000000d;
         --shadow-2: #00000021;
+        --bg-filter: blur(100px) saturate(80%) brightness(120%);
     }
 }
 
@@ -44,6 +45,7 @@
         --card-box-shadow-hover: 0px 3px 8px 6px rgba(67, 77, 87, 0.2);
         --shadow-1: #ffffff0d;
         --shadow-2: #ffffff21;
+        --bg-filter: blur(100px) saturate(60%) brightness(60%);
     }
 }
 
@@ -207,4 +209,8 @@ footer{
 }
 footer>*{
     margin: .25rem;
+}
+
+.bg-filter{
+    backdrop-filter: var(--bg-filter);
 }
