@@ -4,6 +4,7 @@ date: 2023-04-21
 category: About
 old: true
 ---
+<!--more-->
 
 # 0xarch.github.io
 
@@ -13,5 +14,5 @@ old: true
 
 我的项目：
 
-[MEUI](https://github.com/0xarch/meui)
-
+[MEUI(DEPRECATED)](https://github.com/0xarch/meui)
+[Nexo](https://github.com/0xarch/nexo)
