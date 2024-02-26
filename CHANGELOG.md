@@ -1,18 +1,33 @@
 # CHANGELOG
 
+## 2.0.3-1 - 2024-02-26
+
+### New
+
+* `path` function for Post class (`websitePath`=>`path('website')`,`publicFilePath`=>`path('local')`)
+
+### Changed
+
+* app: better performance for API collector
+* sitemap: fixed priority
+
+### Removed
+
+* app: garbage API(from v1) in v2
+
 ## 2.0.3 - 2024-02-25
 
-## Changed
+### Changed
 
 * CRITICAL foreword is now a separate part as description [Wsince 2.0.1]
 * CRITICAL-THEME use copy.@posts instead of rawPosts.copy{,to}, see the default Arch theme.
 
-## New
+### New
 
 * Foreword length check (25 ~ 200)
 * `Cachable` class for storing results.
 
-## Other
+### Other
 
 * Cleared CHANGLOG.md
 

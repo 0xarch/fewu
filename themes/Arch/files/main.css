@@ -107,40 +107,6 @@ a {
     color: var(--brand-color);
 }
 
-body[debug='true'] * {
-    border: 1px solid #000 !important;
-    box-shadow: none !important;
-    background-color: #fff8 !important;
-    color: #000 !important;
-    border-radius: 0 !important;
-}
-
-body[debug='true'] *::before{
-    background: #0ff !important;
-    color: #000 !important;
-}
-
-body[debug='true'] *::after{
-    background: #ff0 !important;
-    color: #000 !important;
-}
-
-body[debug='true']>* {
-    border: 1px solid #f00 !important;
-}
-
-body[debug='true']>*>* {
-    border: 1px solid #0f0 !important;
-}
-
-body[debug='true']>*>*>* {
-    border: 1px solid #00f !important;
-}
-
-body[debug='true']>*>*>*>* {
-    border: 1px solid #f0f !important;
-}
-
 body[debug='true'] .content {
     min-height: 4096px;
 }
@@ -172,14 +138,14 @@ body[debug='true'] .content {
     text-decoration: none;
 }
 
-.topbar>.flex>.go-link {
+.topbar>.flex .go-link {
     padding: .75rem;
     display: block;
     text-decoration: none;
     transition: color .2s ease-in-out;
 }
 
-.topbar>.flex>.go-link:hover{
+.topbar>.flex .go-link:hover{
     color: var(--brand-color-75);
 }
 

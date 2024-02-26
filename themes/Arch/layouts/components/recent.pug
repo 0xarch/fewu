@@ -1,4 +1,5 @@
 .card.recent.column
     .heading= i18n('Recent')
-    each item in sort.defaultOrder.slice(5)
-        a.onbrand(href=file(item.src))=item.title
+    each id in sort.defaultOrder.slice(0,5)
+        - let item = ID[id]
+        a.onbrand(href=file(item.websitePath))=item.title

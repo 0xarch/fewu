@@ -15,6 +15,14 @@ class Cachable{
     set(name,v){
         this.#cache[name] = v;
     }
+    has_or_set(name,fallback){
+        if(this.stored(name)){
+            return this.get(name);
+        } else {
+            this.set(name,fallback);
+            return fallback;
+        }
+    }
 }
 
 class License{
@@ -123,6 +131,14 @@ class Post{
                     this.#cache.set(index,result);
                     return result;
                 }
+        }
+    }
+    path(type){
+        switch(type){
+            case "website":
+                return this.#cache.has_or_set('rw-website',`/${this.datz.toPathString()}/${this.transformedTitle}/index.html`);
+            case "local":
+                return this.#cache.has_or_set('rw-local',`${this.datz.toPathString()}/${this.transformedTitle}/index.html`);
         }
     }
     /**

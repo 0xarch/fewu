@@ -59,7 +59,7 @@
                     "cycling": true,
                     "option": {
                         "cycling": {
-                            "parent": "provision_site.categories",
+                            "parent": "Provision.v2.site.categories",
                             "every": 5,
                             "name": "value"
                         }
@@ -75,7 +75,7 @@
                     "cycling": true,
                     "option": {
                         "varias": {
-                            "parent": "provision_site.categories"
+                            "parent": "Provision.v2.site.categories"
                         },
                         "cycling": {
                             "parent": "Varias.value",

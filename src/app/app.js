@@ -2,9 +2,8 @@ import { gopt } from '../modules/lib/hug.js';
 import * as Optam from '../modules/lib/optam.js';
 import { readFileSync, writeFile, cp, existsSync } from 'fs';
 import * as Path from 'path';
-import { errno, info, nexo_logo,run } from '../lib/mod.js';
+import { info, nexo_logo,run } from '../lib/mod.js';
 import { build_and_write } from '../modules/app/builder.js';
-//import i18n from '../modules/i18n.js';
 import { i18n, set_i18n_file} from '../modules/i18n.js';
 import { getAllPosts, sort } from '../lib/posts.js';
 import { has_property,get_property, mix_object } from '../lib/base_fn.js';
@@ -19,6 +18,7 @@ import { generateSitemapTxt,generateSitemapXml } from '../modules/sitemap.js';
  * **NOTE** Working in progress
  */
 async function App() {
+    let deploy_time = new Date();
     const argv = gopt(process.argv);
     let config_raw_text = readFileSync(argv['config'] || 'config.json').toString();
     const GlobalConfig = JSON.parse(config_raw_text);
@@ -60,18 +60,19 @@ async function App() {
         return;
     }
 
-    // deprecated, v2 ~ later
-    const { Posts, Specials } = Optam.ReadPosts(PostDir, GlobalConfig.excluded_posts);
     // since v2
-    const { posts, excluded_posts } = getAllPosts(PostDir, GlobalConfig.excluded_posts);
+    let Provision = {
+        v2: {
+            site: getAllPosts(PostDir,GlobalConfig.excluded_posts),
+            nexo: {
+                logo: nexo_logo,
+                deploy_time,
+            }
+        }
+    };
 
-    // deprecated, v2 ~ later
-    const Sorts = Optam.getSort(Posts);
-    // since v2
+    const { posts, excluded_posts } = Provision.v2.site;
     const sorted_posts = sort(posts);
-
-    // unmaintained , v2
-    let provision_site = getAllPosts(PostDir, GlobalConfig.excluded_posts);
 
     let __public_root = !["/", "", undefined].includes(GlobalConfig.build.site_root) ? GlobalConfig.build.site_root : '';
 
@@ -125,9 +126,9 @@ async function App() {
     if (ThemeConfig.API) {
         if (ThemeConfig.API.hasPlugin) {
             // used in eval
-            let sec_gconf = JSON.parse(JSON.stringify(GlobalConfig)); sec_gconf;
-            let site = JSON.parse(JSON.stringify(provision_site)); site;
-            let insert_code = 'let provision_site = undefined;\n';
+            let sec_gconf = Object.assign({},Provision.v2.site); sec_gconf;
+            let site = Object.assign({},Provision.v2.site); site;
+            let insert_code = 'let Provision = undefined;\n';
             if (GlobalConfig.security.allowFileSystemOperationInPlugin != true) insert_code += 'let fs = null;\n';
             if (GlobalConfig.security.allowConfiguationChangeInPlugin != true) insert_code += `let GlobalConfig = sec_gconf;\n`;
             let __plugin_file = readFileSync(Path.join(ThemeDir, 'extra/plugin.js'));
@@ -153,51 +154,59 @@ async function App() {
             writeFile(Path.join(PublicDir, 'searchStrings.json'), JSON.stringify(arr), () => { });
         }
     }
-    /**
-     * 
-     * @param { string } filename 
-     * @returns {object}
-     */
-    function resolve(filename) {
-        if (ThemeConfig.API && ThemeConfig.API.provideWith && ThemeConfig.API.provideWith != "v1") {
-            switch (ThemeConfig.API.provideWith) {
-                case "v2":
-                    return {
-                        Plugin: __plugin,
-                        allArticles: Posts,
-                        posts,
-                        excluded_posts,
-                        sort: sorted_posts,
-                        ID: sorted_posts.ID,
-                        settings: GlobalConfig,
-                        theme: __provided_theme_config,
-                        user: GlobalConfig.user,
-                        __root_directory__: __public_root,
-                        __filename__: filename,
-                        __title__: __get_title,
-                        file: __get_file_relative_dir,
-                        i18n,
-                        mix: mix_object,
-                        has_property,
-                        get_property,
-                        insert_nexo_logo: nexo_logo,
-                        Nexo: __provided_nexo,
-                        site: provision_site
-                    }
-            }
-        } else {
-            return {
-                Posts,
-                Sorts,
-                GlobalConfig,
-                user: GlobalConfig.user,
-                theme: GlobalConfig.theme.options,
-                Appearance: GlobalConfig.appearance,
-                ROOT: __public_root,
-                ...Sorts
+    let api_required = (function(){
+        let use_api_version = "v2";
+        // _______ GET API VERSION _______
+        if(ThemeConfig.API && ThemeConfig.API.version){
+            if(ThemeConfig.API.version != "latest" &&
+                ["v1","v2","v3"].includes(ThemeConfig.API.version)){
+                use_api_version = ThemeConfig.API.version;
             }
         }
-    }
+        // _______ RETURN VARIABLES _______
+        let json = {};
+        switch(use_api_version){
+            case "v1":
+                // deprecated, v2 ~ later
+                const { Posts, Specials } = Optam.ReadPosts(PostDir, GlobalConfig.excluded_posts);
+                const Sorts = Optam.getSort(Posts);
+                json = mix_object(json,{
+                    Posts,
+                    Specials,
+                    Sorts,
+                    GlobalConfig,
+                    user: GlobalConfig.user,
+                    theme: GlobalConfig.theme.options,
+                    Appearance: GlobalConfig.appearance,
+                    ROOT: __public_root,
+                    ...Sorts
+                },true);
+                break;
+            case "v2":
+                json = mix_object(json,{
+                    Plugin: __plugin,
+                    posts,
+                    excluded_posts,
+                    sort: sorted_posts,
+                    ID: sorted_posts.ID,
+                    settings: GlobalConfig,
+                    theme: __provided_theme_config,
+                    user: GlobalConfig.user,
+                    __root_directory__: __public_root,
+                    __title__: __get_title,
+                    file: __get_file_relative_dir,
+                    i18n,
+                    mix: mix_object,
+                    has_property,
+                    get_property,
+                    insert_nexo_logo: nexo_logo,
+                    Nexo: __provided_nexo,
+                    ...Provision.v2
+                },true);
+                break;
+        }
+        return json;
+    })();
 
     for (let item of ThemeConfig.layout.layouts) {
         let filename = Path.join(ThemeLayoutDir, item.build.filename),
@@ -247,7 +256,8 @@ async function App() {
         basedir: ThemeLayoutDir,
         filename: postFilename
     }, {
-        ...resolve(postFilename)
+        ...api_required,
+        __filename__: postFilename
     });
     part_copyfiles(ThemeFilesDir, PublicDir, ThemeConfig);
 
@@ -315,7 +325,7 @@ async function App() {
                     filename
                 }, {
                     filename,
-                    ...resolve(),
+                    ...api_required,
                     ...inconf_extra,
                     ...vars,
                     Cycling
@@ -327,7 +337,7 @@ async function App() {
                 filename
             }, {
                 filename,
-                ...resolve(),
+                ...api_required,
                 ...inconf_extra,
                 ...vars
             }, ThemeConfig, destname);
@@ -366,7 +376,7 @@ async function part_build_page(layoutType, template, Articles, publicDir, ThemeC
     Articles.forEach(item => {
         run(()=>{
             let destname = Path.join(publicDir, item.publicFilePath);
-            info([item.publicFilePath,'MAGENTA','NONE']);
+            info([item.publicFilePath,'MAGENTA'],['SUCCESS',"GREEN"]);
             build_and_write(layoutType, template, options, {
                 post: item,
                 ...GivenVariables
