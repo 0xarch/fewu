@@ -5,7 +5,7 @@ html(lang="zh")
     head 
         include /includes/base_script.pug
         +prelude(post)
-        +meta(post.foreword,post.keywords)
+        +meta(post)
         title= __title__(post.title,'read')
     body(OCP='OVERRIDE',style=post.imageUrl?'background-image:url('+post.imageUrl+')':null,class=post.imageUrl?'bg-filter':null)
         #url= file(post.pathto)
