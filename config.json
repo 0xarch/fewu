@@ -1,8 +1,8 @@
 {
     "user": {
         "name": "oxArch",
-        "url": "https://cdn.jsdelivr.net/gh/0xarch/0xarch.github.io/files/default_avatar.png",
-        "avatar": "/files/default_avatar.png",
+        "url": "https://github.com/0xarch",
+        "avatar": "https://cdn.jsdelivr.net/gh/0xarch/0xarch.github.io/files/default_avatar.png",
         "note": "We won't be disturbed!",
         "location": "Xvd 114514",
         "data":{
