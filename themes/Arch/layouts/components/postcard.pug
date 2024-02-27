@@ -7,6 +7,6 @@
             span= item.ECMA262Date
             span= item.category
             span= item.wordCount+i18n('Characters')
-        a.onbrand.title(href=file(item.websitePath))= item.title
+        a.onbrand.title(href=file(item.path('website')))= item.title
         .less!= item.foreword
-        a.onbrand.readmore(href=file(item.websitePath))= i18n('Read more')
+        a.onbrand.readmore(href=file(item.path('website')))= i18n('Read more')

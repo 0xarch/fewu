@@ -4,20 +4,15 @@ html
     head 
         include /includes/base_script.pug
         include /includes/css_iac.pug
-        title= __title__(Varias.keyName,user.name)
+        title= __title__(varias.name,user.name)
     body(OCP='OVERRIDE')
-        .topabr-container
+        nav.topbar-container
             include /includes/topbar.pug
         #main 
             .content
-                each bid in Varias.value.included_articles
+                each bid in cycling.value
                     - let item = ID[bid]
                     include /components/postcard.pug
+                +foot_navigator(cycling.total,cycling.now,'category/s'+varias.name)
             +sidebar(Plugin.hasPropertyThenOr(theme,'overrideCategoryPage.primarySidebarWidgets',theme.primarySidebarWidgets))
-        .pagination.
-            {
-                "page": #{Cycling.TotalCount}
-                "now": #{Cycling.LoopTime}
-                "link": #{__root_directory}/#{Cycling.FileLocationPrefix}/index_#{Varias.keyName}_${i}.html
-            }
         include /includes/footer.pug

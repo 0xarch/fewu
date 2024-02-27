@@ -17,13 +17,13 @@ html
                 .card.update.column
                     .heading| Update
                     .plain| Build time
-                    .plain= Nexo.deploy_time
+                    .plain= nexo.deploy_time
                 .card.theme.column
                     .heading| Theme
                     .plain| Nexo with Arch Theme v0.3
                     .flex.alc.fgap
                         .logo-of-theme
-                        != Nexo.logo
+                        != nexo.logo
                 .card.plugin.column
                     .heading| Plugin
                     .plain!=JSON.stringify(Plugin)

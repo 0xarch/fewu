@@ -14,14 +14,14 @@ mixin add_widgets(array)
         +add_widget(item)
 
 mixin foot_navigator(total,now,name)
-    .pagination
+    .card.foot-navigator
+        - let disable_all = total==1
+        - let enable_prev = !disable_all&&now!=1
+        - let enable_next = !disable_all&&now!=total
+        a(href=enable_prev&&file(`/${name}/~${now-1}`),class=`prev${enable_prev?'':' disabled'}`)= `<<`
         .total= i18n(total+' Pages in total')
         .now= i18n('Page '+now+' now')
-        unless total!=1
-            if now!=1
-                a.prev(href=file(`/${name}/index_${now-1}.html`))= `PREV<${now-1}>`
-            unless now==total
-                a.next(href=file(`/${name}/index_${now+1}.html`))= `NEXT<${now+1}>`
+        a(href=enable_prev&&file(`/${name}/~${now+1}`),class=`prev${enable_next?'':' disabled'}`)= `>>`
 
 mixin topbar()
     nav.topbar-container

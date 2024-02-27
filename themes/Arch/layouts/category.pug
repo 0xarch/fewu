@@ -10,13 +10,13 @@ html
             include /includes/topbar.pug
         #main
             .content
-                each item in Cycling.value
+                each item in cycling.value
                     - v = item.value
                     .card.flex.column.alc
                         b= v.catename
-                        text= v.included_articles.length
+                        text= i18n(v.included_articles.length+' in total')
                         text= 'LAST POST:'+ID[v.included_articles[0]].ECMA262Date
-                        .readmore(href=file(`/category/s/index_${v.catename}_1.html`))= 'GO'
-                +foot_navigator(Cycling.TotalCount,Cycling.LoopTime,'archive')
+                        a.readmore(href=file(`/category/s${v.catename}/~1/index.html`))= i18n('GO')
+                +foot_navigator(cycling.total,cycling.now,'category')
             include /includes/sidebar.pug
         include /includes/footer.pug

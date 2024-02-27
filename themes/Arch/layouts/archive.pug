@@ -10,9 +10,9 @@ html
             include /includes/topbar.pug
         #main
             .content
-                each bid in Cycling.value
+                each bid in cycling.value
                     - let item = ID[bid]
                     include /components/postcard.pug
-                +foot_navigator(Cycling.TotalCount,Cycling.LoopTime,'archive')
+                +foot_navigator(cycling.total,cycling.now,'archive')
             include /includes/sidebar.pug
         include /includes/footer.pug

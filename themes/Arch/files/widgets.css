@@ -210,3 +210,21 @@ input{
 input:focus{
     border: 1px solid var(--brand-color);
 }
+
+.card.foot-navigator{
+    padding: 0px;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+}
+
+.foot-navigator>a{
+    padding: 1.5rem;
+    background: var(--brand-color);
+    color: #fff;
+}
+
+.foot-navigator>.disabled{
+    background: var(--text-foreground-50);
+    color: var(--text-background-50);
+}

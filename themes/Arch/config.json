@@ -44,7 +44,7 @@
                     "cycling": true,
                     "option": {
                         "cycling": {
-                            "parent": "sorted_posts.defaultOrder",
+                            "parent": "sort.defaultOrder",
                             "every": 5,
                             "name": "PostsThisPage"
                         }
@@ -59,7 +59,7 @@
                     "cycling": true,
                     "option": {
                         "cycling": {
-                            "parent": "Provision.v2.site.categories",
+                            "parent": "site.categories",
                             "every": 5,
                             "name": "value"
                         }
@@ -70,17 +70,16 @@
                 "name": "category_every",
                 "build": {
                     "filename": "category_every.pug",
-                    "destname": "category/s",
+                    "destname": "category/s${varias.name}",
                     "varias": true,
                     "cycling": true,
                     "option": {
                         "varias": {
-                            "parent": "Provision.v2.site.categories"
+                            "parent": "site.categories"
                         },
                         "cycling": {
-                            "parent": "Varias.value",
-                            "every": 5,
-                            "name": "value"
+                            "parent": "varias.value.included_articles",
+                            "every": 5
                         }
                     }
                 }
@@ -96,8 +95,10 @@
                 "name": "about",
                 "build": {
                     "filename": "about.pug",
-                    "destname": "about",
-                    "extras": "{post:excluded_posts['about.md']}"
+                    "destname": "about"
+                },
+                "addition": {
+                    "post": "excluded_posts.about\\.md"
                 }
             }
         ]
