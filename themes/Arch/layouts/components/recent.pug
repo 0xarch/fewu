@@ -2,4 +2,4 @@
     .heading= i18n('Recent')
     each id in sort.defaultOrder.slice(0,5)
         - let item = ID[id]
-        a.onbrand(href=file(item.websitePath))=item.title
+        a.onbrand(href=file(item.path('website')))=item.title

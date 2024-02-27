@@ -26,12 +26,12 @@
 * update rss module for new feature
 * update sitemap module for new feature
 
-## Planned
+### Planned
 
 * use new `Collection` for all functions and remove old codes
 * move old builder to new place
 
-## Prepared
+### Prepared
 
 * constants for short code (unused)
 * config template for init and auto using (unused)
