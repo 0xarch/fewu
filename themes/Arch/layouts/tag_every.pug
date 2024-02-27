@@ -1,0 +1,18 @@
+include /mixins/script.pug
+doctype html
+html 
+    head 
+        include /includes/base_script.pug
+        include /includes/css_iac.pug
+        title= __title__(varias.name,user.name)
+    body(OCP='OVERRIDE')
+        nav.topbar-container
+            include /includes/topbar.pug
+        #main 
+            .content
+                each bid in cycling.value
+                    - let item = ID[bid]
+                    include /components/postcard.pug
+                +foot_navigator(cycling.total,cycling.now,'tag/s'+varias.name)
+            +sidebar(Plugin.hasPropertyThenOr(theme,'overrideTagPage.primarySidebarWidgets',theme.primarySidebarWidgets))
+        include /includes/footer.pug

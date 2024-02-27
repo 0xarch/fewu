@@ -13,21 +13,25 @@ html(lang="zh")
             include /includes/topbar.pug
         #main(class=theme['3rd-bar']&&'multi')
             .content
-                if post.old == true
-                    .card
-                        #markdown_fillContent
-                            != post.getParsed('foreword')
-                            != post.getParsed('content')
-                else
+                unless post.old == true
                     .card.foreword.column
-                        .meta= i18n('FOREWORD')
+                        .meta= i18n('Foreword')
                         != post.getParsed('foreword')
-                    .card
-                        #markdown_fillContent!= post.getParsed('content')
-                .card.readnext
+                .card
+                    #markdown_fillContent
+                        if post.old == true
+                            != post.getParsed('foreword')
+                        != post.getParsed('content')
+                .card.readnext.foot-navigator
+                    - let earliest = post.prevID?true:false
+                    - let latest = post.nextID?true:false
                     - let __prev = ID[post.prevID] || {}
                     - let __next = ID[post.nextID] || {}
-                    a.prev(href=__prev.path&&file(__prev.path('website')))=__prev.title || 'ALREADY EARLIEST'
-                    a.next(href=__next.path&&file(__next.path('website')))=__next.title || 'NOT UPDATED'
+                    a(href=__prev.path&&file(__prev.path('website')),class=`prev${earliest?'':' disabled'}`)
+                        .arrow='<<'
+                        .nowrap=__prev.title || i18n('Already earliest')
+                    a(href=__next.path&&file(__next.path('website')),,class=`next${latest?'':' disabled'}`)
+                        .nowrap=__next.title || i18n('Already latest')
+                        .arrow='>>'
             +sidebar(Plugin.hasPropertyThenOr(theme,'overridePostPage.primarySidebarWidgets',theme.primarySidebarWidgets))
         include /includes/footer.pug

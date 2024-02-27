@@ -24,6 +24,7 @@
 @media screen and (min-width: 768px), print {
     #main{
         display: flex;
+        width: 100%;
     }
     .sidebar-l,.sidebar-r{
         padding: .75rem;

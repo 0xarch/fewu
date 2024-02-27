@@ -85,6 +85,34 @@
                 }
             },
             {
+                "name": "Tag Template",
+                "from": "tag.pug",
+                "to": "tag",
+                "cycling":true,
+                "option":{
+                    "cycling": {
+                        "parent":"site.tags",
+                        "every":5
+                    }
+                }
+            },
+            {
+                "name": "Tag (Each) Template",
+                "from": "tag_every.pug",
+                "to": "tag/s${varias.name}",
+                "varias": true,
+                "cycling": true,
+                "option": {
+                    "varias": {
+                        "parent": "site.tags"
+                    },
+                    "cycling": {
+                        "parent": "varias.value.included_articles",
+                        "every": 5
+                    }
+                }
+            },
+            {
                 "name": "status",
                 "build": {
                     "filename": "status.pug",

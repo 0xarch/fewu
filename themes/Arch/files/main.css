@@ -214,3 +214,12 @@ footer>*{
 .bg-filter{
     backdrop-filter: var(--bg-filter);
 }
+
+.nowrap{
+    white-space: nowrap;
+}
+
+.arrow{
+    padding: .25rem;
+    font-weight: 600;
+}

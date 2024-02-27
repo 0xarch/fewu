@@ -18,5 +18,7 @@
     "Now": "当前",
     "Content": "目录",
     "{NUMBER} Pages in total": "共{NUMBER}页",
-    "Page {NUMBER} now": "当前{NUMBER}页"
+    "Page {NUMBER} now": "当前{NUMBER}页",
+    "Already earliest": "已是最早",
+    "Already latest": "已是最新"
 }

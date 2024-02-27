@@ -47,17 +47,24 @@
     padding: 8px;
 }
 .readnext>a{
-    flex:1;
-    padding: 4px;
+    width: 50%;
     text-align: center;
     text-decoration: none;
     font-size: large;
+    display: flex;
+    align-items: center;
 }
-.readnext>.prev::after{
-    content: '<';
+.readnext>.prev{
+    justify-content: flex-start;
 }
-.readnext>.next::before{
-    content: '>';
+.readnext>.next{
+    justify-content: flex-end;
+}
+.readnext>.disabled>.nowrap{
+    color: var(--text-background);
+}
+.readnext>a>.nowrap{
+    flex: 1;
 }
 blockquote {
 	margin: 0;

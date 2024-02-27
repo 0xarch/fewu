@@ -1,0 +1,22 @@
+include /mixins/script.pug
+doctype html
+html 
+    head 
+        include /includes/base_script.pug
+        include /includes/css_iac.pug
+        title= __title__(i18n('Tags'),user.name)
+    body(OCP='OVERRIDE') 
+        nav.topbar-container
+            include /includes/topbar.pug
+        #main
+            .content
+                each item in cycling.value
+                    - v = item.value
+                    .card.flex.column.alc
+                        b= v.tagname
+                        text= i18n(v.included_articles.length+' in total')
+                        text= 'LAST POST:'+ID[v.included_articles[0]].ECMA262Date
+                        a.readmore(href=file(`/tag/s${v.tagname}/1/index.html`))= i18n('GO')
+                +foot_navigator(cycling.total,cycling.now,'tag')
+            include /includes/sidebar.pug
+        include /includes/footer.pug
