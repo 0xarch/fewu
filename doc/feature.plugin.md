@@ -26,8 +26,6 @@ Posts.forEach(item => {
 **注意** 插件中不允许使用 `fs` ，这被认为是危险操作。除非用户在配置文件中声明 `security .allowFileSystemOperationInPlugin:true`
 **注意**插件中不允许修改全局设置，这被认为是危险操作。除非用户在配置文件中声明 `security .allowConfigurationChangeInPlugin:true`
 
-
-
 **警告** 由于插件权力较大，请勿运行未经安全验证的插件
 
 ## 变量传递

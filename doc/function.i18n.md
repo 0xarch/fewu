@@ -1,4 +1,4 @@
-# INTERNATIONALIZATION
+# 国际化 INTERNATIONALIZATION
 
 Nexo provides `i18n` function in `Provision v2` for internationalization.
 

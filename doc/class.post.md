@@ -14,10 +14,6 @@ the raw data from local file.
 
 the posts's content (only content).
 
-### html
-
-the posts's content (after markdown rendering).
-
 ### author
 
 the posts's author (might be `undefined`),
