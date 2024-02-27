@@ -1,14 +1,18 @@
 import { gopt } from '../modules/lib/hug.js';
 import * as Optam from '../modules/lib/optam.js';
-import { readFileSync, writeFile, cp, existsSync } from 'fs';
 import * as Path from 'path';
-import { info, nexo_logo,run } from '../lib/mod.js';
+import { readFileSync, writeFile, cp, existsSync } from 'fs';
+import { info, nexo_logo, run } from '../lib/mod.js';
 import { build_and_write } from '../modules/app/builder.js';
-import { i18n, set_i18n_file} from '../modules/i18n.js';
+import { write } from '../lib/builder.js';
+import { i18n, set_i18n_file } from '../modules/i18n.js';
 import { getAllPosts, sort } from '../lib/posts.js';
-import { has_property,get_property, mix_object } from '../lib/base_fn.js';
+import { has_property, get_property, mix_object } from '../lib/base_fn.js';
 import { Nil } from '../lib/closures.js';
-import { generateSitemapTxt,generateSitemapXml } from '../modules/sitemap.js';
+import { generateSitemapTxt, generateSitemapXml } from '../modules/sitemap.js';
+import SITEMAP from '../modules/sitemap.js';
+import Collection from '../lib/class.collection.js';
+import Layout from '../lib/class.layout.js';
 /**
  * @DOCUMENT_OF_APP
  * @argument config [file] Configuration file for Nexo.
@@ -29,13 +33,17 @@ async function App() {
     }
 
     const ThemeName = argv['theme'] || GlobalConfig.theme.name;
-    const PostDir = GlobalConfig.build.post_directory||"posts",
+    const PostDir = GlobalConfig.build.post_directory || "posts",
         ThemeDir = Path.join('themes', ThemeName),
         ThemeLayoutDir = Path.join('themes', ThemeName, 'layouts'),
         ThemeFilesDir = Path.join('themes', ThemeName, 'files'),
-        PublicDir = GlobalConfig.build.public_directory||"public";
+        PublicDir = GlobalConfig.build.public_directory || "public";
     const ThemeConfig = JSON.parse(readFileSync(Path.join(ThemeDir, 'config.json')).toString());
     const ThemeLayoutType = ThemeConfig.layout.type;
+
+    const Settings = new Collection(GlobalConfig);
+    const Theme = new Collection(ThemeConfig);
+
     let language = GlobalConfig.language || 'en-US';
     let lang_file = {};
     {
@@ -60,9 +68,9 @@ async function App() {
     // since v2
     let Provision = {
         v2: {
-            site: getAllPosts(PostDir,GlobalConfig.excluded_posts),
+            site: getAllPosts(PostDir, GlobalConfig),
             nexo: {
-                logo: nexo_logo,
+                logo: nexo_logo(),
                 deploy_time,
             }
         }
@@ -90,8 +98,7 @@ async function App() {
             return fix + ' ' + sep + ' ' + type;
         }
     })();
-    
-    // since v2
+
     set_i18n_file(lang_file);
 
     /**
@@ -106,13 +113,13 @@ async function App() {
         return __public_root + "/" + file_dir;
     }
     let __provided_theme_config = mix_object(ThemeConfig.default, GlobalConfig.theme.options);
-    let __provided_nexo = {};
 
     if (GlobalConfig.sitemap) {
-        if (GlobalConfig.sitemap.type == 'txt') {
-            writeFile(Path.join(PublicDir, GlobalConfig.sitemap.name), generateSitemapTxt(GlobalConfig.site_url, posts, ThemeConfig), Nil)
+        let path = Path.join(PublicDir, Settings.get('sitemap.name')), type = Settings.get('sitemap.type');
+        if (type == 'txt') {
+            writeFile(path, SITEMAP.TXT(Settings.get('site_url'), posts), Nil)
         } else {
-            writeFile(Path.join(PublicDir, GlobalConfig.sitemap.name), generateSitemapXml(GlobalConfig.site_url, posts, ThemeConfig), Nil)
+            writeFile(path, SITEMAP.XML(Settings.get('site_url'), posts), Nil)
         }
     }
     if (GlobalConfig.extra_file) {
@@ -123,8 +130,8 @@ async function App() {
     if (ThemeConfig.API) {
         if (ThemeConfig.API.hasPlugin) {
             // used in eval
-            let sec_gconf = Object.assign({},Provision.v2.site); sec_gconf;
-            let site = Object.assign({},Provision.v2.site); site;
+            let sec_gconf = Object.assign({}, Provision.v2.site); sec_gconf;
+            let site = Object.assign({}, Provision.v2.site); site;
             let insert_code = 'let Provision = undefined;\n';
             if (GlobalConfig.security.allowFileSystemOperationInPlugin != true) insert_code += 'let fs = null;\n';
             if (GlobalConfig.security.allowConfiguationChangeInPlugin != true) insert_code += `let GlobalConfig = sec_gconf;\n`;
@@ -147,27 +154,27 @@ async function App() {
                 if (content) { arr.push({ 'content': article.content.replace(/\n/g, ' '), 'by': 'Content', href, atitle }); }
                 if (date) { arr.push({ 'content': article.date.toDateString(), 'by': 'Date', href, atitle }); }
             }
-            __provided_nexo.searchStringUrl = __get_file_relative_dir('searchStrings.json');
+            Provision.v2.nexo.searchStringUrl = __get_file_relative_dir('searchStrings.json');
             writeFile(Path.join(PublicDir, 'searchStrings.json'), JSON.stringify(arr), () => { });
         }
     }
-    let api_required = (function(){
+    let api_required = (function () {
         let use_api_version = "v2";
         // _______ GET API VERSION _______
-        if(ThemeConfig.API && ThemeConfig.API.version){
-            if(ThemeConfig.API.version != "latest" &&
-                ["v1","v2","v3"].includes(ThemeConfig.API.version)){
+        if (ThemeConfig.API && ThemeConfig.API.version) {
+            if (ThemeConfig.API.version != "latest" &&
+                ["v1", "v2", "v3"].includes(ThemeConfig.API.version)) {
                 use_api_version = ThemeConfig.API.version;
             }
         }
         // _______ RETURN VARIABLES _______
         let json = {};
-        switch(use_api_version){
+        switch (use_api_version) {
             case "v1":
                 // deprecated, v2 ~ later
                 const { Posts, Specials } = Optam.ReadPosts(PostDir, GlobalConfig.excluded_posts);
                 const Sorts = Optam.getSort(Posts);
-                json = mix_object(json,{
+                json = mix_object(json, {
                     Posts,
                     Specials,
                     Sorts,
@@ -177,10 +184,10 @@ async function App() {
                     Appearance: GlobalConfig.appearance,
                     ROOT: __public_root,
                     ...Sorts
-                },true);
+                }, true);
                 break;
             case "v2":
-                json = mix_object(json,{
+                json = mix_object(json, {
                     Plugin: __plugin,
                     posts,
                     excluded_posts,
@@ -197,54 +204,15 @@ async function App() {
                     has_property,
                     get_property,
                     insert_nexo_logo: nexo_logo,
-                    Nexo: __provided_nexo,
                     ...Provision.v2
-                },true);
+                }, true);
                 break;
         }
         return json;
     })();
 
     for (let item of ThemeConfig.layout.layouts) {
-        let filename = Path.join(ThemeLayoutDir, item.build.filename),
-            destname = Path.join(PublicDir, item.build.destname, 'index.html');
-        let inconf_extra = {};
-        if (item.build.extras) inconf_extra = eval('let _intpvar=' + item.build.extras + ';_intpvar');
-        /**
-         * @DOCUMENT_OF_VARIAS
-         * @since 0.0.1
-         * To Enable, set build.varias: true
-         * Required configuration statements:
-         *  build.option.varias: {
-         *      parent: <variable name> // this must be {} (paired object)
-         * }
-         * 
-         * Offers:
-         *  Varias:{
-         *      enabled: boolean, // true
-         *      keyName: string, // pair key
-         *      value: any, // pair value
-         * }
-         * 
-         * Changes:
-         *  destnation -> ${build.destname}/index_${Varias.keyName}.html
-         */
-        if (item.build.varias && item.build.option.varias) {
-            let Varias = {};
-            let option = item.build.option.varias;
-            let parent_var = eval(option.parent);
-            Varias.enabled = true;
-            for (let var_name in parent_var) {
-                const destSuffix = '_' + var_name;
-                destname = Path.join(PublicDir, item.build.destname, 'index' + destSuffix + '.html');
-                Varias.keyName = var_name;
-                Varias.value = parent_var[var_name];
-                const _W_vars = { Varias };
-                inconf_extra['Varias'] = Varias;
-                BF_with(_W_vars, item, filename, destname, inconf_extra, destSuffix);
-            }
-        } else
-            BF_with({}, item, filename, destname, inconf_extra);
+        write(Theme, Settings, new Collection({ ...api_required }), new Layout(item));
     }
     let postFilename = Path.join(ThemeLayoutDir, ThemeConfig.layout.post_layout);
     let postTemplate = readFileSync(postFilename).toString();
@@ -254,110 +222,28 @@ async function App() {
         filename: postFilename
     }, {
         ...api_required,
-        __filename__: postFilename
+        filename: postFilename
     });
     part_copyfiles(ThemeFilesDir, PublicDir, ThemeConfig);
-
-    async function BF_with(vars, item, filename, destname, inconf_extra, destSuffix = '') {
-        /**
-         * Cycl-building(Cycling)
-         * To Enable, set build.cycling: true
-         * Required configuration statements:
-         *  build.option.cycling: {
-         *      parent: <variable name>, // this must be [] (Array-like) or {} (JSON)
-         *      every: number // integer, slice count
-         *      name: string // the name for child variable to use
-         * }
-         * 
-         * Offers:
-         *  Cycling: {
-         *      enabled: boolean, // true
-         *      TotalCount: number,
-         *      LoopTime: number,
-         *      FileLocationPrefix: string,
-         *      PreviousFile: string,
-         *      NextFile: string
-         * }
-         * 
-         * Changes:
-         *  destnation -> ${build.destname}/index_${Cycling.LoopTime}.html
-         */
-        if (item.build.cycling && item.build.option.cycling) {
-            let Cycling = {};
-            let option = item.build.option.cycling;
-            // aro stands for "array or object"
-            let father_aro = [], every = option.every;
-            {
-                let __splited = option.parent.split(".");
-                let __root = __splited.shift();
-                try{
-                    __root = eval(__root);
-                }catch(e){
-                    __root = inconf_extra[__root];
-                }
-                father_aro = get_property(__root,__splited.join("."));
-            }
-            if (!Array.isArray(father_aro)) {
-                let _arr = [];
-                for (let objKey in father_aro) {
-                    _arr.push({ key: objKey, value: father_aro[objKey] });
-                }
-                father_aro = _arr;
-            }
-            let len = father_aro.length;
-
-            Cycling.enabled = true;
-            Cycling.TotalCount = Math.ceil(len / every);
-            for (let i = 0; i * every <= len; ++i) {
-                let _destPrePath = Path.join(PublicDir, item.build.destname);
-                destname = Path.join(_destPrePath, 'index' + destSuffix + '_' + (i + 1) + '.html');
-                Cycling[option.name] = father_aro.slice(i * every, (i + 1) * every);
-                Cycling.value = father_aro.slice(i * every, (i + 1) * every);
-                Cycling.LoopTime = i + 1;
-                Cycling.PreviousFile = Path.join(_destPrePath, 'index' + destSuffix + '_' + i + '.html');
-                Cycling.NextFile = Path.join(_destPrePath, 'index' + destSuffix + '_' + (i + 2) + '.html');
-                Cycling.FileLocationPrefix = Path.join(__public_root, item.build.destname);
-                build_and_write(ThemeLayoutType, readFileSync(filename).toString(), {
-                    basedir: ThemeLayoutDir,
-                    filename
-                }, {
-                    filename,
-                    ...api_required,
-                    ...inconf_extra,
-                    ...vars,
-                    Cycling
-                }, ThemeConfig, destname);
-            }
-        } else
-            build_and_write(ThemeLayoutType, readFileSync(filename).toString(), {
-                basedir: ThemeLayoutDir,
-                filename
-            }, {
-                filename,
-                ...api_required,
-                ...inconf_extra,
-                ...vars
-            }, ThemeConfig, destname);
-    }
 }
 
 async function part_copyfiles(themeFileDir, publicDir, ThemeConfig) {
     cp(themeFileDir, Path.join(publicDir, 'files'), { recursive: true }, () => { });
     cp('resources', Path.join(publicDir, 'resources'), { recursive: true }, () => { });
-    if (ThemeConfig.copy){
-        for(let key in ThemeConfig.copy){
-            if(key.charAt(0) == '@'){
-                switch(key){
+    if (ThemeConfig.copy) {
+        for (let key in ThemeConfig.copy) {
+            if (key.charAt(0) == '@') {
+                switch (key) {
                     case "@posts":
-                            run(()=>{
-                                cp('posts', Path.join(publicDir, ThemeConfig.copy['@posts']), { recursive: true }, Nil);
-                            },9101);
+                        run(() => {
+                            cp('posts', Path.join(publicDir, ThemeConfig.copy['@posts']), { recursive: true }, Nil);
+                        }, 9101);
                         break;
                 }
             } else {
-                run(()=>{
-                    cp(Path.join(themeFileDir,'extra',key),Path.join(publicDir,ThemeConfig.copy[key]),{recursive:true}, Nil);
-                },9102);
+                run(() => {
+                    cp(Path.join(themeFileDir, 'extra', key), Path.join(publicDir, ThemeConfig.copy[key]), { recursive: true }, Nil);
+                }, 9102);
             }
         }
     }
@@ -366,19 +252,19 @@ async function part_copyfiles(themeFileDir, publicDir, ThemeConfig) {
     } else {
         cp('./nexo_sources/favicon.ico', Path.join(publicDir, 'favicon.ico'), (e) => { if (e) throw e });
     }
-    info(['OPERATION.COPY','MAGENTA','BOLD'],['COMPLETE','GREEN']);
+    info(['OPERATION.COPY', 'MAGENTA', 'BOLD'], ['COMPLETE', 'GREEN']);
 }
 
 async function part_build_page(layoutType, template, Articles, publicDir, ThemeConfig, options, GivenVariables) {
     Articles.forEach(item => {
-        run(()=>{
-            let destname = Path.join(publicDir, item.publicFilePath);
-            info([item.publicFilePath,'MAGENTA'],['SUCCESS',"GREEN"]);
+        run(() => {
+            let destname = Path.join(publicDir, item.path('local'));
+            info([item.title, 'MAGENTA'], [item.path('local'), 'YELLOW'], ['SUCCESS', "GREEN"]);
             build_and_write(layoutType, template, options, {
                 post: item,
                 ...GivenVariables
             }, ThemeConfig, destname);
-        },9001);
+        }, 9001);
     });
 }
 

@@ -1,29 +1,8 @@
 import { parse } from "marked";
 import { word_count } from "./reader.js";
-import { get_property } from "./base_fn.js";
 import { notFake } from "./closures.js";
 import { warn } from "./mod.js";
-
-class Cachable{
-    #cache={};
-    stored(name){
-        return this.#cache[name] != undefined;
-    }
-    get(name){
-        return this.#cache[name];
-    }
-    set(name,v){
-        this.#cache[name] = v;
-    }
-    has_or_set(name,fallback){
-        if(this.stored(name)){
-            return this.get(name);
-        } else {
-            this.set(name,fallback);
-            return fallback;
-        }
-    }
-}
+import Cache from './class.cache.js';
 
 class License{
     #CreativeCommons = {
@@ -118,7 +97,7 @@ class Post{
     datz;
     old = false;
     property;
-    #cache = new Cachable();
+    #cache = new Cache;
     getParsed(type){
         switch(type){
             case "foreword":
@@ -137,9 +116,9 @@ class Post{
     path(type){
         switch(type){
             case "website":
-                return this.#cache.has_or_set('rw-website',`/${this.datz.toPathString()}/${this.transformedTitle}/index.html`);
+                return this.#cache.has_or_set('rw-website',`/read/~${this.id}/index.html`);
             case "local":
-                return this.#cache.has_or_set('rw-local',`${this.datz.toPathString()}/${this.transformedTitle}/index.html`);
+                return this.#cache.has_or_set('rw-local',`read/~${this.id}/index.html`);
         }
     }
     /**
@@ -257,32 +236,12 @@ class Category{
     }
 }
 
-class Configuration {
-    #base;
-    constructor(base){
-        this.#base = base;
-    }
-    get(relative_key_path){
-        let call = relative_key_path.split(".");
-        try {
-            let result = this.#base[call.shift()];
-            return get_property(result,call);
-        } catch(e) {
-            return void 0;
-        }
-    }
-    set(relative_key_path){
-        // TODO
-    }
-    has(relative_key_path){
-        // TODO
-    }
-}
+class Fake{constructor(){}}
 
 export {
     Post,
     License,
     Tag,
     Category,
-    Configuration
+    Fake
 }

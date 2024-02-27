@@ -3,6 +3,7 @@ import { basename } from "path";
 import { Post, Tag, Category } from "./classes.js";
 import { traverse } from "../modules/lib/hail.js";
 import { PostSortingFunction } from "./closures.js";
+import { info } from "./mod.js";
 
 function test(string) {
     let a = new Post(string);
@@ -24,10 +25,10 @@ function initializePost(content, pathto = undefined) {
 /**
  * 
  * @param {string} PostDir 
- * @param {[string]} excluded_filename
+ * @param {object} GlobalConfig
  * @returns {{posts:[Post],excluded_posts:object,categories:[Category],tags:[Tag]}}
  */
-function getAllPosts(PostDir, excluded_filename) {
+function getAllPosts(PostDir, GlobalConfig) {
     let bid = 0;
     let posts = [],
         excluded_posts = {},
@@ -41,8 +42,7 @@ function getAllPosts(PostDir, excluded_filename) {
         let file_data = initializePost(file_text, path);
         file_data.setID(bid);
 
-
-        if (excluded_filename.includes(item)) excluded_posts[item] = file_data;
+        if (GlobalConfig.excluded_posts.includes(item)) excluded_posts[item] = file_data;
         else {
             for (let cname of file_data.category) {
                 if (used_categories.includes(cname)) {

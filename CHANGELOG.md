@@ -1,5 +1,51 @@
 # CHANGELOG
 
+## 2.1.0 - 2024-02-27
+
+### Removed
+
+* **CRITICAL** GARBAGE CODE build pages
+* `Configuration` class (use `Collection` instead)
+
+### New
+
+* `Collection` class
+* `Layout` class
+* `Cache` class (replace `Cachable`)
+* `Correspond` (struct) class
+* `GObject` (unused, for developing)
+
+### Changed
+
+* short path is now default
+* renamed functions in sitemap module
+* get_property now supports array as the second argument
+
+### Fixed
+
+* update rss module for new feature
+* update sitemap module for new feature
+
+## Planned
+
+* use new `Collection` for all functions and remove old codes
+* move old builder to new place
+
+## Prepared
+
+* constants for short code (unused)
+* config template for init and auto using (unused)
+
+## 2.0.3-3 - 2024-02-26
+
+### New
+
+* **EXPERIMENTAL** short path (exShortPath)
+
+### Planned
+
+* better variable requiring
+
 ## 2.0.3-2 - 2024-02-26
 
 ### New

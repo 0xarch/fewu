@@ -11,8 +11,16 @@ function has_property(object, property_path) {
     return result;
 }
 
+/**
+ * 
+ * @param {object} object 
+ * @param {string} property_path
+ * @returns 
+ */
 function get_property(object,property_path) {
+    property_path = property_path.replaceAll(/\\./g,'<!DOT!>');
     let path = property_path.split(".");
+    path = path.map(v=>v.replaceAll(/<\!DOT\!>/g,'.'));
     let __tempor_val = object;
     for (let i = 0; i < path.length; i++) {
         if (!__tempor_val[path[i]]) {
