@@ -1,77 +1,11 @@
-import { parse } from "marked";
 import { word_count } from "./reader.js";
-import { notFake } from "./closures.js";
 import { warn } from "./mod.js";
-import Cache from './class.cache.js';
+import { notFake } from "./closures.js";
+import { readFileSync, statSync } from "fs";
+import { parse } from "marked";
+import Cache from "./class.cache.js";
+import { License, Datz } from "./classes.js";
 
-class License{
-    #CreativeCommons = {
-        BY : false,
-        NC : false,
-        ND : false,
-        SA : false,
-        CC0: false,
-    }
-    #isCreativeCommons = true;
-    /**
-     * 
-     * @param {string} str 
-     */
-    constructor(str){
-        str = str.toLowerCase();
-        if(str.includes('private')) this.#isCreativeCommons = false;
-    }
-    description(){
-        let result='CC';
-        if(this.#isCreativeCommons){
-            for(let key in this.#CreativeCommons)
-                result += '-'+key;
-        } else {
-            result = 'Private';
-        }
-        return result;
-    }
-}
-
-class Datz {
-    y=1970;m=1;d=1;
-    /**
-     * 
-     * @param {number} y 
-     * @param {number} m 
-     * @param {number} d 
-     */
-    constructor(y,m,d){
-        this.y = y;
-        this.m = m;
-        this.d = d;
-    }
-    compareWith(datz){
-        if(datz.y>this.y)return true;
-        if(datz.y<this.y)return false;
-        if(datz.m>this.m)return true;
-        if(datz.m<this.m)return false;
-        if(datz.d>this.d)return true;
-        return false;
-    }
-    isEarlierThan(datz){
-        return this.compareWith(datz);
-    }
-    isLaterThan(datz){
-        return !this.compareWith(datz);
-    }
-    toPathString(){
-        return this.y+'/'+this.m+'/'+this.d;
-    }
-    toString(){
-        return this.y+'-'+this.m+'-'+this.d;
-    }
-}
-
-/**
- * @experimental
- * @since v2
- */
 class Post{
     raw_string;
     content;
@@ -83,6 +17,7 @@ class Post{
     keywords;
     id;
     date;
+    lastModifiedDate;
     ECMA262Date;
     isTopped = false;
     foreword;
@@ -116,16 +51,19 @@ class Post{
     path(type){
         switch(type){
             case "website":
-                return this.#cache.has_or_set('rw-website',`/read/~${this.id}/index.html`);
+                return this.#cache.has_or_set('rw-website',`/read/p${this.id}/index.html`);
             case "local":
-                return this.#cache.has_or_set('rw-local',`read/~${this.id}/index.html`);
+                return this.#cache.has_or_set('rw-local',`read/p${this.id}/index.html`);
         }
     }
     /**
      * 
-     * @param {string} raw_string 
+     * @param {string} path
      */
-    constructor(raw_string){
+    constructor(path){
+        let fstat = statSync(path);
+        this.lastModifiedDate = fstat.ctime;
+        let raw_string = readFileSync(path).toString();
         this.raw_string = raw_string;
         const lines = raw_string.split("\n");
         let getted = {
@@ -171,7 +109,6 @@ class Post{
             warn(['TOO LONG FOREWORD','RED'],[this.title,'MAGENTA','NONE']);
         }
         if(this.foreword=="") this.foreword = "The author of this article has not yet set the foreword.\n\nCategory(ies): "+this.category.join(", ")+"\n\nTag(s): "+this.tags.join(", ");
-        this.tags = getted['tags']?getted.tags.split(" "):[];
         this.isTopped = getted.top?true:false;
         this.date = new Date(getted.date);
         this.license = new License(getted.license||'');
@@ -201,43 +138,4 @@ class Post{
     }
 }
 
-class Tag{
-    tagname;
-    included_articles = [];
-    constructor(tagname,included_articles){
-        this.tagname = tagname;
-        this.included_articles = included_articles;
-    }
-    add(id){
-        this.included_articles.push(id);
-    }
-    includes(id){
-        return this.included_articles.includes(id);
-    }
-}
-
-class Category{
-    catename;
-    included_articles = [];
-    constructor(catename,included_articles){
-        this.catename = catename;
-        this.included_articles = included_articles;
-    }
-    add(id){
-        this.included_articles.push(id);
-    }
-    includes(id){
-        return this.included_articles.includes(id);
-    }
-}
-
-class Fake{constructor(){}}
-
-export {
-    Post,
-    License,
-    Tag,
-    Category,
-    Fake,
-    Datz
-}
+export default Post;

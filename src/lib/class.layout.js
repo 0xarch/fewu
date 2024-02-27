@@ -11,8 +11,8 @@ class Layout{
     constructor(json){
         this.#correspond = new Correspond(json.from||json.build.filename,json.to||json.build.destname);
         this.#name = json.name||'NONAME';
-        this.#isVarias = json.varias||json.build.varias?true:false;
-        this.#isCycling = json.cycling||json.build.cycling?true:false;
+        this.#isVarias = json.varias||(json.build&&json.build.varias)?true:false;
+        this.#isCycling = json.cycling||(json.build&&json.build.cycling)?true:false;
         this.#hasAddition = json.addition?true:false;
         this.#hasAddition && (this.#addition = json.addition);
         this.#option = json.option||json.build.option||{};

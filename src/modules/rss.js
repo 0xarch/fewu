@@ -20,7 +20,7 @@ ${articles.map(v=>
 <link>${blog_link+v.path('website')}</link>
 <guid isPermaLink="false">ID${v.id}</guid>
 <description>${v.foreword}</description>
-<pubDate>${v.date}</pubDate>
+<pubDate>${v.lastModifiedDate}</pubDate>
 </item>`
 )}
 </channel>

@@ -1,9 +1,9 @@
 import { readFileSync } from "fs";
 import { basename } from "path";
-import { Post, Tag, Category } from "./classes.js";
+import { Tag, Category } from "./classes.js";
 import { traverse } from "../modules/lib/hail.js";
 import { PostSortingFunction } from "./closures.js";
-import { info } from "./mod.js";
+import Post from "./class.post.js";
 
 function test(string) {
     let a = new Post(string);
@@ -38,8 +38,7 @@ function getAllPosts(PostDir, GlobalConfig) {
         tags = {};
     for (let path of traverse(PostDir)) {
         let item = basename(path, PostDir);
-        let file_text = readFileSync(path).toString();
-        let file_data = initializePost(file_text, path);
+        let file_data = initializePost(path);
         file_data.setID(bid);
 
         if (GlobalConfig.excluded_posts.includes(item)) excluded_posts[item] = file_data;

@@ -119,9 +119,9 @@ function cycling(parent, every, prefix = '') {
             total: Math.ceil(len / every),
             now: i + 1,
             value: parent.slice(i * every, (i + 1) * every),
-            prev_path: join_path(prefix, '~' + (i) + '/index.html'),
-            next_path: join_path(prefix, '~' + (i + 2) + '/index.html'),
-            path: join_path(prefix, '~' + (i + 1) + '/index.html')
+            prev_path: join_path(prefix, (i) + '/index.html'),
+            next_path: join_path(prefix, (i + 2) + '/index.html'),
+            path: join_path(prefix, (i + 1) + '/index.html')
         };
         results.push(Cycling);
     }

@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 2.1.1 - 2024-02-27
+
+### Fixed
+
+* '~' bug
+* wrong tags
+
+### New
+
+* last modified date support
+
 ## 2.1.0 - 2024-02-27
 
 ### Removed
