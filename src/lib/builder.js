@@ -113,7 +113,7 @@ function cycling(parent, every, prefix = '') {
     }
     let len = parent.length;
     let results = [];
-    for (let i = 0; i * every <= len; ++i) {
+    for (let i = 0; i * every < len; ++i) {
         let Cycling = {
             enabled: true,
             total: Math.ceil(len / every),

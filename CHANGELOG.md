@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2.1.1-1 - 2024-02-27
+
+### Fixed
+
+* wrong cycling times
+
 ## 2.1.1 - 2024-02-27
 
 ### Fixed
