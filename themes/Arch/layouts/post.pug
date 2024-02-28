@@ -30,6 +30,7 @@ html(lang="zh")
                     a(href=__prev.path&&file(__prev.path('website')),class=`prev${earliest?'':' disabled'}`)
                         .arrow='<<'
                         .nowrap=__prev.title || i18n('Already earliest')
+                    .spacer
                     a(href=__next.path&&file(__next.path('website')),,class=`next${latest?'':' disabled'}`)
                         .nowrap=__next.title || i18n('Already latest')
                         .arrow='>>'

@@ -1,7 +1,8 @@
 include /mixins/script.pug
 doctype html
 html 
-    head 
+    head
+        +meta(user.note,user.keyword||'')
         include /includes/base_script.pug
         include /includes/css_iac.pug
         title= __title__('Categories',user.name)
@@ -16,7 +17,7 @@ html
                         b= v.catename
                         text= i18n(v.included_articles.length+' in total')
                         text= 'LAST POST:'+ID[v.included_articles[0]].ECMA262Date
-                        a.readmore(href=file(`/category/s${v.catename}/~1/index.html`))= i18n('GO')
+                        a.readmore(href=file(`/category/s${v.catename}/1/index.html`))= i18n('GO')
                 +foot_navigator(cycling.total,cycling.now,'category')
             include /includes/sidebar.pug
         include /includes/footer.pug

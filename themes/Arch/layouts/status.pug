@@ -2,18 +2,35 @@ include /mixins/script.pug
 doctype html
 html
     head 
+        +meta(user.note,user.keyword||'')
         include /includes/base_script.pug
         include /includes/css_iac.pug
-        title= __title__('STATUS',user.name)
-    body.mdui-theme-auto(OCP='OVERRIDE')
+        title= __title__(i18n('Status'),user.name)
+    body(OCP='OVERRIDE')
         .topbar-container
             include /includes/topbar.pug
         #main
             .content
-                .card.archive.column
-                    .heading| Articles
-                    = site.posts.length
-                .card.category.column
+                .card.counter
+                    .list-post
+                        .heading= i18n('Articles')
+                        .count= i18n(site.posts.length+' in total')
+                    .list-cate
+                        .heading= i18n('Categories')
+                        .count= i18n(site.category_count+' in total')
+                    .list-tag
+                        .heading= i18n('Tags')
+                        .count= i18n(site.tag_count+' in total')
+                .card.cate.column
+                    .heading= i18n('All categories')
+                    .marks
+                        each i in site.used_categories
+                            .mark(style='--i:'+i.length)=i
+                .card.tag.column
+                    .heading= i18n('All tags')
+                    .marks
+                        each i in site.used_tags
+                            .mark(style='--i:'+(i.length<5?i.length:5))=i
                 .card.update.column
                     .heading| Update
                     .plain| Build time
@@ -29,3 +46,18 @@ html
                     .plain!=JSON.stringify(Plugin)
             +sidebar(Plugin.hasPropertyThenOr(theme,'overrideStatusPage.primarySidebarWidgets',theme.primarySidebarWidgets))
         include /includes/footer.pug
+    style.
+        .counter{
+            justify-content: space-evenly;
+            font-size: 1.25em;
+        }
+        .counter>div>.heading{
+            font-size: 1.5em;
+        }
+        .mark{
+            display: inline;
+            padding: .15rem;
+            margin: .15rem;
+            font-size: 1.1em;
+            background: hsla(calc(var(--i)*var(--i)*var(--i)*5),100%,50%,20%);
+        }

@@ -2,6 +2,7 @@ include /mixins/script.pug
 doctype html
 html 
     head 
+        +meta(user.note,varias.name)
         include /includes/base_script.pug
         include /includes/css_iac.pug
         title= __title__(varias.name,user.name)

@@ -18,16 +18,7 @@ hr {
 a {
     color: inherit;
 }
-toolbar{
-    color:var(--basisTextColor);
-}
-paper{
-    overflow: auto;
-    height: calc(100% - var(--toolbarHeight));
-    background-color: var(--me-color-surface-0);
-
-}
-url{
+#url{
     display: none;
 }
 code.hljs {
@@ -190,6 +181,7 @@ a.followme{
     padding: .5rem;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 #searchPanel .contentP>a{
@@ -222,6 +214,11 @@ input:focus{
     padding: 1.5rem;
     background: var(--brand-color);
     color: #fff;
+    transition: color .2s ease-in-out;
+}
+
+.foot-navigator>a:not(.disabled):hover{
+    color: #fffa;
 }
 
 .foot-navigator>.disabled{
