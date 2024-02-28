@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2.1.2 - 2024-02-27
+
+### New
+
+* `used_tags` and `used_categories` in `site` for tag/category name as array
+
 ## 2.1.1-1 - 2024-02-27
 
 ### Fixed

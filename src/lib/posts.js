@@ -77,7 +77,9 @@ function getAllPosts(PostDir, GlobalConfig) {
         categories,
         tags,
         category_count: used_categories.length,
-        tag_count: used_tags.length
+        tag_count: used_tags.length,
+        used_categories,
+        used_tags
     };
 }
 
