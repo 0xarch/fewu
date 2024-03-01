@@ -6,7 +6,7 @@
         "note": "We won't be disturbed!",
         "location": "Xvd 114514",
         "data":{
-            "announcement": ""
+            "announcement": "本博客随时可能发生包括爆炸在内的一系列奇异事件, 请勿惊慌!"
         }
     },
     "site_url": "https://0xarch.github.io",
@@ -18,7 +18,8 @@
     "theme":{
         "name":"Arch",
         "options":{
-            "3rd_bar":false
+            "3rd_bar":false,
+            "verticalNavbar":true
         },
         "title":{
             "separator": "|",

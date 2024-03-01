@@ -14,5 +14,5 @@ old: true
 
 我的项目：
 
-[MEUI(DEPRECATED)](https://github.com/0xarch/meui)
+[MEUI(DEPRECATED)](https://github.com/0xarch/meui)  
 [Nexo](https://github.com/0xarch/nexo)
