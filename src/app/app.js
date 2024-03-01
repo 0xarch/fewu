@@ -1,4 +1,4 @@
-import { gopt } from '../modules/lib/hug.js';
+import { gopt } from '../core/run.js';
 import * as Optam from '../modules/lib/optam.js';
 import * as Path from 'path';
 import { readFileSync, writeFile, cp, existsSync } from 'fs';
@@ -6,13 +6,13 @@ import { info, nexo_logo, run } from '../lib/mod.js';
 import { build_and_write } from '../modules/app/builder.js';
 import { write } from '../lib/builder.js';
 import { i18n, set_i18n_file } from '../modules/i18n.js';
-import { getAllPosts, sort } from '../lib/posts.js';
 import { has_property, get_property, mix_object } from '../lib/base_fn.js';
 import { Nil } from '../lib/closures.js';
-import { generateSitemapTxt, generateSitemapXml } from '../modules/sitemap.js';
-import SITEMAP from '../modules/sitemap.js';
+import { site,sort } from '../core/reader.js';
+import sitemap from '../modules/sitemap.js';
 import Collection from '../lib/class.collection.js';
 import Layout from '../lib/class.layout.js';
+import CONSTANTS from '../core/constants.js';
 /**
  * @DOCUMENT_OF_APP
  * @argument config [file] Configuration file for Nexo.
@@ -33,7 +33,7 @@ async function App() {
     }
 
     const ThemeName = argv['theme'] || GlobalConfig.theme.name;
-    const PostDir = GlobalConfig.build.post_directory || "posts",
+    const //PostDir = GlobalConfig.build.post_directory || "posts",
         ThemeDir = Path.join('themes', ThemeName),
         ThemeLayoutDir = Path.join('themes', ThemeName, 'layouts'),
         ThemeFilesDir = Path.join('themes', ThemeName, 'files'),
@@ -43,6 +43,8 @@ async function App() {
 
     const Settings = new Collection(GlobalConfig);
     const Theme = new Collection(ThemeConfig);
+
+    const PostDir = Settings.get('build.post_directory')||"posts";
 
     let language = GlobalConfig.language || 'en-US';
     let lang_file = {};
@@ -68,11 +70,15 @@ async function App() {
     // since v2
     let Provision = {
         v2: {
-            site: getAllPosts(PostDir, GlobalConfig),
+            site: site(PostDir,Settings),
             nexo: {
                 logo: nexo_logo(),
                 deploy_time,
-            }
+            },
+            proc: {
+
+            },
+            ...CONSTANTS
         }
     };
 
@@ -117,9 +123,9 @@ async function App() {
     if (GlobalConfig.sitemap) {
         let path = Path.join(PublicDir, Settings.get('sitemap.name')), type = Settings.get('sitemap.type');
         if (type == 'txt') {
-            writeFile(path, SITEMAP.TXT(Settings.get('site_url'), posts), Nil)
+            writeFile(path, sitemap.TXT(Settings.get('site_url'), posts), Nil)
         } else {
-            writeFile(path, SITEMAP.XML(Settings.get('site_url'), posts), Nil)
+            writeFile(path, sitemap.XML(Settings.get('site_url'), posts), Nil)
         }
     }
     if (GlobalConfig.extra_file) {

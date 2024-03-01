@@ -1,11 +1,9 @@
-import Article from './classes.js';
-
 /**
  * 
  * @param {string} blog_title 
  * @param {string} blog_link 
  * @param {string} description 
- * @param {[Article]} articles 
+ * @param {[Post]} articles 
  */
 function getRSSFeedXml(blog_title,blog_link,description,articles){
   return `<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">

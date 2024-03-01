@@ -1,54 +1,57 @@
+import { SettingsTemplate } from '../core/config_template.js';
+import { mkdir, } from 'fs';
+import * as fs from 'fs';
+import { Nil } from '../lib/closures.js';
+import Cache from '../lib/class.cache.js';
+import { join } from 'path';
+
+let cache = new Cache();
+
 /**
  * 
  * @returns {string}
- * @since v2.1
  */
-function get_default_configuration(){
-    return `{
-        "user": {
-            "name": "User Name",
-            "url": "User Url",
-            "avatar": "User Image Url",
-            "note": "User note (description)",
-            "location": "User Location (Optional)",
-            "data":{
-                "announcement": "Annoucement (Optional)"
+function get_default_configuration() {
+    return SettingsTemplate
+}
+
+function make_default_directory(settings) {
+    let posts_ = cache.has_or_set('postd', settings.get('build.post_directory'));
+    let public_ = cache.has_or_set('publicd', settings.get('build.public_directory'));
+    mkdir(posts_, {}, Nil);
+    mkdir(public_, {}, Nil);
+    mkdir('resources', {}, Nil);
+    mkdir('extra', {}, Nil);
+}
+
+function remove_directory(settings) {
+    let posts_ = cache.has_or_set('postd', settings.get('build.post_directory'));
+    let public_ = cache.has_or_set('publicd', settings.get('build.public_directory'));
+    rm(posts_);
+    rm(public_);
+    //rmdir('resources',{},Nil);
+    //rmdir('extra',{},Nil);
+}
+
+function rm(path){
+    if(fs.statSync(path).isFile()){
+        fs.rm(path);
+        return;
+    }
+    for (let path_ of fs.readdirSync(path)) {
+        if (path_[0] != '.') {
+            path_ = join(path, path_);
+            if (fs.statSync(path_).isFile()) {
+                fs.rm(path, Nil);
+            } else {
+                fs.rmdir(path, Nil);
             }
-        },
-        "site_url": "Website Url",
-        "sitemap":{
-            "type": "xml",
-            "name": "sitemap.xml"
-        },
-        "language": "en-US",
-        "theme":{
-            "name":"Arch",
-            "options":{
-                "3rd_bar":false
-            },
-            "title":{
-                "separator": "|",
-                "index": "Hello Arch!"
-            }
-        },
-        "RSSFeed":{
-            "title": "",
-            "link": "",
-            "description":""
-        },
-        "extra_files":{
-            "from(in extra directory)": "to(in public directory)"
-        },
-        "excluded_posts": ["about.md"],
-        "override": [],
-        "widgets": {
-            "only used in": "theme"
-        },
-        "build": {
-            "post_directory": "posts",
-            "public_directory": "public",
-            "site_root": "/",
-            "alwaysnew": true
         }
-    }`
+    }
+}
+
+export {
+    get_default_configuration,
+    make_default_directory,
+    remove_directory
 }

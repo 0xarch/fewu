@@ -1,5 +1,34 @@
 # CHANGELOG
 
+## 2.2.0 [BUMP] - 2024-03-01
+
+### New
+
+* `core/run` (gopt support)
+* `CONSTANTS` now merged in Provision
+* `core/reader` (rename `lib/post`)
+* new design for default `Arch` theme
+
+### Changed
+
+* rename `SITEMAP` to lower case `sitemap`
+* move `PostSortingFunction` to class `Post` as a static method.
+
+### Removed
+
+* `lib/post` (renamed as `core/reader`)
+* `modules/classes` (deprecated GARBAGE code)
+* `modules/filesys` (deprecated GARBAGE code)
+* `modules/hug` (deprecated GARBAGE code, replaced by `core/run`)
+* `modules/-r-/v2` (deprecated, unimportant, unused feature)
+
+
+### In Progress
+
+* `core/database` for storing configs,etc, in running
+* `lib/class.theme` for storing theme configuration
+* `modules/init` for greenhand initialization
+
 ## 2.1.2 - 2024-02-27
 
 ### New

@@ -1,6 +1,5 @@
 import { basename } from "path";
 import { parse } from "marked";
-import { log } from './hug.js';
 import { traverse, readFile } from './hail.js';
 import { word_count } from "../word.js";
 import { __TEST01__ } from "../../lib/posts.js";
@@ -73,7 +72,7 @@ function findLessContent(lines) {
 
 function ReadPosts(PostDir, SPECIAL_POSTS) {
     let bid = 0;
-    log("读取目录",PostDir);
+    console.log("读取目录",PostDir);
     let Posts = new Array,
         Specials = {};
     for (let path of traverse(PostDir)) {
@@ -137,7 +136,7 @@ const _SortPassage = (a,b) =>{
 function getSort(POSTS) {
     const SortedPosts = POSTS.sort(Sort);
     const rawByDate = POSTS.sort(_SortPassage);
-    log("开始","排序 & 分类");
+    console.log("开始","排序 & 分类");
 
     // ______ BID & 最近 & 默认 ______
     const BID = {};

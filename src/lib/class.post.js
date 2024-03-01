@@ -7,6 +7,9 @@ import Cache from "./class.cache.js";
 import { License, Datz } from "./classes.js";
 
 class Post{
+    static sort(a,b){
+        return a.datz.compareWith(b.datz)?1:-1;
+    }
     raw_string;
     content;
     html;
@@ -84,23 +87,30 @@ class Post{
             i++;
         }
         this.property = getted;
+
+        this.title = getted.title;
+        this.category = getted.category.split(" ").filter(notFake);
+        this.tags = getted.tags.split(" ").filter(notFake);
+        this.isTopped = getted.top?true:false;
+        this.date = new Date(getted.date);
+        this.license = new License(getted.license||'');
+        this.imageUrl = getted.imageUrl||'';
+        if(!getted.keywords) this.keywords = this.tags;
+        else this.keywords = getted.keywords.split(" ").filter(notFake);
+
         let gz = getted.date.split(/[\ \-\.]/).filter(v=>v).map(v=>parseInt(v));
         let moreIndex = lines.indexOf('<!--more-->');
-        /*
-         * Critical change.
-            After 2.0.3, theme should set a part for showing the foreword as it will not be included in the content. 
-         */
+
         if(moreIndex == -1){
             /* No foreword provided */
             this.content = lines.slice(i).join('\n');
         } else {
             this.content = lines.slice(moreIndex).join('\n');
         }
-        this.title = getted.title;
-        this.category = getted.category.split(" ").filter(notFake);
-        this.tags = getted.tags.split(" ").filter(notFake);
         this.foreword = lines.slice(i, (moreIndex !== -1) ?moreIndex :5) .join('\n').replace(/\#*/g,'');
         let fwc = word_count(this.foreword);
+        this.wordCount = word_count(this.content);
+
         if(fwc <= 1){
             warn(['NO FOREWORD','RED'],[this.title,'MAGENTA','NONE']);
         }else if(fwc < 25){
@@ -109,15 +119,10 @@ class Post{
             warn(['TOO LONG FOREWORD','RED'],[this.title,'MAGENTA','NONE']);
         }
         if(this.foreword=="") this.foreword = "The author of this article has not yet set the foreword.\n\nCategory(ies): "+this.category.join(", ")+"\n\nTag(s): "+this.tags.join(", ");
-        this.isTopped = getted.top?true:false;
-        this.date = new Date(getted.date);
-        this.license = new License(getted.license||'');
+
         this.datz = new Datz(...gz);
-        this.wordCount = word_count(this.content);
-        this.imageUrl = getted.imageUrl||'';
-        if(!getted.keywords) this.keywords = this.tags;
-        else this.keywords = getted.keywords.split(" ").filter(notFake);
         this.ECMA262Date = this.date.toDateString();
+        
         this.transformedTitle = getted.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'\～\·\「\」\；\：\‘\’\“\”\，\。\《\》\？\！\￥\…\、\（\）]/g,'');
         if(getted.old){
             this.old = true;

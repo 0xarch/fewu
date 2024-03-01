@@ -4,6 +4,7 @@ import { notFake } from "./closures.js";
 import { warn } from "./mod.js";
 import Cache from './class.cache.js';
 
+
 class License{
     #CreativeCommons = {
         BY : false,
@@ -20,16 +21,35 @@ class License{
     constructor(str){
         str = str.toLowerCase();
         if(str.includes('private')) this.#isCreativeCommons = false;
+        else {
+            for(let k in this.#CreativeCommons){
+                if(str.includes(k.toLowerCase()) || str.includes(k))
+                    this.#CreativeCommons[k]=true;
+            }
+        }
     }
     description(){
+        if(this.#CreativeCommons.CC0) return 'CC0';
         let result='CC';
         if(this.#isCreativeCommons){
             for(let key in this.#CreativeCommons)
-                result += '-'+key;
+                if(this.#CreativeCommons[key])
+                    result += '-'+key;
         } else {
             result = 'Private';
         }
         return result;
+    }
+    /**
+     * 
+     * @param {'BY'|'NC'|'SA'|'ND'|'CC0'} k 
+     * @returns 
+     */
+    includes(k){
+        return this.#CreativeCommons[k];
+    }
+    is_cc_license(){
+        return this.#isCreativeCommons;
     }
 }
 

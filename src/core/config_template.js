@@ -36,3 +36,7 @@ const SettingsTemplate = {
         description: "No Description"
     }
 }
+
+export {
+    SettingsTemplate
+}
