@@ -13,17 +13,6 @@ function mobile(){
 }
 document.documentElement.setAttribute('isMobile',__isMobile);
 
-function throttle(func, delay) {
-    let timer;
-    return function () {
-        if (timer) return
-        timer = setTimeout(() => {
-            func.call(this, ...arguments);
-            timer = null
-        }, delay);
-    }
-}
-
 function generateSearch(){
     let q = document.querySelector('.com.search');
     let panel = document.getElementById('searchPanel');
@@ -33,8 +22,12 @@ function generateSearch(){
         panel.removeAttribute('open');
     });
     let tempor_val;
-    q.querySelector('.onSearch').addEventListener('click',async ()=>{
+    panel.querySelector('.onSearch').addEventListener('click',async ()=>{
+        container.innerHTML = '';
         let search_content = input.value;
+        if(search_content==''){
+            return;
+        }
         let searched = {};
         if(!tempor_val){
             let resp = await fetch(document.getElementById('searchUrl').innerHTML);
@@ -52,14 +45,13 @@ function generateSearch(){
                 searched[v.atitle].href=v.href;
             }
         });
-        container.innerHTML = '';
         for(let i in searched){
-            container.innerHTML+=`<a href=${searched[i].href}>${i} BY:${searched[i].by.toString()}</a>`;
+            container.innerHTML+=`<a href=${searched[i].href} class='Row'>${i}</a><hr>`;
         }
     });
-    panel.setAttribute('open',false);
+    panel.open=false;
     q.querySelector('.openPanel').addEventListener('click',function openSearchPanel(){
-        panel.setAttribute('open',true);
+        panel.open=true;
     });
 }
 

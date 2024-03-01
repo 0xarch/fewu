@@ -1,0 +1,9 @@
+mixin foot_navigator(total,now,name)
+    .card.foot-navigator
+        - let disable_all = total==1
+        - let enable_prev = !disable_all&&now!=1
+        - let enable_next = !disable_all&&now!=total
+        a.Button(href=enable_prev&&file(`/${name}/${now-1}`),class=enable_prev?'':' disabled')= `<<`
+        .total= i18n(total+' pages in total')
+        .now= i18n('Page '+now+' now')
+        a.Button(href=enable_next&&file(`/${name}/${now+1}`),class=enable_next?'':' disabled')= `>>`

@@ -3,17 +3,16 @@ doctype html
 html 
     head 
         +meta(user.note,varias.name)
-        include /includes/base_script.pug
+        +base()
         include /includes/css_iac.pug
         title= __title__(varias.name,user.name)
     body(OCP='OVERRIDE')
-        nav.topbar-container
-            include /includes/topbar.pug
+        +header()
         #main 
             .content
                 each bid in cycling.value
-                    - let item = ID[bid]
-                    include /components/postcard.pug
+                    +postcard(ID[bid])
                 +foot_navigator(cycling.total,cycling.now,'category/s'+varias.name)
             +sidebar(Plugin.hasPropertyThenOr(theme,'overrideCategoryPage.primarySidebarWidgets',theme.primarySidebarWidgets))
         include /includes/footer.pug
+        include /components/searchPanel.pug

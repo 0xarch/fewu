@@ -77,3 +77,27 @@ blockquote {
 blockquote>p{
     margin: .25rem;
 }
+#markdown_fillContent p>a{
+    color: var(--brand-color);
+}
+#markdown_fillContent p>a::before{
+    content: '[';
+    color: var(--text-foreground)
+}
+#markdown_fillContent p>a::after{
+    content: ']';
+    color: var(--text-foreground)
+}
+.card.cc::after{
+    content: '\f25e';
+    font-family: "Font Awesome 6 Brands";
+    color: var(--text-foreground-25);
+    position: absolute;
+    font-size: 4rem;
+    right: 1rem;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    opacity: .25;
+}

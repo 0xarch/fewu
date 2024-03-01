@@ -1,8 +1,9 @@
 @import url("widgets.css");
 @import url("location.css");
+@import url("card.css");
 
 :root {
-    --radius: .5rem;
+    --card-radius: .675rem;
     --brand-color: #3273dc;
     --brand-color-25: #3273dc44;
     --brand-color-50: #3273dc88;
@@ -26,12 +27,14 @@
         --shadow-1: #0000000d;
         --shadow-2: #00000021;
         --bg-filter: blur(100px) saturate(80%) brightness(120%);
+        --arc-bg-filter: blur(30px);
+        --arc-bg-color: #ffffffbf;
     }
 }
 
 @media (prefers-color-scheme:dark) {
     :root {
-        --bg: #1b1b1b;
+        --bg: #000;
         --text-background: #141414;
         --text-background-25: #1414144f;
         --text-background-50: #1414148f;
@@ -46,7 +49,13 @@
         --shadow-1: #ffffff0d;
         --shadow-2: #ffffff21;
         --bg-filter: blur(100px) saturate(60%) brightness(60%);
+        --arc-bg-filter: blur(30px);
+        --arc-bg-color: #000000bf;
     }
+}
+
+.ta-c{
+    text-align: center;
 }
 
 .flex {
@@ -66,6 +75,9 @@
 }
 .jcc{
     justify-content: center;
+}
+.jc-se{
+    justify-content: space-evenly;
 }
 .fgap{
     gap: .75rem;
@@ -119,7 +131,6 @@ body[debug='true'] .content {
 
 .topbar-container {
     width: 100%;
-    height: 8rem;
     z-index: 100;
     box-shadow: 0px 4px 10px var(--shadow-1);
     background: var(--text-background);
@@ -183,25 +194,11 @@ body[debug='true'] .content {
     order: 2;
 }
 
-.heading {
+.heading,.Heading {
     font-size: 1.5rem;
-    margin: .25rem;
+    margin: .45rem;
     font-weight: 600;
-}
-
-.card {
-    background-color: var(--text-background);
-    color: var(--text-foreground);
-    padding: 8px;
-    border-radius: var(--radius);
-    display: flex;
-    text-decoration: none;
-    transition: box-shadow .2s ease-in-out;
-    box-shadow: 0 4px 10px var(--shadow-1), 0 0 1px var(--shadow-2);
-}
-
-.card+.card {
-    margin-top: 1.5rem;
+    cursor: default;
 }
 
 footer{
@@ -221,6 +218,16 @@ footer>*{
     backdrop-filter: var(--bg-filter);
 }
 
+.bg-arc{
+    backdrop-filter: var(--arc-bg-filter);
+    background: var(--arc-bg-color);
+}
+
+.bg-arc-{
+    backdrop-filter: var(--arc-bg-filter) !important;
+    background: var(--arc-bg-color) !important;
+}
+
 .nowrap{
     white-space: nowrap;
 }
@@ -228,4 +235,73 @@ footer>*{
 .arrow{
     padding: .25rem;
     font-weight: 600;
+}
+
+.RowList{
+    border-radius: var(--card-radius);
+    box-shadow: 0 4px 10px var(--shadow-1), 0 0 1px var(--shadow-2);
+    background-color: #8f8f8f08;
+    overflow: hidden;
+}
+
+.RowList>hr{
+    width: 100%;
+    opacity: .03;
+    margin: 0;
+}
+
+.RowList>hr:last-child{
+    display: none;
+}
+
+.Row{
+    display: block;
+    padding: .75rem;
+    text-decoration: none;
+    background: transparent;
+    transition: background .1s ease-in-out;
+}
+
+.Row:hover{
+    background: var(--text-background);
+}
+
+.Grid{
+    display: grid;
+    margin: 1.5rem 0;
+    gap: 1.5rem;
+    grid-template-columns: var(--i);
+    --card-m: 0;
+}
+
+.Button{
+    border-radius: var(--card-radius);
+    background-color: var(--brand-color);
+    color: #fff;
+    padding: .25rem;
+    min-height: 2.5rem;
+    max-width: 50vw;
+    margin: .15rem;
+    transition: background .15s ease-in-out;
+}
+
+.Button:not(.disabled):hover{
+    background-color: var(--brand-color-75);
+}
+
+.Button.disabled{
+    background-color: #8884;
+    color: #fffa;
+}
+
+.round-all{
+    border-radius: var(--card-radius);
+}
+
+.round-top{
+    border-radius: var(--card-radius) var(--card-radius) 0 0;
+}
+
+.round-bottom{
+    border-radius: 0 0 var(--card-radius) var(--card-radius);
 }

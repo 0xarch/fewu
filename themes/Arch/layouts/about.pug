@@ -3,17 +3,16 @@ doctype html
 html(lang="zh")
     head 
         +meta(user.note,user.keyword||'About')
-        include /includes/base_script.pug
+        +base()
         include /includes/post_prelude.pug
         title= __title__(post.title,'read')
     body(OCP='OVERRIDE')
         #url= file(post.pathto)
-        .topbar-container 
-            include /includes/topbar.pug
+        +header()
         #main(class=theme['3rd-bar']&&'multi')
             .content
                 .card
-                    .meta
-                    #markdown_fillContent!= post.getParsed('content')
+                    #markdown_fillContent.container!= post.getParsed('content')
             +sidebar((has_property(theme,'overrideAboutPage.primarySidebarWidgets')?theme.overrideAboutPage:theme).primarySidebarWidgets)
         include /includes/footer.pug
+        include /components/searchPanel.pug

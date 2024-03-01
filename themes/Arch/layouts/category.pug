@@ -1,23 +1,21 @@
 include /mixins/script.pug
+include /mixins/type_script.pug
 doctype html
 html 
     head
         +meta(user.note,user.keyword||'')
-        include /includes/base_script.pug
+        +base()
         include /includes/css_iac.pug
         title= __title__('Categories',user.name)
     body(OCP='OVERRIDE') 
-        nav.topbar-container
-            include /includes/topbar.pug
+        +header()
         #main
             .content
-                each item in cycling.value
-                    - v = item.value
-                    .card.flex.column.alc
-                        b= v.catename
-                        text= i18n(v.included_articles.length+' in total')
-                        text= 'LAST POST:'+ID[v.included_articles[0]].ECMA262Date
-                        a.readmore(href=file(`/category/s${v.catename}/1/index.html`))= i18n('GO')
+                .Grid.-NoMob(style="--i:1fr 1fr")
+                    each item in cycling.value
+                        - let v = item.value
+                        +typecard(v.catename,v.included_articles.length,ID[v.included_articles[0]].ECMA262Date)
                 +foot_navigator(cycling.total,cycling.now,'category')
             include /includes/sidebar.pug
         include /includes/footer.pug
+        include /components/searchPanel.pug

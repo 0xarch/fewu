@@ -1,3 +1,5 @@
+include /mixins/components.pug
+
 mixin add_widget(type,options)
     case type
         when 'about'
@@ -13,19 +15,11 @@ mixin add_widgets(array)
     each item of array
         +add_widget(item)
 
-mixin foot_navigator(total,now,name)
-    .card.foot-navigator
-        - let disable_all = total==1
-        - let enable_prev = !disable_all&&now!=1
-        - let enable_next = !disable_all&&now!=total
-        a(href=enable_prev&&file(`/${name}/~${now-1}`),class=`prev${enable_prev?'':' disabled'}`)= `<<`
-        .total= i18n(total+' Pages in total')
-        .now= i18n('Page '+now+' now')
-        a(href=enable_prev&&file(`/${name}/~${now+1}`),class=`prev${enable_next?'':' disabled'}`)= `>>`
-
 mixin topbar()
-    nav.topbar-container
-            include /includes/topbar.pug
+    include /includes/topbar.pug
+
+mixin header()
+    include /includes/topbar.pug
 
 mixin sidebar(primaryWidget=theme.primarySidebarWidgets,secondaryWidget=theme.secondarySidebarWidgets)
     - let c = 0
@@ -47,14 +41,19 @@ mixin postcard(item)
                 span= item.ECMA262Date
                 span= item.category
                 span= item.wordCount+' '+'Characters'
-            a.onbrand.title(href=file(item.websitePath))= item.title
+            a.onbrand.title(href=file(item.path('website')))= item.title
             .less!= item.parsedForeword
-            a.onbrand.readmore(href=file(item.websitePath))= i18n('Read more')
+            a.onbrand.readmore.round-all(href=file(item.path('website')))= i18n('Read more')
 
 mixin meta(des,key)
     meta(charset="utf-8")
     meta(name="viewport",content="width:device-width,initial-scale=1.0")
     meta(name="author" content=user.name)
     meta(name="description" content=des.toString())
-    meta(name="keywords" content=key.join?key.join(" "):key)
+    meta(name="keywords" content=Array.isArray(key)?key.join(" "):key)
     meta(http-equiv="content-language" content=settings.language)
+
+mixin base()
+    link(rel="stylesheet",href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.2/css/all.min.css")
+    link(rel="stylesheet",href=file('/files/mod.css'))
+    script(src=file('/files/ui.js'))

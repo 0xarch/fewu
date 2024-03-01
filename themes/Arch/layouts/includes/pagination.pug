@@ -1,9 +1,0 @@
-.pagination
-    .total= _page_total+'TOTAL'
-    | ,
-    .now= _page_now+'NOW'
-    unless _page_total!=1
-        if _page_now!=1
-            a.prev(href=file(`/${_name}/index_${_page_now-1}.html`))= `PREV<${_page_now-1}>`
-        unless _page_now==_page_total
-            a.next(href=file(`/${_name}/index_${_page_now+1}.html`))= `NEXT<${_page_now+1}>`

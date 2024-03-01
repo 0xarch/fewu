@@ -1,15 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     let md_content = document.getElementById('markdown_fillContent')
-    /*const markdown_raw_file = fetch(document.getElementById('url').textContent);
-    window['markdown'].ready.then(markdown => {
-        markdown_raw_file.then(resp => {
-            resp.text().then(data => {
-                
-                md_content.innerHTML = markdown.parse(data.replace(/---\n[\s\S]*?\n---\n/, ''));
-                
-            })
-        });
-    })*/
     if(!__isMobile)TOC(md_content)
 })
 

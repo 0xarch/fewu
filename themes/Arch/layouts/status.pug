@@ -3,59 +3,66 @@ doctype html
 html
     head 
         +meta(user.note,user.keyword||'')
-        include /includes/base_script.pug
+        +base()
         include /includes/css_iac.pug
         title= __title__(i18n('Status'),user.name)
     body(OCP='OVERRIDE')
-        .topbar-container
-            include /includes/topbar.pug
+        +header()
         #main
             .content
                 .card.counter
-                    .list-post
-                        .heading= i18n('Articles')
-                        .count= i18n(site.posts.length+' in total')
-                    .list-cate
-                        .heading= i18n('Categories')
-                        .count= i18n(site.category_count+' in total')
-                    .list-tag
-                        .heading= i18n('Tags')
-                        .count= i18n(site.tag_count+' in total')
-                .card.cate.column
-                    .heading= i18n('All categories')
-                    .marks
-                        each i in site.used_categories
-                            .mark(style='--i:'+i.length)=i
-                .card.tag.column
-                    .heading= i18n('All tags')
-                    .marks
-                        each i in site.used_tags
-                            .mark(style='--i:'+(i.length<5?i.length:5))=i
-                .card.update.column
+                    .inner.jc-se.ta-c
+                        .list-post
+                            .heading= i18n('Articles')
+                            .count= i18n(site.posts.length+' in total')
+                        .list-cate
+                            .heading= i18n('Categories')
+                            .count= i18n(site.category_count+' in total')
+                        .list-tag
+                            .heading= i18n('Tags')
+                            .count= i18n(site.tag_count+' in total')
+                .Grid.-NoMob(style='--i:repeat(2,calc(50% - .75rem))')
+                    .card.cate
+                        .heading= i18n('All categories')
+                        .inner
+                            .marks
+                                each i in site.used_categories
+                                    a.mark(style='--i:'+((i.length<=3?i.length:i.length%3) + Math.random()))=i
+                    .card.tag
+                        .heading= i18n('All tags')
+                        .inner
+                            .marks
+                                each i in site.used_tags
+                                    a.mark(style='--i:'+((i.length<=3?i.length:i.length%3) + Math.random()))=i
+                .card.update
                     .heading| Update
-                    .plain| Build time
-                    .plain= nexo.deploy_time
-                .card.theme.column
+                    .inner.column
+                        .plain| Build time
+                        .plain= nexo.deploy_time
+                .card.theme
                     .heading| Theme
-                    .plain| Nexo with Arch Theme v0.3
-                    .flex.alc.fgap
-                        .logo-of-theme
-                        != nexo.logo
-                .card.plugin.column
+                    .inner.column
+                        .plain| Nexo with Arch Theme v0.3
+                        .flex.alc.fgap
+                            .logo-of-theme
+                            != nexo.logo
+                .card.plugin
                     .heading| Plugin
-                    .plain!=JSON.stringify(Plugin)
+                    .inner.column
+                        .plain!=JSON.stringify(Plugin)
             +sidebar(Plugin.hasPropertyThenOr(theme,'overrideStatusPage.primarySidebarWidgets',theme.primarySidebarWidgets))
         include /includes/footer.pug
+        include /components/searchPanel.pug
     style.
         .counter{
             justify-content: space-evenly;
             font-size: 1.25em;
         }
-        .counter>div>.heading{
-            font-size: 1.5em;
+        .marks{
+            display: flex;
+            flex-wrap: wrap;
         }
         .mark{
-            display: inline;
             padding: .15rem;
             margin: .15rem;
             font-size: 1.1em;

@@ -5,6 +5,8 @@ body{
 
 hr {
     width: 80%;
+    opacity: .05;
+    border-color: var(--text-foreground);
 }
 :is(button,a[\@as=button],.button),
 :is(button,a[\@as=button],.button) *{
@@ -17,6 +19,7 @@ hr {
 }
 a {
     color: inherit;
+    text-decoration: none;
 }
 #url{
     display: none;
@@ -42,68 +45,31 @@ code, code.hljs {
 table {
     text-align: center;
 }
-hr {
-    opacity: .25;
-}
-*[bg=none]{
-    background: transparent;
-}
-*[bg=color],.bg_cld{
-    background-color: var(--primary-background);
-}
 .f_eaj{
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.card.about>.info-1>img{
+.avatar{
     max-width: min(50%,50vw);
     object-fit: fill;
     display:block;
     border-radius: 999px;
 }
-.card.about>.info-1{
-    align-items:center;
-}
-.card.about>.info-1>.name{
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 2px;
-}
-.card.about>.info-2{
-    align-items:center;
-    justify-content:center;
-    gap:12px;
-}
-.card.about>.info-2>*{
-    align-items:center;
-    display:flex;
-    flex-direction:column;
-}
-.card.about>.info-2>*>p{
-    margin: .25rem;
-    padding: .25rem;
-    font-size: 1.1rem;
-}
 a.followme{
-    border-radius: 1.5rem;
-    background: #3273dc;
+    border-radius: var(--card-radius);
+    background: var(--brand-color);
     color: #fff;
-    display: flex;
     width: 100%;
-    align-items:center;
-    justify-content:center;
     padding: .25rem;
     min-height: 2.5rem;
     max-height: 3rem;
     max-width: 50vw;
-    text-decoration: none;
+    margin: .15rem;
+    transition: background .15s ease-in-out;
 }
-.card.recent>a{
-    text-decoration: none;
-}
-.card>.heading{
-    font-size: 1.5rem;
+a.followme:hover{
+    background-color: var(--brand-color-75);
 }
 .logo-of-theme{
     --r: 1.75rem;
@@ -134,62 +100,25 @@ a.followme{
     display: none;
 }
 
-#searchPanel{
-    position: fixed;
-    background-color: var(--text-background);
-    width: 100vw;
-    min-height: 30vh;
-    z-index: 1002;
-    box-shadow: var(--card-box-shadow-hover);
-    display: none;
-    left: 0;
-    top: 0;
-}
-
-#searchPanel[open='true']{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#searchPanel>*{
-    width: 100%;
-    padding: .75rem;
-}
-
 #searchPanel .closeButton{
-    width: 100%;
-    border-radius: .5rem;
-    box-shadow: 0px 0px 2px var(--shadow-2);
     background-color: crimson;
     color: #fff;
-    padding: .75rem;
-    text-align: center;
 }
 
 #searchPanel .onSearch{
-    margin-left: 1rem;
-    border-radius: .5rem;
-    box-shadow: 0px 0px 2px var(--shadow-2);
-    background-color: var(--brand-color);
-    color: #fff;
+    border-radius: 0 .5rem .5rem 0;
     padding: .75rem;
-    text-align: center;
+    margin: 0;
+}
+
+#searchPanel input{
+    border-radius: .5rem 0 0 .5rem;
 }
 
 #searchPanel .contentP{
-    padding: .5rem;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-#searchPanel .contentP>a{
-    padding: 1rem;
-    border-radius: .5rem;
-    text-decoration: none;
-    border: 1px solid var(--brand-color);
-    text-align: center;
+    margin: 1rem;
+    width: 80%;
+    min-height: 5rem;
 }
 
 input{
@@ -201,27 +130,4 @@ input{
 
 input:focus{
     border: 1px solid var(--brand-color);
-}
-
-.card.foot-navigator{
-    padding: 0px;
-    justify-content: space-between;
-    align-items: center;
-    overflow: hidden;
-}
-
-.foot-navigator>a{
-    padding: 1.5rem;
-    background: var(--brand-color);
-    color: #fff;
-    transition: color .2s ease-in-out;
-}
-
-.foot-navigator>a:not(.disabled):hover{
-    color: #fffa;
-}
-
-.foot-navigator>.disabled{
-    background: var(--text-foreground-50);
-    color: var(--text-background-50);
 }

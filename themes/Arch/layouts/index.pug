@@ -3,16 +3,15 @@ doctype html
 html(lang="zh")
     head
         +meta(user.note,user.keyword||'')
-        include /includes/base_script.pug
+        +base()
         include /includes/css_iac.pug
         title= __title__(i18n('Home'),user.name)
     body(OCP='OVERRIDE')
-        +topbar()
+        +header()
         #main
             .content
-                .post-container
-                    each bid in sort.defaultOrder
-                        - let item = ID[bid]
-                        include /components/postcard.pug
+                each bid in sort.defaultOrder.slice(0,5)
+                    +postcard(ID[bid])
             +sidebar(Plugin.hasPropertyThenOr(theme,'overrideIndexPage.primarySidebarWidgets',theme.primarySidebarWidgets))
         include /includes/footer.pug
+        include /components/searchPanel.pug

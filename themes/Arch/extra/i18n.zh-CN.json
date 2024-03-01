@@ -17,8 +17,13 @@
     "Total": "共",
     "Now": "当前",
     "Content": "目录",
-    "{NUMBER} Pages in total": "共{NUMBER}页",
+    "{NUMBER} pages in total": "共{NUMBER}页",
+    "{NUMBER} in total": "共{NUMBER}个",
     "Page {NUMBER} now": "当前{NUMBER}页",
     "Already earliest": "已是最早",
-    "Already latest": "已是最新"
+    "Already latest": "已是最新",
+    "View more": "查看更多",
+    "Last post": "上次发布",
+    "Foreword": "前言",
+    "Distribution License Agreement": "传播许可协议"
 }

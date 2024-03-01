@@ -38,10 +38,8 @@
 }
 
 .readmore{
-    margin: 4px;
-    padding: 2px;
-    border-radius: 2px;
-    background-color: var(--text-background-25);
+    padding: .45rem;
+    background-color: #8881;
     text-decoration: none;
 }
 .detail>.meta>span{

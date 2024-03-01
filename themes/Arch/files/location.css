@@ -20,6 +20,10 @@
     .nomobile{
         display: none !important;
     }
+    .Grid.-NoMob{
+        display: block;
+        --card-m: 1.5rem;
+    }
 }
 @media screen and (min-width: 768px), print {
     #main{
@@ -41,5 +45,4 @@
     #main.multi>:is(.sidebar-l, .sidebar-r) {
         width: 25%;
     }
-
 }
