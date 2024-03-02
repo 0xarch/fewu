@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 2.2.2 [DEVELOPER-UPDATE] [CRITICAL-UPDATE] - 2024-03-01
+
+### New
+
+* basic database for storing
+* widely using of `GObject`
+
+### REMOVED **
+
+* **CRITICAL** OLD API (v1) SUPPORT
+
 ## 2.2.0 [BUMP] - 2024-03-01
 
 ### New

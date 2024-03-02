@@ -1,8 +1,19 @@
-import { basename } from "path";
-import { traverse } from "../modules/lib/hail.js";
+import { basename,join } from "path";
+import * as fs from "fs";
+import db from "./database.js";
 import Post from "../lib/class.post.js";
-import Collection from "../lib/class.collection.js";
-import { Category,Tag } from "../lib/classes.js";
+import { Category,Tag } from "./struct.js";
+
+function traverse(Directory) {
+    let returns = [];
+    for (let item of fs.readdirSync(Directory)) {
+        let path = join(Directory, item);
+        let stat = fs.statSync(path);
+        if (stat.isDirectory()) returns.push(...traverse(path));
+        else returns.push(path);
+    }
+    return returns;
+}
 
 /**
  * 
@@ -18,11 +29,11 @@ function initializePost(content, pathto = undefined) {
 
 /**
  * 
- * @param {string} PostDir 
- * @param {Collection} Settings
  * @returns {{posts:[Post],excluded_posts:object,categories:[Category],tags:[Tag]}}
  */
-function site(PostDir, Settings) {
+function site() {
+    let Settings = db.settings;
+    let PostDir = db.dirs.posts;
     let bid = 0;
     let posts = [],
         excluded_posts = {},

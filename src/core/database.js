@@ -1,41 +1,37 @@
-let site;
-let settings;
-let theme;
+import Collection from "../lib/class.collection.js";
 
-const database = {
+let db = {
     /**
-     * 
-     * @param {Object} site_ 
-     * @returns {void}
+     * @type {Collection}
      */
-    set_site:(site_)=>site=site_,
+    settings:void 0,
     /**
-     * 
-     * @returns {Object}
+     * @type {Collection}
      */
-    get_site:()=>site,
+    theme:void 0,
     /**
-     * 
-     * @param {Collection} site_ 
-     * @returns {void}
+     * @type {object}
      */
-    set_conf:(conf_)=>settings=conf_,
+    site:void 0,
     /**
-     * 
-     * @returns {Collection}
+     * @type {string}
      */
-    get_conf:()=>settings,
-    /**
-     * 
-     * @param {Collection} them_ 
-     * @returns {void}
-     */
-    set_theme:(them_)=>theme=them_,
-    /**
-     * 
-     * @returns {Collection}
-     */
-    get_theme:()=>theme
-}
+    language:void 0,
+    dirs:{
+        posts:"posts",
+        public:"public",
+        root: "/",
+        theme: {
+            root:'',
+            extra:'',
+            layout:'',
+            files:''
+        }
+    },
+    proc:{
+        time: new Date()
+    },
+    constants:void 0
+};
 
-export default database;
+export default db;

@@ -41,7 +41,7 @@ class GObject {
      * @param {string|string[]} property_path 
      * @returns {boolean}
      */
-    static hasOwnProperty(object, property_path) {
+    static hasProperty(object, property_path) {
         let path = getPropertyPathFrom(property_path);
         let __tempor_val = object;
         let result = true;

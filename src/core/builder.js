@@ -1,10 +1,12 @@
-import { readFileSync } from "fs";
+import { readFileSync,writeFile } from "fs";
 import { join as join_path } from "path";
-import { errno } from "./mod.js";
-import { build_and_write } from "../modules/app/builder.js";
-import { Correspond } from "./file_class.js";
-import Collection from './class.collection.js';
-import Layout from "./class.layout.js";
+import { errno } from "../lib/mod.js";
+import { Correspond } from "../lib/file_class.js";
+import { Nil } from "../lib/closures.js";
+import { Collection } from "./struct.js";
+import parsers from "./build_compat.js";
+import db from "./database.js";
+import Layout from "../lib/class.layout.js";
 
 /**
  * 
@@ -14,10 +16,12 @@ import Layout from "./class.layout.js";
  * @param {Layout} file
  * @param {{}} option
  */
-async function write(theme, config, collection, file, option) {
-    let theme_directory = join_path('themes', config.get('theme.name'));
+async function write(collection, file, option) {
+    let theme = db.theme;
+    let config = db.settings;
+    let theme_directory = db.dirs.theme.root;
     let absolute_correspond = new Correspond(
-        join_path(theme_directory, 'layouts', file.correspond().from),
+        join_path(db.dirs.theme.layout, file.correspond().from),
         join_path(config.get('public_directory') || config.get('build.public_directory'), file.correspond().to, 'index.html'));
 
     // _______ get
@@ -86,7 +90,7 @@ async function write(theme, config, collection, file, option) {
                     ...addition,
                     ...addition_in_iter,
                     cycling: result,
-                }, theme, result.path);
+                }, result.path);
             }
         } else {
             let path = path_write_to_prefix + '/index.html';
@@ -97,7 +101,7 @@ async function write(theme, config, collection, file, option) {
                 ...collection.get_all(),
                 ...addition,
                 ...addition_in_iter,
-            }, theme, path);
+            }, path);
         }
     }
     return;
@@ -128,6 +132,31 @@ function cycling(parent, every, prefix = '') {
     return results;
 }
 
+/**
+ * 
+ * @param { string } type 
+ * @param { string } template 
+ * @param { {
+*  basedir: string,
+*  filename: string
+* } } options 
+* @param { object } provide_variables
+* @param { string } path_write_to 
+* @returns void
+*/
+async function build_and_write(type,template,options,provide_variables,path_write_to){
+    let procer;
+    switch(type){
+       case 'JADE':
+           procer = parsers.pug;
+           break;
+        default:
+            procer = parsers[type.toLowerCase()];
+    }
+    writeFile(procer(template,options,provide_variables),path_write_to,Nil);
+}
+
 export {
-    write
+    write,
+    build_and_write as proc_final
 }
