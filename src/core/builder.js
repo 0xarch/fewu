@@ -1,5 +1,5 @@
-import { readFileSync,writeFile } from "fs";
-import { join as join_path } from "path";
+import { mkdir, mkdirSync, readFileSync,writeFile } from "fs";
+import { basename, dirname, join as join_path } from "path";
 import { errno } from "../lib/mod.js";
 import { Correspond } from "../lib/file_class.js";
 import { Nil } from "../lib/closures.js";
@@ -82,7 +82,7 @@ async function write(collection, file, option) {
             let c_parent = collection.get(c_opt.parent) || new Collection(addition_in_iter).get(c_opt.parent) || new Collection(addition).get(c_opt.parent);
             let cycling_results = cycling(c_parent, c_opt.every, path_write_to_prefix);
             for (let result of cycling_results) {
-                build_and_write(template_type, template, {
+                proc_final(template_type, template, {
                     basedir: join_path(theme_directory, 'layouts'),
                     filename: file.correspond().from
                 }, {
@@ -94,7 +94,7 @@ async function write(collection, file, option) {
             }
         } else {
             let path = path_write_to_prefix + '/index.html';
-            build_and_write(template_type, template, {
+            proc_final(template_type, template, {
                 basedir: join_path(theme_directory, 'layouts'),
                 filename: file.correspond().from
             }, {
@@ -142,9 +142,9 @@ function cycling(parent, every, prefix = '') {
 * } } options 
 * @param { object } provide_variables
 * @param { string } path_write_to 
-* @returns void
+* @returns {'Ok'}
 */
-async function build_and_write(type,template,options,provide_variables,path_write_to){
+async function proc_final(type,template,options,provide_variables,path_write_to){
     let procer;
     switch(type){
        case 'JADE':
@@ -153,10 +153,12 @@ async function build_and_write(type,template,options,provide_variables,path_writ
         default:
             procer = parsers[type.toLowerCase()];
     }
-    writeFile(procer(template,options,provide_variables),path_write_to,Nil);
+    mkdirSync(dirname(path_write_to),{recursive:true});
+    writeFile(path_write_to,procer(template,options,provide_variables),(e)=>{if(e)throw e});
+    return 'Ok';
 }
 
 export {
     write,
-    build_and_write as proc_final
+    proc_final
 }

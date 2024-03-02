@@ -34,7 +34,8 @@
         "description":""
     },
     "extra_files":{
-        "BingSiteAuth.xml":"/BingSiteAuth.xml"
+        "BingSiteAuth.xml":"/BingSiteAuth.xml",
+        "robots.txt": "robots.txt"
     },
     "excluded_posts": ["about.md","news.md","links.md"],
     "override": [],

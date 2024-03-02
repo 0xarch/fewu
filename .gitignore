@@ -5,3 +5,7 @@ conf/layout/Preview/
 conf/theme/Preview/
 src/Trashed/
 src/Next/
+extra/*
+doc/*
+posts/*
+resources/*

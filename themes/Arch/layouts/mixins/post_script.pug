@@ -16,3 +16,15 @@ mixin meta(post)
     meta(name="description",content=post.foreword)
     meta(name="keywords",content=post.keywords.join(" "))
     meta(http-equiv="content-language",content=settings.language)
+
+mixin sidebar()
+    - let primaryWidget = Plugin.hasPropertyThenOr(theme,'overridePostPage.primarySidebarWidgets',theme.primarySidebarWidgets)
+    - let secondaryWidget = Plugin.hasPropertyThenOr(theme,'overridePostPage.secondarySidebarWidgets',theme.secondarySidebarWidgets)
+    - let c = 0
+    if theme['side_position']=='right'
+        - c = 1
+    aside(class='sidebar-'+['l','r'][c])
+        +add_widgets(primaryWidget)
+    if theme['3rd_bar']
+        aside(class='sidebar-'+['r','l'][c])
+            +add_widgets(secondaryWidget)

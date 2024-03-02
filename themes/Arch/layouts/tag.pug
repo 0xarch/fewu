@@ -16,6 +16,6 @@ html
                         - let v = item.value
                         +typecard(v.tagname,v.included_articles.length,ID[v.included_articles[0]].ECMA262Date)
                 +foot_navigator(cycling.total,cycling.now,'tag')
-            include /includes/sidebar.pug
+            +sidebar(Plugin.hasPropertyThenOr(theme,'overrideTypePage.primarySidebarWidgets',theme.primarySidebarWidgets))
         include /includes/footer.pug
         include /components/searchPanel.pug

@@ -232,15 +232,13 @@ async function part_copyfiles() {
 }
 
 async function part_build_page(layoutType, template, Articles, publicDir, options, GivenVariables) {
-    Articles.forEach(item => {
-        run(() => {
-            let destname = Path.join(publicDir, item.path('local'));
-            info([item.title, 'MAGENTA'], [item.path('local'), 'YELLOW'], ['SUCCESS', "GREEN"]);
-            build_and_write(layoutType, template, options, {
-                post: item,
-                ...GivenVariables
-            }, destname);
-        }, 9001);
+    db.site.posts.forEach(async item => {
+        let destname = Path.join(db.dirs.public, item.path('local'));
+        build_and_write(layoutType, template, options, {
+            post: item,
+            ...GivenVariables
+        }, destname);
+        info([item.title, 'MAGENTA'], [destname, 'YELLOW'], ['SUCCESS', "GREEN"]);
     });
 }
 
