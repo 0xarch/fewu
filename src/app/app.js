@@ -12,6 +12,7 @@ import Layout from '../lib/class.layout.js';
 import { info, nexo_logo, run } from '../lib/mod.js';
 import { i18n, set_i18n_file } from '../modules/i18n.js';
 import sitemap from '../modules/sitemap.js';
+import generateSearchStrings from '../modules/search.js';
 /**
  * @DOCUMENT_OF_APP
  * @argument config [file] Configuration file for Nexo.
@@ -117,6 +118,7 @@ async function App() {
             file_dir = file_dir.substring(1)
         return __public_root + "/" + file_dir;
     }
+    db.file = __get_file_relative_dir;
     let __provided_theme_config = GObject.mix(db.theme.get('default'), db.settings.get('theme.options'));
 
     if (db.settings.has('sitemap')) {
@@ -133,6 +135,7 @@ async function App() {
             cp(Path.join('extra', k), Path.join(db.dirs.public, GlobalConfig.extra_file[k]), () => { });
         }
     }
+    Provision.v2.nexo.searchStringUrl = __get_file_relative_dir('searchStrings.json');
     if (db.theme.has('API')) {
         let api_conf = db.theme.get('API');
         if (api_conf.hasPlugin) {
@@ -146,7 +149,7 @@ async function App() {
             let __plugin_script = 'try{\n' + insert_code + __plugin_file.toString() + '\nplugin()}catch(e){errno(20202);console.error(e);"NULL"}';
             __plugin = eval(__plugin_script);
         }
-        if (api_conf.searchComponent) {
+        /*if (api_conf.searchComponent) {
             let search_config = api_conf.searchComponent;
             let arr = [];
             let title = search_config.includes('title'),
@@ -156,14 +159,15 @@ async function App() {
             for (let article of db.site.posts) {
                 let href = __get_file_relative_dir(article.path('website'));
                 let atitle = article.title;
-                if (title) { arr.push({ 'content': article.title, 'by': 'Title', href, atitle }); }
-                if (id) { arr.push({ 'content': article.id, 'by': 'ID', href, atitle }); }
-                if (content) { arr.push({ 'content': article.content.replace(/\n/g, ' '), 'by': 'Content', href, atitle }); }
-                if (date) { arr.push({ 'content': article.date.toDateString(), 'by': 'Date', href, atitle }); }
+                if (title) { arr.push({ 'content': article.title, href, atitle }); }
+                if (id) { arr.push({ 'content': article.id, href, atitle }); }
+                if (content) { arr.push({ 'content': article.content.replace(/\n/g, ' '), href, atitle }); }
+                if (date) { arr.push({ 'content': article.date.toDateString(), href, atitle }); }
             }
             Provision.v2.nexo.searchStringUrl = __get_file_relative_dir('searchStrings.json');
             writeFile(Path.join(db.dirs.public, 'searchStrings.json'), JSON.stringify(arr), () => { });
-        }
+        }*/
+        generateSearchStrings();
     }
     let api_required = {
         Plugin: __plugin,

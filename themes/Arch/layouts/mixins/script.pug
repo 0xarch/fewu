@@ -43,7 +43,7 @@ mixin postcard(item)
                 span= item.wordCount+' '+'Characters'
             a.onbrand.title(href=file(item.path('website')))= item.title
             .less!= item.parsedForeword
-            a.onbrand.readmore.round-all(href=file(item.path('website')))= i18n('Read more')
+            a.readmore.round-all(href=file(item.path('website')))= i18n('Read more')
 
 mixin meta(des,key)
     meta(charset="utf-8")

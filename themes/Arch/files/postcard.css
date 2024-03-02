@@ -1,7 +1,5 @@
 .card.post{
     padding: 0px;
-    text-decoration: none;
-    display: block;
     overflow: hidden;
 }
 
@@ -17,18 +15,7 @@
 }
 
 .card.post>.detail{
-    color: var(--text-foreground);
-    padding: 8px;
-}
-
-.card.post>.detail>.date{
-    padding: 4px;
-    border-radius: 8px;
-    opacity: .85;
-    width: 50%;
-    text-align: center;
-    font-weight: bold;
-    background: var(--text-background);
+    padding: .75rem;
 }
 .card.post>.detail>.title{
     font-size: 150%;
@@ -36,17 +23,19 @@
     margin-top: 4px;
     text-decoration: none;
 }
-
 .readmore{
     padding: .45rem;
     background-color: #8881;
     text-decoration: none;
+    transition: color .15s ease-in-out;
+}
+.readmore:hover{
+    color:var(--brand-color)
 }
 .detail>.meta>span{
     margin: 4px;
     padding: 2px;
 }
-
 .card.post .less{
     margin: .5rem;
 }

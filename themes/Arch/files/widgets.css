@@ -10,18 +10,13 @@ hr {
 }
 :is(button,a[\@as=button],.button),
 :is(button,a[\@as=button],.button) *{
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 }
 a {
     color: inherit;
     text-decoration: none;
 }
-#url{
+#url,#searchUrl{
     display: none;
 }
 code.hljs {
@@ -96,16 +91,12 @@ a.followme:hover{
     justify-content: center;
 }
 
-#searchUrl{
-    display: none;
-}
-
-#searchPanel .closeButton{
+#searchPanel .--C{
     background-color: crimson;
     color: #fff;
 }
 
-#searchPanel .onSearch{
+#searchPanel .--S{
     border-radius: 0 .5rem .5rem 0;
     padding: .75rem;
     margin: 0;
@@ -115,7 +106,7 @@ a.followme:hover{
     border-radius: .5rem 0 0 .5rem;
 }
 
-#searchPanel .contentP{
+#searchPanel .--P{
     margin: 1rem;
     width: 80%;
     min-height: 5rem;

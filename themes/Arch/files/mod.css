@@ -21,7 +21,6 @@
         --text-foreground-25: #4a4a4a4f;
         --text-foreground-50: #4a4a4a8f;
         --text-foreground-75: #4a4a4acf;
-        --widget-bg: #fafafa;
         --code-bg: #eff0fa;
         --card-box-shadow-hover: 0px 3px 8px 6px rgba(7, 17, 27, 0.15);
         --shadow-1: #0000000d;
@@ -43,7 +42,6 @@
         --text-foreground-25: #fff4;
         --text-foreground-50: #fff8;
         --text-foreground-75: #fffc;
-        --widget-bg: #242424;
         --code-bg: #151515;
         --card-box-shadow-hover: 0px 3px 8px 6px rgba(67, 77, 87, 0.2);
         --shadow-1: #ffffff0d;
@@ -54,34 +52,14 @@
     }
 }
 
-.ta-c{
-    text-align: center;
-}
-
-.flex {
-    display: flex;
-}
-
-.column {
-    flex-direction: column;
-}
-
-.row {
-    flex-direction: row;
-}
-
-.alc{
-    align-items: center;
-}
-.jcc{
-    justify-content: center;
-}
-.jc-se{
-    justify-content: space-evenly;
-}
-.fgap{
-    gap: .75rem;
-}
+.ta-c{text-align:center}
+.flex {display:flex}
+.column{flex-direction:column}
+.row {flex-direction:row}
+.alc{align-items:center}
+.jcc{justify-content:center}
+.jc-se{justify-content:space-evenly}
+.fgap{gap:.75rem}
 
 html {
     overflow: scroll;

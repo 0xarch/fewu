@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2.2.3 [SEARCH-UPDATE] - 2024-03-02
+
+### Changed
+
+* Removed `by` section in `searchStrings.json` to increase search speed.
+
 ## 2.2.2 [DEVELOPER-UPDATE] [CRITICAL-UPDATE] - 2024-03-01
 
 ### New
