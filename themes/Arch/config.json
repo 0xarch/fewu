@@ -9,8 +9,13 @@
     ],
     "API": {
         "hasPlugin": true,
-        "searchComponent": ["title","date","id","content"],
-        "provideWith":"v2"
+        "searchComponent": [
+            "title",
+            "date",
+            "id",
+            "content"
+        ],
+        "provideWith": "v2"
     },
     "copy": {
         "@posts": "posts"
@@ -19,11 +24,25 @@
     "default": {
         "3rd-bar": false,
         "verticalNavbar": false,
-        "primarySidebarWidgets": ["about","announcement","recent"],
+        "primarySidebarWidgets": [
+            "about",
+            "announcement",
+            "recent"
+        ],
         "secondarySidebarWidgets": [],
         "overrideIndexPage": {},
         "overridePostPage": {
-            "primarySidebarWidgets": ["about","toc","recent"]
+            "primarySidebarWidgets": [
+                "about",
+                "toc",
+                "recent"
+            ]
+        },
+        "overrideAboutPage": {
+            "primarySidebarWidgets": [
+                "about",
+                "contact"
+            ]
         }
     },
     "layout": {
@@ -38,16 +57,26 @@
                 }
             },
             {
+                "name": "page",
+                "from": "page.pug",
+                "to": "page",
+                "cycling": true,
+                "option": {
+                    "cycling": {
+                        "parent": "sort.defaultOrder",
+                        "every": 10
+                    }
+                }
+            },
+            {
                 "name": "archive",
-                "build": {
-                    "filename": "archive.pug",
-                    "destname": "archive",
-                    "cycling": true,
-                    "option": {
-                        "cycling": {
-                            "parent": "sort.defaultOrder",
-                            "every": 5
-                        }
+                "from": "archive.pug",
+                "to": "archive",
+                "cycling": true,
+                "option": {
+                    "cycling": {
+                        "parent": "sort.defaultOrder",
+                        "every": 10
                     }
                 }
             },
@@ -87,11 +116,11 @@
                 "name": "Tag Template",
                 "from": "tag.pug",
                 "to": "tag",
-                "cycling":true,
-                "option":{
+                "cycling": true,
+                "option": {
                     "cycling": {
-                        "parent":"site.tags",
-                        "every":12
+                        "parent": "site.tags",
+                        "every": 12
                     }
                 }
             },

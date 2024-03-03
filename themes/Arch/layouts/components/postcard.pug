@@ -1,12 +1,10 @@
-.card.post
-    if item.imageUrl
-        .image-fill
-            img(src=item.imageUrl)
-    .detail
+.Card.__
+    a.Heading.onbrand(href=file(item.path('website')))= item.title
+    hr
+    .inner.column
         .meta
-            span= item.ECMA262Date
-            span= item.category
-            span= item.wordCount+i18n('Characters')
-        a.onbrand.title(href=file(item.path('website')))= item.title
+            span.p8= item.ECMA262Date
+            span.p8= item.category
+            span.p8= item.wordCount+i18n('Characters')
         .less!= item.foreword
         a.onbrand.readmore(href=file(item.path('website')))= i18n('Read more')

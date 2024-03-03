@@ -1,41 +1,17 @@
-.card.post{
-    padding: 0px;
-    overflow: hidden;
-}
-
-.card.post>.image-fill{
-    overflow: hidden;
-    font-size: 0px;
-    max-height: 18rem;
-}
-
-.card.post>.image-fill>img{
-    object-fit: fill;
-    width: 100%;
-}
-
-.card.post>.detail{
-    padding: .75rem;
-}
-.card.post>.detail>.title{
-    font-size: 150%;
-    font-weight: bold;
-    margin-top: 4px;
-    text-decoration: none;
-}
 .readmore{
     padding: .45rem;
     background-color: #8881;
     text-decoration: none;
     transition: color .15s ease-in-out;
+    width: fit-content;
 }
 .readmore:hover{
     color:var(--brand-color)
 }
-.detail>.meta>span{
+span.p8{
     margin: 4px;
     padding: 2px;
 }
-.card.post .less{
+.less{
     margin: .5rem;
 }

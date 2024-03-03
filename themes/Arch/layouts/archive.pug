@@ -10,9 +10,24 @@ html
         +header()
         #main
             .content
-                each bid in cycling.value
-                    +postcard(ID[bid])
+                .Card
+                    - let used_year = []
+                    each bid in cycling.value
+                        - let post = ID[bid]
+                        if !used_year.includes(post.datz.y)
+                            - used_year.push(post.datz.y)
+                            .Heading= post.datz.y
+                        a.card.post(href=file(post.path('website')))
+                            .detail
+                                .meta
+                                    span= post.ECMA262Date
+                                    span= post.category
+                                    span= post.wordCount+' '+'Characters'
+                                .onbrand.title= post.title
+                                .less!= post.parsedForeword
                 +foot_navigator(cycling.total,cycling.now,'archive')
             include /includes/sidebar.pug
         include /includes/footer.pug
         include /components/searchPanel.pug
+    style.
+        .card.post{border-radius:0;display: block;margin: 0}.content>.Card{padding:0;overflow:hidden}

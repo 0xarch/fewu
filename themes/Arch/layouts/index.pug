@@ -10,8 +10,10 @@ html(lang="zh")
         +header()
         #main
             .content
-                each bid in sort.defaultOrder.slice(0,5)
+                each bid in sort.defaultOrder.slice(0,10)
                     +postcard(ID[bid])
+                if sort.defaultOrder.length>10
+                    +foot_navigator(Math.ceil(sort.defaultOrder.length/10),1,'page')
             +sidebar(Plugin.hasPropertyThenOr(theme,'overrideIndexPage.primarySidebarWidgets',theme.primarySidebarWidgets))
         include /includes/footer.pug
         include /components/searchPanel.pug

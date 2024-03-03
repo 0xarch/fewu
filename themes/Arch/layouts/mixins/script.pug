@@ -10,6 +10,8 @@ mixin add_widget(type,options)
             include /components/recent.pug
         when 'toc'
             include /components/toc.pug
+        when 'contact'
+            include /components/contact.pug
 
 mixin add_widgets(array)
     each item of array
@@ -44,6 +46,10 @@ mixin postcard(item)
             a.onbrand.title(href=file(item.path('website')))= item.title
             .less!= item.parsedForeword
             a.readmore.round-all(href=file(item.path('website')))= i18n('Read more')
+
+mixin postcard(item)
+    - let post = item
+    include /components/postcard.pug
 
 mixin meta(des,key)
     meta(charset="utf-8")

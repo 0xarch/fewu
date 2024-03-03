@@ -7,12 +7,11 @@ html(lang="zh")
         include /includes/post_prelude.pug
         title= __title__(post.title,'read')
     body(OCP='OVERRIDE')
-        #url= file(post.pathto)
         +header()
         #main(class=theme['3rd-bar']&&'multi')
             .content
                 .card
                     #markdown_fillContent.container!= post.getParsed('content')
-            +sidebar((has_property(theme,'overrideAboutPage.primarySidebarWidgets')?theme.overrideAboutPage:theme).primarySidebarWidgets)
+            +sidebar(Plugin.hasPropertyThenOr(theme,'overrideAboutPage.primarySidebarWidgets',theme.primarySidebarWidgets))
         include /includes/footer.pug
         include /components/searchPanel.pug

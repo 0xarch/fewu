@@ -1,0 +1,18 @@
+include /mixins/script.pug
+doctype html
+html 
+    head 
+        +meta(user.note,i18n('Blogs'))
+        +base()
+        include /includes/css_iac.pug
+        title= __title__(i18n('Blogs'),user.name)
+    body(OCP='OVERRIDE') 
+        +header()
+        #main
+            .content
+                each bid in cycling.value
+                    +postcard(ID[bid])
+                +foot_navigator(cycling.total,cycling.now,'page')
+            +sidebar()
+        include /includes/footer.pug
+        include /components/searchPanel.pug
