@@ -29,7 +29,7 @@ async function App() {
     const argv = gopt(process.argv);
     let config_raw_text = readFileSync(argv['config'] || 'config.json').toString();
     const GlobalConfig = JSON.parse(config_raw_text);
-    if (!GlobalConfig.security) GlobalConfig.security = {};
+    //if (!GlobalConfig.security) GlobalConfig.security = {};
 
     const ThemeName = argv['theme'] || db.settings.get('theme.name');
 
@@ -119,7 +119,7 @@ async function App() {
         return __public_root + "/" + file_dir;
     }
     db.file = __get_file_relative_dir;
-    let __provided_theme_config = GObject.mix(db.theme.get('default'), db.settings.get('theme.options'));
+    let __provided_theme_config = GObject.mix(db.theme.get('default'), db.settings.get('theme.options'),true);
 
     if (db.settings.has('sitemap')) {
         let path = Path.join(db.dirs.public, db.settings.get('sitemap.name')), type = db.settings.get('sitemap.type');
@@ -130,9 +130,10 @@ async function App() {
             writeFile(path, sitemap.XML(url, db.site.posts), () => { })
         }
     }
-    if (GlobalConfig.extra_file) {
-        for (let k of GlobalConfig.extra_file) {
-            cp(Path.join('extra', k), Path.join(db.dirs.public, GlobalConfig.extra_file[k]), () => { });
+    if (db.settings.has('extra_files')) {
+        let extra_file = db.settings.get('extra_files');
+        for (let k in extra_file) {
+            cp(Path.join('extra', k), Path.join(db.dirs.public, extra_file[k]), () => { });
         }
     }
     Provision.v2.nexo.searchStringUrl = __get_file_relative_dir('searchStrings.json');

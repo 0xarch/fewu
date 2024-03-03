@@ -1,10 +1,9 @@
 node_modules/
 public/
 package-lock.json
-conf/layout/Preview/
-conf/theme/Preview/
 src/Trashed/
 src/Next/
+theme/Simplus
 extra/*
 doc/*
 posts/*

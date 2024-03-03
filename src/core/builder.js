@@ -1,8 +1,7 @@
-import { mkdir, mkdirSync, readFileSync,writeFile } from "fs";
-import { basename, dirname, join as join_path } from "path";
+import { mkdirSync, readFileSync,writeFile } from "fs";
+import { dirname, join as join_path } from "path";
 import { errno } from "../lib/mod.js";
 import { Correspond } from "../lib/file_class.js";
-import { Nil } from "../lib/closures.js";
 import { Collection } from "./struct.js";
 import parsers from "./build_compat.js";
 import db from "./database.js";
@@ -154,7 +153,11 @@ async function proc_final(type,template,options,provide_variables,path_write_to)
             procer = parsers[type.toLowerCase()];
     }
     mkdirSync(dirname(path_write_to),{recursive:true});
-    writeFile(path_write_to,procer(template,options,provide_variables),(e)=>{if(e)throw e});
+    let result = procer(template,options,provide_variables);
+    try{
+        if(readFileSync(path_write_to).toString() == result) return;
+    } catch(e){}
+    writeFile(path_write_to,result,(e)=>{if(e)throw e});
     return 'Ok';
 }
 
