@@ -20,8 +20,8 @@
 #toc>li{
     cursor: pointer;
     padding: 0.125rem 0.25rem;
-    border-radius: var(--radius);
-    transition: color .2s ease-in-out,margin-left .2s ease-in-out,background .2s ease-in-out;
+    border-radius: var(--card-radius);
+    transition: color .2s ease-in-out,background .2s ease-in-out;
 }
 #toc>.li-1{
     font-size: larger;
@@ -87,6 +87,9 @@ blockquote>p{
 #markdown_fillContent p>a::after{
     content: ']';
     color: var(--text-foreground)
+}
+#markdown_fillContent p img{
+    width: 100%;
 }
 .card.cc::after{
     content: '\f25e';

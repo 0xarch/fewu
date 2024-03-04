@@ -33,7 +33,7 @@ mixin sidebar(primaryWidget=theme.primarySidebarWidgets,secondaryWidget=theme.se
         div(class='sidebar-'+['r','l'][c])
             +add_widgets(secondaryWidget)
 
-mixin postcard(item)
+mixin postcard_deprecated(item)
     .card.post
         if item.imageUrl
             .image-fill

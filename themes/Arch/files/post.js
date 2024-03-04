@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     let md_content = document.getElementById('markdown_fillContent')
-    if(!__isMobile)TOC(md_content)
+    if(!_M_)TOC(md_content)
 })
 
 function TOC(markdown_content) {
@@ -53,5 +53,4 @@ function TOC(markdown_content) {
         ticking = true;
     });
     update();
-
 }

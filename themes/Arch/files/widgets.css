@@ -1,8 +1,3 @@
-body{
-    font-family: 'Google Sans Text';
-    margin: 0px;
-}
-
 hr {
     width: 80%;
     opacity: .05;
@@ -16,16 +11,12 @@ hr {
     display: none;
 }
 code.hljs {
-    border-radius: 8px;
-    display: block;
-    padding: 8px;
-    margin: 8px;
-    color: var(--me-color-surface-outline)
+    border-radius: .75rem;
+    margin: .75rem;
 }
-
 code, code.hljs {
-    background-color: var(--me-color-surface);
-    padding: .35rem;
+    font-family: 'monospace';
+    background-color: var(--code-bg);
 }
 .p8{
     padding: .75rem;
@@ -47,34 +38,13 @@ table {
     display:block;
     border-radius: 999px;
 }
-a.followme{
-    border-radius: var(--card-radius);
-    background: var(--brand-color);
-    color: #fff;
-    width: 100%;
-    padding: .25rem;
-    min-height: 2.5rem;
-    max-height: 3rem;
-    max-width: 50vw;
-    margin: .15rem;
-    transition: background .15s ease-in-out;
-}
 .logo-of-theme{
     --r: 1.75rem;
     height: calc(2*var(--r));
     width: calc(1.73205081*var(--r));
     overflow: hidden;
-}
-.logo-of-theme{
     background: var(--brand-color);
     clip-path: polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%, 0 25%);
-}
-.logo-of-theme::after{
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
 }
 .logo-of-theme::after{
     content: 'ARCH';
@@ -82,8 +52,12 @@ a.followme{
     display: flex;
     align-items: center;
     justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
-
 #searchPanel .--C{
     background-color: crimson;
     color: #fff;

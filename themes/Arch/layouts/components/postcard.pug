@@ -3,7 +3,7 @@
     hr
     .inner.column
         .meta
-            span.p8= item.ECMA262Date
+            span.p8= item.date.toLocaleDateString(settings.language,{dateStyle:'full'})
             span.p8= item.category
             span.p8= item.wordCount+i18n('Characters')
         .less!= item.foreword
