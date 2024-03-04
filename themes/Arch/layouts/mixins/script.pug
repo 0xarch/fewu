@@ -52,6 +52,7 @@ mixin postcard(item)
     include /components/postcard.pug
 
 mixin meta(des,key)
+    link(rel="icon",href=file("files/icon.svg"))
     meta(charset="utf-8")
     meta(name="viewport",content="width:device-width,initial-scale=1.0")
     meta(name="author" content=user.name)
