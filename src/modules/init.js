@@ -3,6 +3,7 @@ import { mkdir, } from 'fs';
 import * as fs from 'fs';
 import { Nil } from '../lib/closures.js';
 import Cache from '../lib/class.cache.js';
+import db from '../core/database.js';
 import { join } from 'path';
 
 let cache = new Cache();
@@ -15,9 +16,9 @@ function get_default_configuration() {
     return SettingsTemplate
 }
 
-function make_default_directory(settings) {
-    let posts_ = cache.has_or_set('postd', settings.get('build.post_directory'));
-    let public_ = cache.has_or_set('publicd', settings.get('build.public_directory'));
+function make_default_directory() {
+    let posts_ = cache.has_or_set('postd', db.settings.get('build.post_directory'));
+    let public_ = cache.has_or_set('publicd', db.settings.get('build.public_directory'));
     mkdir(posts_, {}, Nil);
     mkdir(public_, {}, Nil);
     mkdir('resources', {}, Nil);
@@ -25,12 +26,10 @@ function make_default_directory(settings) {
 }
 
 function remove_directory(settings) {
-    let posts_ = cache.has_or_set('postd', settings.get('build.post_directory'));
-    let public_ = cache.has_or_set('publicd', settings.get('build.public_directory'));
+    let posts_ = cache.has_or_set('postd', db.settings.get('build.post_directory'));
+    let public_ = cache.has_or_set('publicd', db.settings.get('build.public_directory'));
     rm(posts_);
     rm(public_);
-    //rmdir('resources',{},Nil);
-    //rmdir('extra',{},Nil);
 }
 
 function rm(path){

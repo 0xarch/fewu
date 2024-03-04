@@ -3,7 +3,7 @@ public/
 package-lock.json
 src/Trashed/
 src/Next/
-theme/Simplus
+themes/Simplus/
 extra/*
 doc/*
 posts/*
