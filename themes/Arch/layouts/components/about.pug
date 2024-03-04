@@ -1,7 +1,8 @@
 .Card.__
     .inner.column
         .flex.column.alc
-            img.avatar(src=user.avatar,alt=i18n('User Avatar'))
+            - let color = Plugin.getColorByString(user.name)
+            .avatarText(style='--color:'+color+';--bolor:'+color+'6f')= user.name[0].toUpperCase()
             .heading=user.name
             .describe=user.note
             .location=user.location

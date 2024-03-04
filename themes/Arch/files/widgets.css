@@ -38,6 +38,19 @@ table {
     display:block;
     border-radius: 999px;
 }
+.avatarText{
+    width: 6rem;
+    height: 6rem;
+    font-size: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color);
+    border-radius: 3rem;
+    border: .25rem solid var(--bolor);
+    background: var(--bolor);
+    overflow: hidden;
+}
 .logo-of-theme{
     --r: 1.75rem;
     height: calc(2*var(--r));
