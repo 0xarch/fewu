@@ -18,12 +18,11 @@ function traverse(Directory) {
 /**
  * 
  * @param {string} content 
- * @param {string} pathto 
+ * @param {number} id
  * @returns { Post }
  */
-function initializePost(content, pathto = undefined) {
-    let article = new Post(content);
-    article.setPath(pathto);
+function initializePost(content, id = undefined) {
+    let article = new Post(content,id);
     return article;
 }
 
@@ -32,8 +31,6 @@ function initializePost(content, pathto = undefined) {
  * @returns {{posts:[Post],excluded_posts:object,categories:[Category],tags:[Tag]}}
  */
 function site() {
-    let Settings = db.settings;
-    let PostDir = db.dirs.posts;
     let bid = 0;
     let posts = [],
         excluded_posts = {},
@@ -41,12 +38,11 @@ function site() {
         used_tags = [],
         categories = {},
         tags = {};
-    for (let path of traverse(PostDir)) {
-        let item = basename(path, PostDir);
-        let file_data = initializePost(path);
-        file_data.setID(bid);
+    for (let path of traverse(db.dirs.posts)) {
+        let item = basename(path, db.dirs.posts);
+        let file_data = initializePost(path,bid);
 
-        if (Settings.get('excluded_posts').includes(item)) excluded_posts[item] = file_data;
+        if (db.settings.get('excluded_posts').includes(item)) excluded_posts[item] = file_data;
         else {
             for (let cname of file_data.category) {
                 if (used_categories.includes(cname)) {
@@ -99,7 +95,7 @@ function sort(posts) {
     // order in update
     let dateGroup = {};
     for (let item of byPostDate) {
-        let date = new Date(item.date);
+        let date = item.date;
         let y = date.getFullYear(), m = date.getMonth() + 1, d = date.getDate();
         if (!dateGroup[y]) {
             dateGroup[y] = {};

@@ -54,16 +54,20 @@ class Post{
     path(type){
         switch(type){
             case "website":
-                return this.#cache.has_or_set('rw-website',`/read/p${this.id}/index.html`);
+                return this.paths.website;
             case "local":
-                return this.#cache.has_or_set('rw-local',`read/p${this.id}/index.html`);
+                return this.paths.local;
         }
+    }
+    paths = {
+        website: void 0,
+        local: void 0
     }
     /**
      * 
      * @param {string} path
      */
-    constructor(path){
+    constructor(path,id){
         let fstat = statSync(path);
         this.lastModifiedDate = fstat.ctime;
         let raw_string = readFileSync(path).toString();
@@ -128,12 +132,16 @@ class Post{
             this.old = true;
             warn(['OLD POST','YELLOW'],[this.title,'MAGENTA']);
         }
+
+        this.id = id;
+        let tempor_val = `read/${(+gz.join("")).toString(36)}${new Buffer.from(this.transformedTitle).toString("base64")}`;
+        this.paths = {
+            website: `/${tempor_val}/`,
+            local: `${tempor_val}/index.html`
+        }
     }
     setPath(path){
         this.pathto = path;
-    }
-    setID(id){
-        this.id = id;
     }
     setPrev(id){
         this.prevID = id;

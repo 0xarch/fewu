@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 2.2.3-1 - 2024-03-04
+
+### Changed
+
+* encoded string for path now (not id as before, * might change sometime)
+* `nexo.logo` back to function, and removes multiple stylesheets
+* `Post.paths.[website/local]` for static call
+* operation only update theme will not read post now
+
+### Preview
+
+* `code` and `node` section in `core/constants`
+
 ## 2.2.3 [SEARCH-UPDATE] - 2024-03-02
 
 ### Changed
@@ -38,7 +51,6 @@
 * `modules/filesys` (deprecated GARBAGE code)
 * `modules/hug` (deprecated GARBAGE code, replaced by `core/run`)
 * `modules/-r-/v2` (deprecated, unimportant, unused feature)
-
 
 ### In Progress
 

@@ -47,6 +47,12 @@ async function App() {
     db.dirs.theme.layout = Path.join(db.dirs.theme.root, 'layouts');
     db.dirs.theme.files = Path.join(db.dirs.theme.root, 'files');
 
+    if (argv['only'] == 'updateTheme') {
+        cp(db.dirs.theme.files, Path.join(db.dirs.public, 'files'), { recursive: true }, () => { });
+        cp('sources', Path.join(db.dirs.public, 'sources'), { recursive: true }, () => { });
+        return;
+    }
+
     db.language = db.settings.get('language') || 'en-US';
     db.site = site();
     db.sort = sort(db.site.posts);
@@ -59,18 +65,12 @@ async function App() {
         } catch (_) { }
     }
 
-    if (argv['only'] == 'updateTheme') {
-        cp(db.dirs.theme.files, Path.join(db.dirs.public, 'files'), { recursive: true }, () => { });
-        cp('sources', Path.join(db.dirs.public, 'sources'), { recursive: true }, () => { });
-        return;
-    }
-
     // since v2
     let Provision = {
         v2: {
             site: db.site,
             nexo: {
-                logo: nexo_logo(),
+                logo: nexo_logo,
                 deploy_time,
             },
             proc: {

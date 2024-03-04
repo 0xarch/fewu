@@ -41,7 +41,7 @@
         "BingSiteAuth.xml":"/BingSiteAuth.xml",
         "robots.txt": "robots.txt"
     },
-    "excluded_posts": ["about.md","news.md","links.md"],
+    "excluded_posts": ["about.md","news.md","links.md","template.md"],
     "override": [],
     "widgets": {
         "comment":{
