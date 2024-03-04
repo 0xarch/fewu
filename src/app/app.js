@@ -18,6 +18,8 @@ import generateSearchStrings from '../modules/search.js';
  * @argument config [file] Configuration file for Nexo.
  * @argument theme [string] Use specified theme.
  * @argument init [void] WIP.
+ * @argument release build as release mode (for theme, **DEFAULT**)
+ * @argument devel build as developer mode (for theme)
  * 
  * **NOTE** Working in progress
  */
@@ -27,9 +29,9 @@ async function App() {
         readFileSync(db.proc.args['config'] || 'config.json').toString()), true));
     let deploy_time = new Date();
     const argv = gopt(process.argv);
-    let config_raw_text = readFileSync(argv['config'] || 'config.json').toString();
-    const GlobalConfig = JSON.parse(config_raw_text);
-    //if (!GlobalConfig.security) GlobalConfig.security = {};
+    let buildMode = argv['devel']?'devel':'release';
+
+    info(['BUILD MODE'],[buildMode,'GREEN']);
 
     const ThemeName = argv['theme'] || db.settings.get('theme.name');
 
@@ -76,6 +78,7 @@ async function App() {
             proc: {
 
             },
+            buildMode,
             GObject,
             ...CONSTANTS
         }
@@ -176,7 +179,7 @@ async function App() {
         excluded_posts,
         sort: sorted_posts,
         ID: sorted_posts.ID,
-        settings: GlobalConfig,
+        settings: db.settings.get_all(),
         theme: __provided_theme_config,
         user: db.settings.get('user'),
         __root_directory__: __public_root,
