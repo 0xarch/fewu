@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2.2.3-2 [NOW,EDITING,DEVEL] - 2024-03-04
+
+### New
+
+* build mode for theme to better organize (release/devel)
+
 ## 2.2.3-1 - 2024-03-04
 
 ### Changed
