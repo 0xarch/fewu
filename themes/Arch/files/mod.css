@@ -1,7 +1,3 @@
-@import url("widgets.css");
-@import url("location.css");
-@import url("card.css");
-
 :root {
     --card-radius: .675rem;
     --brand-color: #3273dc;

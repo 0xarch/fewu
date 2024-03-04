@@ -6,8 +6,8 @@ mixin prelude(post)
             window.addEventListener('DOMContentLoaded',()=>{
                 hljs.highlightAll();
             })
-    script(src=file("files/post.js"))
-    link(rel="stylesheet",href=file("files/post.css"))
+    script(src=linkPrefix("files/post.js"))
+    link(rel="stylesheet",href=linkPrefix("files/post.css"))
 
 mixin meta(post)
     meta(charset="utf-8")

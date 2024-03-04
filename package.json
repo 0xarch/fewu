@@ -11,7 +11,8 @@
         "@types/ejs": "^3.1.5"
     },
     "scripts": {
-        "start": "node src/main.js --config config.json",
+        "start": "node src/main.js --config config.json --release",
+        "start-dev": "node src/main.js --config config.json --devel",
         "init": "node src/main.js --init",
         "test": " node src/test.js",
         "update-theme": "node src/main.js --config config.json --only updateTheme"

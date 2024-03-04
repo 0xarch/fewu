@@ -58,5 +58,6 @@
         "public_directory": "public",
         "site_root": "/",
         "alwaysnew": true
-    }
+    },
+    "cdn": "https://cdn.jsdelivr.net/gh/0xarch/0xarch.github.io"
 }
