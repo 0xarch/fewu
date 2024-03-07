@@ -35,10 +35,14 @@ html
                                 each i in site.used_tags
                                     a.mark(style='--i:'+((i.length<=3?i.length:i.length%3) + Math.random()))=i
                 .card.update
-                    .heading| Update
+                    .heading= i18n('Build')
                     .inner.column
-                        .plain| Build time
-                        .plain= nexo.deploy_time
+                        .plain= i18n('Build time')+' '+nexo.deploy_time
+                        .plain= i18n('Node.js version')+' '+NODE_CORE_VERSION
+                        .plain= i18n('V8 version')+' '+NODE_V8_VERSION
+                        .plain= i18n('Node.js C++ modules version')+' '+NODE_CPP_VERSION
+                        .plain= i18n('Nexo version')+' '+NEXO_VERSION 
+                        .plain= i18n('Nexo code')+' '+NEXO_CODE
                 .card.theme
                     .heading| Theme
                     .inner.column
@@ -47,7 +51,7 @@ html
                             .logo-of-theme
                             != nexo.logo()
                 .card.plugin
-                    .heading| Plugin
+                    .heading| Node.js
                     .inner.column
                         .plain!=JSON.stringify(Plugin)
             +sidebar(Plugin.hasPropertyThenOr(theme,'overrideStatusPage.primarySidebarWidgets',theme.primarySidebarWidgets))

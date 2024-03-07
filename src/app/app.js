@@ -1,5 +1,5 @@
 import { gopt } from '../core/run.js';
-import * as Path from 'path';
+import { join } from 'path';
 import { readFileSync, writeFile, cp } from 'fs';
 import { write, proc_final as build_and_write } from '../core/builder.js';
 import { site, sort } from '../core/reader.js';
@@ -35,23 +35,23 @@ async function App() {
 
     const ThemeName = argv['theme'] || db.settings.get('theme.name');
 
-    const ThemeDir = Path.join('themes', ThemeName);
-    const ThemeConfig = JSON.parse(readFileSync(Path.join(ThemeDir, 'config.json')).toString());
+    const ThemeDir = join('themes', ThemeName);
+    const ThemeConfig = JSON.parse(readFileSync(join(ThemeDir, 'config.json')).toString());
     const ThemeLayoutType = ThemeConfig.layout.type;
 
-    db.theme = new Collection(JSON.parse(readFileSync(Path.join(ThemeDir, 'config.json')).toString()));
+    db.theme = new Collection(JSON.parse(readFileSync(join(ThemeDir, 'config.json')).toString()));
 
     db.dirs.posts = db.settings.get('build.post_directory') || "posts";
     db.dirs.public = db.settings.get('build.public_directory') || "public";
     db.dirs.root = !["/", "", undefined].includes(db.settings.get('build.site_root')) ? db.settings.get('build.site_root') : '';
-    db.dirs.theme.root = Path.join('themes', ThemeName);
-    db.dirs.theme.extra = Path.join(db.dirs.theme.root, 'extra');
-    db.dirs.theme.layout = Path.join(db.dirs.theme.root, 'layouts');
-    db.dirs.theme.files = Path.join(db.dirs.theme.root, 'files');
+    db.dirs.theme.root = join('themes', ThemeName);
+    db.dirs.theme.extra = join(db.dirs.theme.root, 'extra');
+    db.dirs.theme.layout = join(db.dirs.theme.root, 'layouts');
+    db.dirs.theme.files = join(db.dirs.theme.root, 'files');
 
     if (argv['only'] == 'updateTheme') {
-        cp(db.dirs.theme.files, Path.join(db.dirs.public, 'files'), { recursive: true }, () => { });
-        cp('sources', Path.join(db.dirs.public, 'sources'), { recursive: true }, () => { });
+        cp(db.dirs.theme.files, join(db.dirs.public, 'files'), { recursive: true }, () => { });
+        cp('sources', join(db.dirs.public, 'sources'), { recursive: true }, () => { });
         return;
     }
 
@@ -61,7 +61,7 @@ async function App() {
 
     let lang_file = {};
     {
-        let lang_file_path = Path.join(ThemeDir, 'extra/i18n.' + db.language + '.json');
+        let lang_file_path = join(ThemeDir, 'extra/i18n.' + db.language + '.json');
         try {
             lang_file = JSON.parse(readFileSync(lang_file_path).toString());
         } catch (_) { }
@@ -112,20 +112,20 @@ async function App() {
 
     /**
      * @param { string } file_dir 
-     * @returns string
+     * @returns {string}
      * @since v2
      */
     function __get_file_relative_dir(file_dir) {
         if (!file_dir) return __public_root + '/';
         if (file_dir[0] == '/')
             file_dir = file_dir.substring(1)
-        return __public_root + "/" + file_dir;
+        return join(db.dirs.root,'/',file_dir);
     }
     db.file = __get_file_relative_dir;
     let __provided_theme_config = GObject.mix(db.theme.get('default'), db.settings.get('theme.options'),true);
 
     if (db.settings.has('sitemap')) {
-        let path = Path.join(db.dirs.public, db.settings.get('sitemap.name')), type = db.settings.get('sitemap.type');
+        let path = join(db.dirs.public, db.settings.get('sitemap.name')), type = db.settings.get('sitemap.type');
         let url = db.settings.get('site_url');
         if (type == 'txt') {
             writeFile(path, sitemap.TXT(url, db.site.posts), () => { })
@@ -136,10 +136,10 @@ async function App() {
     if (db.settings.has('extra_files')) {
         let extra_file = db.settings.get('extra_files');
         for (let k in extra_file) {
-            cp(Path.join('extra', k), Path.join(db.dirs.public, extra_file[k]), () => { });
+            cp(join('extra', k), join(db.dirs.public, extra_file[k]), () => { });
         }
     }
-    Provision.v2.nexo.searchStringUrl = __get_file_relative_dir('searchStrings.json');
+    Provision.v2.nexo.searchStringUrl = db.file('searchStrings.json');
     if (db.theme.has('API')) {
         let api_conf = db.theme.get('API');
         if (api_conf.hasPlugin) {
@@ -149,28 +149,10 @@ async function App() {
             let insert_code = 'let Provision = undefined;\n';
             //if (GlobalConfig.security.allowFileSystemOperationInPlugin != true) insert_code += 'let fs = null;\n';
             //if (GlobalConfig.security.allowConfiguationChangeInPlugin != true) insert_code += `let GlobalConfig = sec_gconf;\n`;
-            let __plugin_file = readFileSync(Path.join(ThemeDir, 'extra/plugin.js'));
+            let __plugin_file = readFileSync(join(ThemeDir, 'extra/plugin.js'));
             let __plugin_script = 'try{\n' + insert_code + __plugin_file.toString() + '\nplugin()}catch(e){errno(20202);console.error(e);"NULL"}';
             __plugin = eval(__plugin_script);
         }
-        /*if (api_conf.searchComponent) {
-            let search_config = api_conf.searchComponent;
-            let arr = [];
-            let title = search_config.includes('title'),
-                id = search_config.includes('id'),
-                content = search_config.includes('content'),
-                date = search_config.includes('date');
-            for (let article of db.site.posts) {
-                let href = __get_file_relative_dir(article.path('website'));
-                let atitle = article.title;
-                if (title) { arr.push({ 'content': article.title, href, atitle }); }
-                if (id) { arr.push({ 'content': article.id, href, atitle }); }
-                if (content) { arr.push({ 'content': article.content.replace(/\n/g, ' '), href, atitle }); }
-                if (date) { arr.push({ 'content': article.date.toDateString(), href, atitle }); }
-            }
-            Provision.v2.nexo.searchStringUrl = __get_file_relative_dir('searchStrings.json');
-            writeFile(Path.join(db.dirs.public, 'searchStrings.json'), JSON.stringify(arr), () => { });
-        }*/
         generateSearchStrings();
     }
     let api_required = {
@@ -184,7 +166,7 @@ async function App() {
         user: db.settings.get('user'),
         __root_directory__: __public_root,
         __title__: __get_title,
-        file: __get_file_relative_dir,
+        file: db.file,
         i18n,
         mix: GObject.mix,
         has_property: (...I) => GObject.hasProperty(...I),
@@ -195,7 +177,7 @@ async function App() {
     for (let item of db.theme.get('layout.layouts')) {
         write(new Collection({ ...api_required }), new Layout(item));
     }
-    let postFilename = Path.join(db.dirs.theme.layout, db.theme.get('layout.post_layout'));
+    let postFilename = join(db.dirs.theme.layout, db.theme.get('layout.post_layout'));
     let postTemplate = readFileSync(postFilename).toString();
 
     part_build_page(ThemeLayoutType, postTemplate, posts, db.dirs.public, {
@@ -212,36 +194,36 @@ async function part_copyfiles() {
     let ThemeConfig = db.theme.get_all();
     let publicDir = db.dirs.public;
     let themeFileDir = db.dirs.theme.files;
-    cp(themeFileDir, Path.join(publicDir, 'files'), { recursive: true }, () => { });
-    cp('resources', Path.join(publicDir, 'resources'), { recursive: true }, () => { });
+    cp(themeFileDir, join(publicDir, 'files'), { recursive: true }, () => { });
+    cp('resources', join(publicDir, 'resources'), { recursive: true }, () => { });
     if (ThemeConfig.copy) {
         for (let key in ThemeConfig.copy) {
             if (key.charAt(0) == '@') {
                 switch (key) {
                     case "@posts":
                         run(() => {
-                            cp('posts', Path.join(publicDir, ThemeConfig.copy['@posts']), { recursive: true }, () => { });
+                            cp('posts', join(publicDir, ThemeConfig.copy['@posts']), { recursive: true }, () => { });
                         }, 9101);
                         break;
                 }
             } else {
                 run(() => {
-                    cp(Path.join(themeFileDir, 'extra', key), Path.join(publicDir, ThemeConfig.copy[key]), { recursive: true }, () => { });
+                    cp(join(themeFileDir, 'extra', key), join(publicDir, ThemeConfig.copy[key]), { recursive: true }, () => { });
                 }, 9102);
             }
         }
     }
     if (ThemeConfig.enableThemeWebsiteIcon) {
-        cp(Path.join(themeFileDir, 'extra/favicon.ico'), publicDir, () => { });
+        cp(join(themeFileDir, 'extra/favicon.ico'), publicDir, () => { });
     } else {
-        cp('./nexo_sources/favicon.ico', Path.join(publicDir, 'favicon.ico'), (e) => { if (e) throw e });
+        cp('./nexo_sources/favicon.ico', join(publicDir, 'favicon.ico'), (e) => { if (e) throw e });
     }
     info(['OPERATION.COPY', 'MAGENTA', 'BOLD'], ['COMPLETE', 'GREEN']);
 }
 
 async function part_build_page(layoutType, template, Articles, publicDir, options, GivenVariables) {
     db.site.posts.forEach(async item => {
-        let destname = Path.join(db.dirs.public, item.path('local'));
+        let destname = join(db.dirs.public, item.path('local'));
         build_and_write(layoutType, template, options, {
             post: item,
             ...GivenVariables

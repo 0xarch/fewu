@@ -1,6 +1,15 @@
 import GObject from './gobject.js';
 import { Category,Tag } from '../lib/classes.js';
-import Cache from '../lib/class.cache.js';
+
+class BuiltinCorrespond {
+    from='';
+    to='';
+    constructor(from,to){
+        this.from = from;
+        this.to = to;
+    }
+}
+function Correspond(from,to){return new BuiltinCorrespond(from,to)}
 
 class Collection {
     #obj;
@@ -26,8 +35,34 @@ class Collection {
     get_all=this.asObject;
 }
 
+class Cache {
+    #cache={};
+    has(name){
+        return this.#cache[name] != undefined;
+    }
+    /**
+     * @deprecated
+     */
+    stored=(name)=>this.has(name);
+    get(name){
+        return this.#cache[name];
+    }
+    set(name,v){
+        this.#cache[name] = v;
+    }
+    has_or_set(name,fallback){
+        if(this.has(name)){
+            return this.get(name);
+        } else {
+            this.set(name,fallback);
+            return fallback;
+        }
+    }
+}
+
 export {
     Collection,
+    Correspond,
     Cache,
     Category,
     Tag

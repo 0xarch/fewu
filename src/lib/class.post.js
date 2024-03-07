@@ -3,7 +3,7 @@ import { warn } from "./mod.js";
 import { notFake } from "./closures.js";
 import { readFileSync, statSync } from "fs";
 import { parse } from "marked";
-import Cache from "./class.cache.js";
+import { Cache } from "../core/struct.js";
 import { License, Datz } from "./classes.js";
 
 class Post{
@@ -85,7 +85,7 @@ class Post{
             i++;
             while (lines[i] !== "---") {
                 let __tempor_val = lines[i].split(":");
-                getted[__tempor_val.shift()] = __tempor_val.join(":");
+                getted[__tempor_val.shift()] = __tempor_val.map(v=>v[0]==' '?v.replace(' ',''):v).join(":");
                 i++;
             }
             i++;

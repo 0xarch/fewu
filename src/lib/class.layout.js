@@ -1,4 +1,4 @@
-import { Correspond } from "./file_class.js";
+import { Correspond } from "../core/struct.js";
 
 class Layout{
     #correspond;
@@ -9,7 +9,7 @@ class Layout{
     #option;
     #addition;
     constructor(json){
-        this.#correspond = new Correspond(json.from||json.build.filename,json.to||json.build.destname);
+        this.#correspond = Correspond(json.from||json.build.filename,json.to||json.build.destname);
         this.#name = json.name||'NONAME';
         this.#isVarias = json.varias||(json.build&&json.build.varias)?true:false;
         this.#isCycling = json.cycling||(json.build&&json.build.cycling)?true:false;
