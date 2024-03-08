@@ -20,7 +20,7 @@
     "copy": {
         "@posts": "posts"
     },
-    "enableThemeWebsiteIcon": false,
+    "enableThemeWebsiteIcon": true,
     "default": {
         "3rd-bar": false,
         "verticalNavbar": false,
