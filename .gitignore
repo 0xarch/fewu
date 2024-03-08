@@ -8,3 +8,4 @@ extra/*
 doc/*
 posts/*
 resources/*
+src/*.fks

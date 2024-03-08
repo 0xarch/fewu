@@ -10,6 +10,9 @@ class Post{
     static sort(a,b){
         return a.datz.compareWith(b.datz)?1:-1;
     }
+    static testHasH1(string) {
+        return /\n# /.test(string);
+    }
     raw_string;
     content;
     html;
@@ -99,6 +102,10 @@ class Post{
         this.date = new Date(getted.date);
         this.license = new License(getted.license||'');
         this.imageUrl = getted.imageUrl||'';
+        if(getted.old){
+            this.old = true;
+            warn(['OLD POST','YELLOW'],[this.title,'MAGENTA']);
+        }
         if(!getted.keywords) this.keywords = this.tags;
         else this.keywords = getted.keywords.split(" ").filter(notFake);
 
@@ -111,6 +118,7 @@ class Post{
         } else {
             this.content = lines.slice(moreIndex).join('\n');
         }
+        if(!Post.testHasH1(this.content)) this.content = '# '+this.title+'\n'+this.content;
         this.foreword = lines.slice(i, (moreIndex !== -1) ?moreIndex :5) .join('\n').replace(/\#*/g,'');
         let fwc = word_count(this.foreword);
         this.wordCount = word_count(this.content);
@@ -127,11 +135,7 @@ class Post{
         this.datz = new Datz(...gz);
         this.ECMA262Date = this.date.toDateString();
         
-        this.transformedTitle = getted.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'\～\·\「\」\；\：\‘\’\“\”\，\。\《\》\？\！\￥\…\、\（\）]/g,'');
-        if(getted.old){
-            this.old = true;
-            warn(['OLD POST','YELLOW'],[this.title,'MAGENTA']);
-        }
+        this.transformedTitle = getted.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'\～\·\「\」\；\：\‘\’\“\”\，\。\《\》\？\！\￥\…\、\（\）]+/g,'');
 
         this.id = id;
         let tempor_val = `read/${(+gz.join("")).toString(36)}${new Buffer.from(this.transformedTitle).toString("base64")}`;

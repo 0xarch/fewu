@@ -1,7 +1,7 @@
 mixin prelude(post)
     if post.property.highlight
-        link(rel="stylesheet",href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css")
-        script(src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js")
+        link(rel="stylesheet",href="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/styles/default.min.css")
+        script(src="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/highlight.min.js")
         script.
             window.addEventListener('DOMContentLoaded',()=>{
                 hljs.highlightAll();

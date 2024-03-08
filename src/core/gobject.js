@@ -53,6 +53,10 @@ class GObject {
         }
         return result;
     }
+
+    static deleteEscapingChar(str){
+        return str.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;"'～·「」；：‘’“”，。《》？！￥…、（）]+/g,'');
+    }
 }
 
 function getPropertyPathFrom(property_path){

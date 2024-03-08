@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.2.4 [BETA] - 2024-03-08
+
+### New
+* Automatically adds H1 tag in post
+
 ## 2.2.3-2 - 2024-03-04
 
 ### New
@@ -65,9 +70,9 @@
 
 ### In Progress
 
-* `core/database` for storing configs,etc, in running
-* `lib/class.theme` for storing theme configuration
-* `modules/init` for greenhand initialization
+* [x] `core/database` for storing configs,etc, in running [ 2.2.2]
+* [ ] `lib/class.theme` for storing theme configuration [Marked as deprecated]
+* [ ] `modules/init` for greenhand initialization
 
 ## 2.1.2 - 2024-02-27
 
@@ -120,8 +125,8 @@
 
 ### Planned
 
-* use new `Collection` for all functions and remove old codes
-* move old builder to new place
+* [x] use new `Collection` for all functions and remove old codes [ 2.2.3]
+* [x] move old builder to new place [ 2.2.3]
 
 ### Prepared
 
@@ -136,7 +141,7 @@
 
 ### Planned
 
-* better variable requiring
+* [x] better variable requiring [database 2.2.0]
 
 ## 2.0.3-2 - 2024-02-26
 
@@ -239,7 +244,7 @@
 
 ### Known bugs
 
-* Error during parsing EJS template <ERROR "Could not find the include file">
+* Error during parsing EJS template ERROR "Could not find the include file" [Marked as deprecated]
 
 ## 2.0.1 - 2024-02-16
 
@@ -257,10 +262,10 @@
 * Hail(Low performance) use native fs now.
 
 ### In Progress
-* Sitemap(xml) support [2.0.2]
-* new Builder class
-* new Base class
-* new parser port
-* WebAssembly (rust/c++)
-* Page description support (Function/Variable) [2.0.2]
-* RSS support [2.0.2]
+* [x] Sitemap(xml) support [ 2.0.2]
+* [ ] new Builder class
+* [x] new Base class [GObject 2.1.0]
+* [ ] new parser port []
+* [ ] WebAssembly (rust/c++)
+* [x] Page description support (Function/Variable) [ 2.0.2]
+* [x] RSS support [ 2.0.2]

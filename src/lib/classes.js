@@ -2,7 +2,7 @@ import { parse } from "marked";
 import { word_count } from "./reader.js";
 import { notFake } from "./closures.js";
 import { warn } from "./mod.js";
-import Cache from './class.cache.js';
+import { Cache } from '../core/struct.js';
 
 
 class License{

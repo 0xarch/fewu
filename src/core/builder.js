@@ -13,9 +13,8 @@ import Layout from "../lib/class.layout.js";
  * @param {Collection} config 
  * @param {Collection} collection 
  * @param {Layout} file
- * @param {{}} option
  */
-async function write(collection, file, option) {
+async function write(collection, file) {
     let theme = db.theme;
     let config = db.settings;
     let theme_directory = db.dirs.theme.root;
