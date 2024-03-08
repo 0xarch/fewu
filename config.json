@@ -22,7 +22,6 @@
     "theme":{
         "name":"Arch",
         "options":{
-            "3rd_bar":false,
             "verticalNavbar":true
         },
         "title":{

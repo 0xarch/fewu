@@ -1,6 +1,14 @@
 # CHANGELOG
 
-## 2.2.4 [BETA] - 2024-03-08
+**BETA NOW**
+
+## 2.2.4-1 - 2024-03-8
+
+### Fixed
+
+* i18n number matching bug
+
+## 2.2.4 - 2024-03-08
 
 ### New
 * Automatically adds H1 tag in post
