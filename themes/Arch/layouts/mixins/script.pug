@@ -35,6 +35,18 @@ mixin sidebar(primaryWidget=theme.primarySidebarWidgets,secondaryWidget=theme.se
         div(class='sidebar-'+['r','l'][c])
             +add_widgets(secondaryWidget)
 
+mixin sidebar2(type)
+    - let primaryWidget = Plugin.hasPropertyThenOr(theme,'override'+type+'Page.primarySidebarWidgets',theme.primarySidebarWidgets)
+    - let secondaryWidget = Plugin.hasPropertyThenOr(theme,'override'+type+'Page.secondarySidebarWidgets',theme.secondarySidebarWidgets)
+    - let c = 0
+    if theme['side_position']=='right'
+        - c = 1
+    aside(class='sidebar-'+['l','r'][c])
+        +add_widgets(primaryWidget)
+    if theme['3rd_bar']
+        aside(class='sidebar-'+['r','l'][c])
+            +add_widgets(secondaryWidget)
+
 mixin postcard_deprecated(item)
     .card.post
         if item.imageUrl

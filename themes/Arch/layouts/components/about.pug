@@ -4,17 +4,17 @@
             - let color = Plugin.getColorByString(user.name)
             .avatarText(style='--color:'+color+';--bolor:'+color+'6f')= user.name[0].toUpperCase()
             .heading=user.name
-            .describe=user.note
-            .location=user.location
+            div=user.note
+            div=user.location
         .flex.p8.jcc
             a.Button.f_eaj(href=user.url,style='width:100%')= i18n('Follow')
         .flex.ta-c.jc-se.alc
-            .posts
+            div
                 span= i18n('Articles')
                 p= site.posts.length
-            .categories
+            div
                 span= i18n('Categories')
                 p= site.category_count
-            .tags
+            div
                 span= i18n('Tags')
                 p= site.tag_count

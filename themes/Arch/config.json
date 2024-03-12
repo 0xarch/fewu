@@ -41,7 +41,8 @@
         "overrideAboutPage": {
             "primarySidebarWidgets": [
                 "about",
-                "contact"
+                "contact",
+                "recent"
             ]
         }
     },

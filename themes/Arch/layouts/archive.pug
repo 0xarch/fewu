@@ -26,7 +26,7 @@ html
                                 .Heading.onbrand= post.title
                                 .less!= post.parsedForeword
                 +foot_navigator(cycling.total,cycling.now,'archive')
-            include /includes/sidebar.pug
+            +sidebar2('Archives')
         include /includes/footer.pug
         include /components/searchPanel.pug
     style.

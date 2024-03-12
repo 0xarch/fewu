@@ -13,6 +13,6 @@ html(lang="zh")
             main.content
                 .Card
                     #markdown_fillContent.container!= post.getParsed('content')
-            +sidebar(Plugin.hasPropertyThenOr(theme,'overrideAboutPage.primarySidebarWidgets',theme.primarySidebarWidgets))
+            +sidebar2('About')
         include /includes/footer.pug
         include /components/searchPanel.pug

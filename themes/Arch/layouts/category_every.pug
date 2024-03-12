@@ -13,6 +13,6 @@ html
                 each bid in cycling.value
                     +postcard(ID[bid])
                 +foot_navigator(cycling.total,cycling.now,'category/s'+varias.name)
-            +sidebar(Plugin.hasPropertyThenOr(theme,'overrideCategoryPage.primarySidebarWidgets',theme.primarySidebarWidgets))
+            +sidebar2('Category')
         include /includes/footer.pug
         include /components/searchPanel.pug
