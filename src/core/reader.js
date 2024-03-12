@@ -67,6 +67,7 @@ function site() {
         bid++;
     }
     let prev_id;
+    posts.sort(Post.sort);
     posts.forEach((v, i, a) => {
         v.setPrev(prev_id);
         prev_id = v.id;

@@ -2,7 +2,13 @@
 
 **BETA NOW**
 
-## b1.0.2(2.2.4-2) - 2024-03-12
+## b1.0.3(n2.2.4-3) [WORKING] - 2024-03-12
+
+### Changed
+
+* pre sorted for posts [commit n2.2.4-3:0]
+
+## b1.0.2(n2.2.4-2) - 2024-03-12
 
 The same as 2.2.4-2 , this is a bump tag where version-rel and version-nexo separated.
 
