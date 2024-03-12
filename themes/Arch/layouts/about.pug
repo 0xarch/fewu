@@ -1,16 +1,17 @@
 include /mixins/script.pug
+include /mixins/post_script.pug
 doctype html 
 html(lang="zh")
     head 
-        +meta(user.note,user.keyword||'About')
         +base()
-        include /includes/post_prelude.pug
+        +prelude(post)
+        +meta(post)
         title= __title__(post.title,'read')
     body(OCP='OVERRIDE')
         +header()
         #main(class=theme['3rd-bar']&&'multi')
-            .content
-                .card
+            main.content
+                .Card
                     #markdown_fillContent.container!= post.getParsed('content')
             +sidebar(Plugin.hasPropertyThenOr(theme,'overrideAboutPage.primarySidebarWidgets',theme.primarySidebarWidgets))
         include /includes/footer.pug

@@ -1,6 +1,6 @@
 if GObject.hasProperty(user,'data.contact')
     .Card.__
-        .Heading= i18n('Contact')
+        header= i18n('Contact')
         .container
             .RowList
                 each v,i in user.data.contact
