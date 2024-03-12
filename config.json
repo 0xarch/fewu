@@ -7,7 +7,10 @@
         "location": "Xvd 114514",
         "data":{
             "contact": {
-                "[Matrix]": "https://matrix.to/#/#solo_esta_vez:mozilla.org",
+                "Github Page": "https://0xarch.github.io",
+                "Bitbucket Page": "https://0xarch.bitbucket.io",
+                "[Matrix] Moz": "https://matrix.to/#/#solo_esta_vez:mozilla.org",
+                "[Matrix] Fedora": "https://matrix.to/#/#solo_esta_vez:fedora.im",
                 "E-Mail": "mailto:alanqa-ops@outlook.com"
             },
             "announcement": "本博客随时可能发生包括爆炸在内的一系列奇异事件, 请勿惊慌!"
