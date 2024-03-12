@@ -6,7 +6,7 @@ import { site, sort } from '../core/reader.js';
 import { SettingsTemplate } from '../core/config_template.js';
 import db from '../core/database.js';
 import GObject from '../core/gobject.js';
-import CONSTANTS from '../core/constants.js';
+//import CONSTANTS from '../core/constants.js';
 import { Collection } from '../core/struct.js';
 import Layout from '../lib/class.layout.js';
 import { info, nexo_logo, run } from '../lib/mod.js';
@@ -27,24 +27,17 @@ async function App() {
     db.proc.args = gopt(process.argv);
     db.settings = new Collection(GObject.mix(SettingsTemplate, JSON.parse(
         readFileSync(db.proc.args['config'] || 'config.json').toString()), true));
-    let deploy_time = new Date();
+    let deploy_time = db.proc.time;
     const argv = gopt(process.argv);
     let buildMode = argv['devel']?'devel':'release';
+    db.builder.mode = buildMode;
 
     info(['BUILD MODE'],[buildMode,'GREEN']);
-
-    const ThemeName = argv['theme'] || db.settings.get('theme.name');
-
-    const ThemeDir = join('themes', ThemeName);
-    const ThemeConfig = JSON.parse(readFileSync(join(ThemeDir, 'config.json')).toString());
-    const ThemeLayoutType = ThemeConfig.layout.type;
-
-    db.theme = new Collection(JSON.parse(readFileSync(join(ThemeDir, 'config.json')).toString()));
 
     db.dirs.posts = db.settings.get('build.post_directory') || "posts";
     db.dirs.public = db.settings.get('build.public_directory') || "public";
     db.dirs.root = !["/", "", undefined].includes(db.settings.get('build.site_root')) ? db.settings.get('build.site_root') : '';
-    db.dirs.theme.root = join('themes', ThemeName);
+    db.dirs.theme.root = join('themes', argv['theme'] || db.settings.get('theme.name'));
     db.dirs.theme.extra = join(db.dirs.theme.root, 'extra');
     db.dirs.theme.layout = join(db.dirs.theme.root, 'layouts');
     db.dirs.theme.files = join(db.dirs.theme.root, 'files');
@@ -55,17 +48,22 @@ async function App() {
         return;
     }
 
+    db.theme = new Collection(JSON.parse(readFileSync(join(db.dirs.theme.root, 'config.json')).toString()));
+
+    db.builder.type = db.theme.get('layout.type');
     db.language = db.settings.get('language') || 'en-US';
     db.site = site();
     db.sort = sort(db.site.posts);
 
     let lang_file = {};
     {
-        let lang_file_path = join(ThemeDir, 'extra/i18n.' + db.language + '.json');
+        let lang_file_path = join(db.dirs.theme.root, 'extra/i18n.' + db.language + '.json');
         try {
             lang_file = JSON.parse(readFileSync(lang_file_path).toString());
         } catch (_) { }
     }
+
+    let constants = (await import('../core/constants.js')).default;
 
     // since v2
     let Provision = {
@@ -80,7 +78,15 @@ async function App() {
             },
             buildMode,
             GObject,
-            ...CONSTANTS
+            ...constants
+        },
+        v3: {
+            db,
+            site: db.site,
+            proc: db.proc,
+            nexo: {
+                logo: nexo_logo,
+            }
         }
     };
 
@@ -147,9 +153,7 @@ async function App() {
             let sec_gconf = Object.assign({}, Provision.v2.site); sec_gconf;
             let site = Object.assign({}, Provision.v2.site); site;
             let insert_code = 'let Provision = undefined;\n';
-            //if (GlobalConfig.security.allowFileSystemOperationInPlugin != true) insert_code += 'let fs = null;\n';
-            //if (GlobalConfig.security.allowConfiguationChangeInPlugin != true) insert_code += `let GlobalConfig = sec_gconf;\n`;
-            let __plugin_file = readFileSync(join(ThemeDir, 'extra/plugin.js'));
+            let __plugin_file = readFileSync(join(db.dirs.theme.root, 'extra/plugin.js'));
             let __plugin_script = 'try{\n' + insert_code + __plugin_file.toString() + '\nplugin()}catch(e){errno(20202);console.error(e);"NULL"}';
             __plugin = eval(__plugin_script);
         }
@@ -178,9 +182,9 @@ async function App() {
         write(new Collection({ ...api_required }), new Layout(item));
     }
     let postFilename = join(db.dirs.theme.layout, db.theme.get('layout.post_layout'));
-    let postTemplate = readFileSync(postFilename).toString();
+    db.builder.template.post = readFileSync(postFilename).toString();
 
-    part_build_page(ThemeLayoutType, postTemplate, posts, db.dirs.public, {
+    part_build_page({
         basedir: db.dirs.theme.layout,
         filename: postFilename
     }, {
@@ -221,7 +225,9 @@ async function part_copyfiles() {
     info(['OPERATION.COPY', 'MAGENTA', 'BOLD'], ['COMPLETE', 'GREEN']);
 }
 
-async function part_build_page(layoutType, template, Articles, publicDir, options, GivenVariables) {
+async function part_build_page(options, GivenVariables) {
+    const layoutType = db.builder.type;
+    const template = db.builder.template.post;
     db.site.posts.forEach(async item => {
         let destname = join(db.dirs.public, item.path('local'));
         build_and_write(layoutType, template, options, {

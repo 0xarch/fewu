@@ -17,7 +17,7 @@ let db = {
      * @type {string}
      */
     language:void 0,
-    dirs:{
+    dirs: {
         posts:"posts",
         public:"public",
         root: "/",
@@ -28,10 +28,20 @@ let db = {
             files:''
         }
     },
+    builder: {
+        mode: '',
+        type: '',
+        template: {
+            post: ''
+        },
+        /**
+         * @type {object}
+         */
+        api_required: void 0
+    },
     proc:{
         time: new Date()
     },
     constants:void 0
 };
-
 export default db;

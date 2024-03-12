@@ -2,7 +2,18 @@
 
 **BETA NOW**
 
-## 2.2.4-1 - 2024-03-8
+## 2.2.4-2 - 2024-03-08
+
+### Removed
+
+* old codes
+
+### New
+
+* `builder` section in database
+* `NULL_OBJECT` function to create an object that it's prototype = null
+
+## 2.2.4-1 - 2024-03-08
 
 ### Fixed
 
