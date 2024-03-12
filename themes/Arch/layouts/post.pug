@@ -46,17 +46,18 @@ html(lang="zh")
                         .container
                             | The copyright of this article belongs to the original author. When others share it, they are not allowed to create it again and must indicate the original author.
                 .card.readnext.foot-navigator.flex
-                    - let earliest = post.prevID?false:true
-                    - let latest = post.nextID?false:true
+                    - let earliest = post.nextID?false:true
+                    - let latest = post.prevID?false:true
                     - let __prev = ID[post.prevID]
                     - let __next = ID[post.nextID]
-                    a.Button(href=!earliest&&file(__prev.path('website')),class=earliest?'disabled':'')
+                    a.Button(href=!latest&&file(__prev.path('website')),class=latest?'disabled':'')
                         .arrow='<<'
-                        .nowrap= earliest?i18n('Already earliest'):__prev.title
+                        .nowrap= latest?i18n('Already latest'):__prev.title
                     .spacer
-                    a.Button(href=!latest&&file(__next.path('website')),,class=latest?'disabled':'')
-                        .nowrap= latest?i18n('Already latest'):__next.title
+                    a.Button(href=!earliest&&file(__next.path('website')),class=earliest?'disabled':'')
+                        .nowrap= earliest?i18n('Already earliest'):__next.title
                         .arrow='>>'
+
             +sidebar()
         include /includes/footer.pug
         include /components/searchPanel.pug
