@@ -21,6 +21,7 @@
     "Now": "当前",
     "Content": "目录",
     "{NUMBER} pages in total": "共{NUMBER}页",
+    "Page {NUMBER}": "第{NUMBER}页",
     "{NUMBER} in total": "共{NUMBER}个",
     "Page {NUMBER} now": "当前{NUMBER}页",
     "Already earliest": "已是最早",
@@ -29,5 +30,6 @@
     "Last post": "上次发布",
     "Foreword": "前言",
     "Distribution License Agreement": "传播许可协议",
-    "Page generated": "页面已生成 "
+    "Page generated": "页面已生成 ",
+    "Posted recently": "最近发布的博文"
 }

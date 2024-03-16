@@ -2,17 +2,17 @@ include /mixins/script.pug
 doctype html
 html 
     head 
-        +meta(user.note,i18n('Blogs'))
-        +base()
-        include /includes/css_iac.pug
-        title= __title__(i18n('Blogs'),user.name)
+        +meta(user.note,i18n('Posts'))
+        +gbase()
+        title= __title__(i18n('Posts'),user.name)
     body(OCP='OVERRIDE') 
-        +header()
-        #main
-            .content
-                each bid in cycling.value
-                    +postcard(ID[bid])
-                +foot_navigator(cycling.total,cycling.now,'page')
-            +sidebar()
+        +gnome_header()
+        .intro#intro.tac
+            h1= i18n('Posts') + i18n('Page '+cycling.now)
+        main.content#content
+            ul.intros(style='grid-template-columns:repeat(auto-fill,minmax(480px,1fr))')
+                    each bid in cycling.value
+                        +post_li(ID[bid])
+            +foot_navigator(cycling.total,cycling.now,'page')
         +gnome_footer()
         include /components/searchPanel.pug

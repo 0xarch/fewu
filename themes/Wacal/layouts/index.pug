@@ -23,11 +23,12 @@ html(lang="zh")
                     div=user.note
                     div=user.location
                     a.fol.eaj(href=user.url)= i18n('Follow')
-        main#content
+        main.content#content
             +counter_section()
             .special
                 div
                     h1.m0= i18n('Posts')
+                    small= i18n('Posted recently')
             ul.intros(style='grid-template-columns:repeat(auto-fill,minmax(480px,1fr))')
                 each bid in sort.defaultOrder.slice(0,10)
                     +post_li(ID[bid])

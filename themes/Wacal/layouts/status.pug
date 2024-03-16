@@ -9,7 +9,7 @@ html
         +gnome_header()
         #intro.intro.tac
             h1=i18n('Status')
-        main#content
+        main.content#content
             +counter_section()
             .special
                 h2= i18n('All categories')
@@ -30,23 +30,16 @@ html
             section.small
             .special
                 h2= i18n('Local information')
-            .ngs.fl.col.jcsa.p8
+            .ngs.fl.jcsa.p8
                 .l1
-                    .plain= i18n('Node.js version')+' '+NODE_CORE_VERSION
-                    .plain= i18n('V8 version')+' '+NODE_V8_VERSION
-                    .plain= i18n('Node.js C++ modules version')+' '+NODE_CPP_VERSION
-                    .plain= i18n('Nexo version')+' '+NEXO_VERSION 
-                    .plain= i18n('Nexo code')+' '+NEXO_CODE
-                    .plain= 'LANG '+LANG
+                    each v,k in CONSTANTS
+                        div
+                            b=k
+                            i=v
                 .l2
-                    .plain| Nexo with Wacal Theme v1.0.1
+                    .plain| Nexo with Wacal Theme v1.0.2
                     .fl.alc
                         .logo-of-theme
                         != nexo.logo()
         +gnome_footer()
         include /components/searchPanel.pug
-    style.
-        .counter{
-            justify-content: space-evenly;
-            font-size: 1.25em;
-        }

@@ -8,9 +8,9 @@ html
         title= __title__(i18n('Tags'),user.name)
     body.new(OCP='OVERRIDE')
         +gnome_header()
-        .intro.tac
+        .intro#intro.tac
             h1= i18n('Categories')
-        main#content
+        main.content#content
             ul.intros
                 each item in cycling.value
                     +intro_li(item.value)
