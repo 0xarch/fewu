@@ -1,0 +1,46 @@
+.Card{padding:.25rem}
+.card.p8,.Card.p8{padding:.5rem}
+
+.foot-navigator>a{
+    padding: .45rem .8rem;
+    background: var(--text-background);
+    border: 1px solid var(--text-foreground-25);
+}
+.foot-navigator>a:hover{
+    color: var(--brand-color);
+}
+.foot-navigator>:not(:first-child){
+    border-left: 0;
+}
+.foot-navigator>:first-child{
+    border-radius: .8rem 0 0 .8rem;
+}
+.foot-navigator>:last-child{
+    border-radius: 0 .8rem .8rem 0;
+}
+:is(.card,.Card)>:is(.inner,.container,.grid){
+    padding: .625rem;
+    width: 100%;
+}
+:is(.card,.Card)>.inner{display:flex}
+
+:is(.card,.Card)>.grid{
+    display: grid;
+    grid-template-columns: var(--i);
+}
+
+:is(.card,.Card)+:is(.card,.Card){margin-top:1.5rem}
+
+.Grid>:is(.card,.Card)+:is(.card,.Card){margin-top:var(--card-m)}
+
+.Card.-Type-{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: .5rem;
+}
+
+.Card.-Type->.Heading{
+    grid-column-start:1;
+    grid-column-end: 3;
+}

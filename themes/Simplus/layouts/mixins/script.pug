@@ -1,0 +1,52 @@
+include /mixins/components.pug
+
+- let linkPrefix = (buildMode=='devel'||!settings.cdn)?(v)=>file(v):(v)=>settings.cdn+v
+
+mixin add_widget(type,options)
+    case type
+        when 'search'
+            include /components/comp_search.pug
+        when 'announcement'
+            include /components/announcement.pug
+        when 'recent'
+            include /components/recent.pug
+        when 'toc'
+            include /components/toc.pug
+        when 'contact'
+            include /components/contact.pug
+
+mixin add_widgets(array)
+    each item of array
+        +add_widget(item)
+
+mixin topbar()
+    include /includes/topbar.pug
+
+mixin header()
+    include /includes/header_org.pug
+
+mixin sidebar(primaryWidget=theme.primarySidebarWidgets,secondaryWidget=theme.secondarySidebarWidgets)
+    .sidebar
+        +add_widgets(primaryWidget)
+        +add_widgets(secondaryWidget)
+
+mixin postcard(item)
+    - let post = item
+    include /components/postcard.pug
+
+mixin meta(des,key)
+    link(rel="icon",href=file("files/icon.svg"))
+    meta(charset="utf-8")
+    meta(name="viewport",content="width:device-width,initial-scale=1.0")
+    meta(name="author" content=user.name)
+    meta(name="description" content=des.toString())
+    meta(name="keywords" content=Array.isArray(key)?key.join(" "):key)
+    meta(http-equiv="content-language" content=settings.language)
+
+mixin base()
+    link(rel="stylesheet",href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.2/css/all.min.css")
+    link(rel="stylesheet",href=linkPrefix('/files/mod.css'))
+    link(rel="stylesheet",href=linkPrefix('/files/widgets.css'))
+    link(rel="stylesheet",href=linkPrefix('/files/location.css'))
+    link(rel="stylesheet",href=linkPrefix('/files/card.css'))
+    script(src=linkPrefix('/files/ui.js'))

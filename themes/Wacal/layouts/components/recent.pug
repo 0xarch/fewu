@@ -1,0 +1,8 @@
+.Card.__
+    header= i18n('Recent')
+    .inner.column
+        .RowList
+            each id in sort.defaultOrder.slice(0,5)
+                - let item = ID[id]
+                a.Row.onbrand(href=file(item.path('website')))=item.title
+                hr

@@ -67,18 +67,18 @@ class Datz {
         this.d = d;
     }
     compareWith(datz){
-        if(datz.y>this.y)return true;
-        if(datz.y<this.y)return false;
-        if(datz.m>this.m)return true;
-        if(datz.m<this.m)return false;
-        if(datz.d>this.d)return true;
-        return false;
+        if(datz.y>this.y)return 1;
+        if(datz.y<this.y)return -1;
+        if(datz.m>this.m)return 1;
+        if(datz.m<this.m)return -1;
+        if(datz.d>this.d)return 1;
+        return 0;
     }
     isEarlierThan(datz){
-        return this.compareWith(datz);
+        return this.compareWith(datz)==-1;
     }
     isLaterThan(datz){
-        return !this.compareWith(datz);
+        return !this.compareWith(datz)==1;
     }
     toPathString(){
         return this.y+'/'+this.m+'/'+this.d;

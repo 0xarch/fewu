@@ -23,7 +23,7 @@
     },
     "language": "zh-CN",
     "theme":{
-        "name":"Arch",
+        "name":"Wacal",
         "options":{
             "verticalNavbar":true,
             "customEyeImageUrl":"https://ts1.cn.mm.bing.net/th/id/R-C.0c6ec665d5316e8e08500ac15f530a9e?rik=2D5skp2bF58pNg&riu=http%3a%2f%2fwww.pixelstalk.net%2fwp-content%2fuploads%2f2016%2f05%2fDownload-wallpaper-for-pc.jpg&ehk=%2fC%2feQRX%2fcLjGq4eGzvKPRtgKpo%2bsedFnaIW4%2fNKAYJ4%3d&risl=&pid=ImgRaw&r=0"
@@ -62,6 +62,6 @@
         "site_root": "/",
         "alwaysnew": true
     },
-    "cdn": "https://cdn.jsdelivr.net/gh/0xarch/0xarch.github.io/",
+    "cdn": "https://fastly.jsdelivr.net/gh/0xarch/0xarch.github.io/",
     "enabled_modules": ["i18n","search","sitemap"]
 }

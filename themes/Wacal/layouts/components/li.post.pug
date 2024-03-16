@@ -1,0 +1,9 @@
+li
+    a(href=file(item.path('website')))
+        header
+            h2= item.title
+        small.less!= item.foreword
+        b.meta
+            date= item.date.toLocaleDateString(settings.language,{dateStyle:'full'})
+            span= item.category
+            span= item.wordCount+i18n('Characters') 

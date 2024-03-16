@@ -8,7 +8,7 @@ import { License, Datz } from "./classes.js";
 
 class Post{
     static sort(a,b){
-        return a.datz.compareWith(b.datz)?1:-1;
+        return a.datz.compareWith(b.datz);
     }
     static testHasH1(string) {
         return /\n# /.test(string);

@@ -3,8 +3,6 @@ public/
 package-lock.json
 src/Trashed/
 src/Next/
-themes/Simplus/
-themes/Wacal/
 extra/*
 doc/*
 posts/*

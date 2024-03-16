@@ -1,0 +1,29 @@
+include /mixins/script.pug
+include /mixins/pages.pug
+doctype html
+html 
+    head 
+        +meta(user.note,i18n('Archives'))
+        +base()
+        title= __title__(i18n('Archives'),user.name)
+    body(OCP='OVERRIDE') 
+        +topbar()
+        header(class=(!theme.customEyeImageUrl)&&'nomix',style='background:'+(theme.customEyeImageUrl?'url('+theme.customEyeImageUrl+')':'var(--brand-color-75)'))
+            .Heading= i18n('Archives')
+        #main
+            .content
+                .Card
+                    - let used_year = []
+                    each bid in cycling.value
+                        - let post = ID[bid]
+                        if !used_year.includes(post.datz.y)
+                            - used_year.push(post.datz.y)
+                            .Heading= post.datz.y
+                        +post(post)
+                hr
+                +foot_navigator(cycling.total,cycling.now,'archive')
+            include /includes/sidebar.pug
+        include /includes/footer.pug
+        include /components/searchPanel.pug
+    style.
+        .card.post{border-radius:0;display: block;margin: 0}.content>.Card{padding:0;overflow:hidden}

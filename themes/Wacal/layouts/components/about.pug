@@ -1,0 +1,20 @@
+.Card.__
+    .inner.column
+        .flex.column.alc
+            - let color = Plugin.getColorByString(user.name)
+            .avatarText(style='--color:'+color+';--bolor:'+color+'6f')= user.name[0].toUpperCase()
+            .heading=user.name
+            div=user.note
+            div=user.location
+        .flex.p8.jcc
+            a.Button.f_eaj(href=user.url,style='width:100%')= i18n('Follow')
+        .flex.ta-c.jc-se.alc
+            div
+                span= i18n('Articles')
+                p= site.posts.length
+            div
+                span= i18n('Categories')
+                p= site.category_count
+            div
+                span= i18n('Tags')
+                p= site.tag_count

@@ -31,7 +31,7 @@ function initializePost(content, id = undefined) {
  * @returns {{posts:[Post],excluded_posts:object,categories:[Category],tags:[Tag]}}
  */
 function site() {
-    let bid = 0;
+    let bid = 1;
     let posts = [],
         excluded_posts = {},
         used_categories = [],
@@ -63,7 +63,6 @@ function site() {
             }
             posts.push(file_data);
         }
-
         bid++;
     }
     let prev_id;

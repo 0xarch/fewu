@@ -1,0 +1,106 @@
+#url{
+    display: none;
+}
+#toc{
+    margin: 0;
+    list-style: none;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    border: 1px solid transparent;
+}
+#toc::before{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: .1rem;
+    height: 100%;
+    content: '';
+    background: linear-gradient(var(--brand-color) var(--g-start),transparent var(--g-end));
+}
+#toc>li{
+    cursor: pointer;
+    padding: 0.125rem 0.25rem;
+    border-radius: var(--card-radius);
+    transition: color .2s ease-in-out,background .2s ease-in-out;
+}
+#toc>.li-1{
+    font-size: larger;
+}
+#toc>.li-2{
+    font-size: large;
+    padding-left: 0.65rem;
+}
+#toc>.li-3{
+    padding-left: 1.25rem;
+}
+#toc>li:hover{
+    background: var(--brand-color-75);
+    color: #fff;
+}
+#toc>li.active{
+    color: var(--brand-color);
+}
+#toc>li.active:hover{
+    background-color: var(--brand-color-25);
+}
+.readnext{
+    padding: 8px;
+}
+.readnext>a{
+    width: calc(50% - .5rem);
+    text-align: center;
+    text-decoration: none;
+    font-size: large;
+    display: flex;
+    align-items: center;
+}
+.readnext>.prev{
+    justify-content: flex-start;
+}
+.readnext>.next{
+    justify-content: flex-end;
+}
+.readnext>.disabled>.nowrap{
+    color: var(--text-background);
+}
+.readnext>a>.nowrap{
+    flex: 1;
+}
+.readnext>.spacer{
+    width: 1rem;
+}
+blockquote {
+	margin: 0;
+	padding: .5rem;
+	border-left: .25rem solid var(--text-foreground-25);
+}
+blockquote>p{
+    margin: .25rem;
+}
+#markdown_fillContent p>a{
+    color: var(--brand-color);
+}
+#markdown_fillContent p>a::before{
+    content: '[';
+    color: var(--text-foreground)
+}
+#markdown_fillContent p>a::after{
+    content: ']';
+    color: var(--text-foreground)
+}
+#markdown_fillContent p img{
+    width: 100%;
+}
+.card.cc::after{
+    content: '\f25e';
+    font-family: "Font Awesome 6 Brands";
+    color: var(--text-foreground-25);
+    position: absolute;
+    font-size: 4rem;
+    right: 1rem;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    opacity: .25;
+}

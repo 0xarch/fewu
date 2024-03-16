@@ -1,0 +1,9 @@
+mixin typecard(name,len,lastpost)
+    .Card.-Type-
+        .Heading.f_eaj= name
+        .c1.f_eaj.column
+            .total
+                = i18n(len+' in total')
+                |,
+                = i18n('Last post')+' '+lastpost
+        a.c2.Button.f_eaj(href=file(`/category/s${name}/1/index.html`))= i18n('View more')

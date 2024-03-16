@@ -1,0 +1,15 @@
+nav.topbar-container
+    .topbar(style=(theme.verticalNavbar)?'':'flex-direction:column')
+        a.brand(href=file('/'))
+            .logo.f_eaj
+                if user.logo
+                    != user.logo
+                else
+                    != nexo.logo()
+        .flex
+            a.go-link(href=file())= i18n('Home')
+            a.go-link(href=file('/archive/1/'))= i18n('Archives')
+            a.go-link(href=file('/category/1/'))= i18n('Categories')
+            a.go-link(href=file('/tag/1/'))= i18n('Tags')
+            a.go-link(href=file('/about'))= i18n('About')
+            a.go-link(href=file('/status'))= i18n('Status')

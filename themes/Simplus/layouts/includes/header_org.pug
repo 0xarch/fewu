@@ -1,0 +1,35 @@
+header.topbar-container(style='background:'+(theme.customEyeImageUrl?'url('+theme.customEyeImageUrl+');background-size:cover':'var(--brand-color-75)'))
+    nav.topbar(style=(theme.verticalNavbar?'':'flex-direction:column'))
+        a.brand(href=file('/'))
+            .logo.f_eaj
+                if user.logo
+                    != user.logo
+                else
+                    != nexo.logo()
+        .go
+            a.go-link(href=file())= i18n('Home')
+            a.go-link(href=file('/archive/1/'))= i18n('Archives')
+            a.go-link(href=file('/category/1/'))= i18n('Categories')
+            a.go-link(href=file('/tag/1/'))= i18n('Tags')
+            a.go-link(href=file('/about'))= i18n('About')
+            a.go-link(href=file('/status'))= i18n('Status')
+    .Card.flex.alc.column
+        .Heading= user.name
+        .inner.column
+            .flex.column.alc
+                img.avatar(src=user.avatar)
+                .Heading= user.name
+                .describe=user.note
+                .location=user.location
+            .flex.p8.jcc
+                a.Button.f_eaj.r(href=user.url,style='width:100%')= i18n('Follow')
+            .flex.ta-c.jc-se.alc
+                .posts
+                    span= i18n('Articles')
+                    p= site.posts.length
+                .categories
+                    span= i18n('Categories')
+                    p= site.category_count
+                .tags
+                    span= i18n('Tags')
+                    p= site.tag_count

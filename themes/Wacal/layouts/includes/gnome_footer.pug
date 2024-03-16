@@ -1,0 +1,16 @@
+footer
+    section.fl.tac
+        .l1
+            h3= i18n('Nexo')
+            ul
+                li= NEXO_VERSION
+            != nexo.logo()
+        .l2
+            h3= i18n('Wacal Theme')
+            ul 
+                li= '1.0.alpha'
+            .logo-of-theme
+    section.tac
+        .copyr
+            != theme.useDefaultCopyrightText?i18n(theme.copyrightText):user.copyright
+        div= i18n('Page generated') + (nexo.deploy_time||nexo.proc.time).toLocaleString(LANG,{dateStyle:'full',timeStyle:'full'})

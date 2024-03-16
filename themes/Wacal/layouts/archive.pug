@@ -1,0 +1,33 @@
+include /mixins/script.pug
+doctype html
+html 
+    head 
+        +meta(user.note,i18n('Archives'))
+        +base()
+        include /includes/css_iac.pug
+        title= __title__(i18n('Archives'),user.name)
+    body(OCP='OVERRIDE') 
+        +header()
+        #main
+            .content
+                .Card
+                    - let used_year = []
+                    each bid in cycling.value
+                        - let post = ID[bid]
+                        if !used_year.includes(post.datz.y)
+                            - used_year.push(post.datz.y)
+                            .Heading= post.datz.y
+                        a.card.post(href=file(post.paths.website))
+                            .detail
+                                .meta
+                                    span.p8= post.ECMA262Date
+                                    span.p8= post.category
+                                    span.p8= post.wordCount+' '+'Characters'
+                                .Heading.onbrand= post.title
+                                .less!= post.parsedForeword
+                +foot_navigator(cycling.total,cycling.now,'archive')
+            +sidebar2('Archives')
+        include /includes/footer.pug
+        include /components/searchPanel.pug
+    style.
+        .card.post{border-radius:0;display: block;margin: 0}.content>.Card{padding:0;overflow:hidden}

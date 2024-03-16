@@ -1,0 +1,30 @@
+mixin prelude(post)
+    if post.property.highlight
+        link(rel="stylesheet",href="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/styles/default.min.css")
+        script(src="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/highlight.min.js")
+        script.
+            window.addEventListener('DOMContentLoaded',()=>{
+                hljs.highlightAll();
+            })
+    script(src=linkPrefix("files/post.js"))
+    link(rel="stylesheet",href=linkPrefix("files/post.css"))
+
+mixin meta(post)
+    meta(charset="utf-8")
+    meta(name="viewport",content="width:device-width,initial-scale=1.0")
+    meta(name="author",content=user.name)
+    meta(name="description",content=post.foreword)
+    meta(name="keywords",content=post.keywords.join(" "))
+    meta(http-equiv="content-language",content=settings.language)
+
+mixin sidebar()
+    - let primaryWidget = Plugin.hasPropertyThenOr(theme,'overridePostPage.primarySidebarWidgets',theme.primarySidebarWidgets)
+    - let secondaryWidget = Plugin.hasPropertyThenOr(theme,'overridePostPage.secondarySidebarWidgets',theme.secondarySidebarWidgets)
+    - let c = 0
+    if theme['side_position']=='right'
+        - c = 1
+    aside(class='sidebar-'+['l','r'][c])
+        +add_widgets(primaryWidget)
+    if theme['3rd_bar']
+        aside(class='sidebar-'+['r','l'][c])
+            +add_widgets(secondaryWidget)

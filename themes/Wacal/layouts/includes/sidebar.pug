@@ -1,0 +1,7 @@
+- let c = 0
+    if theme['side_position']=='right'
+        - c = 1
+    div(class='sidebar-'+['l','r'][c])
+        +add_widgets(theme.primarySidebarWidgets)
+    if theme['3rd_bar']
+        div(class='sidebar-'+['r','l'][c])

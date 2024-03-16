@@ -1,0 +1,18 @@
+include /mixins/script.pug
+include /mixins/post_script.pug
+doctype html 
+html(lang="zh")
+    head 
+        +base()
+        +prelude(post)
+        +meta(post)
+        title= __title__(post.title,'read')
+    body(OCP='OVERRIDE')
+        +header()
+        #main(class=theme['3rd-bar']&&'multi')
+            main.content
+                .Card
+                    #markdown_fillContent.container!= post.getParsed('content')
+            +sidebar2('About')
+        include /includes/footer.pug
+        include /components/searchPanel.pug

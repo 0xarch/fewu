@@ -2,11 +2,23 @@
 
 **BETA NOW**
 
-## b1.0.3(n2.2.4-3) [WORKING] - 2024-03-12
+## b1.0.3-1(n2.2.5-1) - 2024-03-12
+
+### To do
+
+## b1.0.3(n2.2.4-3) - 2024-03-12
 
 ### Changed
 
-* pre sorted for posts [commit n2.2.4-3:0]
+* pre sorted for posts
+* flatter builtin icon
+* `Datz.compareWith` now can be used as a `compareFn` (strongly not recommend to use `Datz.compareWith` outside `Array.sort` unless you know what you are exactly doing!)
+* BID now starts with `1`
+* `CONSTANTS` now can be read as constant.
+
+### Fixed
+
+* Unexpected error while scanning objects without `option` attribute in layout section.
 
 ## b1.0.2(n2.2.4-2) - 2024-03-12
 

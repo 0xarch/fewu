@@ -1,0 +1,21 @@
+include /mixins/script.pug
+include /mixins/pages.pug
+doctype html 
+html(lang="zh")
+    head
+        +meta(user.note,user.keyword||'')
+        +base()
+        title= __title__(i18n('Home'),user.name)
+    body(OCP='OVERRIDE')
+        +header()
+        #main
+            .content
+                each bid in sort.defaultOrder.slice(0,10)
+                    +post(ID[bid])
+                if sort.defaultOrder.length>10
+                    +foot_navigator(Math.ceil(sort.defaultOrder.length/10),1,'page')
+                else
+                    +foot_navigator(1,1,'page')
+            +sidebar(Plugin.hasPropertyThenOr(theme,'overrideIndexPage.primarySidebarWidgets',theme.primarySidebarWidgets))
+        include /includes/footer.pug
+        include /components/searchPanel.pug

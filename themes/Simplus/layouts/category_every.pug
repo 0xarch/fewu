@@ -1,0 +1,19 @@
+include /mixins/script.pug
+doctype html
+html 
+    head 
+        +meta(user.note,varias.name)
+        +base()
+        title= __title__(varias.name,user.name)
+    body(OCP='OVERRIDE')
+        +topbar()
+        header(class=(!theme.customEyeImageUrl)&&'nomix',style='background:'+(theme.customEyeImageUrl?'url('+theme.customEyeImageUrl+')':'var(--brand-color-75)'))
+            .Heading= i18n('Categories') + varias.name
+        #main 
+            .content
+                each bid in cycling.value
+                    +postcard(ID[bid])
+                +foot_navigator(cycling.total,cycling.now,'category/s'+varias.name)
+            +sidebar(Plugin.hasPropertyThenOr(theme,'overrideCategoryPage.primarySidebarWidgets',theme.primarySidebarWidgets))
+        include /includes/footer.pug
+        include /components/searchPanel.pug

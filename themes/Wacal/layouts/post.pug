@@ -1,0 +1,63 @@
+include /mixins/script.pug
+include /mixins/post_script.pug
+doctype html 
+html(lang="zh")
+    head 
+        +prelude(post)
+        +meta(post)
+        +base()
+        title= __title__(post.title,'read')
+    body(OCP='OVERRIDE')
+        #url= file(post.pathto)
+        +header()
+        #main(class=theme['3rd-bar']&&'multi')
+            .content
+                unless post.old == true
+                    .card.foreword
+                        .heading= i18n('Foreword')
+                        .container!= post.getParsed('foreword')
+                .card.p8
+                    article#markdown_fillContent
+                        if post.old == true
+                            != post.getParsed('foreword')
+                        != post.getParsed('content')
+                if post.license.is_cc_license()
+                    .card.cc
+                        a.Heading(href='https://creativecommons.org/')
+                            = i18n('Distribution License Agreement') + ' '
+                            i.fa-brands.fa-creative-commons(aria-hidden='true')
+                        .inner
+                            - let is = (v)=>post.license.includes(v)
+                            if is('BY')
+                                .Heading.by BY
+                                    i.fa-brands.fa-creative-commons-by
+                            if is('NC')
+                                .Heading.nc NC
+                                    i.fa-brands.fa-creative-commons-nc
+                            if is('ND')
+                                .Heading.nd ND
+                                    i.fa-brands.fa-creative-commons-nd
+                            if is('SA')
+                                .Heading.sa SA
+                                    i.fa-brands.fa-creative-commons-sa
+                else
+                    .card.cc-priv
+                        .Heading= i18n('Distribution License Agreement')
+                        .container
+                            | The copyright of this article belongs to the original author. When others share it, they are not allowed to create it again and must indicate the original author.
+                .card.readnext.foot-navigator.flex
+                    - let earliest = post.nextID?false:true
+                    - let latest = post.prevID?false:true
+                    - let __prev = ID[post.prevID]
+                    - let __next = ID[post.nextID]
+                    a.Button(href=!latest&&file(__prev.path('website')),class=latest?'disabled':'')
+                        .arrow='<<'
+                        .nowrap= latest?i18n('Already latest'):__prev.title
+                    .spacer
+                    a.Button(href=!earliest&&file(__next.path('website')),class=earliest?'disabled':'')
+                        .nowrap= earliest?i18n('Already earliest'):__next.title
+                        .arrow='>>'
+
+            +sidebar()
+        include /includes/footer.pug
+        include /components/searchPanel.pug

@@ -15,7 +15,7 @@ class Layout{
         this.#isCycling = json.cycling||(json.build&&json.build.cycling)?true:false;
         this.#hasAddition = json.addition?true:false;
         this.#hasAddition && (this.#addition = json.addition);
-        this.#option = json.option||json.build.option||{};
+        this.#option = json.option||(json.build&&json.build.option)||{};
     }
     correspond(){
         return this.#correspond;

@@ -1,0 +1,37 @@
+include /mixins/script.pug
+doctype html 
+html(lang="zh")
+    head
+        +meta(user.note,user.keyword||'')
+        +gbase()
+        style.
+            .widget-about{display:grid;grid-template-columns:.7fr 1fr}
+            .widget-about>*{margin:8px}
+            .avatar>img{border-radius:calc(100%);max-height:min(19vw,320px)}
+            @media (max-width:700px){.avatar>img{max-width:50vw}.widget-about{display:block}}
+            .fol{margin-top:10px;background:var(--blue3);color:#fff;height:3rem;width:50%;border-radius:3rem;text-decoration:none}
+            .fol:hover{background:var(--blue2)}
+        title= __title__(i18n('Home'),user.name)
+    body(OCP='OVERRIDE')
+        +gnome_header()
+        .intro#intro
+            section.widget-about
+                .avatar.jcc
+                    img(src=user.avatar)
+                .info.alc.col
+                    h1= user.name
+                    div=user.note
+                    div=user.location
+                    a.fol.eaj(href=user.url)= i18n('Follow')
+        main#content
+            +counter_section()
+            .special
+                div
+                    h1.m0= i18n('Posts')
+            ul.intros(style='grid-template-columns:repeat(auto-fill,minmax(480px,1fr))')
+                each bid in sort.defaultOrder.slice(0,10)
+                    +post_li(ID[bid])
+            if sort.defaultOrder.length>10
+                +foot_navigator(Math.ceil(sort.defaultOrder.length/10),1,'page')
+        +gnome_footer()
+        include /components/searchPanel.pug

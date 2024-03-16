@@ -1,0 +1,7 @@
+if GObject.hasProperty(user,'data.contact')
+    .Card.__
+        header= i18n('Contact')
+        .container
+            .RowList
+                each v,i in user.data.contact
+                    a.Row.readmore(href=v)= i

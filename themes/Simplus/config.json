@@ -1,0 +1,158 @@
+{
+    "name": "Arch Advyzon",
+    "author": "Hogger team",
+    "description": "Fluent style theme for Nexo",
+    "lib": [
+        "@:rsms:markdown-wasm:jsdelivr",
+        "@:highlightjs:&&:jsdelivr",
+        "@:mdui:&&:unpkg"
+    ],
+    "API": {
+        "hasPlugin": true,
+        "searchComponent": [
+            "title",
+            "date",
+            "id",
+            "content"
+        ],
+        "provideWith": "v2"
+    },
+    "copy": {
+        "@posts": "posts"
+    },
+    "enableThemeWebsiteIcon": true,
+    "default": {
+        "3rd-bar": false,
+        "verticalNavbar": false,
+        "primarySidebarWidgets": [
+            "search",
+            "announcement",
+            "recent"
+        ],
+        "secondarySidebarWidgets": [],
+        "overrideIndexPage": {},
+        "overridePostPage": {
+            "primarySidebarWidgets": [
+                "about",
+                "toc",
+                "recent"
+            ]
+        },
+        "overrideAboutPage": {
+            "primarySidebarWidgets": [
+                "about",
+                "contact"
+            ]
+        }
+    },
+    "layout": {
+        "type": "PUG",
+        "post_layout": "post.pug",
+        "layouts": [
+            {
+                "name": "index",
+                "build": {
+                    "filename": "index.pug",
+                    "destname": ""
+                }
+            },
+            {
+                "name": "page",
+                "from": "page.pug",
+                "to": "page",
+                "cycling": true,
+                "option": {
+                    "cycling": {
+                        "parent": "sort.defaultOrder",
+                        "every": 10
+                    }
+                }
+            },
+            {
+                "name": "archive",
+                "from": "archive.pug",
+                "to": "archive",
+                "cycling": true,
+                "option": {
+                    "cycling": {
+                        "parent": "sort.defaultOrder",
+                        "every": 10
+                    }
+                }
+            },
+            {
+                "name": "Category Template",
+                "from": "category.pug",
+                "to": "category",
+                "cycling": true,
+                "option": {
+                    "cycling": {
+                        "parent": "site.categories",
+                        "every": 12
+                    }
+                }
+            },
+            {
+                "name": "Category (Each) Template",
+                "from": "category_every.pug",
+                "to": "category/s${varias.name}",
+                "varias": true,
+                "cycling": true,
+                "option": {
+                    "varias": {
+                        "parent": "site.categories"
+                    },
+                    "cycling": {
+                        "parent": "varias.value.included_articles",
+                        "every": 5
+                    }
+                }
+            },
+            {
+                "name": "Tag Template",
+                "from": "tag.pug",
+                "to": "tag",
+                "cycling": true,
+                "option": {
+                    "cycling": {
+                        "parent": "site.tags",
+                        "every": 12
+                    }
+                }
+            },
+            {
+                "name": "Tag (Each) Template",
+                "from": "tag_every.pug",
+                "to": "tag/s${varias.name}",
+                "varias": true,
+                "cycling": true,
+                "option": {
+                    "varias": {
+                        "parent": "site.tags"
+                    },
+                    "cycling": {
+                        "parent": "varias.value.included_articles",
+                        "every": 5
+                    }
+                }
+            },
+            {
+                "name": "status",
+                "build": {
+                    "filename": "status.pug",
+                    "destname": "status"
+                }
+            },
+            {
+                "name": "about",
+                "build": {
+                    "filename": "about.pug",
+                    "destname": "about"
+                },
+                "addition": {
+                    "post": "excluded_posts.about\\.md"
+                }
+            }
+        ]
+    }
+}

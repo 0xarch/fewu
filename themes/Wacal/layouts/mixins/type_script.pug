@@ -1,0 +1,42 @@
+mixin typecard(name,len,lastpost)
+    .Card.-Type-
+        .Heading.f_eaj= name
+        .c1.f_eaj.column
+            .total
+                = i18n(len+' in total')
+                |,
+                = i18n('Last post')+' '+lastpost
+        a.c2.Button.f_eaj(href=file(`/category/s${name}/1/index.html`))= i18n('View more')
+
+mixin intro_li(v)
+    - let posts = v.included_articles || v.included
+    - let lastpost = ID[posts[0]]
+    - let name = v.catename || v.tagname
+    li
+        a.mark(href=file(`/category/s${name}/1/`),style='--i:var(--'+colors[Math.floor(name.length*2+5)%7]+'3)')
+            b= v.catename || v.tagname
+            small= i18n(posts.length+' in total') +','+i18n('Last post')+' '+lastpost.date.toLocaleDateString(settings.language,{dateStyle:'full'})
+
+mixin foot_navigator(total,now,name)
+    .foot-navigator.f_eaj
+        - let disable_all = total==1
+        - let enable_prev = !disable_all&&now!=1
+        - let enable_next = !disable_all&&now!=total
+        - let limit_front = now ==1 ? 1 :now - 2 > 1 ? now - 2 : 2
+        - let limit_end = now == total ? total : now + 2 < total ? now + 2 : 15
+        a(href=enable_prev&&file(`/${name}/${now-1}`),class=enable_prev?'':' disabled')= i18n('<<')
+        if now >= 3
+            a(href=file(`/${name}/1`))= 1
+        if now > 3
+            a.disabled ...
+        - let iter_num = limit_front
+        while iter_num <= limit_end
+            if iter_num!=now
+                a(href=file(`/${name}/${iter_num}`))= iter_num++
+            else
+                a= iter_num++
+        if total - now > 3
+            a.disabled ...
+        if total - now >=3
+            a(href=file(`/${name}/${total}`))= total
+        a(href=enable_next&&file(`/${name}/${now+1}`),class=enable_next?'':' disabled')= i18n('>>')

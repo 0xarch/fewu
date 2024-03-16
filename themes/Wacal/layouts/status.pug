@@ -1,0 +1,52 @@
+include /mixins/script.pug
+doctype html
+html
+    head 
+        +meta(user.note,user.keyword||'')
+        +gbase()
+        title= __title__(i18n('Status'),user.name)
+    body(OCP='OVERRIDE')
+        +gnome_header()
+        #intro.intro.tac
+            h1=i18n('Status')
+        main#content
+            +counter_section()
+            .special
+                h2= i18n('All categories')
+            ul.intros
+                each i in site.used_categories
+                    li
+                        a.mark(style='--i:var(--'+colors[Math.floor(i.length*2+5)%7]+'3)')
+                            b= i
+                            small= i18n(site.categories[i].included_articles.length+' in total')
+            .special
+                h2= i18n('All tags')
+            ul.intros
+                each i in site.used_tags
+                    li
+                        a.mark(style='--i:var(--'+colors[Math.floor(i.length*2+5)%7]+'3)')
+                            b= i
+                            small= i18n(site.tags[i].included_articles.length+' in total')
+            section.small
+            .special
+                h2= i18n('Local information')
+            .ngs.fl.col.jcsa.p8
+                .l1
+                    .plain= i18n('Node.js version')+' '+NODE_CORE_VERSION
+                    .plain= i18n('V8 version')+' '+NODE_V8_VERSION
+                    .plain= i18n('Node.js C++ modules version')+' '+NODE_CPP_VERSION
+                    .plain= i18n('Nexo version')+' '+NEXO_VERSION 
+                    .plain= i18n('Nexo code')+' '+NEXO_CODE
+                    .plain= 'LANG '+LANG
+                .l2
+                    .plain| Nexo with Wacal Theme v1.0.1
+                    .fl.alc
+                        .logo-of-theme
+                        != nexo.logo()
+        +gnome_footer()
+        include /components/searchPanel.pug
+    style.
+        .counter{
+            justify-content: space-evenly;
+            font-size: 1.25em;
+        }
