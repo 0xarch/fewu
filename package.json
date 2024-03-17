@@ -8,11 +8,13 @@
         "marked": "^4.3.0",
         "node-fs-extra": "^0.8.2",
         "pug": "^3.0.2",
-        "@types/ejs": "^3.1.5"
+        "ejs": "^3.1.5"
     },
     "scripts": {
         "start": "node src/main.js --config config.json --release",
         "start-dev": "node src/main.js --config config.json --devel",
+        "dev": "node src/main.js --config config.json --devel",
+        "rel": "node src/main.js --config config.json --release",
         "init": "node src/main.js --init",
         "test": " node src/test.js",
         "update-theme": "node src/main.js --config config.json --only updateTheme"
