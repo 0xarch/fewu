@@ -98,7 +98,7 @@
                 "option": {
                     "cycling": {
                         "parent": "site.categories",
-                        "every": 24
+                        "every": 48
                     }
                 }
             },
@@ -126,7 +126,7 @@
                 "option": {
                     "cycling": {
                         "parent": "site.tags",
-                        "every": 24
+                        "every": 48
                     }
                 }
             },

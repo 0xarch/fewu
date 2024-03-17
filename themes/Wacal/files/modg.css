@@ -13,7 +13,7 @@ footer ul>li{padding:4px}
 footer>section.fl{justify-content: space-around}
 footer>section.fl>div{display:flex;flex-direction:column;align-items:center}
 @media(max-width:700px){header.top>div{padding:0!important}header.top>div>nav{margin:auto}header.top>div>nav li>a{margin-inline:0!important}header.top>div .logo{display:none}}
-.logo-of-theme{height:32px;width:80px;background:#824626;color:#fff;display:flex;align-items:center;justify-content:center;}
+.logo-of-theme{height:32px;width:80px;background:#824626;color:#fff}
 .logo-of-theme::after{content:'!WACAL~';font-size:16px}
 #url,#searchUrl{display:none}
 .clist{padding:20px}
@@ -23,3 +23,7 @@ footer>section.fl>div{display:flex;flex-direction:column;align-items:center}
 .mark>b{color:var(--i)!important}
 ul.intros>li{max-width:100vw}
 #intro h1{margin:0 0 20px;font-size:45px;font-weight:800;hyphens:auto;word-wrap:break-word}
+.footnavi>a{width:40px;height:40px;margin:4px;border-radius:7px}
+.footnavi>a,.logo-of-theme{display:flex;align-items:center;justify-content:center}
+.footnavi>a:is(:hover,.now){background:var(--tile-hover-color)}
+.footnavi>a.disabled{color:var(--header-second-color)}
