@@ -35,7 +35,7 @@ const SettingsTemplate = {
     sitemap: {
         enabled: false,
         type: "XML",
-        file_name: "sitemap.xml"
+        name: "sitemap.xml" // deprecated, may use sitemap.xml for default
     },
     // rss feed
     rss: {

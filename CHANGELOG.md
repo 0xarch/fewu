@@ -2,7 +2,14 @@
 
 **BETA NOW**
 
-## b1.0.3-1(n2.2.5-1) [EDITING] - 2024-03-12
+## b1.0.3-2(n2.2.5-2) [EDITING] - 2024-03-19
+
+### Changed
+* sitemap module now only provides a `generateSitemap()` function
+* config.json is now generated automatically by init module
+* rerecongized codes
+
+## b1.0.3-1(n2.2.5-1) - 2024-03-12
 
 ### Changed
 * `CODE[0]` is now `FED`

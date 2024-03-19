@@ -8,3 +8,4 @@ doc/*
 posts/*
 resources/*
 src/*.fks
+config.json

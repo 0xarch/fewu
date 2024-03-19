@@ -3,7 +3,6 @@ import { mkdir, } from 'fs';
 import * as fs from 'fs';
 import { Nil } from '../lib/closures.js';
 import { Cache } from '../core/struct.js';
-import db from '../core/database.js';
 import { join } from 'path';
 
 const POST_TEMPLATE = 
@@ -17,6 +16,8 @@ SOME FOREWORDS
 <!--more-->`;
 
 let cache = new Cache();
+cache.set('postd','posts');
+cache.set('publicd','public')
 
 /**
  * 
@@ -27,26 +28,21 @@ function get_default_configuration() {
 }
 
 function make_default_directory() {
-    let posts_ = cache.has_or_set('postd', db.settings.get('build.post_directory'));
-    let public_ = cache.has_or_set('publicd', db.settings.get('build.public_directory'));
-    mkdir(posts_, {}, Nil);
-    mkdir(public_, {}, Nil);
+    mkdir('posts', {}, Nil);
+    mkdir('public', {}, Nil);
     mkdir('resources', {}, Nil);
     mkdir('extra', {}, Nil);
 }
 
 function make_common_file(){
-    let posts_ = cache.has_or_set('postd', db.settings.get('build.post_directory'));
-    fs.writeFile(join(posts_,'about.md'),POST_TEMPLATE,Nil);
-    fs.writeFile(join(posts_,'template.md'),POST_TEMPLATE,Nil);
-    fs.writeFile('config.json',JSON.stringify(SettingsTemplate,null,4),Nil);
+    fs.writeFile(join('posts','about.md'),POST_TEMPLATE,Nil);
+    fs.writeFile(join('posts','template.md'),POST_TEMPLATE,Nil);
+    fs.writeFile('./config.json',JSON.stringify(SettingsTemplate,null,4),Nil);
 }
 
 function remove_directory() {
-    let posts_ = cache.has_or_set('postd', db.settings.get('build.post_directory'));
-    let public_ = cache.has_or_set('publicd', db.settings.get('build.public_directory'));
-    rm(posts_);
-    rm(public_);
+    rm('posts');
+    rm('public');
 }
 
 function rm(path){

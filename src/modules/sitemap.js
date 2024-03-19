@@ -1,3 +1,7 @@
+import db from '../core/database.js';
+import {join} from 'path';
+import {writeFile} from 'fs';
+
 const sitemap = {
     TXT(root_url, posts) {
         let result = root_url + '\n';
@@ -15,4 +19,17 @@ const sitemap = {
     }
 }
 
-export default sitemap;
+function generateSitemap(){
+    if (db.settings.has('sitemap')) {
+        if(db.settings.get('sitemap.enabled')==false) return;
+        let path = join(db.dirs.public, db.settings.get('sitemap.name')), type = db.settings.get('sitemap.type');
+        let url = db.settings.get('site_url');
+        if (type == 'txt') {
+            writeFile(path, sitemap.TXT(url, db.site.posts), () => { })
+        } else {
+            writeFile(path, sitemap.XML(url, db.site.posts), () => { })
+        }
+    }
+}
+
+export default generateSitemap;

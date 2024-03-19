@@ -1,6 +1,6 @@
 import { gopt } from '../core/run.js';
 import { join } from 'path';
-import { readFileSync, writeFile, cp } from 'fs';
+import { readFileSync, cp } from 'fs';
 import { write, proc_final as build_and_write } from '../core/builder.js';
 import { site, sort } from '../core/reader.js';
 import { SettingsTemplate } from '../core/config_template.js';
@@ -10,9 +10,9 @@ import GObject from '../core/gobject.js';
 import { Collection } from '../core/struct.js';
 import Layout from '../lib/class.layout.js';
 import { info, nexo_logo, run } from '../lib/mod.js';
-import { auto_set_i18n_file, i18n, set_i18n_file } from '../modules/i18n.js';
-import sitemap from '../modules/sitemap.js';
+import { auto_set_i18n_file, i18n } from '../modules/i18n.js';
 import generateSearchStrings from '../modules/search.js';
+import generateSitemap from '../modules/sitemap.js';
 /**
  * @DOCUMENT_OF_APP
  * @argument config [file] Configuration file for Nexo.
@@ -25,8 +25,6 @@ import generateSearchStrings from '../modules/search.js';
  */
 async function App() {
     db.proc.args = gopt(process.argv);
-    db.settings = new Collection(GObject.mix(SettingsTemplate, JSON.parse(
-        readFileSync(db.proc.args['config'] || 'config.json').toString()), true));
 
     // init
     if(db.proc.args.init){
@@ -37,6 +35,8 @@ async function App() {
         return;
     }
 
+    db.settings = new Collection(GObject.mix(SettingsTemplate, JSON.parse(
+        readFileSync(db.proc.args['config'] || 'config.json').toString()), true));
     const argv = db.proc.args;
     let buildMode = argv['devel']?'devel':'release';
     db.builder.mode = buildMode;
@@ -45,7 +45,7 @@ async function App() {
 
     db.dirs.posts = db.settings.get('build.post_directory') || "posts";
     db.dirs.public = db.settings.get('build.public_directory') || "public";
-    db.dirs.root = !["/", "", undefined].includes(db.settings.get('build.site_root')) ? db.settings.get('build.site_root') : '';
+    db.dirs.root = !["/", "", undefined].includes(db.settings.get('build.root')||db.settings.get('build.site_root')) ? db.settings.get('build.site_root') : '';
     db.dirs.theme.root = join('themes', argv['theme'] || db.settings.get('theme.name'));
     db.dirs.theme.extra = join(db.dirs.theme.root, 'extra');
     db.dirs.theme.layout = join(db.dirs.theme.root, 'layouts');
@@ -123,7 +123,7 @@ async function App() {
      * @since v2
      */
     function __get_file_relative_dir(file_dir) {
-        if (!file_dir) return __public_root + '/';
+        if (!file_dir) return db.dirs.root + '/';
         if (file_dir[0] == '/')
             file_dir = file_dir.substring(1)
         return join(db.dirs.root,'/',file_dir);
@@ -131,7 +131,7 @@ async function App() {
     db.file = __get_file_relative_dir;
     let __provided_theme_config = GObject.mix(db.theme.get('default'), db.settings.get('theme.options'),true);
 
-    if (db.settings.has('sitemap')) {
+    /*if (db.settings.has('sitemap')) {
         let path = join(db.dirs.public, db.settings.get('sitemap.name')), type = db.settings.get('sitemap.type');
         let url = db.settings.get('site_url');
         if (type == 'txt') {
@@ -139,7 +139,8 @@ async function App() {
         } else {
             writeFile(path, sitemap.XML(url, db.site.posts), () => { })
         }
-    }
+    }*/
+    generateSitemap();
     if (db.settings.has('extra_files')) {
         let extra_file = db.settings.get('extra_files');
         for (let k in extra_file) {
