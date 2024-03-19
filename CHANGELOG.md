@@ -6,6 +6,7 @@
 
 ### Changed
 * `CODE[0]` is now `FED`
+* {`Tag`,`Category`}.included_article is now renamed to included
 
 ### New
 * structure tree, better organizing
