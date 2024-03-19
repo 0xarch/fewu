@@ -4,6 +4,22 @@
 
 ## Using Nexo
 
-**NOTE** Clean or mkdir `posts` `sources` `extra` after cloned the repository. Then edit the `config.json` to suit your need. This step might be completed by simply executing `npm run init` somedays(2.4 maybe), however, not now.
+### dependencies
+* node.js
+* npm
 
-**For now** Simply `npm run start` in your console, the site is in the `output` dir.
+### deployment
+
+1. run `npm i` to download node modules.
+```sh
+npm i
+```
+2. run `npm run init` to automatically make required files and directiories.
+```sh
+npm run init
+```
+3. run `npm run rel` to generate website.
+```sh
+npm run rel
+```
+4. now your site is generated in the `public` directory.

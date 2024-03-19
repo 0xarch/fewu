@@ -39,6 +39,7 @@ function make_common_file(){
     let posts_ = cache.has_or_set('postd', db.settings.get('build.post_directory'));
     fs.writeFile(join(posts_,'about.md'),POST_TEMPLATE,Nil);
     fs.writeFile(join(posts_,'template.md'),POST_TEMPLATE,Nil);
+    fs.writeFile('config.json',JSON.stringify(SettingsTemplate,null,4),Nil);
 }
 
 function remove_directory() {
