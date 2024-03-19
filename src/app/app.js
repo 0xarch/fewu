@@ -4,13 +4,13 @@ import { readFileSync, writeFile, cp } from 'fs';
 import { write, proc_final as build_and_write } from '../core/builder.js';
 import { site, sort } from '../core/reader.js';
 import { SettingsTemplate } from '../core/config_template.js';
+import * as init from '../modules/init.js';
 import db from '../core/database.js';
 import GObject from '../core/gobject.js';
-//import CONSTANTS from '../core/constants.js';
 import { Collection } from '../core/struct.js';
 import Layout from '../lib/class.layout.js';
 import { info, nexo_logo, run } from '../lib/mod.js';
-import { i18n, set_i18n_file } from '../modules/i18n.js';
+import { auto_set_i18n_file, i18n, set_i18n_file } from '../modules/i18n.js';
 import sitemap from '../modules/sitemap.js';
 import generateSearchStrings from '../modules/search.js';
 /**
@@ -27,8 +27,17 @@ async function App() {
     db.proc.args = gopt(process.argv);
     db.settings = new Collection(GObject.mix(SettingsTemplate, JSON.parse(
         readFileSync(db.proc.args['config'] || 'config.json').toString()), true));
-    let deploy_time = db.proc.time;
-    const argv = gopt(process.argv);
+
+    // init
+    if(db.proc.args.init){
+        info(['Init','YELLOW'],['Making directories']);
+        init.make_default_directory();
+        info(['Init','YELLOW'],['Touching templates']);
+        init.make_common_file();
+        return;
+    }
+
+    const argv = db.proc.args;
     let buildMode = argv['devel']?'devel':'release';
     db.builder.mode = buildMode;
 
@@ -55,13 +64,7 @@ async function App() {
     db.site = site();
     db.sort = sort(db.site.posts);
 
-    let lang_file = {};
-    {
-        let lang_file_path = join(db.dirs.theme.root, 'extra/i18n.' + db.language + '.json');
-        try {
-            lang_file = JSON.parse(readFileSync(lang_file_path).toString());
-        } catch (_) { }
-    }
+    auto_set_i18n_file();
 
     let constants = (await import('../core/constants.js')).default;
 
@@ -71,7 +74,7 @@ async function App() {
             site: db.site,
             nexo: {
                 logo: nexo_logo,
-                deploy_time,
+                deploy_time: db.proc.time,
             },
             proc: {
 
@@ -113,8 +116,6 @@ async function App() {
             return fix + ' ' + sep + ' ' + type;
         }
     })();
-
-    set_i18n_file(lang_file);
 
     /**
      * @param { string } file_dir 

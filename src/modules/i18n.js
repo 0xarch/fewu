@@ -1,48 +1,51 @@
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import db from '../core/database.js';
+
 let langfile = {};
-let test_reg = /[0-9]/;
-let match_reg = /[0-9]+/g;
+let lang_fallback = {};
 
 function set_i18n_file(json){
     langfile = json;
 }
 
-function i18n(json){
-    if(!json)json={};
-    return function(key){
-        if(test_reg.test(key)){
-            let __tempor_val = [];
-            for(let item of match_reg.exec(key)){
-                key = key.replace(item,'{NUMBER}');
-                __tempor_val.push(item);
-            }
-            let result= json[key]||key;
-            for(let item of __tempor_val){
-                result = result.replace('{NUMBER}',item);
-            }
-            return result;
+function auto_set_i18n_file(){
+    try{
+        let lang_fb_json = JSON.parse(readFileSync(join(db.dirs.theme.extra,'i18n.default.json')).toString())
+        lang_fallback = lang_fb_json;
+    } catch(e) {
+        console.error('Could not read default(fallback) i18n file in theme directory $THEME/extra/i18n.default.json');
+    }
+    {
+        let lang_file_path = join(db.dirs.theme.extra, 'i18n.' + db.language + '.json');
+        try {
+            let lang_fl_json = JSON.parse(readFileSync(lang_file_path).toString())
+            langfile = lang_fl_json;
+        } catch (e) {
+            console.error('Could not readi18n file in theme directory $THEME/extra/i18n.$LANG.json');
         }
-        else return json[key]||key;
     }
 }
 
-function i18n_new(key){
+function i18n(key){
+    let result;
     if(/[0-9]/.test(key)){
         let __tempor_val = [];
         for(let item of (/[0-9]+/g).exec(key)){
             key = key.replace(item,'{NUMBER}');
             __tempor_val.push(item);
         }
-        let result= langfile[key]||key;
+        result= langfile[key]||lang_fallback[key]||key;
         for(let item of __tempor_val){
             result = result.replace('{NUMBER}',item);
         }
-        return result;
     }
-    else return langfile[key]||key;
+    else result = langfile[key]||lang_fallback[key]||key;
+    return result;
 }
 
-export default i18n;
 export {
-    i18n_new as i18n,
-    set_i18n_file
+    i18n,
+    set_i18n_file,
+    auto_set_i18n_file
 }

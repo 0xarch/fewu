@@ -2,7 +2,7 @@ import { basename,join } from "path";
 import * as fs from "fs";
 import db from "./database.js";
 import Post from "../lib/class.post.js";
-import { Category,Tag } from "./struct.js";
+import { Category,Tag } from "./descriptive_class.js";
 
 function traverse(Directory) {
     let returns = [];
@@ -116,7 +116,21 @@ function sort(posts) {
     }
 }
 
+/**
+ * 
+ * @param {string} content 
+ * @since 2.0
+ */
+function word_count(content){
+    let count = 0;
+    let en_char = /[A-z]+/;
+    content.replace(/[\u4E00-\u9FA5]/g,(e,i)=>{count++;content=content.substring(0,i)+' '+content.substring(i+1)});
+    let arr = content.split(" ").filter(v=>v!='');
+    arr.forEach(v=>en_char.test(v)&&count++);
+    return count;
+}
 export {
     site,
-    sort
+    sort,
+    word_count
 }

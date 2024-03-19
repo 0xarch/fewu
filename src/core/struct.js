@@ -1,5 +1,4 @@
 import GObject from './gobject.js';
-import { Category,Tag } from '../lib/classes.js';
 
 function NULL_OBJECT(){
     return Object.create(null);
@@ -68,7 +67,5 @@ export {
     Collection,
     Correspond,
     Cache,
-    Category,
-    Tag,
     NULL_OBJECT
 }

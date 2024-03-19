@@ -1,8 +1,7 @@
 import { mkdirSync, readFileSync,writeFile } from "fs";
 import { dirname, join as join_path } from "path";
 import { errno } from "../lib/mod.js";
-import { Correspond } from "../lib/file_class.js";
-import { Collection } from "./struct.js";
+import { Collection,Correspond } from "./struct.js";
 import parsers from "./build_compat.js";
 import db from "./database.js";
 import Layout from "../lib/class.layout.js";
@@ -18,7 +17,7 @@ async function write(collection, file) {
     let theme = db.theme;
     let config = db.settings;
     let theme_directory = db.dirs.theme.root;
-    let absolute_correspond = new Correspond(
+    let absolute_correspond = Correspond(
         join_path(db.dirs.theme.layout, file.correspond().from),
         join_path(config.get('public_directory') || config.get('build.public_directory'), file.correspond().to, 'index.html'));
 

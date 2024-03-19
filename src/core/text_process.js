@@ -1,7 +1,6 @@
 /**
  * 
  * @param {string} content 
- * @since 2.0
  */
 function word_count(content){
     let count = 0;
@@ -14,4 +13,4 @@ function word_count(content){
 
 export {
     word_count
-};
+}

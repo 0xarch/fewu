@@ -2,9 +2,21 @@
 
 **BETA NOW**
 
-## b1.0.3-1(n2.2.5-1) - 2024-03-12
+## b1.0.3-1(n2.2.5-1) [EDITING] - 2024-03-12
 
-### To do
+### Changed
+* `CODE[0]` is now `FED`
+
+### New
+* structure tree, better organizing
+* `init` module completed (call using `npm run init`)
+* `text_process.js` for processing text *haha
+* `descriptive_class.js` for descriptive class like `Category` `Tag` `License` `Datz`
+* i18n fallback file support (`i18n.default.json`)
+
+### Removed
+* `classes.js` (GARBAGE)
+* `file_class.js` (GARBAGE)
 
 ## b1.0.3(n2.2.4-3) - 2024-03-12
 
@@ -112,8 +124,8 @@ The same as 2.2.4-2 , this is a bump tag where version-rel and version-nexo sepa
 ### In Progress
 
 * [x] `core/database` for storing configs,etc, in running [ 2.2.2]
-* [ ] `lib/class.theme` for storing theme configuration [Marked as deprecated]
-* [ ] `modules/init` for greenhand initialization
+* [!] `lib/class.theme` for storing theme configuration [Marked as deprecated]
+* [x] `modules/init` for greenhand initialization [ 2.2.5]
 
 ## 2.1.2 - 2024-02-27
 

@@ -1,0 +1,31 @@
+Nexo code structure tree:
+<src>
+    <app>
+        app.js - The main js file
+        nexo_logo.html - A html file containing nexo's logo
+    <core>
+        build_compat.js - loading parsers(ejs,pug,...)
+        builder.js - build page
+        config_template.js - store configuration(setting) file template
+        constants.js - constants
+        database.js - store an object (tree-like) for storing data
+        descriptive_class.js
+        gobject.js - provide GObject
+        reader.js - read file
+        run.js - container for run end function
+        struct.js - classes and structs
+        text_process.js
+    <lib>
+        class.*.js - DEPRECATED, waiting for remove
+        closures.js - DEPRECATED, waiting for remove
+        file_class.js - DEPRECATED, waiting for remove
+        mod.js - output functions
+        posts.js - DEPRECATED, replaced by [^+core/reader.js]
+        reader.js - DEPRECATED, replaced by [^+core/reader.js]
+    <modules>
+        i18n.js - i18n functions
+        init.js - global preworks
+        rss.js - RSS feed functions
+        search.js - Search functions
+        sitemap.js - Sitemap functions
+    main.js - entrance

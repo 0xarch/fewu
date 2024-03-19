@@ -2,9 +2,19 @@ import { SettingsTemplate } from '../core/config_template.js';
 import { mkdir, } from 'fs';
 import * as fs from 'fs';
 import { Nil } from '../lib/closures.js';
-import Cache from '../lib/class.cache.js';
+import { Cache } from '../core/struct.js';
 import db from '../core/database.js';
 import { join } from 'path';
+
+const POST_TEMPLATE = 
+`---
+title: TITLE
+date: 1970-1-1
+tags: TAG_A TAG_B?
+category: CATEGORY
+---
+SOME FOREWORDS
+<!--more-->`;
 
 let cache = new Cache();
 
@@ -25,7 +35,13 @@ function make_default_directory() {
     mkdir('extra', {}, Nil);
 }
 
-function remove_directory(settings) {
+function make_common_file(){
+    let posts_ = cache.has_or_set('postd', db.settings.get('build.post_directory'));
+    fs.writeFile(join(posts_,'about.md'),POST_TEMPLATE,Nil);
+    fs.writeFile(join(posts_,'template.md'),POST_TEMPLATE,Nil);
+}
+
+function remove_directory() {
     let posts_ = cache.has_or_set('postd', db.settings.get('build.post_directory'));
     let public_ = cache.has_or_set('publicd', db.settings.get('build.public_directory'));
     rm(posts_);
@@ -52,5 +68,6 @@ function rm(path){
 export {
     get_default_configuration,
     make_default_directory,
+    make_common_file,
     remove_directory
 }

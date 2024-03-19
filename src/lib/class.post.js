@@ -1,10 +1,10 @@
-import { word_count } from "./reader.js";
 import { warn } from "./mod.js";
 import { notFake } from "./closures.js";
 import { readFileSync, statSync } from "fs";
 import { parse } from "marked";
 import { Cache } from "../core/struct.js";
-import { License, Datz } from "./classes.js";
+import { word_count } from "../core/reader.js";
+import { License, Datz } from "../core/descriptive_class.js";
 
 class Post{
     static sort(a,b){
