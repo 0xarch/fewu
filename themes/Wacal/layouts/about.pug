@@ -3,16 +3,16 @@ include /mixins/post_script.pug
 doctype html 
 html(lang="zh")
     head 
-        +base()
+        +gbase()
         +prelude(post)
         +meta(post)
         title= __title__(post.title,'read')
-    body(OCP='OVERRIDE')
-        +header()
-        #main(class=theme['3rd-bar']&&'multi')
-            main.content
-                .Card
+    body.colorful(OCP='OVERRIDE',style='--color1:'+Plugin.getColorByString(post.foreword)+';--color2:'+Plugin.getColorByString(post.getParsed('foreword')))
+        +gnome_header()
+        .intro#intro.tac
+            .h1= i18n('About')
+        main.content#content
+            section
+                .block
                     #markdown_fillContent.container!= post.getParsed('content')
-            +sidebar2('About')
-        include /includes/footer.pug
-        include /components/searchPanel.pug
+        +gnome_footer()

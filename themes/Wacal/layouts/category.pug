@@ -14,7 +14,6 @@ html
             ul.intros
                 each item in cycling.value
                     +intro_li(item.value)
-            hr
             +gnome_page_navigator(cycling.total,cycling.now,'category')
         +gnome_footer()
         include /components/searchPanel.pug

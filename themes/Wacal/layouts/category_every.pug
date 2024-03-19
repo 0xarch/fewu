@@ -3,16 +3,15 @@ doctype html
 html 
     head 
         +meta(user.note,varias.name)
-        +base()
-        include /includes/css_iac.pug
+        +gbase()
         title= __title__(varias.name,user.name)
     body(OCP='OVERRIDE')
-        +header()
-        #main 
-            .content
+        +gnome_header()
+        .intro#intro.tac
+            h1= i18n('Category')+' - '+varias.name
+        main.content#content
+            ul.intros(style='grid-template-columns:repeat(auto-fill,minmax(480px,1fr))')
                 each bid in cycling.value
-                    +postcard(ID[bid])
+                    +post_li(ID[bid])
                 +foot_navigator(cycling.total,cycling.now,'category/s'+varias.name)
-            +sidebar2('Category')
-        include /includes/footer.pug
-        include /components/searchPanel.pug
+        +gnome_footer()

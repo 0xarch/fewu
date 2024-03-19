@@ -1,10 +1,14 @@
+let toc,opened=true;
 document.addEventListener('DOMContentLoaded', () => {
+    toc = document.querySelector("#toc")
     let md_content = document.getElementById('markdown_fillContent')
-    if(!_M_)TOC(md_content)
+    if(!_M_){TOC(md_content);Q(D,'.fix.toc-con-button>button').onclick=()=>{
+        toc.style.display=opened?'block':'none';
+        opened=!opened;
+    }}
 })
 
 function TOC(markdown_content) {
-    let toc = document.querySelector("#toc");
     if(!toc) return;
     let tocList = markdown_content.querySelectorAll("h1, h2, h3, h4, h5, h6");
     let liList = [];
@@ -35,10 +39,9 @@ function TOC(markdown_content) {
                 removeClass();
                 let li = liList[i];
                 li.classList.add('active');
-                toc.style.setProperty('--g-start',li.offsetTop+li.getBoundingClientRect().height-5+'px');
-                toc.style.setProperty('--g-end',li.offsetTop+li.getBoundingClientRect().height+5+'px');
+                /*toc.style.setProperty('--g-start',li.offsetTop+li.getBoundingClientRect().height-5+'px');
+                toc.style.setProperty('--g-end',li.offsetTop+li.getBoundingClientRect().height+5+'px');*/
                 break;
-            } else {
             }
         }
     }

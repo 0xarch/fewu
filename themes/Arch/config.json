@@ -107,7 +107,7 @@
                             "parent": "site.categories"
                         },
                         "cycling": {
-                            "parent": "varias.value.included_articles",
+                            "parent": "varias.value.included",
                             "every": 5
                         }
                     }
@@ -136,7 +136,7 @@
                         "parent": "site.tags"
                     },
                     "cycling": {
-                        "parent": "varias.value.included_articles",
+                        "parent": "varias.value.included",
                         "every": 5
                     }
                 }

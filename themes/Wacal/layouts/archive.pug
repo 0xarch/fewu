@@ -3,31 +3,28 @@ doctype html
 html 
     head 
         +meta(user.note,i18n('Archives'))
-        +base()
-        include /includes/css_iac.pug
+        +gbase()
         title= __title__(i18n('Archives'),user.name)
     body(OCP='OVERRIDE') 
-        +header()
-        #main
-            .content
-                .Card
-                    - let used_year = []
-                    each bid in cycling.value
-                        - let post = ID[bid]
-                        if !used_year.includes(post.datz.y)
-                            - used_year.push(post.datz.y)
-                            .Heading= post.datz.y
-                        a.card.post(href=file(post.paths.website))
-                            .detail
-                                .meta
-                                    span.p8= post.ECMA262Date
-                                    span.p8= post.category
-                                    span.p8= post.wordCount+' '+'Characters'
-                                .Heading.onbrand= post.title
-                                .less!= post.parsedForeword
+        +gnome_header()
+        .intro#intro.tac
+            h1= i18n('Archives')
+        main.content#content
+            - let used_year = []
+            - let y = {}
+            each bid in cycling.value
+                - let post = ID[bid]
+                if !used_year.includes(post.datz.y)
+                    - y[post.datz.y] = []
+                    - used_year.push(post.datz.y)
+                - y[post.datz.y].push(bid)
+            each v,k in y
+                .special
+                    h2= k
+                ul.intros(style='grid-template-columns:repeat(auto-fill,minmax(480px,1fr))')
+                    each item in v
+                        +post_li(ID[item])
                 +foot_navigator(cycling.total,cycling.now,'archive')
-            +sidebar2('Archives')
-        include /includes/footer.pug
-        include /components/searchPanel.pug
+        +gnome_footer()
     style.
-        .card.post{border-radius:0;display: block;margin: 0}.content>.Card{padding:0;overflow:hidden}
+        a.block{display:block}

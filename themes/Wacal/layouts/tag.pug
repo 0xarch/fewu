@@ -9,12 +9,11 @@ html
     body.new(OCP='OVERRIDE')
         +gnome_header()
         .intro#intro.tac
-            h1= i18n('Categories')
+            h1= i18n('Tags')
         main.content#content
             ul.intros
                 each item in cycling.value
                     +intro_li(item.value)
-            hr
             +gnome_page_navigator(cycling.total,cycling.now,'tag')
         +gnome_footer()
         include /components/searchPanel.pug

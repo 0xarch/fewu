@@ -5,59 +5,58 @@ html(lang="zh")
     head 
         +prelude(post)
         +meta(post)
-        +base()
+        +gbase()
         title= __title__(post.title,'read')
-    body(OCP='OVERRIDE')
-        #url= file(post.pathto)
-        +header()
-        #main(class=theme['3rd-bar']&&'multi')
-            .content
-                unless post.old == true
-                    .card.foreword
-                        .heading= i18n('Foreword')
-                        .container!= post.getParsed('foreword')
-                .card.p8
-                    article#markdown_fillContent
-                        if post.old == true
-                            != post.getParsed('foreword')
-                        != post.getParsed('content')
+    body.colorful(OCP='OVERRIDE',style='--color1:'+Plugin.getColorByString(post.foreword)+';--color2:'+Plugin.getColorByString(post.getParsed('foreword')))
+        +gnome_header()
+        .intro#intro.tac
+            .h1= post.title
+        main.content#content
+            unless post.old == true
+                section.small
+                    h2= i18n('Foreword')
+                    != post.getParsed('foreword')
+            section
+                article.block#markdown_fillContent
+                    if post.old == true
+                        != post.getParsed('foreword')
+                    != post.getParsed('content')
+            section.small.fit(class=post.license.is_cc_license()&&'cclogo')
                 if post.license.is_cc_license()
-                    .card.cc
-                        a.Heading(href='https://creativecommons.org/')
-                            = i18n('Distribution License Agreement') + ' '
-                            i.fa-brands.fa-creative-commons(aria-hidden='true')
-                        .inner
-                            - let is = (v)=>post.license.includes(v)
-                            if is('BY')
-                                .Heading.by BY
-                                    i.fa-brands.fa-creative-commons-by
-                            if is('NC')
-                                .Heading.nc NC
-                                    i.fa-brands.fa-creative-commons-nc
-                            if is('ND')
-                                .Heading.nd ND
-                                    i.fa-brands.fa-creative-commons-nd
-                            if is('SA')
-                                .Heading.sa SA
-                                    i.fa-brands.fa-creative-commons-sa
+                    a.Heading(href='https://creativecommons.org/')
+                        = i18n('Distribution License Agreement') + ' '
+                        i.fa-brands.fa-creative-commons(aria-hidden='true')
+                    .inner
+                        - let is = (v)=>post.license.includes(v)
+                        if is('BY')
+                            span BY
+                                i.fa-brands.fa-creative-commons-by
+                        if is('NC')
+                            span NC
+                                i.fa-brands.fa-creative-commons-nc
+                        if is('ND')
+                            span ND
+                                i.fa-brands.fa-creative-commons-nd
+                        if is('SA')
+                            span SA
+                                i.fa-brands.fa-creative-commons-sa
                 else
-                    .card.cc-priv
-                        .Heading= i18n('Distribution License Agreement')
-                        .container
-                            | The copyright of this article belongs to the original author. When others share it, they are not allowed to create it again and must indicate the original author.
-                .card.readnext.foot-navigator.flex
+                    .Heading= i18n('Distribution License Agreement')
+                    .container= i18n('@CC_PRIVATE')
+            section
+                .pagination
                     - let earliest = post.nextID?false:true
                     - let latest = post.prevID?false:true
                     - let __prev = ID[post.prevID]
                     - let __next = ID[post.nextID]
-                    a.Button(href=!latest&&file(__prev.path('website')),class=latest?'disabled':'')
-                        .arrow='<<'
-                        .nowrap= latest?i18n('Already latest'):__prev.title
-                    .spacer
-                    a.Button(href=!earliest&&file(__next.path('website')),class=earliest?'disabled':'')
-                        .nowrap= earliest?i18n('Already earliest'):__next.title
-                        .arrow='>>'
-
-            +sidebar()
-        include /includes/footer.pug
-        include /components/searchPanel.pug
+                    a.arrow.left.nowrap(href=!latest&&file(__prev.path('website')),class=latest?'disabled':'')
+                        = '← '
+                        = latest?i18n('Already latest'):__prev.title
+                    a.arrow.right.nowrap(href=!earliest&&file(__next.path('website')),class=earliest?'disabled':'')
+                        = earliest?i18n('Already earliest'):__next.title
+                        = ' →'
+                    a.top(href='#')= i18n('Top')
+        +gnome_footer()
+        .fix#toc
+        .fix.toc-con-button
+            button= 'TOC'

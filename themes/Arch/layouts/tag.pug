@@ -14,7 +14,7 @@ html
                 .Grid.-NoMob(style="--i: 1fr 1fr")
                     each item in cycling.value
                         - let v = item.value
-                        +typecard(v.tagname,v.included_articles.length,ID[v.included_articles[0]].ECMA262Date)
+                        +typecard(v.tagname,v.included.length,ID[v.included[0]].ECMA262Date)
                 +foot_navigator(cycling.total,cycling.now,'tag')
             +sidebar2('Type')
         include /includes/footer.pug

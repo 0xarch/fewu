@@ -10,6 +10,6 @@ header.top
                 each v in __prov_map||theme.headerObjects
                     li
                         if v[2]
-                            a(href=file(v[0]),'$svg'=v[1])
+                            a(href=file(v[0]))!= Plugin.load_svg(v[1])
                         else
                             a(href=file(v[0]))= i18n(v[1])

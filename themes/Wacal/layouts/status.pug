@@ -18,7 +18,7 @@ html
                     li
                         a.mark(style='--i:var(--'+colors[Math.floor(i.length*2+5)%7]+'3)')
                             b= i
-                            small= i18n(site.categories[i].included_articles.length+' in total')
+                            small= i18n(site.categories[i].included.length+' in total')
             .special
                 h2= i18n('All tags')
             ul.intros
@@ -26,7 +26,7 @@ html
                     li
                         a.mark(style='--i:var(--'+colors[Math.floor(i.length*2+5)%7]+'3)')
                             b= i
-                            small= i18n(site.tags[i].included_articles.length+' in total')
+                            small= i18n(site.tags[i].included.length+' in total')
             section.small
             .special
                 h2= i18n('Local information')

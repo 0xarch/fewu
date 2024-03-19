@@ -9,7 +9,7 @@ mixin typecard(name,len,lastpost)
         a.c2.Button.f_eaj(href=file(`/category/s${name}/1/index.html`))= i18n('View more')
 
 mixin intro_li(v)
-    - let posts = v.included_articles || v.included
+    - let posts = v.included
     - let lastpost = ID[posts[0]]
     - let name = v.catename || v.tagname
     li

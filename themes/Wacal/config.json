@@ -32,7 +32,7 @@
             ["/category/1","Categories"],
             ["/tag/1","Tags"],
             ["/about/","About"],
-            ["/status/","https://fastly.jsdelivr.net/gh/0xarch/Wark@master/svgs/gnome-feather-tool.svg",true]
+            ["/status/","gnome-feather-tool",true]
         ],
         "primarySidebarWidgets": [
             "about",
@@ -113,7 +113,7 @@
                         "parent": "site.categories"
                     },
                     "cycling": {
-                        "parent": "varias.value.included_articles",
+                        "parent": "varias.value.included",
                         "every": 5
                     }
                 }
@@ -141,7 +141,7 @@
                         "parent": "site.tags"
                     },
                     "cycling": {
-                        "parent": "varias.value.included_articles",
+                        "parent": "varias.value.included",
                         "every": 5
                     }
                 }
@@ -153,10 +153,8 @@
             },
             {
                 "name": "about",
-                "build": {
-                    "filename": "about.pug",
-                    "destname": "about"
-                },
+                "from": "about.pug",
+                "to": "about",
                 "addition": {
                     "post": "excluded_posts.about\\.md"
                 }
