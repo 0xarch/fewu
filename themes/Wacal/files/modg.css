@@ -37,3 +37,4 @@ body.colorful header.top{background:#fff0;position:absolute}
 body.colorful :is(#intro,.intro){color:#111;background:linear-gradient(35deg,var(--color1),var(--color2));width:100%;box-sizing:border-box}
 body.colorful header.top>div a{color:#111}
 body.colorful header.top>div nav>ul>li a:hover{background:#fff3}
+*{-webkit-tap-highlight-color:#0000}
