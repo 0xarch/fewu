@@ -236,12 +236,12 @@ class BuiltinDescriptivePostContainer {
     #sort_name
     included = []
     constructor(name,v){
-        this.#sort_name = name;
-        this.included.push(v);
+        this.#sort_name = name
+        this.included.push(v)
     }
     name=()=>this.#sort_name
     includes=(id)=>this.included.includes(id)
-    add=(id)=>!this.includes(id)&&this.included.push(id);
+    add=(id)=>!this.includes(id)&&this.included.unshift(id);
 }
 
 class Tag extends BuiltinDescriptivePostContainer{
