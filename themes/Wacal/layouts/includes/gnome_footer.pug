@@ -15,4 +15,3 @@ footer
     section.tac
         .copyr
             != theme.useDefaultCopyrightText?i18n(theme.copyrightText):user.copyright
-        div= i18n('Page generated') + (nexo.deploy_time||nexo.proc.time).toLocaleString(LANG,{dateStyle:'full',timeStyle:'full'})
