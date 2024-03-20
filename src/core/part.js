@@ -2,6 +2,7 @@ import db from './database.js';
 import {join} from 'path';
 import {cp} from 'fs';
 import {run,info} from '../lib/mod.js';
+import {proc_final} from './builder.js';
 
 async function copy_files() {
     let ThemeConfig = db.theme.get_all();
