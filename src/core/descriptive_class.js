@@ -1,3 +1,9 @@
+import { parse } from "marked";
+import { statSync, readFileSync } from 'fs';
+import { Cache } from './struct.js';
+import { word_count } from "./text_process.js";
+import { warn } from "./run.js";
+
 class License{
     #CreativeCommons = {
         BY : false,
@@ -173,8 +179,8 @@ class Post{
         this.property = getted;
 
         this.title = getted.title;
-        this.category = getted.category.split(" ").filter(notFake);
-        this.tags = getted.tags.split(" ").filter(notFake);
+        this.category = getted.category.split(" ").filter(v=>v!='');
+        this.tags = getted.tags.split(" ").filter(v=>v!='');
         this.isTopped = getted.top?true:false;
         this.date = new Date(getted.date);
         this.license = new License(getted.license||'');
@@ -184,7 +190,7 @@ class Post{
             warn(['OLD POST','YELLOW'],[this.title,'MAGENTA']);
         }
         if(!getted.keywords) this.keywords = this.tags;
-        else this.keywords = getted.keywords.split(" ").filter(notFake);
+        else this.keywords = getted.keywords.split(" ").filter(v=>v!='');
 
         let gz = getted.date.split(/[\ \-\.]/).filter(v=>v).map(v=>parseInt(v));
         let moreIndex = lines.indexOf('<!--more-->');

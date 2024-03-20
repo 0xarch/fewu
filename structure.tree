@@ -12,6 +12,7 @@ Nexo code structure tree:
         descriptive_class.js
         gobject.js - provide GObject
         i18n.js - i18n functions
+        init.js - global preworks
         part.js
         reader.js - read file
         run.js - container for run end function
@@ -23,7 +24,6 @@ Nexo code structure tree:
         mod.js - output functions
     <modules>
         extra_files.js - copy works
-        init.js - global preworks, builtin , must be enabled
         rss.js - RSS feed functions
         search.js - Search functions
         sitemap.js - Sitemap functions

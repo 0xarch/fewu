@@ -1,8 +1,7 @@
 import { basename,join } from "path";
 import * as fs from "fs";
 import db from "./database.js";
-import Post from "../lib/class.post.js";
-import { Category,Tag } from "./descriptive_class.js";
+import { Category,Tag, Post } from "./descriptive_class.js";
 
 function traverse(Directory) {
     let returns = [];

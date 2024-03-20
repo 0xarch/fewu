@@ -1,7 +1,7 @@
-import db from './database.js';
 import {join} from 'path';
 import {cp} from 'fs';
-import {run,info} from '../lib/mod.js';
+import db from './database.js';
+import {run,info} from './run.js';
 import {proc_final} from './builder.js';
 
 async function copy_files() {

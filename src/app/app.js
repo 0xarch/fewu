@@ -1,17 +1,16 @@
-import { gopt } from '../core/run.js';
 import { join } from 'path';
 import { readFileSync, cp } from 'fs';
+import { gopt,info, nexo_logo } from '../core/run.js';
+import db from '../core/database.js';
+import GObject from '../core/gobject.js';
 import * as part from '../core/part.js';
 import { write } from '../core/builder.js';
 import { site, sort, get_file_relative_dir } from '../core/reader.js';
 import { SettingsTemplate } from '../core/config_template.js';
-import db from '../core/database.js';
-import GObject from '../core/gobject.js';
 import { Collection } from '../core/struct.js';
 import { auto_set_i18n_file, i18n } from '../core/i18n.js';
 import Layout from '../lib/class.layout.js';
-import { info, nexo_logo } from '../lib/mod.js';
-import * as init from '../modules/init.js';
+
 /**
  * @DOCUMENT_OF_APP
  * @argument config [file] Configuration file for Nexo.
@@ -27,6 +26,7 @@ async function App() {
 
     // init
     if(db.proc.args.init){
+        const init = await(import('../core/init.js'));
         info(['Init','YELLOW'],['Making directories']);
         init.make_default_directory();
         info(['Init','YELLOW'],['Touching templates']);

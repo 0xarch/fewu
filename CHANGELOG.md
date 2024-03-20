@@ -2,12 +2,17 @@
 
 **BETA NOW**
 
-## b1.0.3-2(n2.2.5-2) [EDITING] - 2024-03-19
+## b1.0.3-3(n2.2.5-4) - 2024-03-20
+
+## Todo
+
+## b1.0.3-2(n2.2.5-2) - 2024-03-19
 
 ### Changed
 * config.json is now generated automatically by init module
 * rerecongized codes
 * `i18n` is merged into **Core**
+* `init` is merged into **Core**
 * `extra_files` separated as a module named `extra_files`
 * some part codes in app.js is divided as part.js
 
@@ -18,6 +23,11 @@
 
 ### Fixed
 * wrong order in `site.categories` and `site.tags`
+* `init` overrides files
+
+### Removed
+* `lib/mod.js` (moved to `core/run`)
+* `lib/class.post.js` (`Post` moved to `core/descriptive_class`)
 
 ## b1.0.3-1(n2.2.5-1) - 2024-03-12
 

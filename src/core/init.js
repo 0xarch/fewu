@@ -1,9 +1,8 @@
-import { SettingsTemplate } from '../core/config_template.js';
-import { mkdir, } from 'fs';
+import { join } from 'path';
 import * as fs from 'fs';
 import { Nil } from '../lib/closures.js';
-import { Cache } from '../core/struct.js';
-import { join } from 'path';
+import { Cache } from './struct.js';
+import { SettingsTemplate } from './config_template.js';
 
 const POST_TEMPLATE = 
 `---
@@ -28,16 +27,16 @@ function get_default_configuration() {
 }
 
 function make_default_directory() {
-    mkdir('posts', {}, Nil);
-    mkdir('public', {}, Nil);
-    mkdir('resources', {}, Nil);
-    mkdir('extra', {}, Nil);
+    fs.mkdir('posts', {}, Nil);
+    fs.mkdir('public', {}, Nil);
+    fs.mkdir('resources', {}, Nil);
+    fs.mkdir('extra', {}, Nil);
 }
 
 function make_common_file(){
-    fs.writeFile(join('posts','about.md'),POST_TEMPLATE,Nil);
-    fs.writeFile(join('posts','template.md'),POST_TEMPLATE,Nil);
-    fs.writeFile('./config.json',JSON.stringify(SettingsTemplate,null,4),Nil);
+    safeWriteFile(join('posts','about.md'),POST_TEMPLATE,Nil);
+    safeWriteFile(join('posts','template.md'),POST_TEMPLATE,Nil);
+    safeWriteFile('./config.json',JSON.stringify(SettingsTemplate,null,4),Nil);
 }
 
 function remove_directory() {
@@ -60,6 +59,11 @@ function rm(path){
             }
         }
     }
+}
+
+function safeWriteFile(path,data,callback){
+    if(fs.existsSync(path)) return;
+    else fs.writeFile(path,data,callback);
 }
 
 export {
