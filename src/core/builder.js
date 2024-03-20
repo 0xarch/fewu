@@ -88,8 +88,7 @@ async function write(collection, file) {
                     ...addition_in_iter,
                     cycling: result,
                 }, result.path);
-                if(stat === 'Ok') info([absolute_correspond.from, 'MAGENTA'], [result.path, 'YELLOW'], ['SUCCESS', "GREEN"]);
-                else errno(stat);
+                if(stat === 'Ok') info([result.path, 'YELLOW'], ['SUCCESS', "GREEN"]);
             }
         } else {
             let path = path_write_to_prefix + '/index.html';
@@ -101,8 +100,7 @@ async function write(collection, file) {
                 ...addition,
                 ...addition_in_iter,
             }, path);
-            if(stat === 'Ok') info([absolute_correspond.from, 'MAGENTA'], [path, 'YELLOW'], ['SUCCESS', "GREEN"]);
-            else errno(stat);
+            if(stat === 'Ok') info([path, 'YELLOW'], ['SUCCESS', "GREEN"]);
         }
     }
     return;
@@ -157,7 +155,10 @@ function proc_final(type,template,options,provide_variables,path_write_to){
     mkdirSync(dirname(path_write_to),{recursive:true});
     let result = procer(template,options,provide_variables);
     try{
-        if(readFileSync(path_write_to).toString() == result) return 'Ok';
+        if(readFileSync(path_write_to).toString() === result){
+            info([path_write_to, 'MAGENTA'], ['SKIPPED: No difference', "GREEN"]);
+            return 'Skipped';
+        }
     } catch(e){}
     writeFile(path_write_to,result,(e)=>{if(e)throw e});
     return 'Ok';
