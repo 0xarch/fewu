@@ -2,9 +2,16 @@
 
 **BETA NOW**
 
-## b1.0.3-3(n2.2.5-4) - 2024-03-20
+## b1.0.3-3(n2.2.5-4) [EDITING] - 2024-03-20
 
-## Todo
+### Changed
+* `GObject.mix` is now recursive.
+* FULL support of `GString`
+
+### New
+* you can now customize the foreword when a post has no foreword.
+
+### Todo
 
 ## b1.0.3-2(n2.2.5-2) - 2024-03-19
 

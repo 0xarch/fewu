@@ -1,35 +1,55 @@
 import GObject from './gobject.js';
 
 class GString {
-    static from(str) {
-        let strs=[''], i=0, is_in_val = false, is_locating_quote=false, skip_a_char=false, quote_locate_starter='{';
-        str.split("").filter(v => v != '').forEach((char)=>{
-            if(!skip_a_char){
-                if(char=='\\'){
+    static #get_array(str) {
+        let strs = [''], i = 0, is_in_val = false, is_locating_quote = false, skip_a_char = false, quote_locate_starter = '{';
+        str.split("").filter(v => v != '').forEach((char) => {
+            if (!skip_a_char) {
+                if (char == '\\') {
                     skip_a_char = true;
-                } else if(is_locating_quote){
-                    if(char=='{' || char=='}'){
+                } else if (is_locating_quote) {
+                    if (char == '{' || char == '}') {
                         is_in_val = !is_in_val;
                         i++;
-                        strs[i]='';
+                        strs[i] = '';
                     } else {
-                        strs[i]+=quote_locate_starter+char;
+                        strs[i] += quote_locate_starter + char;
                     }
                     is_locating_quote = false;
-                } else if(char=='{' &&! is_in_val){
+                } else if (char == '{' && !is_in_val) {
                     is_locating_quote = true;
                     quote_locate_starter = '{';
-                } else if(char=='}' && is_in_val){
+                } else if (char == '}' && is_in_val) {
                     is_locating_quote = true;
                     quote_locate_starter = '}';
                 } else
-                strs[i]+=char;
-            }else{
+                    strs[i] += char;
+            } else {
                 strs[i] += char;
                 skip_a_char = false
             }
         });
+        return strs;
+    }
+
+    static #eval(arr, coll) {
+        if (!coll) return this.toString();
+        let is_in_val = false, result = '';
+        arr.forEach((v) => {
+            if (is_in_val) result += coll.get(v);
+            else result += v;
+            is_in_val = !is_in_val;
+        });
+        return result;
+    }
+
+    static from(str) {
+        let strs = GString.#get_array(str);
         return new SymString(strs);
+    }
+
+    static parse(str, coll) {
+        return GString.#eval(GString.#get_array(str), coll);
     }
 
     #str_group;
@@ -42,17 +62,10 @@ class GString {
      * 
      * @param {Collection} collection 
      */
-    eval(collection){
-        if(!collection) return this.toString();
-        let is_in_val = false, result='';
-        this.#str_group.forEach((v)=>{
-            if(is_in_val) result += collection.get(v);
-            else result += v;
-            is_in_val =! is_in_val;
-        });
-        return result;
+    eval(collection) {
+        return GString.#eval(collection);
     }
-    toString(){
+    toString() {
         return this.#str_group.join();
     }
 }

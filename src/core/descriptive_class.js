@@ -1,8 +1,9 @@
 import { parse } from "marked";
 import { statSync, readFileSync } from 'fs';
-import { Cache } from './struct.js';
+import { Cache, Collection, GString } from './struct.js';
 import { word_count } from "./text_process.js";
 import { warn } from "./run.js";
+import db from "./database.js";
 
 class License{
     #CreativeCommons = {
@@ -214,7 +215,16 @@ class Post{
         }else if(fwc > 200){
             warn(['TOO LONG FOREWORD','RED'],[this.title,'MAGENTA','NONE']);
         }
-        if(this.foreword=="") this.foreword = "The author of this article has not yet set the foreword.\n\nCategory(ies): "+this.category.join(", ")+"\n\nTag(s): "+this.tags.join(", ");
+        
+        //if(this.foreword=="") this.foreword = "The author of this article has not yet set the foreword.\n\nCategory(ies): "+this.category.join(", ")+"\n\nTag(s): "+this.tags.join(", ");
+        {
+            let coll_strict = {
+                category: this.category.join(", "),
+                tags: this.tags.join(", ")
+            }
+            if (this.foreword == '')
+                this.foreword = GString.parse(db.settings.get('build.no_foreword_text')||'',new Collection(coll_strict));
+        }
 
         this.datz = new Datz(...gz);
         this.ECMA262Date = this.date.toDateString();

@@ -1,5 +1,8 @@
 class GObject {
 
+    static isObject(obj){
+        return Object.prototype.toString.call(obj) === '[object Object]';
+    }
     /**
      * 
      * @param {object} object 
@@ -28,7 +31,10 @@ class GObject {
     static mix(primary, secondary, insert_new_key = false) {
         let main = primary||{};
         for (let key in secondary) {
-            if (main.hasOwnProperty(key) || insert_new_key) {
+            let mainHasKey = main.hasOwnProperty(key);
+            if(mainHasKey && GObject.isObject(primary[key]) && GObject.isObject(secondary[key]))
+                primary[key] = GObject.mix(primary[key],secondary[key],insert_new_key);
+            else if (mainHasKey || insert_new_key) {
                 main[key] = secondary[key];
             }
         }
