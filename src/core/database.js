@@ -29,7 +29,7 @@ let db = {
         }
     },
     module: {
-        enabled_modules: ['search','init','sitemap','extra_files']
+        enabled_modules: ['search','sitemap','extra_files']
     },
     builder: {
         mode: '',

@@ -4,6 +4,7 @@ import { join } from "path";
 
 async function generateSearchStrings(){
     if(!db.theme.has('API')) return;
+    db.builder.api_required.nexo.searchStringUrl = db.file('searchStrings.json');
     let api_conf = db.theme.get('API');
     if (api_conf.searchComponent) {
         let search_config = api_conf.searchComponent;

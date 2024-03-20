@@ -114,13 +114,6 @@ async function App() {
 
     let __provided_theme_config = GObject.mix(db.theme.get('default'), db.settings.get('theme.options'),true);
 
-    db.module.enabled_modules.forEach(async (module_name)=>{
-        let Module = (await import('../modules/'+module_name+'.js')).default;
-        if(Module && Module.exec) Module.exec();
-    })
-
-    Provision.v2.nexo.searchStringUrl = db.file('searchStrings.json');
-
     if (db.theme.has('API')) {
         let api_conf = db.theme.get('API');
         if (api_conf.hasPlugin) {
@@ -143,6 +136,10 @@ async function App() {
         settings: db.settings.get_all(),
         theme: __provided_theme_config,
         user: db.settings.get('user'),
+        nexo: {
+            logo: nexo_logo,
+            deploy_time: db.proc.time,
+        },
         __root_directory__: db.dirs.root,
         __title__: __get_title,
         file: db.file,
@@ -152,6 +149,13 @@ async function App() {
         get_property: GObject.getProperty,
         ...Provision.v2
     };
+
+    // Load modules
+    db.module.enabled_modules.forEach(async (module_name)=>{
+        const Module = (await import('../modules/'+module_name+'.js')).default;
+        if(!Module || !Module.exec) throw new Error('Could not load module:',module_name);
+        Module.exec();
+    })
 
     for (let item of db.theme.get('layout.layouts')) {
         write(new Collection({ ...db.builder.api_required }), new Layout(item));
