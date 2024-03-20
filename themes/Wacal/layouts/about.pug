@@ -7,7 +7,7 @@ html(lang="zh")
         +prelude(post)
         +meta(post)
         title= __title__(post.title,'read')
-    body.colorful(OCP='OVERRIDE',style='--color1:'+Plugin.getColorByString(post.foreword)+';--color2:'+Plugin.getColorByString(post.getParsed('foreword')))
+    body.colorful(OCP='OVERRIDE',style='--color1:'+Plugin.getColorByString(post.content)+';--color2:'+Plugin.getColorByString(post.getParsed('content')))
         +gnome_header()
         .intro#intro.tac
             .h1= i18n('About')

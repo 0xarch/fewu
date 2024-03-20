@@ -13,7 +13,7 @@ html
         main.content#content
             ul.intros
                 each item in cycling.value
-                    +intro_li(item.value)
+                    +intro_li(item.value,'tag')
             +gnome_page_navigator(cycling.total,cycling.now,'tag')
         +gnome_footer()
         include /components/searchPanel.pug

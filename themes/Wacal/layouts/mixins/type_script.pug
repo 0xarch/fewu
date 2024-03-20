@@ -1,19 +1,9 @@
-mixin typecard(name,len,lastpost)
-    .Card.-Type-
-        .Heading.f_eaj= name
-        .c1.f_eaj.column
-            .total
-                = i18n(len+' in total')
-                |,
-                = i18n('Last post')+' '+lastpost
-        a.c2.Button.f_eaj(href=file(`/category/s${name}/1/index.html`))= i18n('View more')
-
-mixin intro_li(v)
+mixin intro_li(v,pname='category')
     - let posts = v.included
     - let lastpost = ID[posts[0]]
     - let name = v.catename || v.tagname
     li
-        a.mark(href=file(`/category/s${name}/1/`),style='--i:var(--'+colors[Math.floor(name.length*2+5)%7]+'3)')
+        a.mark(href=file(`/${pname}/s${name}/1/`),style='--i:var(--'+colors[Math.floor(name.length*2+5)%7]+'3)')
             b= v.catename || v.tagname
             small= i18n(posts.length+' in total') +','+i18n('Last post')+' '+lastpost.date.toLocaleDateString(settings.language,{dateStyle:'full'})
 
