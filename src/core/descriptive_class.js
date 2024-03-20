@@ -82,10 +82,11 @@ class Datz {
         return !this.compareWith(datz)==1;
     }
     toPathString(){
-        return this.y+'/'+this.m+'/'+this.d;
+        return this.toString('/');
     }
-    toString(){
-        return this.y+'-'+this.m+'-'+this.d;
+    toString(separator){
+        if(typeof(separator)!='string') separator ='-';
+        return this.y+separator+this.m+separator+this.d;
     }
 }
 
