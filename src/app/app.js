@@ -1,25 +1,24 @@
 import { gopt } from '../core/run.js';
 import { join } from 'path';
 import { readFileSync, cp } from 'fs';
-import { write, proc_final as build_and_write } from '../core/builder.js';
-import { site, sort } from '../core/reader.js';
+import * as part from '../core/part.js';
+import { write } from '../core/builder.js';
+import { site, sort, get_file_relative_dir } from '../core/reader.js';
 import { SettingsTemplate } from '../core/config_template.js';
-import * as init from '../modules/init.js';
 import db from '../core/database.js';
 import GObject from '../core/gobject.js';
 import { Collection } from '../core/struct.js';
+import { auto_set_i18n_file, i18n } from '../core/i18n.js';
 import Layout from '../lib/class.layout.js';
-import { info, nexo_logo, run } from '../lib/mod.js';
-import { auto_set_i18n_file, i18n } from '../modules/i18n.js';
-import generateSearchStrings from '../modules/search.js';
-import generateSitemap from '../modules/sitemap.js';
+import { info, nexo_logo } from '../lib/mod.js';
+import * as init from '../modules/init.js';
 /**
  * @DOCUMENT_OF_APP
  * @argument config [file] Configuration file for Nexo.
  * @argument theme [string] Use specified theme.
- * @argument init [void] WIP.
- * @argument release build as release mode (for theme, **DEFAULT**)
- * @argument devel build as developer mode (for theme)
+ * @argument init [void] Use init module
+ * @argument release [void] build as release mode (for theme, **DEFAULT**)
+ * @argument devel [void] build as developer mode (for theme)
  * 
  * **NOTE** Working in progress
  */
@@ -63,6 +62,7 @@ async function App() {
     db.language = db.settings.get('language') || 'en-US';
     db.site = site();
     db.sort = sort(db.site.posts);
+    db.file = get_file_relative_dir;
 
     auto_set_i18n_file();
 
@@ -93,11 +93,6 @@ async function App() {
         }
     };
 
-    const { posts, excluded_posts } = db.site;
-    const sorted_posts = db.sort;
-
-    let __public_root = !["/", "", undefined].includes(db.settings.get('build.site_root')) ? db.settings.get('build.site_root') : '';
-
     let __plugin;
     let __get_title = (function () {
         let sep = '|';
@@ -117,37 +112,15 @@ async function App() {
         }
     })();
 
-    /**
-     * @param { string } file_dir 
-     * @returns {string}
-     * @since v2
-     */
-    function __get_file_relative_dir(file_dir) {
-        if (!file_dir) return db.dirs.root + '/';
-        if (file_dir[0] == '/')
-            file_dir = file_dir.substring(1)
-        return join(db.dirs.root,'/',file_dir);
-    }
-    db.file = __get_file_relative_dir;
     let __provided_theme_config = GObject.mix(db.theme.get('default'), db.settings.get('theme.options'),true);
 
-    /*if (db.settings.has('sitemap')) {
-        let path = join(db.dirs.public, db.settings.get('sitemap.name')), type = db.settings.get('sitemap.type');
-        let url = db.settings.get('site_url');
-        if (type == 'txt') {
-            writeFile(path, sitemap.TXT(url, db.site.posts), () => { })
-        } else {
-            writeFile(path, sitemap.XML(url, db.site.posts), () => { })
-        }
-    }*/
-    generateSitemap();
-    if (db.settings.has('extra_files')) {
-        let extra_file = db.settings.get('extra_files');
-        for (let k in extra_file) {
-            cp(join('extra', k), join(db.dirs.public, extra_file[k]), () => { });
-        }
-    }
+    db.module.enabled_modules.forEach(async (module_name)=>{
+        let Module = (await import('../modules/'+module_name+'.js')).default;
+        if(Module && Module.exec) Module.exec();
+    })
+
     Provision.v2.nexo.searchStringUrl = db.file('searchStrings.json');
+
     if (db.theme.has('API')) {
         let api_conf = db.theme.get('API');
         if (api_conf.hasPlugin) {
@@ -159,18 +132,18 @@ async function App() {
             let __plugin_script = 'try{\n' + insert_code + __plugin_file.toString() + '\nplugin()}catch(e){errno(20202);console.error(e);"NULL"}';
             __plugin = eval(__plugin_script);
         }
-        generateSearchStrings();
     }
-    let api_required = {
+
+    db.builder.api_required = {
         Plugin: __plugin,
-        posts,
-        excluded_posts,
-        sort: sorted_posts,
-        ID: sorted_posts.ID,
+        posts: db.site.posts,
+        excluded_posts: db.site.excluded_posts,
+        sort: db.sort,
+        ID: db.sort.ID,
         settings: db.settings.get_all(),
         theme: __provided_theme_config,
         user: db.settings.get('user'),
-        __root_directory__: __public_root,
+        __root_directory__: db.dirs.root,
         __title__: __get_title,
         file: db.file,
         i18n,
@@ -181,63 +154,21 @@ async function App() {
     };
 
     for (let item of db.theme.get('layout.layouts')) {
-        write(new Collection({ ...api_required }), new Layout(item));
+        write(new Collection({ ...db.builder.api_required }), new Layout(item));
     }
+
     let postFilename = join(db.dirs.theme.layout, db.theme.get('layout.post_layout'));
     db.builder.template.post = readFileSync(postFilename).toString();
 
-    part_build_page({
+    part.build_post_pages({
         basedir: db.dirs.theme.layout,
         filename: postFilename
     }, {
-        ...api_required,
+        ...db.builder.api_required,
         filename: postFilename
     });
-    part_copyfiles();
-}
 
-async function part_copyfiles() {
-    let ThemeConfig = db.theme.get_all();
-    let publicDir = db.dirs.public;
-    let themeFileDir = db.dirs.theme.files;
-    cp(themeFileDir, join(publicDir, 'files'), { recursive: true }, () => { });
-    cp('resources', join(publicDir, 'resources'), { recursive: true }, () => { });
-    if (ThemeConfig.copy) {
-        for (let key in ThemeConfig.copy) {
-            if (key.charAt(0) == '@') {
-                switch (key) {
-                    case "@posts":
-                        run(() => {
-                            cp('posts', join(publicDir, ThemeConfig.copy['@posts']), { recursive: true }, () => { });
-                        }, 9101);
-                        break;
-                }
-            } else {
-                run(() => {
-                    cp(join(themeFileDir, 'extra', key), join(publicDir, ThemeConfig.copy[key]), { recursive: true }, () => { });
-                }, 9102);
-            }
-        }
-    }
-    if (ThemeConfig.enableThemeWebsiteIcon) {
-        cp(join(themeFileDir, 'extra/favicon.ico'), publicDir, () => { });
-    } else {
-        cp('./nexo_sources/favicon.ico', join(publicDir, 'favicon.ico'), (e) => { if (e) throw e });
-    }
-    info(['OPERATION.COPY', 'MAGENTA', 'BOLD'], ['COMPLETE', 'GREEN']);
-}
-
-async function part_build_page(options, GivenVariables) {
-    const layoutType = db.builder.type;
-    const template = db.builder.template.post;
-    db.site.posts.forEach(async item => {
-        let destname = join(db.dirs.public, item.path('local'));
-        build_and_write(layoutType, template, options, {
-            post: item,
-            ...GivenVariables
-        }, destname);
-        info([item.title, 'MAGENTA'], [destname, 'YELLOW'], ['SUCCESS', "GREEN"]);
-    });
+    part.copy_files();
 }
 
 export default App;

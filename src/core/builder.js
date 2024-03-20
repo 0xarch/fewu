@@ -1,6 +1,6 @@
 import { mkdirSync, readFileSync,writeFile } from "fs";
 import { dirname, join as join_path } from "path";
-import { errno } from "../lib/mod.js";
+import { errno, info } from "../lib/mod.js";
 import { Collection,Correspond } from "./struct.js";
 import parsers from "./build_compat.js";
 import db from "./database.js";
@@ -79,7 +79,7 @@ async function write(collection, file) {
             let c_parent = collection.get(c_opt.parent) || new Collection(addition_in_iter).get(c_opt.parent) || new Collection(addition).get(c_opt.parent);
             let cycling_results = cycling(c_parent, c_opt.every, path_write_to_prefix);
             for (let result of cycling_results) {
-                proc_final(template_type, template, {
+                let stat = proc_final(template_type, template, {
                     basedir: join_path(theme_directory, 'layouts'),
                     filename: file.correspond().from
                 }, {
@@ -88,10 +88,12 @@ async function write(collection, file) {
                     ...addition_in_iter,
                     cycling: result,
                 }, result.path);
+                if(stat === 'Ok') info([absolute_correspond.from, 'MAGENTA'], [result.path, 'YELLOW'], ['SUCCESS', "GREEN"]);
+                else errno(stat);
             }
         } else {
             let path = path_write_to_prefix + '/index.html';
-            proc_final(template_type, template, {
+            let stat = proc_final(template_type, template, {
                 basedir: join_path(theme_directory, 'layouts'),
                 filename: file.correspond().from
             }, {
@@ -99,6 +101,8 @@ async function write(collection, file) {
                 ...addition,
                 ...addition_in_iter,
             }, path);
+            if(stat === 'Ok') info([absolute_correspond.from, 'MAGENTA'], [path, 'YELLOW'], ['SUCCESS', "GREEN"]);
+            else errno(stat);
         }
     }
     return;
@@ -141,7 +145,7 @@ function cycling(parent, every, prefix = '') {
 * @param { string } path_write_to 
 * @returns {'Ok'}
 */
-async function proc_final(type,template,options,provide_variables,path_write_to){
+function proc_final(type,template,options,provide_variables,path_write_to){
     let procer;
     switch(type){
        case 'JADE':
@@ -153,7 +157,7 @@ async function proc_final(type,template,options,provide_variables,path_write_to)
     mkdirSync(dirname(path_write_to),{recursive:true});
     let result = procer(template,options,provide_variables);
     try{
-        if(readFileSync(path_write_to).toString() == result) return;
+        if(readFileSync(path_write_to).toString() == result) return 'Ok';
     } catch(e){}
     writeFile(path_write_to,result,(e)=>{if(e)throw e});
     return 'Ok';

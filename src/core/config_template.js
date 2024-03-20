@@ -16,7 +16,8 @@ const SettingsTemplate = {
     build: {
         post_directory: "posts",
         public_directory: "public",
-        root: "/"
+        root: "/",
+        default_no_foreword_text: "The author of this article has not yet set the foreword.\n\nCategory(ies): {{categories}} \n\nTag(s): {{tags}}"
     },
     // post.excluded
     excluded_posts: ["about.md","template.md"],

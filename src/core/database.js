@@ -28,6 +28,9 @@ let db = {
             files:''
         }
     },
+    module: {
+        enabled_modules: ['search','init','sitemap','extra_files']
+    },
     builder: {
         mode: '',
         type: '',

@@ -32,4 +32,8 @@ function generateSitemap(){
     }
 }
 
-export default generateSitemap;
+const Module = {
+    exec: generateSitemap
+}
+
+export default Module;

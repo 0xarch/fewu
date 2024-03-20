@@ -3,7 +3,7 @@ import { notFake } from "./closures.js";
 import { readFileSync, statSync } from "fs";
 import { parse } from "marked";
 import { Cache } from "../core/struct.js";
-import { word_count } from "../core/reader.js";
+import { word_count } from "../core/text_process.js";
 import { License, Datz } from "../core/descriptive_class.js";
 
 class Post{

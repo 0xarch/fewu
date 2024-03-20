@@ -5,9 +5,16 @@
 ## b1.0.3-2(n2.2.5-2) [EDITING] - 2024-03-19
 
 ### Changed
-* sitemap module now only provides a `generateSitemap()` function
 * config.json is now generated automatically by init module
 * rerecongized codes
+* `i18n` is merged into **Core**
+* `extra_files` separated as a module named `extra_files`
+* some part codes in app.js is divided as part.js
+
+### New
+* `GString` class (struct) (Experimental,WIP)
+* advanced module support is now experimental
+* **Module Standard v1**
 
 ## b1.0.3-1(n2.2.5-1) - 2024-03-12
 

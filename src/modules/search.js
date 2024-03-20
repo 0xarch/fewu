@@ -2,7 +2,8 @@ import db from "../core/database.js";
 import { writeFile } from "fs";
 import { join } from "path";
 
-function generateSearchStrings(){
+async function generateSearchStrings(){
+    if(!db.theme.has('API')) return;
     let api_conf = db.theme.get('API');
     if (api_conf.searchComponent) {
         let search_config = api_conf.searchComponent;
@@ -25,4 +26,8 @@ function generateSearchStrings(){
     }
 }
 
-export default generateSearchStrings;
+const Module = {
+    exec: generateSearchStrings
+}
+
+export default Module;

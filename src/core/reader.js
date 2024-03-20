@@ -129,8 +129,16 @@ function word_count(content){
     arr.forEach(v=>en_char.test(v)&&count++);
     return count;
 }
+
+function get_file_relative_dir(file_dir) {
+    if (!file_dir) return db.dirs.root + '/';
+    if (file_dir[0] == '/')
+        file_dir = file_dir.substring(1)
+    return join(db.dirs.root,'/',file_dir);
+}
+
 export {
     site,
     sort,
-    word_count
+    get_file_relative_dir
 }

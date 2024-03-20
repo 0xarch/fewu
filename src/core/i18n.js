@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import db from '../core/database.js';
+import db from './database.js';
 
 let langfile = {};
 let lang_fallback = {};
