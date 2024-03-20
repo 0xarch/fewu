@@ -16,6 +16,9 @@
 * advanced module support is now experimental
 * **Module Standard v1**
 
+### Fixed
+* wrong order in `site.categories` and `site.tags`
+
 ## b1.0.3-1(n2.2.5-1) - 2024-03-12
 
 ### Changed
