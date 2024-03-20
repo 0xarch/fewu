@@ -11,6 +11,8 @@ Nexo code structure tree:
         database.js - store an object (tree-like) for storing data
         descriptive_class.js
         gobject.js - provide GObject
+        i18n.js - i18n functions
+        part.js
         reader.js - read file
         run.js - container for run end function
         struct.js - classes and structs
@@ -18,13 +20,10 @@ Nexo code structure tree:
     <lib>
         class.*.js - DEPRECATED, waiting for remove
         closures.js - DEPRECATED, waiting for remove
-        file_class.js - DEPRECATED, waiting for remove
         mod.js - output functions
-        posts.js - DEPRECATED, replaced by [^+core/reader.js]
-        reader.js - DEPRECATED, replaced by [^+core/reader.js]
     <modules>
-        i18n.js - i18n functions
-        init.js - global preworks
+        extra_files.js - copy works
+        init.js - global preworks, builtin , must be enabled
         rss.js - RSS feed functions
         search.js - Search functions
         sitemap.js - Sitemap functions
