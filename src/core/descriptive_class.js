@@ -5,6 +5,25 @@ import { word_count } from "./text_process.js";
 import { warn } from "./run.js";
 import db from "./database.js";
 
+class Template {
+    type;
+    text;
+    basedir;
+    filename;
+    constructor(type,text,{basedir,filename}){
+        this.type = type;
+        this.text = text;
+        this.basedir = basedir;
+        this.filename = filename;
+    }
+    get_base(){
+        return {
+            basedir: this.basedir,
+            filename: this.filename
+        }
+    }
+}
+
 class License{
     #CreativeCommons = {
         BY : false,
@@ -278,6 +297,7 @@ class Category extends BuiltinDescriptivePostContainer{
 }
 
 export {
+    Template,
     License,
     Datz,
     Tag,
