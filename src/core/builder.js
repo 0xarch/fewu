@@ -5,6 +5,7 @@ import { Collection, Correspond } from "./struct.js";
 import parsers from "./build_compat.js";
 import db from "./database.js";
 import Layout from "../lib/class.layout.js";
+import { Template } from "./descriptive_class.js";
 
 /**
  * 
@@ -154,6 +155,34 @@ function proc_final(type, template, options, provide_variables, path_write_to) {
     }
     mkdirSync(dirname(path_write_to), { recursive: true });
     let result = procer(template, options, provide_variables);
+    try {
+        if (readFileSync(path_write_to).toString() === result) {
+            info([path_write_to, 'MAGENTA'], ['SKIPPED: No difference', "GREEN"]);
+            return 'Skipped';
+        }
+    } catch (e) { }
+    writeFile(path_write_to, result, (e) => { if (e) throw e });
+    return 'Ok';
+}
+
+/**
+ * 
+ * @param {Template} template 
+ * @param {object} provide_variables 
+ * @param {string} path_write_to
+ * @returns {'Ok'|'Skipped'} 
+ */
+function proc_final_new(template,provide_variables,path_write_to){
+    let procer;
+    switch (template.type) {
+        case 'JADE':
+            procer = parsers.pug;
+            break;
+        default:
+            procer = parsers[type.toLowerCase()];
+    }
+    mkdirSync(dirname(path_write_to), { recursive: true });
+    let result = procer(template.text, template.get_base(), provide_variables);
     try {
         if (readFileSync(path_write_to).toString() === result) {
             info([path_write_to, 'MAGENTA'], ['SKIPPED: No difference', "GREEN"]);
