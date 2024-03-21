@@ -4,8 +4,8 @@ import { Nil } from '../lib/closures.js';
 import { Cache } from './struct.js';
 import { SettingsTemplate } from './config_template.js';
 
-const POST_TEMPLATE = 
-`---
+const POST_TEMPLATE =
+    `---
 title: TITLE
 date: 1970-1-1
 tags: TAG_A TAG_B?
@@ -15,8 +15,8 @@ SOME FOREWORDS
 <!--more-->`;
 
 let cache = new Cache();
-cache.set('postd','posts');
-cache.set('publicd','public')
+cache.set('postd', 'posts');
+cache.set('publicd', 'public')
 
 /**
  * 
@@ -33,10 +33,10 @@ function make_default_directory() {
     fs.mkdir('extra', {}, Nil);
 }
 
-function make_common_file(){
-    safeWriteFile(join('posts','about.md'),POST_TEMPLATE,Nil);
-    safeWriteFile(join('posts','template.md'),POST_TEMPLATE,Nil);
-    safeWriteFile('./config.json',JSON.stringify(SettingsTemplate,null,4),Nil);
+function make_common_file() {
+    safeWriteFile(join('posts', 'about.md'), POST_TEMPLATE, Nil);
+    safeWriteFile(join('posts', 'template.md'), POST_TEMPLATE, Nil);
+    safeWriteFile('./config.json', JSON.stringify(SettingsTemplate, null, 4), Nil);
 }
 
 function remove_directory() {
@@ -44,8 +44,8 @@ function remove_directory() {
     rm('public');
 }
 
-function rm(path){
-    if(fs.statSync(path).isFile()){
+function rm(path) {
+    if (fs.statSync(path).isFile()) {
         fs.rm(path);
         return;
     }
@@ -61,9 +61,9 @@ function rm(path){
     }
 }
 
-function safeWriteFile(path,data,callback){
-    if(fs.existsSync(path)) return;
-    else fs.writeFile(path,data,callback);
+function safeWriteFile(path, data, callback) {
+    if (fs.existsSync(path)) return;
+    else fs.writeFile(path, data, callback);
 }
 
 export {

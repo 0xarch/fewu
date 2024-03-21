@@ -1,7 +1,7 @@
-import { mkdirSync, readFileSync,writeFile } from "fs";
+import { mkdirSync, readFileSync, writeFile } from "fs";
 import { dirname, join as join_path } from "path";
 import { errno, info } from "./run.js";
-import { Collection,Correspond } from "./struct.js";
+import { Collection, Correspond } from "./struct.js";
 import parsers from "./build_compat.js";
 import db from "./database.js";
 import Layout from "../lib/class.layout.js";
@@ -61,7 +61,7 @@ async function write(collection, file) {
         }
     }
 
-    for (let key in iter) {
+    for (const key in iter) {
         let addition_in_iter = iter[key];
         let path_write_to_prefix = join_path(config.get('public_directory') || config.get('build.public_directory'));
         if (addition_in_iter.varias) {
@@ -78,7 +78,7 @@ async function write(collection, file) {
             let c_opt = opt.cycling;
             let c_parent = collection.get(c_opt.parent) || new Collection(addition_in_iter).get(c_opt.parent) || new Collection(addition).get(c_opt.parent);
             let cycling_results = cycling(c_parent, c_opt.every, path_write_to_prefix);
-            for (let result of cycling_results) {
+            for (const result of cycling_results) {
                 let stat = proc_final(template_type, template, {
                     basedir: join_path(theme_directory, 'layouts'),
                     filename: file.correspond().from
@@ -88,7 +88,7 @@ async function write(collection, file) {
                     ...addition_in_iter,
                     cycling: result,
                 }, result.path);
-                if(stat === 'Ok') info([result.path, 'YELLOW'], ['SUCCESS', "GREEN"]);
+                if (stat === 'Ok') info([result.path, 'YELLOW'], ['SUCCESS', "GREEN"]);
             }
         } else {
             let path = path_write_to_prefix + '/index.html';
@@ -100,7 +100,7 @@ async function write(collection, file) {
                 ...addition,
                 ...addition_in_iter,
             }, path);
-            if(stat === 'Ok') info([path, 'YELLOW'], ['SUCCESS', "GREEN"]);
+            if (stat === 'Ok') info([path, 'YELLOW'], ['SUCCESS', "GREEN"]);
         }
     }
     return;
@@ -143,24 +143,24 @@ function cycling(parent, every, prefix = '') {
 * @param { string } path_write_to 
 * @returns {'Ok'}
 */
-function proc_final(type,template,options,provide_variables,path_write_to){
+function proc_final(type, template, options, provide_variables, path_write_to) {
     let procer;
-    switch(type){
-       case 'JADE':
-           procer = parsers.pug;
-           break;
+    switch (type) {
+        case 'JADE':
+            procer = parsers.pug;
+            break;
         default:
             procer = parsers[type.toLowerCase()];
     }
-    mkdirSync(dirname(path_write_to),{recursive:true});
-    let result = procer(template,options,provide_variables);
-    try{
-        if(readFileSync(path_write_to).toString() === result){
+    mkdirSync(dirname(path_write_to), { recursive: true });
+    let result = procer(template, options, provide_variables);
+    try {
+        if (readFileSync(path_write_to).toString() === result) {
             info([path_write_to, 'MAGENTA'], ['SKIPPED: No difference', "GREEN"]);
             return 'Skipped';
         }
-    } catch(e){}
-    writeFile(path_write_to,result,(e)=>{if(e)throw e});
+    } catch (e) { }
+    writeFile(path_write_to, result, (e) => { if (e) throw e });
     return 'Ok';
 }
 

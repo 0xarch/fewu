@@ -5,15 +5,15 @@ import db from './database.js';
 let langfile = {};
 let lang_fallback = {};
 
-function set_i18n_file(json){
+function set_i18n_file(json) {
     langfile = json;
 }
 
-function auto_set_i18n_file(){
-    try{
-        let lang_fb_json = JSON.parse(readFileSync(join(db.dirs.theme.extra,'i18n.default.json')).toString())
+function auto_set_i18n_file() {
+    try {
+        let lang_fb_json = JSON.parse(readFileSync(join(db.dirs.theme.extra, 'i18n.default.json')).toString())
         lang_fallback = lang_fb_json;
-    } catch(e) {
+    } catch (e) {
         console.error('Could not read default(fallback) i18n file in theme directory $THEME/extra/i18n.default.json');
     }
     {
@@ -27,20 +27,20 @@ function auto_set_i18n_file(){
     }
 }
 
-function i18n(key){
+function i18n(key) {
     let result;
-    if(/[0-9]/.test(key)){
+    if (/[0-9]/.test(key)) {
         let __tempor_val = [];
-        for(let item of (/[0-9]+/g).exec(key)){
-            key = key.replace(item,'{NUMBER}');
+        for (let item of (/[0-9]+/g).exec(key)) {
+            key = key.replace(item, '{NUMBER}');
             __tempor_val.push(item);
         }
-        result= langfile[key]||lang_fallback[key]||key;
-        for(let item of __tempor_val){
-            result = result.replace('{NUMBER}',item);
+        result = langfile[key] || lang_fallback[key] || key;
+        for (let item of __tempor_val) {
+            result = result.replace('{NUMBER}', item);
         }
     }
-    else result = langfile[key]||lang_fallback[key]||key;
+    else result = langfile[key] || lang_fallback[key] || key;
     return result;
 }
 

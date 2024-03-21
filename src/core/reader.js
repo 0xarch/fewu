@@ -1,7 +1,7 @@
-import { basename,join } from "path";
+import { basename, join } from "path";
 import * as fs from "fs";
 import db from "./database.js";
-import { Category,Tag, Post } from "./descriptive_class.js";
+import { Category, Tag, Post } from "./descriptive_class.js";
 
 function traverse(Directory) {
     let returns = [];
@@ -21,7 +21,7 @@ function traverse(Directory) {
  * @returns { Post }
  */
 function initializePost(content, id = undefined) {
-    let article = new Post(content,id);
+    let article = new Post(content, id);
     return article;
 }
 
@@ -39,7 +39,7 @@ function site() {
         tags = {};
     for (let path of traverse(db.dirs.posts)) {
         let item = basename(path, db.dirs.posts);
-        let file_data = initializePost(path,bid);
+        let file_data = initializePost(path, bid);
 
         if (db.settings.get('excluded_posts').includes(item)) excluded_posts[item] = file_data;
         else {
@@ -119,7 +119,7 @@ function get_file_relative_dir(file_dir) {
     if (!file_dir) return db.dirs.root + '/';
     if (file_dir[0] == '/')
         file_dir = file_dir.substring(1)
-    return join(db.dirs.root,'/',file_dir);
+    return join(db.dirs.root, '/', file_dir);
 }
 
 export {

@@ -3,7 +3,7 @@ import { cp } from "fs";
 import { join } from "path";
 
 const Module = {
-    exec: async()=>{
+    exec: async () => {
         if (db.settings.has('extra_files')) {
             let extra_file = db.settings.get('extra_files');
             for (let k in extra_file) {

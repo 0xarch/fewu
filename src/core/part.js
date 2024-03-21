@@ -1,8 +1,8 @@
-import {join} from 'path';
-import {cp} from 'fs';
+import { join } from 'path';
+import { cp } from 'fs';
 import db from './database.js';
-import {run,info} from './run.js';
-import {proc_final} from './builder.js';
+import { run, info } from './run.js';
+import { proc_final } from './builder.js';
 
 async function copy_files() {
     let ThemeConfig = db.theme.get_all();
@@ -44,7 +44,7 @@ async function build_post_pages(options, GivenVariables) {
             post: item,
             ...GivenVariables
         }, destname) == 'Ok' &&
-        info([item.title, 'MAGENTA'], [destname, 'YELLOW'], ['SUCCESS', "GREEN"]);
+            info([item.title, 'MAGENTA'], [destname, 'YELLOW'], ['SUCCESS', "GREEN"]);
     });
 }
 

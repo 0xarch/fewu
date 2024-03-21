@@ -1,6 +1,6 @@
-const Nil = () => {}
+const Nil = () => { }
 
-const notFake = (v) => v!=''
+const notFake = (v) => v != ''
 
 export {
     Nil,

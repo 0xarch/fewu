@@ -1,6 +1,6 @@
 class GObject {
 
-    static isObject(obj){
+    static isObject(obj) {
         return Object.prototype.toString.call(obj) === '[object Object]';
     }
     /**
@@ -9,7 +9,7 @@ class GObject {
      * @param {string|string[]} property_path 
      * @returns {any|null}
      */
-    static getProperty(object,property_path) {
+    static getProperty(object, property_path) {
         let path = getPropertyPathFrom(property_path);
         let __tempor_val = object;
         for (let i = 0; i < path.length; i++) {
@@ -29,11 +29,11 @@ class GObject {
      * @returns {object}
      */
     static mix(primary, secondary, insert_new_key = false) {
-        let main = primary||{};
+        let main = primary || {};
         for (let key in secondary) {
             let mainHasKey = main.hasOwnProperty(key);
-            if(mainHasKey && GObject.isObject(primary[key]) && GObject.isObject(secondary[key]))
-                primary[key] = GObject.mix(primary[key],secondary[key],insert_new_key);
+            if (mainHasKey && GObject.isObject(primary[key]) && GObject.isObject(secondary[key]))
+                primary[key] = GObject.mix(primary[key], secondary[key], insert_new_key);
             else if (mainHasKey || insert_new_key) {
                 main[key] = secondary[key];
             }
@@ -60,16 +60,16 @@ class GObject {
         return result;
     }
 
-    static deleteEscapingChar(str){
-        return str.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;"'～·「」；：‘’“”，。《》？！￥…、（）]+/g,'');
+    static deleteEscapingChar(str) {
+        return str.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;"'～·「」；：‘’“”，。《》？！￥…、（）]+/g, '');
     }
 }
 
-function getPropertyPathFrom(property_path){
+function getPropertyPathFrom(property_path) {
     let path;
-    if(!Array.isArray(property_path)){
-        property_path = property_path.replaceAll(/\\./g,'<!DOT!>');
-        path = property_path.split(".").map(v=>v.replaceAll(/<\!DOT\!>/g,'.'));
+    if (!Array.isArray(property_path)) {
+        property_path = property_path.replaceAll(/\\./g, '<!DOT!>');
+        path = property_path.split(".").map(v => v.replaceAll(/<\!DOT\!>/g, '.'));
     } else {
         path = property_path;
     }

@@ -20,17 +20,17 @@ const SettingsTemplate = {
         no_foreword_text: "The author of this article has not yet set the foreword.\n\nCategory(ies): {{category}} \n\nTag(s): {{tags}}"
     },
     // post.excluded
-    excluded_posts: ["about.md","template.md"],
+    excluded_posts: ["about.md", "template.md"],
     // Theme settings
     theme: {
         name: "Arch",
         options: {
-            
+
         }
     },
     // Security settings (needs implement)
     security: {
-        
+
     },
     // sitemap (only post and homepage)
     sitemap: {

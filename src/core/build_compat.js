@@ -1,20 +1,20 @@
 let parsers = {};
 
-try{
+try {
     let ejs = await import('ejs');
-    parsers.ejs = (template,opt,prov)=>{
-        return ejs.render(template,{...opt,...prov});
+    parsers.ejs = (template, opt, prov) => {
+        return ejs.render(template, { ...opt, ...prov });
     }
-} catch(e){
+} catch (e) {
     console.error('Error during loading EJS parser.');
 }
 
-try{
+try {
     let pug = await import('pug');
-    parsers.pug = (template,opt,prov)=>{
-        return pug.compile(template,opt)(prov);
+    parsers.pug = (template, opt, prov) => {
+        return pug.compile(template, opt)(prov);
     }
-} catch(e){
+} catch (e) {
     console.error('Error during loading PUG parser.');
 }
 

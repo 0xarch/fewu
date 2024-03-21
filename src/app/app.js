@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { readFileSync, cp } from 'fs';
-import { gopt,info, nexo_logo } from '../core/run.js';
+import { gopt, info, nexo_logo } from '../core/run.js';
 import db from '../core/database.js';
 import GObject from '../core/gobject.js';
 import * as part from '../core/part.js';
@@ -25,11 +25,11 @@ async function App() {
     db.proc.args = gopt(process.argv);
 
     // init
-    if(db.proc.args.init){
-        const init = await(import('../core/init.js'));
-        info(['Init','YELLOW'],['Making directories']);
+    if (db.proc.args.init) {
+        const init = await (import('../core/init.js'));
+        info(['Init', 'YELLOW'], ['Making directories']);
         init.make_default_directory();
-        info(['Init','YELLOW'],['Touching templates']);
+        info(['Init', 'YELLOW'], ['Touching templates']);
         init.make_common_file();
         return;
     }
@@ -37,14 +37,14 @@ async function App() {
     db.settings = new Collection(GObject.mix(SettingsTemplate, JSON.parse(
         readFileSync(db.proc.args['config'] || 'config.json').toString()), true));
     const argv = db.proc.args;
-    let buildMode = argv['devel']?'devel':'release';
+    let buildMode = argv['devel'] ? 'devel' : 'release';
     db.builder.mode = buildMode;
 
-    info(['BUILD MODE'],[buildMode,'GREEN']);
+    info(['BUILD MODE'], [buildMode, 'GREEN']);
 
     db.dirs.posts = db.settings.get('build.post_directory') || "posts";
     db.dirs.public = db.settings.get('build.public_directory') || "public";
-    db.dirs.root = !["/", "", undefined].includes(db.settings.get('build.root')||db.settings.get('build.site_root')) ? db.settings.get('build.site_root') : '';
+    db.dirs.root = !["/", "", undefined].includes(db.settings.get('build.root') || db.settings.get('build.site_root')) ? db.settings.get('build.site_root') : '';
     db.dirs.theme.root = join('themes', argv['theme'] || db.settings.get('theme.name'));
     db.dirs.theme.extra = join(db.dirs.theme.root, 'extra');
     db.dirs.theme.layout = join(db.dirs.theme.root, 'layouts');
@@ -112,7 +112,7 @@ async function App() {
         }
     })();
 
-    let __provided_theme_config = GObject.mix(db.theme.get('default'), db.settings.get('theme.options'),true);
+    let __provided_theme_config = GObject.mix(db.theme.get('default'), db.settings.get('theme.options'), true);
 
     if (db.theme.has('API')) {
         let api_conf = db.theme.get('API');
@@ -151,9 +151,9 @@ async function App() {
     };
 
     // Load modules
-    db.module.enabled_modules.forEach(async (module_name)=>{
-        const Module = (await import('../modules/'+module_name+'.js')).default;
-        if(!Module || !Module.exec) throw new Error('Could not load module:',module_name);
+    db.module.enabled_modules.forEach(async (module_name) => {
+        const Module = (await import('../modules/' + module_name + '.js')).default;
+        if (!Module || !Module.exec) throw new Error('Could not load module:', module_name);
         Module.exec();
     })
 

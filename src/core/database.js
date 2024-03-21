@@ -1,35 +1,35 @@
-import {Collection} from "./struct.js";
+import { Collection } from "./struct.js";
 
 let db = {
     /**
      * @type {Collection}
      */
-    settings:void 0,
+    settings: void 0,
     /**
      * @type {Collection}
      */
-    theme:void 0,
+    theme: void 0,
     /**
      * @type {object}
      */
-    site:void 0,
+    site: void 0,
     /**
      * @type {string}
      */
-    language:void 0,
+    language: void 0,
     dirs: {
-        posts:"posts",
-        public:"public",
+        posts: "posts",
+        public: "public",
         root: "/",
         theme: {
-            root:'',
-            extra:'',
-            layout:'',
-            files:''
+            root: '',
+            extra: '',
+            layout: '',
+            files: ''
         }
     },
     module: {
-        enabled_modules: ['search','sitemap','extra_files']
+        enabled_modules: ['search', 'sitemap', 'extra_files']
     },
     builder: {
         mode: '',
@@ -42,9 +42,9 @@ let db = {
          */
         api_required: void 0
     },
-    proc:{
+    proc: {
         time: new Date()
     },
-    constants:void 0
+    constants: void 0
 };
 export default db;
