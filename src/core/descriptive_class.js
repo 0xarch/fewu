@@ -4,7 +4,6 @@ import { Cache, Collection, GString } from './struct.js';
 import { word_count } from "./text_process.js";
 import { warn } from "./run.js";
 import db from "./database.js";
-
 class Template {
     type;
     text;

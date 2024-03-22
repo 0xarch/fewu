@@ -21,6 +21,19 @@ const SettingsTemplate = {
     },
     // post.excluded
     excluded_posts: ["about.md", "template.md"],
+    // Module settings
+    modules: {
+        enabled: [],
+        sitemap: {
+            type: "XML",
+            name: "sitemap.xml"
+        },
+        rss: {
+            title: "No title",
+            link: "/",
+            description: "No Description"
+        }
+    },
     // Theme settings
     theme: {
         name: "Arch",

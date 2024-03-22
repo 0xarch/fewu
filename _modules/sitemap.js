@@ -1,4 +1,4 @@
-import db from '../core/database.js';
+import db from '#db';
 import { join } from 'path';
 import { writeFile } from 'fs';
 
@@ -21,15 +21,13 @@ function xml() {
 }
 
 function generateSitemap() {
-    if (db.settings.has('sitemap')) {
-        if (db.settings.get('sitemap.enabled') == false) return;
-        let path = join(db.dirs.public, db.settings.get('sitemap.name')), type = db.settings.get('sitemap.type');
-        let url = db.settings.get('site_url');
-        if (type == 'txt') {
-            writeFile(path, txt(), () => { });
-        } else {
-            writeFile(path, xml(), () => { })
-        }
+    const conf = db.settings.has('modules.sitemap') ? db.settings.get('modules.sitemap') : {};
+
+    let path = join(db.dirs.public, conf.name), type = conf.type;
+    if (type == 'txt') {
+        writeFile(path, txt(), () => { });
+    } else {
+        writeFile(path, xml(), () => { })
     }
 }
 

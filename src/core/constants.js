@@ -1,10 +1,10 @@
-import db from './database.js';
+import db from '#db';
 import * as os from 'os';
 
 const CONSTANTS = {
     NEXO_RELEASE_VERSION: "1.0.3",
-    NEXO_NEXO_VERSION: "n2.2.5-2",
-    NEXO_SYMBOLS: ["FED", "NOI"],
+    NEXO_NEXO_VERSION: "n2.2.5-4",
+    NEXO_SYMBOLS: ["AR", "NOI"],
     NODE_CORE_VERSION: process.versions.node,
     NODE_V8_VERSION: process.versions.v8,
     NODE_CPP_VERSION: process.versions.modules,

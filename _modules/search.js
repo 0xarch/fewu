@@ -1,4 +1,4 @@
-import db from "../core/database.js";
+import db from "#db";
 import { writeFile } from "fs";
 import { join } from "path";
 

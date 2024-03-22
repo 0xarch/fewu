@@ -28,8 +28,8 @@ let db = {
             files: ''
         }
     },
-    module: {
-        enabled_modules: ['search', 'sitemap', 'extra_files']
+    modules: {
+        enabled: []
     },
     builder: {
         mode: '',

@@ -1,14 +1,14 @@
 import { join } from 'path';
 import { readFileSync, cp } from 'fs';
-import { gopt, info, nexo_logo } from '../core/run.js';
-import db from '../core/database.js';
-import GObject from '../core/gobject.js';
-import * as part from '../core/part.js';
-import { write } from '../core/builder.js';
-import { site, sort, get_file_relative_dir } from '../core/reader.js';
-import { SettingsTemplate } from '../core/config_template.js';
-import { Collection } from '../core/struct.js';
-import { auto_set_i18n_file, i18n } from '../core/i18n.js';
+import { gopt, info, nexo_logo } from '#core/run.js';
+import db from '#db';
+import GObject from '#core/gobject.js';
+import * as part from '#core/part.js';
+import { write } from '#core/builder.js';
+import { site, sort, get_file_relative_dir } from '#core/reader.js';
+import { SettingsTemplate } from '#core/config_template.js';
+import { Collection } from '#core/struct.js';
+import { auto_set_i18n_file, i18n } from '#core/i18n.js';
 import Layout from '../lib/class.layout.js';
 
 /**
@@ -26,7 +26,7 @@ async function App() {
 
     // init
     if (db.proc.args.init) {
-        const init = await (import('../core/init.js'));
+        const init = await (import('#core/init.js'));
         info(['Init', 'YELLOW'], ['Making directories']);
         init.make_default_directory();
         info(['Init', 'YELLOW'], ['Touching templates']);
@@ -63,10 +63,11 @@ async function App() {
     db.site = site();
     db.sort = sort(db.site.posts);
     db.file = get_file_relative_dir;
+    db.modules.enabled = db.settings.get('modules.enabled');
 
     auto_set_i18n_file();
 
-    let constants = (await import('../core/constants.js')).default;
+    let constants = (await import('#core/constants.js')).default;
 
     // since v2
     let Provision = {
@@ -151,8 +152,8 @@ async function App() {
     };
 
     // Load modules
-    db.module.enabled_modules.forEach(async (module_name) => {
-        const Module = (await import('../modules/' + module_name + '.js')).default;
+    db.modules.enabled.forEach(async (module_name) => {
+        const Module = (await import('#modules/' + module_name + '.js')).default;
         if (!Module || !Module.exec) throw new Error('Could not load module:', module_name);
         Module.exec();
     })

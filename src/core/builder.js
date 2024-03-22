@@ -1,11 +1,10 @@
 import { mkdirSync, readFileSync, writeFile } from "fs";
 import { dirname, join as join_path } from "path";
 import { errno, info } from "./run.js";
-import { Collection, Correspond } from "./struct.js";
+import { Collection, Correspond, Template } from "#struct";
 import parsers from "./build_compat.js";
-import db from "./database.js";
+import db from "#db";
 import Layout from "../lib/class.layout.js";
-import { Template } from "./descriptive_class.js";
 
 /**
  * 
