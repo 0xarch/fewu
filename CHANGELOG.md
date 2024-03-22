@@ -2,16 +2,25 @@
 
 **BETA NOW**
 
-## b1.0.3-3(n2.2.5-4) [EDITING] - 2024-03-20
+## b1.0.4(n2.2.6) [EDITING] - 2024-03-22
+
+### Todo WIP
+
+## b1.0.3-3(n2.2.5-4) - 2024-03-20
 
 ### Changed
 * `GObject.mix` is now recursive.
 * FULL support of `GString`
+* alias class from `descriptive_class` to `struct`
+* moved `src/modules` directory to `_modules`
 
 ### New
 * you can now customize the foreword when a post has no foreword.
+* node imports alias (`#core` `#db` `#struct`)
+* docs for **Module Standards v1**
 
-### Todo
+### Announced
+* The first stable version will be s1.0.0, as the beta version b1.1.0, and nexo version n2.3.0
 
 ## b1.0.3-2(n2.2.5-2) - 2024-03-19
 
@@ -26,7 +35,7 @@
 ### New
 * `GString` class (struct) (Experimental,WIP)
 * advanced module support is now experimental
-* **Module Standard v1**
+* **Module Standards v1**
 
 ### Fixed
 * wrong order in `site.categories` and `site.tags`
