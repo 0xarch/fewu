@@ -32,5 +32,9 @@
     "Distribution License Agreement": "传播许可协议",
     "Page generated": "页面已生成 ",
     "Posted recently": "最近发布的博文",
-    "@CC_PRIVATE": "这篇文章的版权属于原作者。当其他人共享此文章时，不允许修改此文章，并且必须指明原始作者。"
+    "All categories": "所有分类",
+    "All tags": "所有标签",
+    "Local information": "生成信息",
+    "@CC_PRIVATE": "这篇文章的版权属于原作者。当其他人共享此文章时，不允许修改此文章，并且必须指明原始作者。",
+    "@STAT_PRO_WARN": "我们只建议专业人士阅读以下信息，您可能会误解信息而导致不必要的麻烦。"
 }

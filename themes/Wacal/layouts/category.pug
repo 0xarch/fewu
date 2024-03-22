@@ -11,9 +11,10 @@ html
         .intro#intro.tac
             h1= i18n('Categories')
         main.content#content
-            ul.intros
-                each item in cycling.value
-                    +intro_li(item.value)
+            section
+                ul.intros
+                    each item in cycling.value
+                        +intro_li(item.value)
             +gnome_page_navigator(cycling.total,cycling.now,'category')
         +gnome_footer()
         include /components/searchPanel.pug

@@ -13,33 +13,31 @@ html
             +counter_section()
             .special
                 h2= i18n('All categories')
-            ul.intros
-                each i in site.used_categories
-                    li
-                        a.mark(style='--i:var(--'+colors[Math.floor(i.length*2+5)%7]+'3)')
-                            b= i
-                            small= i18n(site.categories[i].included.length+' in total')
+            section
+                ul.intros
+                    each i in site.used_categories
+                        li
+                            a.mark(style='--i:var(--'+colors[Math.floor(i.length*2+5)%7]+'3)')
+                                b= i
+                                small= i18n(site.categories[i].included.length+' in total')
             .special
                 h2= i18n('All tags')
-            ul.intros
-                each i in site.used_tags
-                    li
-                        a.mark(style='--i:var(--'+colors[Math.floor(i.length*2+5)%7]+'3)')
-                            b= i
-                            small= i18n(site.tags[i].included.length+' in total')
-            section.small
+            section
+                ul.intros
+                    each i in site.used_tags
+                        li
+                            a.mark(style='--i:var(--'+colors[Math.floor(i.length*2+5)%7]+'3)')
+                                b= i
+                                small= i18n(site.tags[i].included.length+' in total')
             .special
-                h2= i18n('Local information')
-            .ngs.fl.jcsa.p8
-                .l1
+                header
+                    h2= i18n('Local information')
+                    small= i18n('@STAT_PRO_WARN')
+            section
+                div 
                     each v,k in CONSTANTS
                         div
                             b=k
                             i=v
-                .l2
-                    .plain| Nexo with Wacal Theme v1.0.2
-                    .fl.alc
-                        .logo-of-theme
-                        != nexo.logo()
         +gnome_footer()
         include /components/searchPanel.pug
