@@ -10,6 +10,7 @@
 
 ### New
 * `html-minifier` is used to compress html file
+* a bridge file is used for import structures and class
 
 ### Update docs
 * BID

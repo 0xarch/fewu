@@ -1,5 +1,4 @@
 import GObject from './gobject.js';
-import { Template, License, Datz, Tag, Category, Post } from './descriptive_class.js';
 
 class GString {
     static #get_array(str) {
@@ -140,7 +139,5 @@ export {
     Collection,
     Cache,
     Correspond,
-    NULL_OBJECT,
-    // from descriptive class
-    Template, License, Datz, Tag, Category, Post
+    NULL_OBJECT
 }

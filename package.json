@@ -14,7 +14,7 @@
     "imports": {
         "#core/*": "./src/core/*",
         "#db": "./src/core/database.js",
-        "#struct": "./src/core/struct.js",
+        "#struct": "./src/core/bridge.class.js",
         "#modules/*": "./_modules/*"
     },
     "scripts": {
