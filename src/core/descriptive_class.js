@@ -116,15 +116,15 @@ class Post {
     static testHasH1(string) {
         return /\n# /.test(string);
     }
-    raw_string;
-    content;
-    html;
-    author;
-    license;
+    raw_string= '';
+    content= '';
+    html= '';
+    author= '';
+    license= '';
     category;
     tags;
     keywords;
-    id;
+    id= 0;
     date;
     lastModifiedDate;
     ECMA262Date;
@@ -132,29 +132,17 @@ class Post {
     foreword;
     prevID;
     nextID;
-    websitePath;
-    publicFilePath;
     transformedTitle;
-    pathto = '';
     wordCount = 0;
     title;
     datz;
     old = false;
     property;
-    #cache = new Cache;
     getParsed(type) {
         switch (type) {
             case "foreword":
             case "content":
-                // rp stands for 'result of parsing'
-                let index = 'rp-' + type;
-                if (this.#cache.stored(index))
-                    return this.#cache.get(index);
-                else {
-                    let result = parse(this[type]);
-                    this.#cache.set(index, result);
-                    return result;
-                }
+                return this.parsed[type];
         }
     }
     path(type) {
@@ -166,8 +154,12 @@ class Post {
         }
     }
     paths = {
-        website: void 0,
-        local: void 0
+        website: '',
+        local: ''
+    }
+    parsed = {
+        content: '',
+        foreword: ''
     }
     /**
      * 
@@ -234,7 +226,6 @@ class Post {
             warn(['TOO LONG FOREWORD', 'RED'], [this.title, 'MAGENTA', 'NONE']);
         }
 
-        //if(this.foreword=="") this.foreword = "The author of this article has not yet set the foreword.\n\nCategory(ies): "+this.category.join(", ")+"\n\nTag(s): "+this.tags.join(", ");
         {
             let coll_strict = {
                 category: this.category.join(", "),
@@ -247,14 +238,15 @@ class Post {
         this.datz = new Datz(...gz);
         this.ECMA262Date = this.date.toDateString();
 
-        this.transformedTitle = getted.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'\～\·\「\」\；\：\‘\’\“\”\，\。\《\》\？\！\￥\…\、\（\）]+/g, '');
+        this.transformedTitle = getted.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'～\·\「\」；：‘’\“\”，\。\《\》？！\￥\…\、（）]+/g, '');
 
         this.id = id;
         let tempor_val = `read/${(+gz.join("")).toString(36)}${new Buffer.from(this.transformedTitle).toString("base64")}`;
-        this.paths = {
-            website: `/${tempor_val}/`,
-            local: `${tempor_val}/index.html`
-        }
+
+        this.paths.website = `/${tempor_val}/`
+        this.paths.local = `${tempor_val}/index.html`
+        this.parsed.content = parse(this.content)
+        this.parsed.foreword = parse(this.foreword)
     }
     setPath(path) {
         this.pathto = path;

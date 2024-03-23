@@ -37,6 +37,8 @@ function site() {
         used_tags = [],
         categories = {},
         tags = {};
+    let categoriesMap = new Map,
+        tagsMap = new Map;
     for (let path of traverse(db.dirs.posts)) {
         let item = basename(path, db.dirs.posts);
         let file_data = initializePost(path, bid);
@@ -46,8 +48,10 @@ function site() {
             for (let cname of file_data.category) {
                 if (used_categories.includes(cname)) {
                     categories[cname].add(file_data.id);
+                    categoriesMap.get(cname).add(file_data.id);
                 } else {
-                    categories[cname] = new Category(cname, [file_data.id]);
+                    categoriesMap.set(cname,new Category(cname, [file_data.id]));
+                    categories[cname] = categoriesMap.get(cname);
                     used_categories.push(cname);
                 }
             }
@@ -55,8 +59,10 @@ function site() {
             for (let cname of file_data.tags) {
                 if (used_tags.includes(cname)) {
                     tags[cname].add(file_data.id);
+                    tagsMap.get(cname).add(file_data.id);
                 } else {
-                    tags[cname] = new Tag(cname, [file_data.id]);
+                    tagsMap.set(cname,new Tag(cname, [file_data.id]));
+                    tags[cname] = tagsMap.get(cname);
                     used_tags.push(cname);
                 }
             }
@@ -71,6 +77,13 @@ function site() {
         prev_id = v.id;
         a[i - 1] && a[i - 1].setNext(v.id);
     });
+    /**
+     * @type {Map<number,Post>}
+     */
+    let ID = new Map;
+    posts.forEach(v=>{
+        ID.set(v.id,v);
+    });
     return {
         posts,
         excluded_posts,
@@ -79,12 +92,13 @@ function site() {
         category_count: used_categories.length,
         tag_count: used_tags.length,
         used_categories,
-        used_tags
+        used_tags,
+        ID
     };
 }
 
 function sort(posts) {
-    const byPostDate = posts.sort(Post.sort);
+    const byPostDate = posts;
     let ID = {};
     let defaultOrder = byPostDate.map(v => {
         ID[v.id] = v;

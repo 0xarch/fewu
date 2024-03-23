@@ -2,9 +2,14 @@
 
 **BETA NOW**
 
-## b1.0.4(n2.2.6) [EDITING] - 2024-03-22
+## b1.0.4(n2.2.6-0) [EDITING] - 2024-03-22
 
-### Todo WIP
+### Changed
+* `Map` is going to be used as the default data type of `site.categories`, `site.tags` and `ID`, while now Nexo provides an `IDMap` export that is experimental
+* `Post` now has a new property `parsed` for storing parsed content/foreword
+
+### Update docs
+* BID
 
 ## b1.0.3-3(n2.2.5-4) - 2024-03-20
 

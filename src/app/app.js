@@ -134,6 +134,7 @@ async function App() {
         excluded_posts: db.site.excluded_posts,
         sort: db.sort,
         ID: db.sort.ID,
+        IDMap: db.site.ID,
         settings: db.settings.get_all(),
         theme: __provided_theme_config,
         user: db.settings.get('user'),

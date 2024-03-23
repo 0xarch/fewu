@@ -44,7 +44,7 @@ async function build_post_pages(options, GivenVariables) {
             post: item,
             ...GivenVariables
         }, destname) == 'Ok' &&
-            info([item.title, 'MAGENTA'], [destname, 'YELLOW'], ['SUCCESS', "GREEN"]);
+            info(['SUCCESS', "GREEN"], [item.title, 'MAGENTA'], [destname, 'YELLOW']);
     });
 }
 
