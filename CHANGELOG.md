@@ -8,6 +8,9 @@
 * `Map` is going to be used as the default data type of `site.categories`, `site.tags` and `ID`, while now Nexo provides an `IDMap` export that is experimental
 * `Post` now has a new property `parsed` for storing parsed content/foreword
 
+### New
+* `html-minifier` is used to compress html file
+
 ### Update docs
 * BID
 
