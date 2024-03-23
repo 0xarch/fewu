@@ -7,7 +7,7 @@ html(lang="zh")
         +meta(post)
         +gbase()
         title= __title__(post.title,'read')
-    body.colorful(OCP='OVERRIDE',style='--color1:'+Plugin.getColorByString(post.foreword)+';--color2:'+Plugin.getColorByString(post.getParsed('foreword')))
+    body.colorful(OCP='OVERRIDE',style='--color1:'+Plugin.getColorByString(post.foreword)+';--color2:'+Plugin.getColorByString(post.parsed.foreword))
         +gnome_header()
         .intro#intro.tac
             .h1= post.title
@@ -15,12 +15,12 @@ html(lang="zh")
             unless post.old == true
                 section.small
                     h2= i18n('Foreword')
-                    != post.getParsed('foreword')
+                    != post.parsed.foreword
             section
                 article.block#markdown_fillContent
                     if post.old == true
-                        != post.getParsed('foreword')
-                    != post.getParsed('content')
+                        != post.parsed.foreword
+                    != post.parsed.content
             section.small.fit(class=post.license.is_cc_license()&&'cclogo')
                 if post.license.is_cc_license()
                     a.Heading(href='https://creativecommons.org/')
@@ -47,16 +47,16 @@ html(lang="zh")
                 .pagination
                     - let earliest = post.nextID?false:true
                     - let latest = post.prevID?false:true
-                    - let __prev = ID[post.prevID]
-                    - let __next = ID[post.nextID]
-                    a.arrow.left.nowrap(href=!latest&&file(__prev.path('website')),class=latest?'disabled':'')
+                    - let __prev = IDMap.get(post.prevID)
+                    - let __next = IDMap.get(post.nextID)
+                    a.arrow.left.nowrap(href=!latest&&file(__prev.paths.website),class=latest?'disabled':'')
                         = '← '
                         = latest?i18n('Already latest'):__prev.title
-                    a.arrow.right.nowrap(href=!earliest&&file(__next.path('website')),class=earliest?'disabled':'')
+                    a.arrow.right.nowrap(href=!earliest&&file(__next.paths.website),class=earliest?'disabled':'')
                         = earliest?i18n('Already earliest'):__next.title
                         = ' →'
                     a.top(href='#')= i18n('Top')
         +gnome_footer()
         .fix#toc
-        .fix.toc-con-button
+        .fix.toc-con-button.nomobile
             button= 'TOC'
