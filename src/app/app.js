@@ -56,7 +56,6 @@ async function App() {
         return;
     }
 
-    db.theme.config = new Collection(JSON.parse(readFileSync(join(db.theme.dirs.root, 'config.json')).toString()));
     db.theme.name = argv['theme'] || db.settings.get('theme.name');
     db.theme.config = new Collection(JSON.parse(readFileSync(join(db.theme.dirs.root,'theme.json')).toString()));
     db.theme.variables = JSON.parse(readFileSync(join(db.theme.dirs.root,'variables.json')).toString());
