@@ -6,10 +6,6 @@ let db = {
      */
     settings: void 0,
     /**
-     * @type {Collection}
-     */
-    theme: void 0,
-    /**
      * @type {object}
      */
     site: void 0,
@@ -21,6 +17,10 @@ let db = {
         posts: "posts",
         public: "public",
         root: "/",
+        /**
+         * @deprecated since v2.2.6
+         * @instead db.themes.dirs
+         */
         theme: {
             root: '',
             extra: '',
@@ -41,6 +41,20 @@ let db = {
          * @type {object}
          */
         api_required: void 0
+    },
+    theme: {
+        /**
+         * @type {Collection}
+         */
+        config: void 0,
+        name: '',
+        variables: '',
+        dirs: {
+            root: '',
+            extra: '',
+            layout: '',
+            files: ''
+        }
     },
     proc: {
         time: new Date()

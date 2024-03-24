@@ -16,14 +16,14 @@ import Layout from "../lib/class.layout.js";
 async function write(collection, file) {
     let theme = db.theme;
     let config = db.settings;
-    let theme_directory = db.dirs.theme.root;
+    let theme_directory = db.theme.dirs.root;
     let absolute_correspond = Correspond(
-        join_path(db.dirs.theme.layout, file.correspond().from),
+        join_path(db.theme.dirs.layout, file.correspond().from),
         join_path(config.get('public_directory') || config.get('build.public_directory'), file.correspond().to, 'index.html'));
 
     // _______ get
     let template = readFileSync(absolute_correspond.from).toString();
-    let template_type = theme.get('layout.type');
+    let template_type = db.theme.config.get('parser');
     const opt = file.option();
 
     // _______ define vars
@@ -144,6 +144,7 @@ function cycling(parent, every, prefix = '') {
 * @returns {'Ok'}
 */
 function proc_final(type, template, options, provide_variables, path_write_to) {
+    type = db.theme.config.get('parser');
     let procer;
     switch (type) {
         case 'JADE':

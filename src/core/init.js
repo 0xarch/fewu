@@ -1,8 +1,8 @@
 import { join } from 'path';
 import * as fs from 'fs';
-import { Nil } from '../lib/closures.js';
-import { Cache } from './struct.js';
 import { SettingsTemplate } from './config_template.js';
+
+const Nil = ()=>{};
 
 const POST_TEMPLATE =
     `---
@@ -13,10 +13,6 @@ category: CATEGORY
 ---
 SOME FOREWORDS
 <!--more-->`;
-
-let cache = new Cache();
-cache.set('postd', 'posts');
-cache.set('publicd', 'public')
 
 /**
  * 
@@ -31,6 +27,7 @@ function make_default_directory() {
     fs.mkdir('public', {}, Nil);
     fs.mkdir('resources', {}, Nil);
     fs.mkdir('extra', {}, Nil);
+    fs.mkdir('_themes',{},Nil);
 }
 
 function make_common_file() {

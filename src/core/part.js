@@ -4,34 +4,37 @@ import db from './database.js';
 import { run, info } from './run.js';
 import { proc_final } from './builder.js';
 
-async function copy_files() {
-    let ThemeConfig = db.theme.get_all();
-    let publicDir = db.dirs.public;
-    let themeFileDir = db.dirs.theme.files;
-    cp(themeFileDir, join(publicDir, 'files'), { recursive: true }, () => { });
-    cp('resources', join(publicDir, 'resources'), { recursive: true }, () => { });
-    if (ThemeConfig.copy) {
-        for (let key in ThemeConfig.copy) {
-            if (key.charAt(0) == '@') {
-                switch (key) {
-                    case "@posts":
-                        run(() => {
-                            cp('posts', join(publicDir, ThemeConfig.copy['@posts']), { recursive: true }, () => { });
-                        }, 9101);
-                        break;
+async function theme_operations() {
+    let operations = db.theme.config.get('operations');
+    operations.forEach(async (v) => {
+        switch (v.do) {
+            case "copy":
+                {
+                    if (v.from.charAt(0) == '@') {
+                        switch (v.from) {
+                            case "@posts":
+                                cp('posts', join(db.dirs.public, v.to), {}, () => { });
+                                break;
+                            case "@icon":
+                                cp('nexo_sources', join(db.dirs.public, v.to), {}, () => { });
+                                break;
+                        }
+                    } else {
+                        cp(join(db.theme.dirs.extra, v.from), join(db.dirs.public, v.to), { recursive: true }, () => { });
+                    }
                 }
-            } else {
-                run(() => {
-                    cp(join(themeFileDir, 'extra', key), join(publicDir, ThemeConfig.copy[key]), { recursive: true }, () => { });
-                }, 9102);
-            }
+                break;
         }
-    }
-    if (ThemeConfig.enableThemeWebsiteIcon) {
-        cp(join(themeFileDir, 'extra/favicon.ico'), publicDir, () => { });
-    } else {
-        cp('./nexo_sources/favicon.ico', join(publicDir, 'favicon.ico'), (e) => { if (e) throw e });
-    }
+    });
+
+    info(['OPERATION.THEME', 'MAGENTA', 'BOLD'], ['COMPLETE', 'GREEN']);
+}
+
+async function copy_files() {
+    let publicDir = db.dirs.public;
+    cp(db.theme.dirs.files, join(publicDir, 'files'), { recursive: true }, () => { });
+    cp('resources', join(publicDir, 'resources'), { recursive: true }, () => { });
+
     info(['OPERATION.COPY', 'MAGENTA', 'BOLD'], ['COMPLETE', 'GREEN']);
 }
 
@@ -50,5 +53,6 @@ async function build_post_pages(options, GivenVariables) {
 
 export {
     copy_files,
+    theme_operations,
     build_post_pages
 }

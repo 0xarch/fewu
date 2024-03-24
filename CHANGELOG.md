@@ -2,7 +2,13 @@
 
 **BETA NOW**
 
-## b1.0.4(n2.2.6-0) [EDITING] - 2024-03-22
+## b1.0(n2.3.0-0) [EDITING] - 2024-03-24
+
+### Critical Changes
+* `database` section theme has now changed to be an object with `config`(before `db.theme`) `dirs`(before `db.dirs.theme`) `name` `variables`(before `db.theme[default]`)
+* Theme's configuration file has now changed a lot. See documentation.
+
+## b1.0.4(n2.2.6-0) [QUICK PASSED] - 2024-03-22
 
 ### Changed
 * `Map` is going to be used as the default data type of `site.categories`, `site.tags` and `ID`, while now Nexo provides an `IDMap` export that is experimental
@@ -14,6 +20,7 @@
 
 ### Update docs
 * BID
+* Theme
 
 ## b1.0.3-3(n2.2.5-4) - 2024-03-20
 

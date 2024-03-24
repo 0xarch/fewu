@@ -37,28 +37,31 @@ async function App() {
     db.settings = new Collection(GObject.mix(SettingsTemplate, JSON.parse(
         readFileSync(db.proc.args['config'] || 'config.json').toString()), true));
     const argv = db.proc.args;
-    let buildMode = argv['devel'] ? 'devel' : 'release';
-    db.builder.mode = buildMode;
+    db.builder.mode = argv['devel'] ? 'devel' : 'release';
 
-    info(['BUILD MODE'], [buildMode, 'GREEN']);
+    info(['BUILD MODE'], [db.builder.mode, 'GREEN']);
 
     db.dirs.posts = db.settings.get('build.post_directory') || "posts";
     db.dirs.public = db.settings.get('build.public_directory') || "public";
     db.dirs.root = !["/", "", undefined].includes(db.settings.get('build.root') || db.settings.get('build.site_root')) ? db.settings.get('build.site_root') : '';
-    db.dirs.theme.root = join('themes', argv['theme'] || db.settings.get('theme.name'));
-    db.dirs.theme.extra = join(db.dirs.theme.root, 'extra');
-    db.dirs.theme.layout = join(db.dirs.theme.root, 'layouts');
-    db.dirs.theme.files = join(db.dirs.theme.root, 'files');
+    db.theme.dirs.root = join('_themes', argv['theme'] || db.settings.get('theme.name'));
+    db.theme.dirs.extra = join(db.theme.dirs.root, 'extra');
+    db.theme.dirs.layout = join(db.theme.dirs.root, 'layouts');
+    db.theme.dirs.files = join(db.theme.dirs.root, 'files');
+    db.dirs.theme = db.theme.dirs;
 
     if (argv['only'] == 'updateTheme') {
-        cp(db.dirs.theme.files, join(db.dirs.public, 'files'), { recursive: true }, () => { });
+        cp(db.theme.dirs.files, join(db.dirs.public, 'files'), { recursive: true }, () => { });
         cp('sources', join(db.dirs.public, 'sources'), { recursive: true }, () => { });
         return;
     }
 
-    db.theme = new Collection(JSON.parse(readFileSync(join(db.dirs.theme.root, 'config.json')).toString()));
+    db.theme.config = new Collection(JSON.parse(readFileSync(join(db.theme.dirs.root, 'config.json')).toString()));
+    db.theme.name = argv['theme'] || db.settings.get('theme.name');
+    db.theme.config = new Collection(JSON.parse(readFileSync(join(db.theme.dirs.root,'theme.json')).toString()));
+    db.theme.variables = JSON.parse(readFileSync(join(db.theme.dirs.root,'variables.json')).toString());
 
-    db.builder.type = db.theme.get('layout.type');
+    db.builder.type = db.theme.config.get('layout.type');
     db.language = db.settings.get('language') || 'en-US';
     db.site = site();
     db.sort = sort(db.site.posts);
@@ -80,7 +83,7 @@ async function App() {
             proc: {
 
             },
-            buildMode,
+            buildMode: db.builder.mode,
             GObject,
             ...constants
         },
@@ -94,7 +97,6 @@ async function App() {
         }
     };
 
-    let __plugin;
     let __get_title = (function () {
         let sep = '|';
         let theme = db.settings.get('theme.title');
@@ -113,30 +115,31 @@ async function App() {
         }
     })();
 
-    let __provided_theme_config = GObject.mix(db.theme.get('default'), db.settings.get('theme.options'), true);
+    let provided_theme_plugin;
+    let provided_theme_config = GObject.mix(db.theme.variables, db.settings.get('theme.options'), true);
 
-    if (db.theme.has('API')) {
-        let api_conf = db.theme.get('API');
-        if (api_conf.hasPlugin) {
-            // used in eval
-            let sec_gconf = Object.assign({}, Provision.v2.site); sec_gconf;
-            let site = Object.assign({}, Provision.v2.site); site;
-            let insert_code = 'let Provision = undefined;\n';
-            let __plugin_file = readFileSync(join(db.dirs.theme.root, 'extra/plugin.js'));
-            let __plugin_script = 'try{\n' + insert_code + __plugin_file.toString() + '\nplugin()}catch(e){errno(20202);console.error(e);"NULL"}';
-            __plugin = eval(__plugin_script);
-        }
+    // plugin
+    if (db.theme.config.get('plugin') == true) {
+        let sec_gconf = Object.assign({}, Provision.v2.site); sec_gconf;
+        let site = Object.assign({}, Provision.v2.site); site;
+        let insert_code = 'let Provision = undefined;\n';
+        let __plugin_file = readFileSync(join(db.theme.dirs.extra, 'plugin.js'));
+        let __plugin_script = 'try{\n' + insert_code + __plugin_file.toString() + '\nplugin()}catch(e){errno(20202);console.error(e);"NULL"}';
+        provided_theme_plugin = eval(__plugin_script);
+    } else {
+        provided_theme_plugin = {};
     }
 
     db.builder.api_required = {
-        Plugin: __plugin,
+        Plugin: provided_theme_plugin,
         posts: db.site.posts,
         excluded_posts: db.site.excluded_posts,
         sort: db.sort,
         ID: db.sort.ID,
         IDMap: db.site.ID,
         settings: db.settings.get_all(),
-        theme: __provided_theme_config,
+        theme: provided_theme_config,
+        plugin: provided_theme_plugin,
         user: db.settings.get('user'),
         nexo: {
             logo: nexo_logo,
@@ -159,21 +162,22 @@ async function App() {
         Module.exec();
     })
 
-    for (let item of db.theme.get('layout.layouts')) {
+    for (let item of db.theme.config.get('layouts')) {
         write(new Collection({ ...db.builder.api_required }), new Layout(item));
     }
 
-    let postFilename = join(db.dirs.theme.layout, db.theme.get('layout.post_layout'));
+    let postFilename = join(db.theme.dirs.layout, db.theme.config.get('template'));
     db.builder.template.post = readFileSync(postFilename).toString();
 
     part.build_post_pages({
-        basedir: db.dirs.theme.layout,
+        basedir: db.theme.dirs.layout,
         filename: postFilename
     }, {
         ...db.builder.api_required,
         filename: postFilename
     });
 
+    part.theme_operations();
     part.copy_files();
 }
 
