@@ -181,12 +181,6 @@ The same as 2.2.4-2 , this is a bump tag where version-rel and version-nexo sepa
 * `modules/hug` (deprecated GARBAGE code, replaced by `core/run`)
 * `modules/-r-/v2` (deprecated, unimportant, unused feature)
 
-### In Progress
-
-* [x] `core/database` for storing configs,etc, in running [ 2.2.2]
-* [!] `lib/class.theme` for storing theme configuration [Marked as deprecated]
-* [x] `modules/init` for greenhand initialization [ 2.2.5]
-
 ## 2.1.2 - 2024-02-27
 
 ### New
@@ -251,10 +245,6 @@ The same as 2.2.4-2 , this is a bump tag where version-rel and version-nexo sepa
 ### New
 
 * **EXPERIMENTAL** short path (exShortPath)
-
-### Planned
-
-* [x] better variable requiring [database 2.2.0]
 
 ## 2.0.3-2 - 2024-02-26
 
@@ -373,12 +363,3 @@ The same as 2.2.4-2 , this is a bump tag where version-rel and version-nexo sepa
 ### Deprecated Functions
 * Hug (With bugs, and no actual meaning) use LibMod now.
 * Hail(Low performance) use native fs now.
-
-### In Progress
-* [x] Sitemap(xml) support [ 2.0.2]
-* [ ] new Builder class
-* [x] new Base class [GObject 2.1.0]
-* [ ] new parser port []
-* [ ] WebAssembly (rust/c++)
-* [x] Page description support (Function/Variable) [ 2.0.2]
-* [x] RSS support [ 2.0.2]
