@@ -1,5 +1,5 @@
-_themes/
-_nexosrc/
+_themes/*
+_nexosrc/*
 node_modules/
 public/
 package-lock.json
