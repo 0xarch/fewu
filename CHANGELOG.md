@@ -5,8 +5,13 @@
 ## b1.0(n2.3.0-0) [EDITING] - 2024-03-24
 
 ### Critical Changes
-* `database` section theme has now changed to be an object with `config`(before `db.theme`) `dirs`(before `db.dirs.theme`) `name` `variables`(before `db.theme[default]`)
+* `database` section `theme` has now changed to be an object with `config`(before `db.theme`) `dirs`(before `db.dirs.theme`) `name` `variables`(before `db.theme[default]`)
 * Theme's configuration file has now changed a lot. See documentation.
+* Nexo source code is now moved to _src
+
+### Update docs
+* [u] BID
+* [u] Theme
 
 ## b1.0.4(n2.2.6-0) [QUICK PASSED] - 2024-03-22
 

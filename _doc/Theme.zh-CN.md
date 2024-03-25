@@ -17,7 +17,7 @@ Nexo 的主题是一个目录。目录中应至少包含以下文件/目录：
 ## theme.json
 
 ### operations
-`ThemeOperation[]` 操作。
+`*ThemeOperation[]` 操作。
 
 ### plugin
 `boolean` 是否启用插件。默认为`false`。
@@ -32,7 +32,7 @@ Nexo 的主题是一个目录。目录中应至少包含以下文件/目录：
 `string<PathLike>` 生成博文使用的模板文件名，在 layouts 目录下查找。
 
 ### layouts
-`ThemeLayout[]` 页面生成配置。 
+`*ThemeLayout[]` 页面生成配置。 
 
 ### name[可选]
 `string` 主题名，无实际作用。
@@ -70,3 +70,45 @@ Nexo 的主题是一个目录。目录中应至少包含以下文件/目录：
 插件会在生成页面前被运行。
 
 插件必须提供一个 `plugin()` 函数。该函数的返回值会被作为导出提供给生成器。可以通过 `plugin` 对象在模板中访问插件导出。
+
+## files
+
+资源目录。
+
+Nexo 在处理时会将此目录**完全复制**到网站同名目录下，即 `{{PUBLIC_DIR}}/files`。
+
+## layouts
+
+模板目录。
+
+此目录应只存放模板文件。 Nexo 在 layouts 小节的每一个部分时都会从这里读取模板文件。 
+
+## *ThemeOperation
+
+`*ThemeOperation` 标识了操作。
+
+每个 `*ThemeOperation` 应至少包含一个 `do` 键。 Nexo 会根据此键对应的值进行相应操作。
+
+## *ThemeLayout
+
+`*ThemeLayout` 标识了页面。
+
+`*ThemeLayout` 的结构：
+
+```jsonc
+{
+    "name": "标识，无实际意义",
+    "from": "一个位于 layouts 目录下的文件",
+    "to": "一个相对于 PUBLIC_DIR 的目录",
+    "varias": false, // 是否启用 Varias Builder Module. 默认为 false
+    "cycling": false, // 是否启用 Cycling Builer Module. 默认为 false
+    "option": { // 此小节标识了 Builder Module 的配置
+        "varias": {
+            // Varias 配置
+        },
+        "cycling": {
+            // Cycling 配置
+        }
+    }
+}
+```

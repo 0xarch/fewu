@@ -64,3 +64,45 @@ A plugin is an **executable** JavaScript file. The plugin has complete control o
 The plugin will be run before generating the page.
 
 The plugin must provide a `plugin()` function. The return value of this function will be provided as an export to the generator. You can access plugin exports in the template through the `plugin` object.
+
+## files
+
+Resource directory.
+
+Nexo will **completely copy** this directory to the directory with the same name on the website during processing, that is, `{{PUBLIC-DIR}}/files`.
+
+## layouts
+
+Template directory.
+
+This directory should only store template files. Nexo reads template files from each section of the layouts section.
+
+## *ThemeOperation
+
+`*ThemeOperation` identifies the operation.
+
+Each `*ThemeOperation` should at least contain one`do` key. Nexo will perform corresponding operations based on the value corresponding to this key.
+
+## *ThemeLayout
+
+`*ThemeLayout` identifies the page.
+
+`*ThemeLayout` structure：
+
+```jsonc
+{
+    "name": "Identification, has no actual meaning",
+    "from": "A file located in the layouts directory",
+    "to": "A directory relative to PUBLIC_DIR",
+    "varias": false, // Whether to enable the Varias Builder Module.Default to false
+    "cycling": false, // Whether to enable Cycling Builder Module.  Default to false
+    "option": { // This section identifies the configuration of the Builder Module
+        "varias": {
+            // Varias configuration
+        },
+        "cycling": {
+            // Cycling configuration
+        }
+    }
+}
+```

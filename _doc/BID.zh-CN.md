@@ -1,19 +1,24 @@
-# Nexo BID system
+# Nexo BID 系统
 
-## What is a BID system
+## 什么是 BID 系统
 
-The BID system is a tool used by Nexo to mark blog posts, dynamically generated every time Nexo runs. Nexo uses BID to mark every blog post.
+BID 系统是 Nexo 用来标记博文的工具，在每次 Nexo 运行时**动态**生成。 Nexo 通过 BID 来标记每一篇博文。
 
-## Using
+## 使用
 
-Unless otherwise specified, the sorting group exported by Nexo's `sort` contains the BID of the blog post. Nexo's `ID` export is a `Map` that provides a mapping relationship between BID and blog posts, so when using it, detailed information about the blog post needs to be obtained from the `ID`.
+在没有额外说明的情况下， Nexo 的 `sort` 导出下的排序组所包含的都是博文的 BID。 Nexo 的 `ID` 导出是一个 `Map`，提供了 BID 和博文的映射关系，因此使用时需要从 `ID` 获取博文的详细信息。
 
-The following is an example of obtaining information for a blog post with a BID of 1 from the `ID` and outputting it from the command line.
+以下是一个从 `ID` 中获取 BID 为 1 的博文的信息并从命令行输出的示例。
 
 ```js
-const post = ID[1]
+function read_bid_1_and_log(){
+    const post = ID[1];
 
-let {title,date,lastModifiedDate,category,tags} = post;
+    if (!post) return;
 
-console.log(`Title: ${title}\nPublish date: ${date}\nLast modified date: ${lastModifiedDate}\nCategory(s): ${category.join()}\nTag(s): ${tags.join()}`);
+    let {title,date,lastModifiedDate,category,tags} = post;
+
+    console.log(`Title: ${title}\nPublish date: ${date}\nLast modified date: ${lastModifiedDate}\nCategory(s): ${category.join()}\nTag(s): ${tags.join()}`);
+}
+read_bid_1_and_log();
 ```
