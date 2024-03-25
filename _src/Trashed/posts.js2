@@ -1,57 +1,53 @@
-import { basename, join } from "path";
-import * as fs from "fs";
-import db from "./database.js";
-import { Category, Tag, Post } from "./descriptive_class.js";
+import { readFileSync } from "fs";
+import { basename } from "path";
+import { Tag, Category } from "./classes.js";
+import { traverse } from "../modules/lib/hail.js";
+import { PostSortingFunction } from "./closures.js";
+import Post from "./class.post.js";
 
-function traverse(Directory) {
-    let returns = [];
-    for (let item of fs.readdirSync(Directory)) {
-        let path = join(Directory, item);
-        let stat = fs.statSync(path);
-        if (stat.isDirectory()) returns.push(...traverse(path));
-        else returns.push(path);
-    }
-    return returns;
+function test(string) {
+    let a = new Post(string);
+    return a;
 }
 
 /**
  * 
  * @param {string} content 
- * @param {number} id
+ * @param {string} pathto 
  * @returns { Post }
  */
-function initializePost(content, id = undefined) {
-    let article = new Post(content, id);
+function initializePost(content, pathto = undefined) {
+    let article = new Post(content);
+    article.setPath(pathto);
     return article;
 }
 
 /**
  * 
+ * @param {string} PostDir 
+ * @param {object} GlobalConfig
  * @returns {{posts:[Post],excluded_posts:object,categories:[Category],tags:[Tag]}}
  */
-function site() {
-    let bid = 1;
+function getAllPosts(PostDir, GlobalConfig) {
+    let bid = 0;
     let posts = [],
         excluded_posts = {},
         used_categories = [],
         used_tags = [],
         categories = {},
         tags = {};
-    let categoriesMap = new Map,
-        tagsMap = new Map;
-    for (let path of traverse(db.dirs.posts)) {
-        let item = basename(path, db.dirs.posts);
-        let file_data = initializePost(path, bid);
+    for (let path of traverse(PostDir)) {
+        let item = basename(path, PostDir);
+        let file_data = initializePost(path);
+        file_data.setID(bid);
 
-        if (db.settings.get('excluded_posts').includes(item)) excluded_posts[item] = file_data;
+        if (GlobalConfig.excluded_posts.includes(item)) excluded_posts[item] = file_data;
         else {
             for (let cname of file_data.category) {
                 if (used_categories.includes(cname)) {
                     categories[cname].add(file_data.id);
-                    categoriesMap.get(cname).add(file_data.id);
                 } else {
-                    categoriesMap.set(cname,new Category(cname, [file_data.id]));
-                    categories[cname] = categoriesMap.get(cname);
+                    categories[cname] = new Category(cname, [file_data.id]);
                     used_categories.push(cname);
                 }
             }
@@ -59,30 +55,21 @@ function site() {
             for (let cname of file_data.tags) {
                 if (used_tags.includes(cname)) {
                     tags[cname].add(file_data.id);
-                    tagsMap.get(cname).add(file_data.id);
                 } else {
-                    tagsMap.set(cname,new Tag(cname, [file_data.id]));
-                    tags[cname] = tagsMap.get(cname);
+                    tags[cname] = new Tag(cname, [file_data.id]);
                     used_tags.push(cname);
                 }
             }
             posts.push(file_data);
         }
+
         bid++;
     }
     let prev_id;
-    posts.sort(Post.sort);
     posts.forEach((v, i, a) => {
         v.setPrev(prev_id);
         prev_id = v.id;
         a[i - 1] && a[i - 1].setNext(v.id);
-    });
-    /**
-     * @type {Map<number,Post>}
-     */
-    let ID = new Map;
-    posts.forEach(v=>{
-        ID.set(v.id,v);
     });
     return {
         posts,
@@ -92,13 +79,12 @@ function site() {
         category_count: used_categories.length,
         tag_count: used_tags.length,
         used_categories,
-        used_tags,
-        ID
+        used_tags
     };
 }
 
 function sort(posts) {
-    const byPostDate = posts;
+    const byPostDate = posts.sort(PostSortingFunction);
     let ID = {};
     let defaultOrder = byPostDate.map(v => {
         ID[v.id] = v;
@@ -108,7 +94,7 @@ function sort(posts) {
     // order in update
     let dateGroup = {};
     for (let item of byPostDate) {
-        let date = item.date;
+        let date = new Date(item.date);
         let y = date.getFullYear(), m = date.getMonth() + 1, d = date.getDate();
         if (!dateGroup[y]) {
             dateGroup[y] = {};
@@ -129,15 +115,9 @@ function sort(posts) {
     }
 }
 
-function get_file_relative_dir(file_dir) {
-    if (!file_dir) return db.dirs.root + '/';
-    if (file_dir[0] == '/')
-        file_dir = file_dir.substring(1)
-    return join(db.dirs.root, '/', file_dir);
-}
-
 export {
-    site,
-    sort,
-    get_file_relative_dir
+    test as __TEST01__,
+    initializePost,
+    getAllPosts,
+    sort
 }

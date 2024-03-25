@@ -12,19 +12,19 @@
         "pug": "^3.0.2"
     },
     "imports": {
-        "#core/*": "./src/core/*",
-        "#db": "./src/core/database.js",
-        "#struct": "./src/core/bridge.class.js",
+        "#core/*": "./_src/core/*.js",
+        "#db": "./_src/core/database.js",
+        "#struct": "./_src/core/bridge.class.js",
         "#modules/*": "./_modules/*"
     },
     "scripts": {
-        "start": "node src/main.js --config config.json --release",
-        "start-dev": "node src/main.js --config config.json --devel",
-        "dev": "node src/main.js --config config.json --devel",
-        "rel": "node src/main.js --config config.json --release",
-        "init": "node src/main.js --init",
-        "test": " node src/test.js",
-        "update-theme": "node src/main.js --config config.json --only updateTheme"
+        "start": "node _src/main.js --config config.json --release",
+        "start-dev": "node _src/main.js --config config.json --devel",
+        "dev": "node _src/main.js --config config.json --devel",
+        "rel": "node _src/main.js --config config.json --release",
+        "init": "node _src/main.js --init",
+        "test": " node _src/test.js",
+        "update-theme": "node _src/main.js --config config.json --only updateTheme"
     },
     "type": "module"
 }

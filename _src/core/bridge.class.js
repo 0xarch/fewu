@@ -5,14 +5,14 @@ import {
     Tag,
     Category,
     Post
-} from './descriptive_class.js';
+} from '#core/descriptive_class';
 import {
     GString,
     Collection,
     Cache,
     Correspond,
     NULL_OBJECT,
-} from './struct.js';
+} from '#core/struct';
 
 export {
     Template,

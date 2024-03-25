@@ -1,4 +1,4 @@
-import { Collection } from "./struct.js";
+import { Collection } from "#struct";
 
 let db = {
     /**

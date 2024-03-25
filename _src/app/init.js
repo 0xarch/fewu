@@ -1,6 +1,6 @@
 import { join } from 'path';
 import * as fs from 'fs';
-import { SettingsTemplate } from './config_template.js';
+import { SettingsTemplate } from '#core/config_template';
 
 const Nil = ()=>{};
 

@@ -2,9 +2,9 @@
     "compilerOptions": {
         "baseUrl": "./",
         "paths": {
-            "#core/*": ["./src/core/*"],
-            "#db": ["./src/core/database.js"],
-            "#struct": ["./src/core/struct.js"],
+            "#core/*": ["./_src/core/*.js"],
+            "#db": ["./_src/core/database.js"],
+            "#struct": ["./_src/core/bridge.class.js"],
             "#modules": ["./_modules"]
         }
     }

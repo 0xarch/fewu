@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { cp } from 'fs';
-import db from './database.js';
+import db from '#db';
 import { run, info } from './run.js';
 import { proc_final } from './builder.js';
 
