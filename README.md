@@ -42,8 +42,11 @@ npm run rel
 
 ## 开发主题
 
-请参阅 [主题](/_doc/Theme.zh-CN.md)。
+请参阅 [主题文档](/_doc/Theme.zh-CN.md)。
+
 > 最快速的方法是从 0xarch 开发的 [Arch](//github.com/0xarch/nexo-theme-arch) 开始，这也是 Nexo 的默认主题。
+
+> See [en-US Document](/_doc/Theme.md) if you are stupid.
 
 ## Code Hack
 
@@ -56,3 +59,5 @@ npm run rel
 
 ## 开发者
 
+1. 0xarch(soloev)
+2. Anverinmontu(Mento)

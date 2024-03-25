@@ -3,6 +3,7 @@ extra/
 posts/
 public/
 sources/
-themes/Next/
-src/Trashed/
-src/test.js
+_themes/
+_src/Trashed/
+_src/test.js
+_doc/
