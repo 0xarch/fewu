@@ -4,7 +4,8 @@ import {
     Datz,
     Tag,
     Category,
-    Post
+    Post,
+    Layout
 } from '#core/descriptive_class';
 import {
     GString,
@@ -21,6 +22,7 @@ export {
     Tag,
     Category,
     Post,
+    Layout,
     GString,
     Collection,
     Cache,

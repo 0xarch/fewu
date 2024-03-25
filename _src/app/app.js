@@ -7,9 +7,8 @@ import * as part from '#core/part';
 import { write } from '#core/builder';
 import { site, sort, get_file_relative_dir } from '#core/reader';
 import { SettingsTemplate } from '#core/config_template';
-import { Collection } from '#core/struct';
+import { Collection, Layout } from '#struct';
 import { auto_set_i18n_file, i18n } from '#core/i18n';
-import Layout from '../lib/class.layout.js';
 
 /**
  * @DOCUMENT_OF_APP

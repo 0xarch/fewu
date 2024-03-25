@@ -1,7 +1,7 @@
 import { basename, join } from "path";
 import * as fs from "fs";
 import db from "#db";
-import { Category, Tag, Post } from "./descriptive_class.js";
+import { Category, Tag, Post } from "#struct";
 
 function traverse(Directory) {
     let returns = [];

@@ -1,8 +1,8 @@
 import { join } from 'path';
 import { cp } from 'fs';
 import db from '#db';
-import { run, info } from './run.js';
-import { proc_final } from './builder.js';
+import { info } from '#core/run';
+import { proc_final } from '#core/builder';
 
 async function theme_operations() {
     let operations = db.theme.config.get('operations');
