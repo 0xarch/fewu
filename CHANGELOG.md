@@ -13,6 +13,9 @@
 * [u] BID
 * [u] Theme
 
+### New
+* Support for quickly start a post, run `npm run new` in terminal you'll get a new .md in the `posts` directory.
+
 ## b1.0.4(n2.2.6-0) [QUICK PASSED] - 2024-03-22
 
 ### Changed

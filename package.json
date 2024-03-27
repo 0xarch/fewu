@@ -18,8 +18,8 @@
         "#modules/*": "./_modules/*"
     },
     "scripts": {
+        "new": "node _src/app/new.js",
         "start": "node _src/main.js --config config.json --release",
-        "start-dev": "node _src/main.js --config config.json --devel",
         "dev": "node _src/main.js --config config.json --devel",
         "rel": "node _src/main.js --config config.json --release",
         "init": "node _src/main.js --init",
