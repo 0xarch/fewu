@@ -13,6 +13,9 @@
 * [u] BID
 * [u] Theme
 
+### Changed
+* Move all built-in assets into `_assets` directory
+
 ### New
 * Support for quickly start a post, run `npm run new` in terminal you'll get a new .md in the `posts` directory.
 
