@@ -19,7 +19,7 @@ function getRSSFeedXml(blog_title, blog_link, description, articles) {
 ${articles.map(v =>
         `<item>
 <title>${v.title}</title>
-<link>${blog_link + v.path.website}</link>
+<link>${blog_link + v.paths.website}</link>
 <guid isPermaLink="false">ID${v.id}</guid>
 <description>${v.foreword}</description>
 <pubDate>${v.lastModifiedDate}</pubDate>
