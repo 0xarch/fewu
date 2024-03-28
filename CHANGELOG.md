@@ -1,6 +1,6 @@
 # CHANGELOG
 
-**BETA NOW**
+**RELEASE**
 
 ## REL1.0.0 n2.3.2 [EDITING] - 2024-03-28
 Release.
