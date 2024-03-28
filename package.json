@@ -1,7 +1,7 @@
 {
     "name": "nexo-static-generator",
-    "main": "src/main.js",
-    "version": "2.2.5",
+    "main": "_src/app/app.js",
+    "version": "2.3.0",
     "dependencies": {
         "ejs": "^3.1.5",
         "fs": "^0.0.1-security",
@@ -16,6 +16,9 @@
         "#db": "./_src/core/database.js",
         "#struct": "./_src/core/bridge.class.js",
         "#modules/*": "./_modules/*"
+    },
+    "bin": {
+        "nexo-cli": "_src/bin/main-enter.js"
     },
     "scripts": {
         "new": "node _src/app/new.js",

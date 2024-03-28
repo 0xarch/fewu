@@ -20,8 +20,8 @@ import { auto_set_i18n_file, i18n } from '#core/i18n';
  * 
  * **NOTE** Working in progress
  */
-async function App() {
-    db.proc.args = gopt(process.argv);
+async function App(override_argv) {
+    db.proc.args = gopt(override_argv || process.argv);
 
     // init
     if (db.proc.args.init) {
@@ -55,9 +55,14 @@ async function App() {
         return;
     }
 
-    db.theme.name = argv['theme'] || db.settings.get('theme.name');
-    db.theme.config = new Collection(JSON.parse(readFileSync(join(db.theme.dirs.root,'theme.json')).toString()));
-    db.theme.variables = JSON.parse(readFileSync(join(db.theme.dirs.root,'variables.json')).toString());
+    try {
+        db.theme.name = argv['theme'] || db.settings.get('theme.name');
+        db.theme.config = new Collection(JSON.parse(readFileSync(join(db.theme.dirs.root,'theme.json')).toString()));
+        db.theme.variables = JSON.parse(readFileSync(join(db.theme.dirs.root,'variables.json')).toString());
+    } catch(e) {
+        console.error('Error reading theme configuration files. Make sure you have theme installed in _themes directory');
+        return;
+    }
 
     db.builder.type = db.theme.config.get('layout.type');
     db.language = db.settings.get('language') || 'en-US';
