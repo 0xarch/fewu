@@ -10,3 +10,6 @@ _doc/
 _assets/
 TODO.md
 structure.tree
+.gitmodules
+config.json
+package-lock.json
