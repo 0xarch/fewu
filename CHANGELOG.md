@@ -2,7 +2,7 @@
 
 **BETA NOW**
 
-## b1.0(n2.3.0-0) [EDITING] - 2024-03-24
+## b1.1.0(n2.3.0-0) [EDITING] - 2024-03-24
 
 ### Critical Changes
 * `database` section `theme` has now changed to be an object with `config`(before `db.theme`) `dirs`(before `db.dirs.theme`) `name` `variables`(before `db.theme[default]`)
