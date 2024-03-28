@@ -6,20 +6,19 @@ const gopt = (argv) => {
     let len = argv.length;
     let args = {};
     for (let i = 1; i < len; i++) {
-        if (argv[i][0] == '-' && argv[i][1] == '-') {
-            let arg_key = argv[i].slice(2, argv[i].length);
-            i++;
-            if (argv[i] == undefined) {
+        if (argv[i].startsWith('--')) {
+            let arg_key = argv[i].substring(2);
+            if (!argv[i+1]) {
                 args[arg_key] = 'null';
-                continue;
+                break;
             } else {
-                if (argv[i][0] != '-') {
+                if (!argv[i+1].startsWith('--')) {
+                    i++;
                     args[arg_key] = argv[i];
                 } else {
                     args[arg_key] = 'null';
                 }
             }
-
         } else {
             args[i] = argv[i];
         }

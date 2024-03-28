@@ -28,6 +28,7 @@ function make_default_directory() {
     fs.mkdir('resources', {}, Nil);
     fs.mkdir('extra', {}, Nil);
     fs.mkdir('_themes',{},Nil);
+    fs.mkdir('_modules',{},Nil);
 }
 
 function make_common_file() {

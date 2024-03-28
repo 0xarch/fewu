@@ -2,7 +2,7 @@
 
 **BETA NOW**
 
-## s1.0.X+9(n2.3.0-0+324) [EDITING] - 2024-03-24
+## s1.0.X+11(n2.3.0-0+325) [EDITING] - 2024-03-24
 
 ### Critical Changes
 * `database` section `theme` has now changed to be an object with `config`(before `db.theme`) `dirs`(before `db.dirs.theme`) `name` `variables`(before `db.theme[default]`)
@@ -19,6 +19,9 @@
 ### New
 * Support for quickly start a post, run `npm run new` in terminal you'll get a new .md in the `posts` directory.
 * Support for terminal **IMPORTANT**, you can run `npm link` then use `nexo-cli` in your terminal for all functions! *NOTE THAT* you can also use `npm run` and so on when you cloned `nexo`
+
+### Fixed
+* `gopt` got wrong arguments
 
 ## b1.0.4(n2.2.6-0) [QUICK PASSED] - 2024-03-22
 

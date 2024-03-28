@@ -1,14 +1,13 @@
 {
     "name": "nexo-static-generator",
     "main": "_src/app/app.js",
-    "version": "2.3.0",
+    "version": "2.3.1",
     "dependencies": {
         "ejs": "^3.1.5",
         "fs": "^0.0.1-security",
         "html-minifier": "^4.0.0",
         "marked": "^6.0.0",
         "marked-mangle": "^1.1.7",
-        "module-alias": "^2.2.3",
         "pug": "^3.0.2"
     },
     "imports": {
@@ -21,13 +20,13 @@
         "nexo-cli": "_src/bin/main-enter.js"
     },
     "scripts": {
-        "new": "node _src/app/new.js",
-        "start": "node _src/main.js --config config.json --release",
-        "dev": "node _src/main.js --config config.json --devel",
-        "rel": "node _src/main.js --config config.json --release",
-        "init": "node _src/main.js --init",
+        "bin": "node _src/bin/main-enter.js",
+        "new": "node _src/bin/main-enter.js --new",
+        "dev": "node _src/bin/main-enter.js --devel",
+        "rel": "node _src/bin/main-enter.js --release",
+        "init": "node _src/bin/main-enter.js --init",
         "test": " node _src/test.js",
-        "update-theme": "node _src/main.js --config config.json --only updateTheme"
+        "update-theme": "node _src/bin/main-enter.js --only updateTheme"
     },
     "type": "module"
 }

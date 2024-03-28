@@ -2,8 +2,10 @@ node_modules/
 extra/
 posts/
 public/
-sources/
+resources/
 _themes/
 _src/Trashed/
 _src/test.js
 _doc/
+_assets/
+TODO.md

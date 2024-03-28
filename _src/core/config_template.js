@@ -12,6 +12,8 @@ const SettingsTemplate = {
             */
         }
     },
+    // Language
+    language: 'en-US',
     // Default builder settings
     build: {
         post_directory: "posts",
@@ -23,7 +25,7 @@ const SettingsTemplate = {
     excluded_posts: ["about.md", "template.md"],
     // Module settings
     modules: {
-        enabled: [],
+        enabled: ['sitemap','rss'],
         sitemap: {
             type: "XML",
             name: "sitemap.xml"
@@ -44,19 +46,6 @@ const SettingsTemplate = {
     // Security settings (needs implement)
     security: {
 
-    },
-    // sitemap (only post and homepage)
-    sitemap: {
-        enabled: false,
-        type: "XML",
-        name: "sitemap.xml" // deprecated, may use sitemap.xml for default
-    },
-    // rss feed
-    rss: {
-        enabled: false,
-        title: "No Title",
-        link: "/",
-        description: "No Description"
     }
 }
 

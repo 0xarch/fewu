@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { readFileSync, cp } from 'fs';
+import { readFileSync, cp, existsSync } from 'fs';
 import db from '#db';
 import { gopt, info, nexo_logo } from '#core/run';
 import GObject from '#core/gobject';
@@ -9,6 +9,7 @@ import { site, sort, get_file_relative_dir } from '#core/reader';
 import { SettingsTemplate } from '#core/config_template';
 import { Collection, Layout } from '#struct';
 import { auto_set_i18n_file, i18n } from '#core/i18n';
+import ErrorLogger from '#core/error_logger';
 
 /**
  * @DOCUMENT_OF_APP
@@ -33,8 +34,13 @@ async function App(override_argv) {
         return;
     }
 
-    db.settings = new Collection(GObject.mix(SettingsTemplate, JSON.parse(
-        readFileSync(db.proc.args['config'] || 'config.json').toString()), true));
+    try{
+        db.settings = new Collection(GObject.mix(SettingsTemplate, JSON.parse(
+            readFileSync(db.proc.args['config'] || 'config.json').toString()), true));
+    } catch (e) {
+        ErrorLogger.couldNotLoadConfig();
+        return;
+    }
     const argv = db.proc.args;
     db.builder.mode = argv['devel'] ? 'devel' : 'release';
 
@@ -60,7 +66,7 @@ async function App(override_argv) {
         db.theme.config = new Collection(JSON.parse(readFileSync(join(db.theme.dirs.root,'theme.json')).toString()));
         db.theme.variables = JSON.parse(readFileSync(join(db.theme.dirs.root,'variables.json')).toString());
     } catch(e) {
-        console.error('Error reading theme configuration files. Make sure you have theme installed in _themes directory');
+        ErrorLogger.couldNotLoadTheme();
         return;
     }
 
@@ -160,9 +166,16 @@ async function App(override_argv) {
 
     // Load modules
     db.modules.enabled.forEach(async (module_name) => {
-        const Module = (await import('#modules/' + module_name + '.js')).default;
-        if (!Module || !Module.exec) throw new Error('Could not load module:', module_name);
-        Module.exec();
+        let module_path = '#modules/' + module_name + '.js';
+        if (existsSync('_modules/'+module_name+'.js')) {
+            module_path = '_modules/'+module_name+'.js';
+        };
+        try {
+            const Module = (await import(module_path)).default;
+            Module.exec();
+        } catch (e) {
+            ErrorLogger.couldNotLoadModule(module_name);
+        }
     })
 
     for (let item of db.theme.config.get('layouts')) {
