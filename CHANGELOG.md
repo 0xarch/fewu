@@ -2,7 +2,13 @@
 
 **BETA NOW**
 
-## s1.0.X+11(n2.3.0-0+325) [EDITING] - 2024-03-24
+## 2.3.2 [EDITING] - 2024-03-28
+Release.
+
+## 2.3.1 [FAKE-BUMP] - 2024-03-28
+This is a fake version for fix critical bugs in 2.3.0
+
+## s1.0.X+11(n2.3.0-0+325) - 2024-03-24
 
 ### Critical Changes
 * `database` section `theme` has now changed to be an object with `config`(before `db.theme`) `dirs`(before `db.dirs.theme`) `name` `variables`(before `db.theme[default]`)

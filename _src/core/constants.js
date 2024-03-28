@@ -2,9 +2,8 @@ import db from '#db';
 import * as os from 'os';
 
 const CONSTANTS = {
-    NEXO_RELEASE_VERSION: "1.0.X+7",
-    NEXO_NEXO_VERSION: "n2.3.0-0+323",
-    NEXO_SYMBOLS: ["AR", "NOI","PACKAGEIMPORT","YBNY","MOV"],
+    NEXO_RELEASE_VERSION: "2.3.2",
+    NEXO_SYMBOLS: ["AR", "NOI","IMPORT","YBNY","MOV","NPMENA"],
     NODE_CORE_VERSION: process.versions.node,
     NODE_V8_VERSION: process.versions.v8,
     NODE_CPP_VERSION: process.versions.modules,
