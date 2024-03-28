@@ -6,9 +6,8 @@ _src/Trashed/
 _src/Next/
 _src/test*
 _src/*.fks
-extra/*
-doc/*
-posts/*
-resources/*
+extra
+posts
+resources
 config.json
 package-lock.json

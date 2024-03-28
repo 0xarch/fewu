@@ -8,12 +8,12 @@ README.zh-CN.md：说明文件。
 
 你应该已经收到一份附随此程序的GNU通用公共许可证副本。否则，请参阅 <http://www.gnu.org/licenses/>。
 
-# Nexo
+# Fewu
 
-`Nexo` 是一个自动化静态博客生成器。
+`Fewu` 是一个自动化静态博客生成器。
 > 注意：你可以在 npm 上看见这个东西了！
 
-## 使用 Nexo
+## 使用 Fewu
 
 ### 依赖
 * node.js
@@ -21,46 +21,46 @@ README.zh-CN.md：说明文件。
 
 ### 部署
 
-1. 下载 nexo-cli
+1. 下载 fewu-cli
 ```sh
-npm install nexo-static-generator -g
+npm install fewu-cli -g
 ```
 
 2. 自动生成需要的目录和文件。
 ```sh
-nexo-cli --init
+fewu --init
 ```
 > 通常这个命令只需要运行一次。你也可以重复运行。是否会破坏数据取决于 Node.js 的内部实现。在 Arch Linux 上的测试结果表明多次运行此命令并无明显影响。
 
 3. [可选] 写一篇博客
 ```sh
-nexo-cli --new
+fewu --new
 ```
 > 这个命令会在 `posts` 目录下生成一个 {{Y}}{{m}}{{d}}-new.md 的 Markdown 文档。
 
 4. 生成发布版网站
 ```sh
-nexo-cli
+fewu
 # The same as
-# nexo-cli --config config.json --release
+# fewu --config config.json --release
 ```
-> `nexo-cli` 本身是对 `nexo-cli --config config.json --release` 的简写。
+> `fewu` 本身是对 `fewu --config config.json --release` 的简写。
 
-> 你也可以使用 `nexo-cli --devel` 生成开发版网站。发布版与开发版的区别由主题决定。但大多数情况下，发布版会使用 CDN 服务器获取资源文件，而开发版会从网站服务器获取资源文件。如果一个主题的更新速度并不快，我们推荐使用发布版。
+> 你也可以使用 `fewu --devel` 生成开发版网站。发布版与开发版的区别由主题决定。但大多数情况下，发布版会使用 CDN 服务器获取资源文件，而开发版会从网站服务器获取资源文件。如果一个主题的更新速度并不快，我们推荐使用发布版。
 
-> Nexo 在写入网页的时候会首先将已有的网页文件内容与生成的内容比对。如果内容相同，则不会继续写入文件。同时你会在日志输出中看到 SKIPPED 一词。
+> Fewu 在写入网页的时候会首先将已有的网页文件内容与生成的内容比对。如果内容相同，则不会继续写入文件。同时你会在日志输出中看到 SKIPPED 一词。
 
 5. 你的网站已经在 `public` 目录可用了！
 
 ## 修改配置
 请修改 `config.json`。  
-如果你有多个配置文件，可以在运行`nexo-cli`时使用`--config $CONFIG_FILE`手动制定
+如果你有多个配置文件，可以在运行`fewu`时使用`--config $CONFIG_FILE`手动制定
 
 ## 开发主题
 
 请参阅 [主题文档](/_doc/Theme.zh-CN.md)。
 
-> 最快速的方法是从 0xarch 开发的 [Arch](//github.com/0xarch/nexo-theme-arch) 开始，这也是 Nexo 的默认主题。
+> 最快速的方法是从 0xarch 开发的 [Arch](//github.com/0xarch/fewu-theme-arch) 开始，这也是 Fewu 的默认主题。
 
 > See [en-US Document](/_doc/Theme.md) if you are stupid.
 
@@ -68,15 +68,15 @@ nexo-cli
 
 请 fork 此仓库。
 
-## 为 Nexo 作出贡献
+## 为 Fewu 作出贡献
 
-你可以发起 Issue ，或提交 Pull Request 来为 Nexo 作出贡献。我们非常重视你的意见。
+你可以发起 Issue ，或提交 Pull Request 来为 Fewu 作出贡献。我们非常重视你的意见。
 > 请耐心。
 
 ### 在本地调试
 
-`package.json>scripts` 中包含了对 `nexo-cli` 的模拟。你可以使用 `npm run $SOME_COMMAND` 达到同样的效果，而不必通过软链接到全局目录中。
-> `npm run bin` 与直接调用 `nexo-cli` 基本相同。不同的是，你需要通过 `--` 来传递参数。 示例：`npm run bin -- --new`
+`package.json>scripts` 中包含了对 `fewu` 的模拟。你可以使用 `npm run $SOME_COMMAND` 达到同样的效果，而不必通过软链接到全局目录中。
+> `npm run bin` 与直接调用 `fewu` 基本相同。不同的是，你需要通过 `--` 来传递参数。 示例：`npm run bin -- --new`
 
 ## 开发者
 

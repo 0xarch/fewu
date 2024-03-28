@@ -13,7 +13,6 @@ import db from "#db";
  * @param {Layout} file
  */
 async function write(collection, file) {
-    let theme = db.theme;
     let config = db.settings;
     let theme_directory = db.theme.dirs.root;
     let absolute_correspond = Correspond(

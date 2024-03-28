@@ -16,7 +16,7 @@ async function theme_operations() {
                                 cp('posts', join(db.dirs.public, v.to), {}, () => { });
                                 break;
                             case "@icon":
-                                cp('nexo_sources', join(db.dirs.public, v.to), {}, () => { });
+                                cp('_assets', join(db.dirs.public, v.to), {}, () => { });
                                 break;
                         }
                     } else {

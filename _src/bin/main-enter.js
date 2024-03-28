@@ -7,10 +7,10 @@ let opt = gopt(process.argv);
 if(opt.new){
     (await import("../app/new.js"));
 } else if (opt.help) {
-    console.log(`--- Nexo Static Generator ---
+    console.log(`--- Fewu Static Generator ---
 
-executing nexo-cli directly without any arguments,
-is the same as executing nexo-cli --config config.json --release
+executing fewu directly without any arguments,
+is the same as executing fewu --config config.json --release
 
 Avaiable arguments:
 --new                   Touch a markdown file with basic information frame in the posts directory.

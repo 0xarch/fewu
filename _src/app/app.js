@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { readFileSync, cp, existsSync } from 'fs';
 import db from '#db';
-import { gopt, info, nexo_logo } from '#core/run';
+import { gopt, info, fewu_logo } from '#core/run';
 import GObject from '#core/gobject';
 import * as part from '#core/part';
 import { write } from '#core/builder';
@@ -85,8 +85,8 @@ async function App(override_argv) {
     let Provision = {
         v2: {
             site: db.site,
-            nexo: {
-                logo: nexo_logo,
+            fewu: {
+                logo: fewu_logo,
                 deploy_time: db.proc.time,
             },
             proc: {
@@ -100,8 +100,8 @@ async function App(override_argv) {
             db,
             site: db.site,
             proc: db.proc,
-            nexo: {
-                logo: nexo_logo,
+            fewu: {
+                logo: fewu_logo,
             }
         }
     };
@@ -150,8 +150,8 @@ async function App(override_argv) {
         theme: provided_theme_config,
         plugin: provided_theme_plugin,
         user: db.settings.get('user'),
-        nexo: {
-            logo: nexo_logo,
+        fewu: {
+            logo: fewu_logo,
             deploy_time: db.proc.time,
         },
         __root_directory__: db.dirs.root,
@@ -167,8 +167,8 @@ async function App(override_argv) {
     // Load modules
     db.modules.enabled.forEach(async (module_name) => {
         let module_path = '#modules/' + module_name + '.js';
-        if (existsSync('_modules/'+module_name+'.js')) {
-            module_path = '_modules/'+module_name+'.js';
+        if (existsSync('./_modules/'+module_name+'.js')) {
+            module_path = process.cwd()+'/_modules/'+module_name+'.js';
         };
         try {
             const Module = (await import(module_path)).default;

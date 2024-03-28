@@ -2,8 +2,12 @@
 
 **BETA NOW**
 
-## 2.3.2 [EDITING] - 2024-03-28
+## REL1.0.0 n2.3.2 [EDITING] - 2024-03-28
 Release.
+**RENAME** Fewu is now the project name!
+
+### Fixed
+* Could not load modules when developing fewu.
 
 ## 2.3.1 [FAKE-BUMP] - 2024-03-28
 This is a fake version for fix critical bugs in 2.3.0
@@ -24,7 +28,7 @@ This is a fake version for fix critical bugs in 2.3.0
 
 ### New
 * Support for quickly start a post, run `npm run new` in terminal you'll get a new .md in the `posts` directory.
-* Support for terminal **IMPORTANT**, you can run `npm link` then use `nexo-cli` in your terminal for all functions! *NOTE THAT* you can also use `npm run` and so on when you cloned `nexo`
+* Support for terminal **IMPORTANT**, you can run `npm link` then use `fewu` in your terminal for all functions! *NOTE THAT* you can also use `npm run` and so on when you cloned `fewu`
 
 ### Fixed
 * `gopt` got wrong arguments
@@ -57,7 +61,7 @@ This is a fake version for fix critical bugs in 2.3.0
 * docs for **Module Standards v1**
 
 ### Announced
-* The first stable version will be s1.0.0, as the beta version b1.1.0, and nexo version n2.3.0
+* The first stable version will be s1.0.0, as the beta version b1.1.0, and fewu version n2.3.0
 
 ## b1.0.3-2(n2.2.5-2) - 2024-03-19
 
@@ -115,7 +119,7 @@ This is a fake version for fix critical bugs in 2.3.0
 
 ## b1.0.2(n2.2.4-2) - 2024-03-12
 
-The same as 2.2.4-2 , this is a bump tag where version-rel and version-nexo separated.
+The same as 2.2.4-2 , this is a bump tag where version-rel and version-fewu separated.
 
 ## 2.2.4-2 - 2024-03-08
 
@@ -155,7 +159,7 @@ The same as 2.2.4-2 , this is a bump tag where version-rel and version-nexo sepa
 ### Changed
 
 * encoded string for path now (not id as before, * might change sometime)
-* `nexo.logo` back to function, and removes multiple stylesheets
+* `fewu.logo` back to function, and removes multiple stylesheets
 * `Post.paths.[website/local]` for static call
 * operation only update theme will not read post now
 
@@ -340,7 +344,7 @@ The same as 2.2.4-2 , this is a bump tag where version-rel and version-nexo sepa
 
 ### Fixed
 
-* white background of nexo logo
+* white background of fewu logo
 * 9001 error
 
 ### Planned

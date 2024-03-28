@@ -29,7 +29,7 @@ const ErrorLogger = {
         error('Could not load theme configuration file. Do you have the specific theme in _themes directory?');
     },
     couldNotLoadConfig: ()=>{
-        error('Could not load configuration file. Did you run',['nexo-cli --init','GREEN'],'before generation?');
+        error('Could not load configuration file. Did you run',['fewu --init','GREEN'],'before generation?');
     },
     couldNotLoadModule: (name)=>{
         error('Could not load module:',[name,'YELLOW']);
