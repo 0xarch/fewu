@@ -22,7 +22,7 @@ import ErrorLogger from '#core/error_logger';
  * **NOTE** Working in progress
  */
 async function App(override_argv) {
-    db.proc.args = gopt(override_argv || process.argv);
+    db.proc.args = override_argv || gopt(process.argv);
 
     // init
     if (db.proc.args.init) {
@@ -42,9 +42,7 @@ async function App(override_argv) {
         return;
     }
     const argv = db.proc.args;
-    db.builder.mode = argv['devel'] ? 'devel' : 'release';
 
-    info(['BUILD MODE'], [db.builder.mode, 'GREEN']);
 
     db.dirs.posts = db.settings.get('build.post_directory') || "posts";
     db.dirs.public = db.settings.get('build.public_directory') || "public";
@@ -70,16 +68,20 @@ async function App(override_argv) {
         return;
     }
 
-    db.builder.type = db.theme.config.get('layout.type');
+    db.builder.mode = argv['devel'] ? 'devel' : 'release';
+    db.builder.type = db.theme.config.get('parser');
+    db.builder.parser_name = db.theme.config.get('parser');
     db.language = db.settings.get('language') || 'en-US';
     db.site = site();
     db.sort = sort(db.site.posts);
     db.file = get_file_relative_dir;
     db.modules.enabled = db.settings.get('modules.enabled');
 
+    info(['BUILD MODE'], [db.builder.mode, 'GREEN']);
+
     auto_set_i18n_file();
 
-    let constants = (await import('#core/constants')).default;
+    db.constants = (await import('#core/constants')).default;
 
     // since v2
     let Provision = {
@@ -94,7 +96,7 @@ async function App(override_argv) {
             },
             buildMode: db.builder.mode,
             GObject,
-            ...constants
+            ...db.constants
         },
         v3: {
             db,
@@ -146,7 +148,7 @@ async function App(override_argv) {
         sort: db.sort,
         ID: db.sort.ID,
         IDMap: db.site.ID,
-        settings: db.settings.get_all(),
+        settings: db.settings.asObject(),
         theme: provided_theme_config,
         plugin: provided_theme_plugin,
         user: db.settings.get('user'),
@@ -167,8 +169,8 @@ async function App(override_argv) {
     // Load modules
     db.modules.enabled.forEach(async (module_name) => {
         let module_path = '#modules/' + module_name + '.js';
-        if (existsSync('./_modules/'+module_name+'.js')) {
-            module_path = process.cwd()+'/_modules/'+module_name+'.js';
+        if (existsSync('./_modules/'+module_name+'.mjs')) {
+            module_path = process.cwd()+'/_modules/'+module_name+'.mjs';
         };
         try {
             const Module = (await import(module_path)).default;

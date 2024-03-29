@@ -33,7 +33,11 @@ let db = {
     },
     builder: {
         mode: '',
+        /**
+         * @deprecated use parser_name instead
+         */
         type: '',
+        parser_name: '',
         template: {
             post: ''
         },
@@ -61,4 +65,8 @@ let db = {
     },
     constants: void 0
 };
+
+// Mount on global
+global.database = db;
+
 export default db;

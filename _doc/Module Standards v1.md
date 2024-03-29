@@ -1,4 +1,5 @@
 # Nexo Module Standard v1
+
 ## Composition
 The Nexo module needs to comply with the ES6 (and newer) standard and provide at least one default export.
 The default export of a module must be a JavaScript object ('Object '), which must contain the following properties:
@@ -22,6 +23,7 @@ Nexo recommends storing module configurations in the `db.settings[modules]` sect
 ### Call
 
 We recommend a standard module that only calls the `#db` `#core/constants` and built-in libraries of node.js, but you can still call other libraries without any restrictions.
+> We mounted the `database` on the `global` global object. If you do not need auto completion, it is no need to use it from import `#db`.
 
 ## Example
 

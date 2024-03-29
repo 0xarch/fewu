@@ -1,9 +1,9 @@
 import { parse } from "marked";
 import { minify } from "html-minifier";
 import { statSync, readFileSync } from 'fs';
-import { Collection, GString } from './struct.js';
-import { word_count } from "./text_process.js";
-import { warn } from "./run.js";
+import { Collection, GString } from '#core/struct';
+import { word_count } from "#core/text_process";
+import { warn } from "#core/run";
 import db from "#db";
 
 class Template {
@@ -17,7 +17,7 @@ class Template {
         this.basedir = basedir;
         this.filename = filename;
     }
-    get_base() {
+    getBase() {
         return {
             basedir: this.basedir,
             filename: this.filename
@@ -272,13 +272,13 @@ class Layout {
     #option;
     #addition;
     constructor(json) {
-        this.#correspond = Correspond(json.from || json.build.filename, json.to || json.build.destname);
-        this.#name = json.name || 'NONAME';
-        this.#isVarias = json.varias || (json.build && json.build.varias) ? true : false;
-        this.#isCycling = json.cycling || (json.build && json.build.cycling) ? true : false;
-        this.#hasAddition = json.addition ? true : false;
+        this.#correspond = Correspond(json.from ?? json.build.filename, json.to ?? json.build.destname);
+        this.#name = json.name ?? 'NONAME';
+        this.#isVarias = !!(json.varias ?? json.build?.varias);
+        this.#isCycling = !!(json.cycling ?? json.build?.cycling);
+        this.#hasAddition = !!json.addition;
         this.#hasAddition && (this.#addition = json.addition);
-        this.#option = json.option || (json.build && json.build.option) || {};
+        this.#option = json.option ?? {};
     }
     correspond() {
         return this.#correspond;

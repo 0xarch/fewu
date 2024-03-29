@@ -100,6 +100,9 @@ class Collection {
     asObject() {
         return this.#obj;
     }
+    /**
+     * @deprecated use asObject insteads
+     */
     get_all = this.asObject;
 }
 

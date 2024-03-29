@@ -81,7 +81,7 @@ async function write(collection, file) {
                     basedir: join_path(theme_directory, 'layouts'),
                     filename: file.correspond().from
                 }, {
-                    ...collection.get_all(),
+                    ...collection.asObject(),
                     ...addition,
                     ...addition_in_iter,
                     cycling: result,
@@ -94,7 +94,7 @@ async function write(collection, file) {
                 basedir: join_path(theme_directory, 'layouts'),
                 filename: file.correspond().from
             }, {
-                ...collection.get_all(),
+                ...collection.asObject(),
                 ...addition,
                 ...addition_in_iter,
             }, path);

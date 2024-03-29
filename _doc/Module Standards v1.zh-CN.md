@@ -4,7 +4,7 @@
 
 Nexo 模块需要遵循 ES6(及更新) 标准，至少提供一个默认导出。
 
-模块的默认导出必须为一个JavaScript 对象(`Object`)，并且该对象必须包含以下属性：
+模块的默认导出必须为一个 JavaScript 对象(`Object`)，并且该对象必须包含以下属性：
 
 ### exec
 
@@ -26,6 +26,7 @@ Nexo 推荐的模块配置存放位置在 `db.settings[modules]` 小节中，每
 ### 调用
 
 我们推荐一个标准模块只调用 `#db` `#core/constants` 和 node.js 的内置库，但你仍然可以调用其他的库，我们并不对此作出限制。
+> 我们默认在 node.js 的 `global` 全局对象中挂载了 `database`，因此如果你不需要 IDE 自动补全等，可以直接使用 `database` 而不需要从 `#db` 导入。
 
 ## 示例
 

@@ -2,7 +2,11 @@
 
 **RELEASE**
 
-## REL1.0.0 n2.3.2 [EDITING] - 2024-03-28
+## REL1.0.1 n2.3.3 [EDIDING] - 2024-03-39
+* Fix Module Standards
+* Custom modules needs to set suffix to '.mjs' for node to import
+
+## REL1.0.0 n2.3.2 - 2024-03-28
 Release.
 **RENAME** Fewu is now the project name!
 
