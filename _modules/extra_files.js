@@ -4,7 +4,7 @@ import { join } from "path";
 
 const Module = {
     exec: async () => {
-        let config = databse.config.modules.extra_files;
+        let config = database.config.modules.extra_files;
         if(!config) return -1;
         let source_path = config?.from ?? 'extra';
         let extra_file = config?.list;
