@@ -1,5 +1,6 @@
 import License from '#class/license';
 import FuzzyDate from '#class/fuzzydate';
+import Collection from '#class/collection';
 import db from '#core/database';
 import { relative } from 'path';
 import { minify } from 'html-minifier';
@@ -7,6 +8,7 @@ import { parse } from 'marked';
 import { statSync,readFileSync } from 'fs';
 import { word_count } from '#core/text_process';
 import { warn } from '#core/run';
+import { GString } from '#core/struct';
 
 class Post {
     static sort(a, b) {

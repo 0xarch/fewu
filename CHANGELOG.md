@@ -2,7 +2,12 @@
 
 **RELEASE**
 
-## REL1.1.0 n2.4.0 [EDIDING] - 2024-03-39
+## REL1.1.1 n2.4.1 [BUGIFX] - 2024-03-30
+* Fix bug which `GString` and `Collection` not imported
+* Fix typo bug in built-in module extra-files
+* Fix bug which Category and Tag contains `number[][]`
+
+## REL1.1.0 n2.4.0 - 2024-03-30
 
 ### Fixed
 * wrong comma in result from built-in module `rss`

@@ -311,7 +311,7 @@ class BuiltinDescriptivePostContainer {
     included = []
     constructor(name, v) {
         this.#sort_name = name
-        this.included.push(v)
+        this.included.push(...v)
     }
     name = () => this.#sort_name
     includes = (id) => this.included.includes(id)
