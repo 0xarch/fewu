@@ -24,7 +24,7 @@ ${articles.map(v =>
 <description>${v.foreword}</description>
 <pubDate>${v.lastModifiedDate}</pubDate>
 </item>`
-    )}
+    ).join('')}
 </channel>
 </rss>`;
 }
