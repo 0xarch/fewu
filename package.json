@@ -1,7 +1,7 @@
 {
     "name": "fewu",
     "main": "_src/app/app.js",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "dependencies": {
         "ejs": "^3.1.5",
         "fs": "^0.0.1-security",
