@@ -1,7 +1,7 @@
 {
     "name": "fewu",
     "main": "_src/app/app.js",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "dependencies": {
         "ejs": "^3.1.5",
         "fs": "^0.0.1-security",
@@ -14,6 +14,7 @@
         "#core/*": "./_src/core/*.js",
         "#db": "./_src/core/database.js",
         "#struct": "./_src/core/bridge.class.js",
+        "#class/*": "./_src/class/*.mjs",
         "#modules/*": "./_modules/*"
     },
     "bin": {

@@ -2,12 +2,47 @@
 
 **RELEASE**
 
-## REL1.0.1 n2.3.3 [EDIDING] - 2024-03-39
-* Fix Module Standards
-* Custom modules needs to set suffix to '.mjs' for node to import
+## REL1.1.0 n2.4.0 [EDIDING] - 2024-03-39
 
 ### Fixed
 * wrong comma in result from built-in module `rss`
+> pesky ','
+* Module Standards v1
+> There are some changes in documents
+
+### New
+* New License type: Reprint (Experimental)
+> **DISABLED** BY DEFAULT BECAUSE IT EXPOSES **DIFFERENT FUNCTIONS**
+* The operation new post is now supported auto rename
+* ES2023 porting
+> Why do we need to write such old codes?
+
+### Changed
+* Post path is now calculated by file path, not title.
+> It aims to fix some problems with the same title, through it's not very common.
+> This might cause some trouble, be careful.
+* Plugin now uses ESM
+> Need to use '.mjs' extname.
+* Custom modules needs to set suffix to '.mjs' for node to import
+> Forgot to mention this in REL1.0.0
+* Rewrite some codes
+> "SOME"
+
+### Removed
+* Removed English documents(only Theme kept)
+> Who needs those garbage?
+
+### Deprecated
+* `Post.path()` is removed. This property will be the same as `Post.paths.<Property>`, which will be renamed.
+
+### PRE-Deprecated
+These functions or properties will be removed in 1.2.0
+New features will be available in 1.1.x
+* `Post<>.old` will be removed. Use `!!Post<>.property?.old` instead.
+* `Post<>.ECMA262Date` will be removed. This it not necessary.
+* `License.is_cc_license` (renamed: `License.isCreativeCommons`)
+* `Post<>.isTopped` (renamed: `Post<>.top`)
+* `Post<>.datz` (renamed: `Post<>.fuzzyDate`)
 
 ## REL1.0.0 n2.3.2 - 2024-03-28
 Release.

@@ -1,15 +1,15 @@
 import { join } from 'path';
-import { readFileSync, cp, existsSync } from 'fs';
+import { readFileSync, cp} from 'fs';
 import db from '#db';
-import { gopt, info, fewu_logo } from '#core/run';
+import Collection from '#class/collection';
+import { gopt, info, fewu_logo, } from '#core/run';
 import GObject from '#core/gobject';
 import * as part from '#core/part';
-import { write } from '#core/builder';
 import { site, sort, get_file_relative_dir } from '#core/reader';
 import { SettingsTemplate } from '#core/config_template';
-import { Collection, Layout } from '#struct';
-import { auto_set_i18n_file, i18n } from '#core/i18n';
+import i18n from '#core/i18n';
 import ErrorLogger from '#core/error_logger';
+import { loadPlugin,loadModules } from '#core/loader';
 
 /**
  * @DOCUMENT_OF_APP
@@ -35,18 +35,19 @@ async function App(override_argv) {
     }
 
     try{
-        db.settings = new Collection(GObject.mix(SettingsTemplate, JSON.parse(
-            readFileSync(db.proc.args['config'] || 'config.json').toString()), true));
+        db.config = GObject.mix(SettingsTemplate, JSON.parse(
+            readFileSync(db.proc.args['config'] || 'config.json').toString()), true);
+        // Object.assign created a clone
+        db.settings = new Collection(Object.assign({},db.config));
     } catch (e) {
         ErrorLogger.couldNotLoadConfig();
         return;
     }
     const argv = db.proc.args;
 
-
-    db.dirs.posts = db.settings.get('build.post_directory') || "posts";
-    db.dirs.public = db.settings.get('build.public_directory') || "public";
-    db.dirs.root = !["/", "", undefined].includes(db.settings.get('build.root') || db.settings.get('build.site_root')) ? db.settings.get('build.site_root') : '';
+    db.dirs.posts = db.config.post_directory ?? db.config.build?.post_directory ?? "posts";
+    db.dirs.public = db.config.public_directory ?? db.config.build?.public_directory ?? "public";
+    db.dirs.root = (!['/', '', undefined].includes(db.config.build?.root) && db.config.build?.root)||(!['/', '', undefined].includes(db.config.build?.site_root) && db.config.build.site_root)|| '';
     db.theme.dirs.root = join('_themes', argv['theme'] || db.settings.get('theme.name'));
     db.theme.dirs.extra = join(db.theme.dirs.root, 'extra');
     db.theme.dirs.layout = join(db.theme.dirs.root, 'layouts');
@@ -60,8 +61,9 @@ async function App(override_argv) {
     }
 
     try {
-        db.theme.name = argv['theme'] || db.settings.get('theme.name');
-        db.theme.config = new Collection(JSON.parse(readFileSync(join(db.theme.dirs.root,'theme.json')).toString()));
+        db.theme.name = argv['theme'] ?? db.config.theme?.name;
+        db.theme.config = JSON.parse(readFileSync(join(db.theme.dirs.root,'theme.json')).toString());
+        db.theme.settings = new Collection(Object.assign({},db.theme.config));
         db.theme.variables = JSON.parse(readFileSync(join(db.theme.dirs.root,'variables.json')).toString());
     } catch(e) {
         ErrorLogger.couldNotLoadTheme();
@@ -69,48 +71,33 @@ async function App(override_argv) {
     }
 
     db.builder.mode = argv['devel'] ? 'devel' : 'release';
-    db.builder.type = db.theme.config.get('parser');
-    db.builder.parser_name = db.theme.config.get('parser');
-    db.language = db.settings.get('language') || 'en-US';
+    db.builder.type = db.theme.config.parser;
+    db.builder.parser_name = db.theme.config.parser;
+    db.language = db.config.language ?? 'en-US';
     db.site = site();
     db.sort = sort(db.site.posts);
     db.file = get_file_relative_dir;
-    db.modules.enabled = db.settings.get('modules.enabled');
+    db.modules.enabled = db.config.modules?.enabled instanceof Array ? db.config.modules.enabled : [];
 
     info(['BUILD MODE'], [db.builder.mode, 'GREEN']);
 
-    auto_set_i18n_file();
+    i18n.autoSetFile();
 
     db.constants = (await import('#core/constants')).default;
-
-    // since v2
-    let Provision = {
-        v2: {
-            site: db.site,
-            fewu: {
-                logo: fewu_logo,
-                deploy_time: db.proc.time,
-            },
-            proc: {
-
-            },
-            buildMode: db.builder.mode,
-            GObject,
-            ...db.constants
+    const PROVISION = {
+        db,
+        site: db.site,
+        proc: db.proc,
+        CONSTANTS: db.constants,
+        fewu: {
+            logo: fewu_logo,
         },
-        v3: {
-            db,
-            site: db.site,
-            proc: db.proc,
-            fewu: {
-                logo: fewu_logo,
-            }
-        }
-    };
+        GObject,
+    }
 
     let __get_title = (function () {
         let sep = '|';
-        let theme = db.settings.get('theme.title');
+        let theme = db.config.theme?.title;
         if (theme) {
             if (theme.separator)
                 sep = theme.separator;
@@ -126,77 +113,43 @@ async function App(override_argv) {
         }
     })();
 
-    let provided_theme_plugin;
-    let provided_theme_config = GObject.mix(db.theme.variables, db.settings.get('theme.options'), true);
 
-    // plugin
-    if (db.theme.config.get('plugin') == true) {
-        let sec_gconf = Object.assign({}, Provision.v2.site); sec_gconf;
-        let site = Object.assign({}, Provision.v2.site); site;
-        let insert_code = 'let Provision = undefined;\n';
-        let __plugin_file = readFileSync(join(db.theme.dirs.extra, 'plugin.js'));
-        let __plugin_script = 'try{\n' + insert_code + __plugin_file.toString() + '\nplugin()}catch(e){errno(20202);console.error(e);"NULL"}';
-        provided_theme_plugin = eval(__plugin_script);
-    } else {
-        provided_theme_plugin = {};
-    }
+    let provided_theme_config = GObject.mix(db.theme.variables, db.config.theme?.options ?? {}, true);
+
+    // Load theme-side plugin
+    let theme_plugin_provide = await loadPlugin(PROVISION);
+    if (theme_plugin_provide === null) return;
+
+    loadModules(PROVISION);
 
     db.builder.api_required = {
-        Plugin: provided_theme_plugin,
+        Plugin: theme_plugin_provide,
+        plugin: theme_plugin_provide,
         posts: db.site.posts,
         excluded_posts: db.site.excluded_posts,
         sort: db.sort,
         ID: db.sort.ID,
         IDMap: db.site.ID,
-        settings: db.settings.asObject(),
+        settings: db.config,
         theme: provided_theme_config,
-        plugin: provided_theme_plugin,
-        user: db.settings.get('user'),
-        fewu: {
-            logo: fewu_logo,
-            deploy_time: db.proc.time,
-        },
+        user: db.config.user,
         __root_directory__: db.dirs.root,
         __title__: __get_title,
         file: db.file,
-        i18n,
+        i18n: i18n.i18n,
         mix: GObject.mix,
         has_property: (...I) => GObject.hasProperty(...I),
         get_property: GObject.getProperty,
-        ...Provision.v2
+        ...PROVISION
     };
 
-    // Load modules
-    db.modules.enabled.forEach(async (module_name) => {
-        let module_path = '#modules/' + module_name + '.js';
-        if (existsSync('./_modules/'+module_name+'.mjs')) {
-            module_path = process.cwd()+'/_modules/'+module_name+'.mjs';
-        };
-        try {
-            const Module = (await import(module_path)).default;
-            Module.exec();
-        } catch (e) {
-            ErrorLogger.couldNotLoadModule(module_name);
-        }
-    })
+    part.buildPages();
 
-    for (let item of db.theme.config.get('layouts')) {
-        write(new Collection({ ...db.builder.api_required }), new Layout(item));
-    }
+    part.buildPosts();
 
-    let postFilename = join(db.theme.dirs.layout, db.theme.config.get('template'));
-    db.builder.template.post = readFileSync(postFilename).toString();
-
-    part.build_post_pages({
-        basedir: db.theme.dirs.layout,
-        filename: postFilename
-    }, {
-        ...db.builder.api_required,
-        filename: postFilename
-    });
-
-    part.theme_operations();
-    part.copy_files();
+    part.resolveThemeOperations();
+    
+    part.copyFiles();
 }
 
 export default App;

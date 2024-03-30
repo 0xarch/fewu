@@ -1,107 +1,113 @@
-# Theme/Template
+# 主题/模板
 
-## Overview
+## 概述
 
-Nexo generates websites through themes. The theme is an indispensable part of Nexo. To start writing a theme, you can refer to the Nexo author's theme [Wacal](//github. com/0xarch/nexo theme wacal), which was inspired by the GNOME website.
+Nexo 通过主题生成网站。主题是 Nexo 不可或缺的一部分。 要开始编写主题，可以参考 Nexo 作者的主题 [Wacal](//github.com/0xarch/nexo-theme-wacal)，这个主题受 GNOME 网站启发而被编写。
 
-## Structure
+## 结构
 
-Nexo's theme is a directory. The directory should include at least the following files/directories:
+Nexo 的主题是一个目录。目录中应至少包含以下文件/目录：
 
-*[Directory] Layouts web page template
-*[Directory] Files web resources, such as CSS and JS
-*[Directory] Extra theme resources, such as i18n files and plugin scripts
-*[File] Theme. json Main Theme Configuration Files
-*[File] Configuration file for variables. JSON theme variable
+* [目录] layouts 网页模板
+* [目录] files 网页资源，如 CSS 和 JS
+* [目录] extra 主题资源，如 i18n 文件和插件脚本
+* [文件] theme.json 主要的主题配置文件
+* [文件] variables.json 主题变量的配置文件
 
 ## theme.json
 
 ### operations
-`ThemeOperation[]` operations.
+`*ThemeOperation[]` 操作。
 
 ### plugin
-`boolean` Whether to enable plugins. The default is `false`.
+`boolean` 是否启用插件。默认为`false`。
 
 ### Modules.*
-`object` module configuration. According to the Nexo module standards v1, modules should read configuration from `Modules.{{moduleName}}`.
+`object` 模块配置。根据 Nexo 模块标准，模块应当读取`Modules.{{moduleName}}`的信息。
 
 ### parser
-`string` The name of the module parser used.
+`string` 使用的模块解析器名。
 
 ### template
-`string<PathLike>` Search for the template file name used to generate blog posts in the `layouts` directory.
+`string<PathLike>` 生成博文使用的模板文件名，在 layouts 目录下查找。
 
 ### layouts
-`ThemeLayout[]` Page generation configuration.
+`*ThemeLayout[]` 页面生成配置。 
 
-### name [optional]
-`string` Theme name, has no actual effect.
-### author [optional]
-`string` Author, has no actual effect.
-### thanks [optional]
-`string` Thanks, has no actual effect.
-### description [optional]
-`string` Theme description, has no actual effect.
-### lib [optional]
-`string[]` Theme dependent library, has no actual effect.
+### name[可选]
+`string` 主题名，无实际作用。
+
+### author[可选]
+`string` 作者，无实际作用。
+
+### thanks[可选]
+`string` 致谢，无实际作用。
+
+### description[可选]
+`string` 主题描述，无实际作用。
+
+### lib[可选]
+`string[]` 主题依赖的库，无实际作用。
 
 ## variables.json
-Include a JSON object as the default value for theme variables.
+
+包括一个 JSON object，作为主题变量的默认值使用。
 
 ## extra
 
-Store i18n files and plugins.
+存放 i18n 文件和 插件。
 
-### i18n file
+### i18n 文件
 
-A JSON file. Naming: `i18n.{{LANG}}.json`
+一个 JSON 文件。命名：`i18n.{{LANG}}.json`
 
-Process default values (fallback) file for i18n: `i18n.default.json`
+处理 i18n 的默认值(回退)文件： `i18n.default.json`
 
-### plugins
+### 插件
 
-A plugin is an **executable** JavaScript file. The plugin has complete control over Nexo. Each theme can only have one plugin enabled.
-The plugin will be run before generating the page.
+插件是一个 可执行的 JavaScript 文件。插件对 Nexo 具有完全的控制权。每个主题只能启用一个插件。
 
-The plugin must provide a `plugin()` function. The return value of this function will be provided as an export to the generator. You can access plugin exports in the template through the `plugin` object.
+插件会在生成页面前被运行。
+
+插件必须提供一个 `plugin()` 函数。该函数的返回值会被作为导出提供给生成器。可以通过 `plugin` 对象在模板中访问插件导出。
 
 ## files
 
-Resource directory.
+资源目录。
 
-Nexo will **completely copy** this directory to the directory with the same name on the website during processing, that is, `{{PUBLIC-DIR}}/files`.
+Nexo 在处理时会将此目录**完全复制**到网站同名目录下，即 `{{PUBLIC_DIR}}/files`。
 
 ## layouts
 
-Template directory.
+模板目录。
 
-This directory should only store template files. Nexo reads template files from each section of the layouts section.
+此目录应只存放模板文件。 Nexo 在 layouts 小节的每一个部分时都会从这里读取模板文件。 
 
 ## *ThemeOperation
 
-`*ThemeOperation` identifies the operation.
+`*ThemeOperation` 标识了操作。
 
-Each `*ThemeOperation` should at least contain one`do` key. Nexo will perform corresponding operations based on the value corresponding to this key.
+每个 `*ThemeOperation` 应至少包含一个 `do` 键。 Nexo 会根据此键对应的值进行相应操作。
 
 ## *ThemeLayout
 
-`*ThemeLayout` identifies the page.
+`*ThemeLayout` 标识了页面。
 
-`*ThemeLayout` structure：
+`*ThemeLayout` 的结构：
 
 ```jsonc
 {
-    "name": "Identification, has no actual meaning",
-    "from": "A file located in the layouts directory",
-    "to": "A directory relative to PUBLIC_DIR",
-    "varias": false, // Whether to enable the Varias Builder Module.Default to false
-    "cycling": false, // Whether to enable Cycling Builder Module.  Default to false
-    "option": { // This section identifies the configuration of the Builder Module
+    "name": "标识，无实际意义",
+    "from": "一个位于 layouts 目录下的文件",
+    "to": "一个相对于 PUBLIC_DIR 的目录",
+    "varias": false, // 是否启用 Varias Builder Module. 默认为 false
+    "cycling": false, // 是否启用 Cycling Builer Module. 默认为 false
+    "option": { // 此小节标识了 Builder Module 的配置
         "varias": {
-            // Varias configuration
+            // Varias 配置
         },
         "cycling": {
-            // Cycling configuration
+            // Cycling 配置
         }
     }
 }

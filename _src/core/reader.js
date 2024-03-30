@@ -43,8 +43,9 @@ function site() {
         let item = basename(path, db.dirs.posts);
         let file_data = initializePost(path, bid);
 
-        if (db.settings.get('excluded_posts').includes(item)) excluded_posts[item] = file_data;
-        else {
+        if (db.config.excluded_posts.includes(item)){
+            excluded_posts[item] = file_data;
+        } else {
             for (let cname of file_data.category) {
                 if (used_categories.includes(cname)) {
                     categories[cname].add(file_data.id);
@@ -129,10 +130,15 @@ function sort(posts) {
     }
 }
 
+/**
+ * 
+ * @param {string} file_dir 
+ * @returns {string}
+ */
 function get_file_relative_dir(file_dir) {
     if (!file_dir) return db.dirs.root + '/';
-    if (file_dir[0] == '/')
-        file_dir = file_dir.substring(1)
+    if (file_dir.startsWith('/'))
+        file_dir = file_dir.substring(1);
     return join(db.dirs.root, '/', file_dir);
 }
 

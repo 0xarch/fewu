@@ -6,6 +6,14 @@ let db = {
      */
     settings: void 0,
     /**
+     * this is used for develop that you
+     * have clear path to target var.
+     * 
+     * do not forget to use '?.'
+     * @type {object}
+     */
+    config: void 0,
+    /**
      * @type {object}
      */
     site: void 0,
@@ -32,7 +40,10 @@ let db = {
         enabled: []
     },
     builder: {
-        mode: '',
+        /**
+         * @type {'devel'|'release'}
+         */
+        mode: 'release',
         /**
          * @deprecated use parser_name instead
          */
@@ -48,9 +59,13 @@ let db = {
     },
     theme: {
         /**
-         * @type {Collection}
+         * @type {object}
          */
         config: void 0,
+        /**
+         * @type {Collection}
+         */
+        settings: void 0,
         name: '',
         variables: '',
         dirs: {

@@ -5,7 +5,11 @@
             "#core/*": ["./_src/core/*.js"],
             "#db": ["./_src/core/database.js"],
             "#struct": ["./_src/core/bridge.class.js"],
+            "#class/*": ["./_src/class/*.mjs"],
             "#modules": ["./_modules"]
         }
-    }
+    },
+    "exclude": [
+        "_assets","_doc","_themes"
+    ]
 }

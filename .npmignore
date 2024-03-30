@@ -13,3 +13,5 @@ structure.tree
 .gitmodules
 config.json
 package-lock.json
+clean-workspace.sh
+run-test.sh

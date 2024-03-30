@@ -33,6 +33,15 @@ const ErrorLogger = {
     },
     couldNotLoadModule: (name)=>{
         error('Could not load module:',[name,'YELLOW']);
+    },
+    couldNotLoadPlugin: ()=>{
+        error('An error occured during loading plugin.');
+    },
+    couldNotLoadI18nDefault: ()=>{
+        error('Could not read default(fallback) i18n file in theme directory $THEME/extra/i18n.default.json');
+    },
+    couldNotLoadI18nFile: ()=>{
+        error('Could not read i18n file in theme directory $THEME/extra/i18n.'+database.language+'.json');
     }
 }
 

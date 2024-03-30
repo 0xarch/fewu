@@ -7,18 +7,18 @@ class GObject {
      * 
      * @param {object} object 
      * @param {string|string[]} property_path 
-     * @returns {any|null}
+     * @returns {any|undefined}
      */
     static getProperty(object, property_path) {
         let path = getPropertyPathFrom(property_path);
-        let __tempor_val = object;
+        let result = object;
         for (let i = 0; i < path.length; i++) {
-            if (!__tempor_val[path[i]]) {
-                __tempor_val = null;
+            if (!result[path[i]]) {
+                result = undefined;
                 break;
-            } else __tempor_val = __tempor_val[path[i]];
+            } else result = result[path[i]];
         }
-        return __tempor_val;
+        return result;
     }
 
     /**
@@ -75,5 +75,8 @@ function getPropertyPathFrom(property_path) {
     }
     return path;
 }
+
+// Mount on global
+global.GObject = GObject;
 
 export default GObject;

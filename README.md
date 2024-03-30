@@ -23,7 +23,7 @@ README.zh-CN.md：说明文件。
 
 1. 下载 fewu-cli
 ```sh
-npm install fewu-cli -g
+npm install fewu -g
 ```
 
 2. 自动生成需要的目录和文件。
@@ -37,6 +37,7 @@ fewu --init
 fewu --new
 ```
 > 这个命令会在 `posts` 目录下生成一个 {{Y}}{{m}}{{d}}-new.md 的 Markdown 文档。
+> 如果目录下已经有了，则会生成 {{Y}}{{m}}{{d}}-new-{{JUMP_NUMBER}}.md
 
 4. 生成发布版网站
 ```sh
@@ -58,11 +59,11 @@ fewu
 
 ## 开发主题
 
-请参阅 [主题文档](/_doc/Theme.zh-CN.md)。
+请参阅 [主题文档](/_doc/Theme.md)。
 
 > 最快速的方法是从 0xarch 开发的 [Arch](//github.com/0xarch/fewu-theme-arch) 开始，这也是 Fewu 的默认主题。
 
-> See [en-US Document](/_doc/Theme.md) if you are stupid.
+> See [en-US Document](/_doc/Theme.en-US.md) if you are stupid.
 
 ## Code Hack
 

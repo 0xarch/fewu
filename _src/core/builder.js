@@ -1,27 +1,30 @@
 import { mkdirSync, readFileSync, writeFile } from "fs";
 import { dirname, join as join_path } from "path";
 import { errno, info } from "#core/run";
-import { Collection, Correspond, Template, Layout } from "#struct";
+import { Collection, Correspond, BuildTemplate, Layout } from "#struct";
 import parsers from "#core/build_compat";
+import GObject from "#core/gobject";
 import db from "#db";
 
 /**
- * 
- * @param {Collection} theme 
- * @param {Collection} config 
+ * d
  * @param {Collection} collection 
  * @param {Layout} file
  */
 async function write(collection, file) {
-    let config = db.settings;
-    let theme_directory = db.theme.dirs.root;
+    let public_directory = db.config.public_directory ?? db.config.build?.public_directory ?? 'public';
     let absolute_correspond = Correspond(
         join_path(db.theme.dirs.layout, file.correspond().from),
-        join_path(config.get('public_directory') || config.get('build.public_directory'), file.correspond().to, 'index.html'));
+        join_path(public_directory, file.correspond().to, 'index.html'));
 
     // _______ get
-    let template = readFileSync(absolute_correspond.from).toString();
-    let template_type = db.theme.config.get('parser');
+    let build_template = new BuildTemplate(db.builder.parser_name,
+        readFileSync(absolute_correspond.from).toString(),
+        {
+            basedir: db.theme.dirs.layout,
+            filename: file.correspond().from
+        }
+    );
     const opt = file.option();
 
     // _______ define vars
@@ -61,7 +64,7 @@ async function write(collection, file) {
 
     for (const key in iter) {
         let addition_in_iter = iter[key];
-        let path_write_to_prefix = join_path(config.get('public_directory') || config.get('build.public_directory'));
+        let path_write_to_prefix = public_directory;
         if (addition_in_iter.varias) {
             let varias = addition_in_iter.varias; varias;//used in eval
             path_write_to_prefix += '/' + eval('`' + file.correspond().to + '`');
@@ -74,13 +77,10 @@ async function write(collection, file) {
                 return;
             }
             let c_opt = opt.cycling;
-            let c_parent = collection.get(c_opt.parent) || new Collection(addition_in_iter).get(c_opt.parent) || new Collection(addition).get(c_opt.parent);
+            let c_parent = collection.get(c_opt.parent) ?? GObject.getProperty(addition_in_iter,c_opt.parent) ?? GObject.getProperty(addition,c_opt.parent);
             let cycling_results = cycling(c_parent, c_opt.every, path_write_to_prefix);
             for (const result of cycling_results) {
-                let stat = proc_final(template_type, template, {
-                    basedir: join_path(theme_directory, 'layouts'),
-                    filename: file.correspond().from
-                }, {
+                let stat = proc_final_new(build_template, {
                     ...collection.asObject(),
                     ...addition,
                     ...addition_in_iter,
@@ -90,10 +90,7 @@ async function write(collection, file) {
             }
         } else {
             let path = path_write_to_prefix + '/index.html';
-            let stat = proc_final(template_type, template, {
-                basedir: join_path(theme_directory, 'layouts'),
-                filename: file.correspond().from
-            }, {
+            let stat = proc_final_new(build_template, {
                 ...collection.asObject(),
                 ...addition,
                 ...addition_in_iter,
@@ -142,7 +139,7 @@ function cycling(parent, every, prefix = '') {
 * @returns {'Ok'}
 */
 function proc_final(type, template, options, provide_variables, path_write_to) {
-    type = db.theme.config.get('parser');
+    type = db.builder.parser_name;
     let procer;
     switch (type) {
         case 'JADE':
@@ -165,7 +162,7 @@ function proc_final(type, template, options, provide_variables, path_write_to) {
 
 /**
  * 
- * @param {Template} template 
+ * @param {BuildTemplate} template 
  * @param {object} provide_variables 
  * @param {string} path_write_to
  * @returns {'Ok'|'Skipped'} 
@@ -173,14 +170,15 @@ function proc_final(type, template, options, provide_variables, path_write_to) {
 function proc_final_new(template,provide_variables,path_write_to){
     let procer;
     switch (template.type) {
+        // Fix for Jade(Old name of pug)
         case 'JADE':
             procer = parsers.pug;
             break;
         default:
-            procer = parsers[type.toLowerCase()];
+            procer = parsers[template.type.toLowerCase()];
     }
     mkdirSync(dirname(path_write_to), { recursive: true });
-    let result = procer(template.text, template.get_base(), provide_variables);
+    let result = procer(template.text, template.getBase(), provide_variables);
     try {
         if (readFileSync(path_write_to).toString() === result) {
             info([path_write_to, 'MAGENTA'], ['SKIPPED: No difference', "GREEN"]);
@@ -193,5 +191,6 @@ function proc_final_new(template,provide_variables,path_write_to){
 
 export {
     write,
-    proc_final
+    proc_final,
+    proc_final_new as procFinal
 }

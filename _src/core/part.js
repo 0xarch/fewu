@@ -1,11 +1,13 @@
 import { join } from 'path';
-import { cp } from 'fs';
+import { cp,readFileSync } from 'fs';
 import db from '#db';
 import { info } from '#core/run';
-import { proc_final } from '#core/builder';
+import { procFinal } from '#core/builder';
+import { BuildTemplate, Collection, Layout } from '#struct';
+import { write } from '#core/builder';
 
-async function theme_operations() {
-    let operations = db.theme.config.get('operations');
+async function resolveThemeOperations() {
+    let operations = db.theme.config.operations;
     operations.forEach(async (v) => {
         switch (v.do) {
             case "copy":
@@ -30,7 +32,7 @@ async function theme_operations() {
     info(['OPERATION.THEME', 'MAGENTA', 'BOLD'], ['COMPLETE', 'GREEN']);
 }
 
-async function copy_files() {
+async function copyFiles() {
     let publicDir = db.dirs.public;
     cp(db.theme.dirs.files, join(publicDir, 'files'), { recursive: true }, () => { });
     cp('resources', join(publicDir, 'resources'), { recursive: true }, () => { });
@@ -38,21 +40,36 @@ async function copy_files() {
     info(['OPERATION.COPY', 'MAGENTA', 'BOLD'], ['COMPLETE', 'GREEN']);
 }
 
-async function build_post_pages(options, GivenVariables) {
-    const layoutType = db.builder.type;
-    const template = db.builder.template.post;
+async function buildPosts() {
+    let filename = join(db.theme.dirs.layout, db.theme.config.template);
+    let build_template = new BuildTemplate(
+            db.builder.parser_name,
+            readFileSync(filename).toString(),
+            {
+                basedir: db.theme.dirs.layout,
+                filename
+            }
+        );
     db.site.posts.forEach(async item => {
-        let destname = join(db.dirs.public, item.path('local'));
-        proc_final(layoutType, template, options, {
-            post: item,
-            ...GivenVariables
-        }, destname) == 'Ok' &&
-            info(['SUCCESS', "GREEN"], [item.title, 'MAGENTA'], [destname, 'YELLOW']);
+        let destname = join(db.dirs.public, item.paths.local);
+        const STAT = procFinal(build_template,{
+            ...db.builder.api_required,
+            filename,
+            post: item
+        },destname);
+        if (STAT == 'Ok') info(['SUCCESS', "GREEN"], [item.title, 'MAGENTA'], [destname, 'YELLOW']);
     });
 }
 
+async function buildPages(){
+    for (let item of db.theme.config.layouts) {
+        write(new Collection({ ...db.builder.api_required }), new Layout(item));
+    }
+}
+
 export {
-    copy_files,
-    theme_operations,
-    build_post_pages
+    copyFiles,
+    resolveThemeOperations,
+    buildPosts,
+    buildPages
 }

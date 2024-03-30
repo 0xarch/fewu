@@ -1,7 +1,8 @@
 import { parse } from "marked";
 import { minify } from "html-minifier";
 import { statSync, readFileSync } from 'fs';
-import { Collection, GString } from '#core/struct';
+import { relative } from "path";
+import { Collection, GString, Correspond } from '#core/struct';
 import { word_count } from "#core/text_process";
 import { warn } from "#core/run";
 import db from "#db";
@@ -166,6 +167,7 @@ class Post {
     /**
      * 
      * @param {string} path
+     * @param {number?} id
      */
     constructor(path, id) {
         let fstat = statSync(path);
@@ -234,7 +236,7 @@ class Post {
                 tags: this.tags.join(", ")
             }
             if (this.foreword == '')
-                this.foreword = GString.parse(db.settings.get('build.no_foreword_text') || '', new Collection(coll_strict));
+                this.foreword = GString.parse(db.settings.get('build.no_foreword_text') ?? '', new Collection(coll_strict));
         }
 
         this.datz = new Datz(...gz);
@@ -243,7 +245,7 @@ class Post {
         this.transformedTitle = getted.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'～\·\「\」；：‘’\“\”，\。\《\》？！\￥\…\、（）]+/g, '');
 
         this.id = id;
-        let tempor_val = `read/${(+gz.join("")).toString(36)}${new Buffer.from(this.transformedTitle).toString("base64")}`;
+        let tempor_val = `read/${(+gz.join("")).toString(36)}${new Buffer.from(relative(db.dirs.posts,path)).toString("base64")}`;
 
         this.paths.website = `/${tempor_val}/`
         this.paths.local = `${tempor_val}/index.html`
@@ -260,8 +262,6 @@ class Post {
         this.nextID = id;
     }
 }
-
-import { Correspond } from "#struct";
 
 class Layout {
     #correspond;
