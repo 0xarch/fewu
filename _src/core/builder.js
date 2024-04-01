@@ -1,5 +1,5 @@
 import { mkdirSync, readFileSync } from "fs";
-import { writeFile } from "fs/promises";
+import { writeFile } from "fs";
 import { dirname, join as join_path } from "path";
 import { errno, info } from "#core/run";
 import { Collection, Correspond, BuildTemplate, Layout } from "#struct";
@@ -94,22 +94,20 @@ async function write(collection, file) {
             let c_parent = collection.get(opt_split.parent) ?? GObject.getProperty(addition_in_iter,opt_split.parent) ?? GObject.getProperty(addition,opt_split.parent);
             let cycling_results = cycling(c_parent, opt_split.every, path_write_to_prefix);
             for (const result of cycling_results) {
-                let stat = processTemplate(build_template, {
+                await processTemplate(build_template, {
                     ...collection.asObject(),
                     ...addition,
                     ...addition_in_iter,
                     cycling: result,
                 }, result.path);
-                if (stat === 'Ok') info([result.path, 'YELLOW'], ['SUCCESS', "GREEN"]);
             }
         } else {
             let path = path_write_to_prefix + '/index.html';
-            let stat = processTemplate(build_template, {
+            await processTemplate(build_template, {
                 ...collection.asObject(),
                 ...addition,
                 ...addition_in_iter,
             }, path);
-            if (stat === 'Ok') info([path, 'YELLOW'], ['SUCCESS', "GREEN"]);
         }
     }
     return;
@@ -142,46 +140,11 @@ function cycling(parent, every, prefix = '') {
 
 /**
  * 
- * @param { string } type 
- * @param { string } template 
- * @param { {
-*  basedir: string,
-*  filename: string
-* } } options 
-* @param { object } provide_variables
-* @param { string } path_write_to 
-* @returns {'Ok'}
-*/
-function proc_final(type, template, options, provide_variables, path_write_to) {
-    type = db.builder.parser_name;
-    let procer;
-    switch (type) {
-        case 'JADE':
-            procer = parsers.pug;
-            break;
-        default:
-            procer = parsers[type.toLowerCase()];
-    }
-    mkdirSync(dirname(path_write_to), { recursive: true });
-    let result = procer(template, options, provide_variables);
-    try {
-        if (readFileSync(path_write_to).toString() === result) {
-            info([path_write_to, 'MAGENTA'], ['SKIPPED: No difference', "GREEN"]);
-            return 'Skipped';
-        }
-    } catch (e) { }
-    writeFile(path_write_to, result, (e) => { if (e) throw e });
-    return 'Ok';
-}
-
-/**
- * 
  * @param {BuildTemplate} template 
  * @param {object} provide_variables 
  * @param {string} path_write_to
- * @returns {'Ok'|'Skipped'} 
  */
-function processTemplate(template,provide_variables,path_write_to){
+async function processTemplate(template,provide_variables,path_write_to){
     let procer;
     switch (template.type) {
         // Fix for Jade(Old name of pug)
@@ -195,16 +158,18 @@ function processTemplate(template,provide_variables,path_write_to){
     let result = procer(template.text, template.getBase(), provide_variables);
     try {
         if (readFileSync(path_write_to).toString() === result) {
-            info([path_write_to, 'MAGENTA'], ['SKIPPED: No difference', "GREEN"]);
-            return 'Skipped';
+            info(['SKIPPED', "GREEN"], [path_write_to, 'MAGENTA']);
+            return
         }
     } catch (e) { }
-    writeFile(path_write_to, result, (e) => { if (e) throw e });
-    return 'Ok';
+    writeFile(path_write_to, result, (e) => {
+        if (e) throw e
+        info([path_write_to, 'YELLOW'], ['SUCCESS', "GREEN"]);
+    });
 }
 
 export {
     write,
-    proc_final,
-    processTemplate as procFinal
+    processTemplate as procFinal,
+    processTemplate
 }

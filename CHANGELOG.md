@@ -2,6 +2,11 @@
 
 **RELEASE**
 
+## REL1.2.1 - 2024-04-01
+* Removed `FEWU_INSIDER_VERSION`
+* Changed Info format when skipping
+* Update `processTemplate` with `async`
+
 ## REL1.2.0 n2.5.0 - 2024-04-01
 
 ### Fixed
