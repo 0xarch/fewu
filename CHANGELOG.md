@@ -2,6 +2,46 @@
 
 **RELEASE**
 
+## REL1.2.0 n2.5.0 - 2024-04-01
+
+### Fixed
+* Fix bug that Reader could not sort ports correctly.
+
+### Changed
+* `text_process.js` now exports a default `TEXT` object.
+* `GObject.deleteEscapingChar` is now moved to `text_process` as `TEXT.deleteEscapingCharacters`
+* Update CONSTANT.OS_UNAME
+
+### New
+* Adjusted function names under `Layout` class
+> The old functions are marked as deprecated and will be removed soon
+
+* Adjusted function names in the `text_process.js`
+
+* Update document: GString
+
+* shell script `clean-workspace` and `run-test`
+> `clean-workspace` will remove files created by fewu in current dir.
+> `run-test` will mkdir fewu-test in $HOME,automatically download theme, create post and generate.
+
+### CLI Parts
+* **new** now supports tags, category and title as arguments in command line.
+
+* **help** rewrited
+
+### Beta Changes
+> **WARN** that this is undone and do have many bugs !  
+**These changes are usually compatible with last minor version, and the old will be removed after about 3 minor versions.**
+Rename theme layout option name, and uses `GString` for string calculate.
+`cycling` -> `use_split`
+`varias` -> `use_foreach`
+`option.cycling` -> `option.@split`
+`option.varias` -> `option.@foreach`
+> NOTE that option.@split and option.@foreach is invalid in JS. Here is used only for convenient.
+
+the `to` uses `GString` format. And **older Template String format is compatible for a while**
+> For GString, see document.
+
 ## REL1.1.1 n2.4.1 [BUGIFX] - 2024-03-30
 * Fix bug which `GString` and `Collection` not imported
 * Fix typo bug in built-in module extra-files

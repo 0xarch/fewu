@@ -2,17 +2,17 @@ import License from '#class/license';
 import FuzzyDate from '#class/fuzzydate';
 import Collection from '#class/collection';
 import db from '#core/database';
+import GString from '#core/gstring';
 import { relative } from 'path';
 import { minify } from 'html-minifier';
 import { parse } from 'marked';
 import { statSync,readFileSync } from 'fs';
-import { word_count } from '#core/text_process';
+import TEXT from '#core/text_process';
 import { warn } from '#core/run';
-import { GString } from '#core/struct';
 
 class Post {
     static sort(a, b) {
-        return a.datz.compareWith(b.datz);
+        return a.fuzzyDate.compareWith(b.fuzzyDate);
     }
     static testHasH1(string) {
         return /\n# /.test(string);
@@ -153,8 +153,8 @@ class Post {
         if (!Post.testHasH1(this.content)) this.content = '# ' + this.title + '\n' + this.content;
 
         this.foreword = lines.slice(i, (moreIndex !== -1) ? moreIndex : 5).join('\n').replace(/\#*/g, '');
-        let fwc = word_count(this.foreword);
-        this.wordCount = word_count(this.content);
+        let fwc = TEXT.getTotalWordCount(this.foreword);
+        this.wordCount = TEXT.getTotalWordCount(this.content);
 
         // Warn the users if they write their foreword
         // too long or too short
@@ -177,8 +177,12 @@ class Post {
                 this.foreword = GString.parse(db.settings.get('build.no_foreword_text') || '', new Collection(coll_strict));
         }
 
-        this.datz = new FuzzyDate(...gz);
-        this.fuzzyDate = new FuzzyDate(...gz);
+        this.fuzzyDate = new FuzzyDate({
+            y: gz[0],
+            m: gz[1],
+            d: gz[2]
+        });
+        this.datz = this.fuzzyDate;
         this.ECMA262Date = this.date.toDateString();
 
         this.transformedTitle = getted.title.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;\"\'～\·\「\」；：‘’\“\”，\。\《\》？！\￥\…\、（）]+/g, '');

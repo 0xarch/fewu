@@ -55,7 +55,9 @@ let db = {
         /**
          * @type {object}
          */
-        api_required: void 0
+        api_required: void 0,
+        exposed: void 0,
+        plugin: void 0,
     },
     theme: {
         /**

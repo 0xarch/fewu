@@ -1,27 +1,38 @@
 import { writeFile,existsSync } from "fs";
 
-const date = new Date();
+async function createNew(argv){
+    const date = new Date();
 
-const y = date.getFullYear(),
-    m = date.getMonth()+1,
-    d = date.getDate();
+    const y = date.getFullYear(),
+        m = date.getMonth()+1,
+        d = date.getDate();
 
-let path = 'posts/'+y+m+d+'-new.md';
-let path_exist_jump = 0;
-while(existsSync(path)){
-    path = 'posts/'+y+m+d+'-new-'+path_exist_jump+'.md';
-    path_exist_jump += 1;
-}
+    const m_path = m.toString().padStart(2,0),
+        d_path = d.toString().padStart(2,0);
+    
+    let path = 'posts/'+y+m_path+d_path+'-new.md';
+    let path_exist_jump = 0;
+    while(existsSync(path)){
+        path = 'posts/'+y+m_path+d_path+'-new-'+path_exist_jump+'.md';
+        path_exist_jump += 1;
+    }
 
-const text = `---
-title: 
+    let tags = argv?.['tag']?.split('+')?.join(' ') ?? '';
+    let category = argv?.['category']?.split('+')?.join(' ') ?? '';
+    let title = argv?.['title'] ?? 'Blog on '+date.toDateString();
+    
+    const text = `---
+title: ${title}
 date: ${y}-${m}-${d}
-tags: 
-category: 
+tags: ${tags}
+category: ${category}
 ---
 ¯\\_(ツ)_/¯
 Write some FOREWORDS here.
 After the "more" tag is the content.
 <!--more-->`;
+    
+    writeFile(path,text,{},()=>{});
+}
 
-writeFile(path,text,{},()=>{});
+export default createNew;

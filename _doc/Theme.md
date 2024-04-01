@@ -2,11 +2,11 @@
 
 ## 概述
 
-Nexo 通过主题生成网站。主题是 Nexo 不可或缺的一部分。 要开始编写主题，可以参考 Nexo 作者的主题 [Wacal](//github.com/0xarch/nexo-theme-wacal)，这个主题受 GNOME 网站启发而被编写。
+Fewu 通过主题生成网站。主题是 Fewu 不可或缺的一部分。 要开始编写主题，可以参考 Fewu 作者的主题 [Wacal](//github.com/0xarch/nexo-theme-wacal)，这个主题受 GNOME 网站启发而被编写。
 
 ## 结构
 
-Nexo 的主题是一个目录。目录中应至少包含以下文件/目录：
+Fewu 的主题是一个目录。目录中应至少包含以下文件/目录：
 
 * [目录] layouts 网页模板
 * [目录] files 网页资源，如 CSS 和 JS
@@ -23,7 +23,7 @@ Nexo 的主题是一个目录。目录中应至少包含以下文件/目录：
 `boolean` 是否启用插件。默认为`false`。
 
 ### Modules.*
-`object` 模块配置。根据 Nexo 模块标准，模块应当读取`Modules.{{moduleName}}`的信息。
+`object` 模块配置。根据 Fewu 模块标准，模块应当读取`Modules.{{moduleName}}`的信息。
 
 ### parser
 `string` 使用的模块解析器名。
@@ -65,7 +65,7 @@ Nexo 的主题是一个目录。目录中应至少包含以下文件/目录：
 
 ### 插件
 
-插件是一个 可执行的 JavaScript 文件。插件对 Nexo 具有完全的控制权。每个主题只能启用一个插件。
+插件是一个 可执行的 JavaScript 文件。插件对 Fewu 具有完全的控制权。每个主题只能启用一个插件。
 
 插件会在生成页面前被运行。
 
@@ -75,19 +75,19 @@ Nexo 的主题是一个目录。目录中应至少包含以下文件/目录：
 
 资源目录。
 
-Nexo 在处理时会将此目录**完全复制**到网站同名目录下，即 `{{PUBLIC_DIR}}/files`。
+Fewu 在处理时会将此目录**完全复制**到网站同名目录下，即 `{{PUBLIC_DIR}}/files`。
 
 ## layouts
 
 模板目录。
 
-此目录应只存放模板文件。 Nexo 在 layouts 小节的每一个部分时都会从这里读取模板文件。 
+此目录应只存放模板文件。 Fewu 在 layouts 小节的每一个部分时都会从这里读取模板文件。 
 
 ## *ThemeOperation
 
 `*ThemeOperation` 标识了操作。
 
-每个 `*ThemeOperation` 应至少包含一个 `do` 键。 Nexo 会根据此键对应的值进行相应操作。
+每个 `*ThemeOperation` 应至少包含一个 `do` 键。 Fewu 会根据此键对应的值进行相应操作。
 
 ## *ThemeLayout
 

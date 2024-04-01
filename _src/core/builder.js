@@ -1,9 +1,11 @@
-import { mkdirSync, readFileSync, writeFile } from "fs";
+import { mkdirSync, readFileSync } from "fs";
+import { writeFile } from "fs/promises";
 import { dirname, join as join_path } from "path";
 import { errno, info } from "#core/run";
 import { Collection, Correspond, BuildTemplate, Layout } from "#struct";
 import parsers from "#core/build_compat";
 import GObject from "#core/gobject";
+import GString from "#core/gstring";
 import db from "#db";
 
 /**
@@ -26,29 +28,31 @@ async function write(collection, file) {
         }
     );
     const opt = file.option();
+    const opt_split = file.getSplitOptions();
+    const opt_foreach = file.getForeachOptions();
 
     // _______ define vars
     let iter = { "MAIN": {} };
     let addition = {};
 
     // _______ proc
-    if (file.has_addition()) {
+    if (file.hasAddition()) {
         let map = file.addition();
         for (let key in map) {
             addition[key] = collection.get(map[key]);
         }
     }
-    if (file.is_varias()) {
-        if (!opt.varias) {
+    if (file.useForeachBuild()) {
+        if (!opt_foreach) {
             errno(8102);
             return;
         }
         iter = {};
-        let v_parent = collection.get(opt.varias.parent);
+        let v_parent = collection.get(opt_foreach.parent);
         let time = 0;
         for (let key in v_parent) {
             let iter_key = 'V' + time;
-            let varias = {
+            let each = {
                 enabled: true,
                 name: key,
                 iter_key,
@@ -56,7 +60,9 @@ async function write(collection, file) {
             }
             iter[iter_key] = {
                 ...iter[iter_key],
-                varias
+                // deprecated.
+                varias: each,
+                each
             };
             time++;
         }
@@ -66,21 +72,29 @@ async function write(collection, file) {
         let addition_in_iter = iter[key];
         let path_write_to_prefix = public_directory;
         if (addition_in_iter.varias) {
-            let varias = addition_in_iter.varias; varias;//used in eval
-            path_write_to_prefix += '/' + eval('`' + file.correspond().to + '`');
+            if(GString.test(file.correspond().to,1)){
+                // The New (Experimental) GString format
+                let collection = new Collection({
+                    each: addition_in_iter.varias,
+                });
+                path_write_to_prefix += '/' + GString.parse(file.correspond().to,collection);
+            } else {
+                // The Old ${ } format.
+                let varias = addition_in_iter.varias; varias; //used in eval
+                path_write_to_prefix += '/' + eval('`' + file.correspond().to + '`');
+            }
         } else {
             path_write_to_prefix = join_path(path_write_to_prefix, file.correspond().to);
         }
-        if (file.is_cycling()) {
-            if (!opt.cycling) {
+        if (file.useSplitBuild()) {
+            if (!opt_split) {
                 errno(8103);
                 return;
             }
-            let c_opt = opt.cycling;
-            let c_parent = collection.get(c_opt.parent) ?? GObject.getProperty(addition_in_iter,c_opt.parent) ?? GObject.getProperty(addition,c_opt.parent);
-            let cycling_results = cycling(c_parent, c_opt.every, path_write_to_prefix);
+            let c_parent = collection.get(opt_split.parent) ?? GObject.getProperty(addition_in_iter,opt_split.parent) ?? GObject.getProperty(addition,opt_split.parent);
+            let cycling_results = cycling(c_parent, opt_split.every, path_write_to_prefix);
             for (const result of cycling_results) {
-                let stat = proc_final_new(build_template, {
+                let stat = processTemplate(build_template, {
                     ...collection.asObject(),
                     ...addition,
                     ...addition_in_iter,
@@ -90,7 +104,7 @@ async function write(collection, file) {
             }
         } else {
             let path = path_write_to_prefix + '/index.html';
-            let stat = proc_final_new(build_template, {
+            let stat = processTemplate(build_template, {
                 ...collection.asObject(),
                 ...addition,
                 ...addition_in_iter,
@@ -167,7 +181,7 @@ function proc_final(type, template, options, provide_variables, path_write_to) {
  * @param {string} path_write_to
  * @returns {'Ok'|'Skipped'} 
  */
-function proc_final_new(template,provide_variables,path_write_to){
+function processTemplate(template,provide_variables,path_write_to){
     let procer;
     switch (template.type) {
         // Fix for Jade(Old name of pug)
@@ -192,5 +206,5 @@ function proc_final_new(template,provide_variables,path_write_to){
 export {
     write,
     proc_final,
-    proc_final_new as procFinal
+    processTemplate as procFinal
 }

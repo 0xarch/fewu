@@ -73,7 +73,7 @@ async function App(override_argv) {
     db.builder.mode = argv['devel'] ? 'devel' : 'release';
     db.builder.type = db.theme.config.parser;
     db.builder.parser_name = db.theme.config.parser;
-    db.language = db.config.language ?? 'en-US';
+    db.language = argv['language'] ?? db.config.language ?? 'en-US';
     db.site = site();
     db.sort = sort(db.site.posts);
     db.file = get_file_relative_dir;
@@ -84,6 +84,7 @@ async function App(override_argv) {
     i18n.autoSetFile();
 
     db.constants = (await import('#core/constants')).default;
+
     const PROVISION = {
         db,
         site: db.site,
@@ -117,14 +118,14 @@ async function App(override_argv) {
     let provided_theme_config = GObject.mix(db.theme.variables, db.config.theme?.options ?? {}, true);
 
     // Load theme-side plugin
-    let theme_plugin_provide = await loadPlugin(PROVISION);
-    if (theme_plugin_provide === null) return;
+    db.builder.plugin = await loadPlugin(PROVISION);
+    if (db.builder.plugin === null) return;
 
     loadModules(PROVISION);
 
     db.builder.api_required = {
-        Plugin: theme_plugin_provide,
-        plugin: theme_plugin_provide,
+        Plugin: db.builder.plugin,
+        plugin: db.builder.plugin,
         posts: db.site.posts,
         excluded_posts: db.site.excluded_posts,
         sort: db.sort,

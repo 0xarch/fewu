@@ -1,17 +1,16 @@
 import BuildTemplate from '#class/buildtemplate';
 import Collection from '#class/collection';
 import FuzzyDate from '#class/fuzzydate';
+import Layout from '#class/layout';
 import License from '#class/license';
 import Post from '#class/post';
 
 import {
     Tag,
-    Category,
-    Layout
+    Category
 } from '#core/descriptive_class';
 
 import {
-    GString,
     Cache,
     Correspond,
     NULL_OBJECT,
@@ -26,7 +25,6 @@ export {
     Category,
     Post,
     Layout,
-    GString,
     Collection,
     Cache,
     Correspond,

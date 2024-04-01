@@ -44,10 +44,6 @@ Fewu 的插件运行在一个 `try-catch` 代码块中。 当插件运行出现�
 
 ## 工作
 
-### 提示
-
-Fewu 插件对于 Fewu 的任何部位**都具有操作权**，但我们并不希望你**过度干扰** Fewu 的运作。您应该只从 Fewu 的**数据库**中读取属性。
-
 ### 读取
 
 ##### Collection [推荐]
@@ -70,11 +66,11 @@ Fewu 推荐的插件配置存放位置在 `db.settings[modules]` 小节中，每
 以下是一个简单的 Fewu 插件，代码通过调用数据库，在生成目录下生成一个包含 Fewu 版本号的 `nversion` 文件，并在导出中提供一个键值对 `foo: 'bar'`。
 
 ```js
-import db from '#db';
 import { writeFile } from 'fs';
 import { join } from 'path';
 
-function write_version_to_public(){
+function write_version_to_public(PROVISION){
+    const {db} = PROVISION;
     let version = db.constants.FEWU_RELEASE_VERSION;
     writeFile(join(db.dirs.public, 'nversion'), version, (e)=>{if(e)throw e});
 }

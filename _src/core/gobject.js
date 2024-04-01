@@ -60,6 +60,11 @@ class GObject {
         return result;
     }
 
+    /**
+     * @deprecated use TEXT.deleteEscapingCharacters
+     * @param {string} str 
+     * @returns {string}
+     */
     static deleteEscapingChar(str) {
         return str.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;"'～·「」；：‘’“”，。《》？！￥…、（）]+/g, '');
     }

@@ -2,11 +2,11 @@
 
 ## Overview
 
-Nexo generates websites through themes. The theme is an indispensable part of Nexo. To start writing a theme, you can refer to the Nexo author's theme [Wacal](//github. com/0xarch/nexo theme wacal), which was inspired by the GNOME website.
+Fewu generates websites through themes. The theme is an indispensable part of Fewu. To start writing a theme, you can refer to the Fewu author's theme [Wacal](//github. com/0xarch/nexo theme wacal), which was inspired by the GNOME website.
 
 ## Structure
 
-Nexo's theme is a directory. The directory should include at least the following files/directories:
+Fewu's theme is a directory. The directory should include at least the following files/directories:
 
 *[Directory] Layouts web page template
 *[Directory] Files web resources, such as CSS and JS
@@ -23,7 +23,7 @@ Nexo's theme is a directory. The directory should include at least the following
 `boolean` Whether to enable plugins. The default is `false`.
 
 ### Modules.*
-`object` module configuration. According to the Nexo module standards v1, modules should read configuration from `Modules.{{moduleName}}`.
+`object` module configuration. According to the Fewu module standards v1, modules should read configuration from `Modules.{{moduleName}}`.
 
 ### parser
 `string` The name of the module parser used.
@@ -60,7 +60,7 @@ Process default values (fallback) file for i18n: `i18n.default.json`
 
 ### plugins
 
-A plugin is an **executable** JavaScript file. The plugin has complete control over Nexo. Each theme can only have one plugin enabled.
+A plugin is an **executable** JavaScript file. The plugin has complete control over Fewu. Each theme can only have one plugin enabled.
 The plugin will be run before generating the page.
 
 The plugin must provide a `plugin()` function. The return value of this function will be provided as an export to the generator. You can access plugin exports in the template through the `plugin` object.
@@ -69,19 +69,19 @@ The plugin must provide a `plugin()` function. The return value of this function
 
 Resource directory.
 
-Nexo will **completely copy** this directory to the directory with the same name on the website during processing, that is, `{{PUBLIC-DIR}}/files`.
+Fewu will **completely copy** this directory to the directory with the same name on the website during processing, that is, `{{PUBLIC-DIR}}/files`.
 
 ## layouts
 
 Template directory.
 
-This directory should only store template files. Nexo reads template files from each section of the layouts section.
+This directory should only store template files. Fewu reads template files from each section of the layouts section.
 
 ## *ThemeOperation
 
 `*ThemeOperation` identifies the operation.
 
-Each `*ThemeOperation` should at least contain one`do` key. Nexo will perform corresponding operations based on the value corresponding to this key.
+Each `*ThemeOperation` should at least contain one`do` key. Fewu will perform corresponding operations based on the value corresponding to this key.
 
 ## *ThemeLayout
 
