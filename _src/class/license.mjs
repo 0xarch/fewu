@@ -2,7 +2,7 @@ class License {
     /**
      * @type {'REPRINT'|'PRIVATE'|'CC'|'CCZERO'}
      */
-    #type= 'PRIVATE'
+    type= 'PRIVATE'
     #cc_type = {
         ZERO: false,
         BY: false,
@@ -16,9 +16,9 @@ class License {
      */
     constructor(str) {
         str = str.toLowerCase()
-        if (str.includes('private')) this.#type = 'PRIVATE'
-        else if (str.includes('reprint')) this.#type = 'REPRINT'
-        else if (str.includes('cc0') || str.includes('cc-zero')) this.#type = 'CCZERO'
+        if (str.includes('private')) this.type = 'PRIVATE'
+        else if (str.includes('reprint')) this.type = 'REPRINT'
+        else if (str.includes('cc0') || str.includes('cc-zero')) this.type = 'CCZERO'
         else {
             for (let k in this.#cc_type) {
                 if (str.includes(k.toLowerCase()) || str.includes(k))
@@ -27,7 +27,7 @@ class License {
         }
     }
     description() {
-        switch(this.#type){
+        switch(this.type){
             case 'CC':
                 let result = 'CC'
                 for(let key in this.#cc_type)
@@ -54,7 +54,7 @@ class License {
      * @returns {boolean}
      */
     isCreativeCommons() {
-        return this.#type == 'CC' || this.#type == 'CCZERO'
+        return this.type == 'CC' || this.type == 'CCZERO'
     }
     /**
      * @deprecated use isCreativeCommons instead

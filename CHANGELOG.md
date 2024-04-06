@@ -2,6 +2,9 @@
 
 **RELEASE**
 
+## REL1.2.2 [Editing] - 2024-04-10
+* `License` property `type` moved to public
+
 ## REL1.2.1 - 2024-04-01
 * Removed `FEWU_INSIDER_VERSION`
 * Changed Info format when skipping
