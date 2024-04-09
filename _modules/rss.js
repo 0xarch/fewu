@@ -1,6 +1,7 @@
-import db from '#db';
 import { join } from 'path';
 import { writeFile } from 'fs';
+
+const db = database;
 
 /**
  * 
@@ -19,7 +20,7 @@ function getRSSFeedXml(blog_title, blog_link, description, articles) {
 ${articles.map(v =>
         `<item>
 <title>${v.title}</title>
-<link>${blog_link + v.paths.website}</link>
+<link>${blog_link + v.path.website}</link>
 <guid isPermaLink="false">ID${v.id}</guid>
 <description>${v.foreword}</description>
 <pubDate>${v.lastModifiedDate}</pubDate>
@@ -30,9 +31,9 @@ ${articles.map(v =>
 }
 
 function exec() {
-    let conf = db.settings.has('modules.rss') ? db.settings.get('modules.rss') : {};
-    let text = getRSSFeedXml(conf.title,db.settings.get('site_url'),conf.description,db.site.posts);
-    writeFile(join(db.dirs.public,'feed.xml'),text,(e)=>{if(e)throw e});
+    let conf = db.config.modules.rss ?? {};
+    let text = getRSSFeedXml(conf.title,db.config.site_url,conf.description,db.site.posts);
+    writeFile(join(PUBLIC_DIRECTORY,'feed.xml'),text,(e)=>{if(e)throw e});
 }
 
 const Module = {

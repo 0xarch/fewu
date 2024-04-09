@@ -54,6 +54,9 @@ async function App(override_argv) {
     db.theme.dirs.files = join(db.theme.dirs.root, 'files');
     db.dirs.theme = db.theme.dirs;
 
+    // Mount on global
+    global.PUBLIC_DIRECTORY = db.dirs.public;
+
     if (argv['only'] == 'updateTheme') {
         cp(db.theme.dirs.files, join(db.dirs.public, 'files'), { recursive: true }, () => { });
         cp('sources', join(db.dirs.public, 'sources'), { recursive: true }, () => { });

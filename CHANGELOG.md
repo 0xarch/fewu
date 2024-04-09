@@ -2,8 +2,11 @@
 
 **RELEASE**
 
-## REL1.2.2 [Editing] - 2024-04-10
+## REL1.2.2 - 2024-04-10
 * `License` property `type` moved to public
+* fix bug `License` could not use Creative Commons
+* `PUBLIC_DIRECTORY` is now avaiable in modules (global mounted)
+* fix bug in builtin module extra_files
 
 ## REL1.2.1 - 2024-04-01
 * Removed `FEWU_INSIDER_VERSION`

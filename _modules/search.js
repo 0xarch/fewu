@@ -23,7 +23,7 @@ async function generateSearchStrings() {
             if (date) acontent += '%%%' + article.date.toDateString();
             arr.push({ 'content': acontent, href, atitle });
         }
-        writeFile(join(db.dirs.public, 'searchStrings.json'), JSON.stringify(arr), () => { });
+        writeFile(join(PUBLIC_DIRECTORY, 'searchStrings.json'), JSON.stringify(arr), () => { });
     }
 }
 

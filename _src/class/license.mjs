@@ -20,6 +20,7 @@ class License {
         else if (str.includes('reprint')) this.type = 'REPRINT'
         else if (str.includes('cc0') || str.includes('cc-zero')) this.type = 'CCZERO'
         else {
+            this.type = 'CC'
             for (let k in this.#cc_type) {
                 if (str.includes(k.toLowerCase()) || str.includes(k))
                     this.#cc_type[k] = true
