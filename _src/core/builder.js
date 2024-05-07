@@ -72,12 +72,12 @@ async function write(collection, file) {
         let addition_in_iter = iter[key];
         let path_write_to_prefix = public_directory;
         if (addition_in_iter.varias) {
-            if(GString.test(file.correspond().to,1)){
+            if (GString.test(file.correspond().to, 1)) {
                 // The New (Experimental) GString format
                 let collection = new Collection({
                     each: addition_in_iter.varias,
                 });
-                path_write_to_prefix += '/' + GString.parse(file.correspond().to,collection);
+                path_write_to_prefix += '/' + GString.parse(file.correspond().to, collection);
             } else {
                 // The Old ${ } format.
                 let varias = addition_in_iter.varias; varias; //used in eval
@@ -91,7 +91,7 @@ async function write(collection, file) {
                 errno(8103);
                 return;
             }
-            let c_parent = collection.get(opt_split.parent) ?? GObject.getProperty(addition_in_iter,opt_split.parent) ?? GObject.getProperty(addition,opt_split.parent);
+            let c_parent = collection.get(opt_split.parent) ?? GObject.getProperty(addition_in_iter, opt_split.parent) ?? GObject.getProperty(addition, opt_split.parent);
             let cycling_results = cycling(c_parent, opt_split.every, path_write_to_prefix);
             for (const result of cycling_results) {
                 await processTemplate(build_template, {
@@ -144,7 +144,7 @@ function cycling(parent, every, prefix = '') {
  * @param {object} provide_variables 
  * @param {string} path_write_to
  */
-async function processTemplate(template,provide_variables,path_write_to){
+async function processTemplate(template, provide_variables, path_write_to) {
     let procer;
     switch (template.type) {
         // Fix for Jade(Old name of pug)

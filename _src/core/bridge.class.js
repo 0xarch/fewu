@@ -1,14 +1,11 @@
 import BuildTemplate from '#class/buildtemplate';
 import Collection from '#class/collection';
+import ContainerCategory from '#class/containercategory';
+import ContainerTag from '#class/containertag';
 import FuzzyDate from '#class/fuzzydate';
 import Layout from '#class/layout';
 import License from '#class/license';
 import Post from '#class/post';
-
-import {
-    Tag,
-    Category
-} from '#core/descriptive_class';
 
 import {
     Cache,
@@ -21,8 +18,8 @@ export {
     //BuildTemplate as Template,
     License,
     FuzzyDate as Datz,
-    Tag,
-    Category,
+    ContainerTag as Tag,
+    ContainerCategory as Category,
     Post,
     Layout,
     Collection,

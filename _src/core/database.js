@@ -37,7 +37,8 @@ let db = {
         }
     },
     modules: {
-        enabled: []
+        enabled: [],
+        versions: {}
     },
     builder: {
         /**

@@ -25,7 +25,7 @@ async function App(override_argv) {
     // mount
     global.args = override_argv || gopt(process.argv);
 
-    db.proc.args = argv;
+    db.proc.args = args;
     
     // init
     if (args.init) {
