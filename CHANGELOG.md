@@ -2,6 +2,8 @@
 
 **RELEASE**
 
+## REL1.2.3 - 2024-05-10 [WIP]
+
 ## REL1.2.2 - 2024-04-10
 * `License` property `type` moved to public
 * fix bug `License` could not use Creative Commons

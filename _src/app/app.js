@@ -22,10 +22,13 @@ import { loadPlugin,loadModules } from '#core/loader';
  * **NOTE** Working in progress
  */
 async function App(override_argv) {
-    db.proc.args = override_argv || gopt(process.argv);
+    // mount
+    global.args = override_argv || gopt(process.argv);
 
+    db.proc.args = argv;
+    
     // init
-    if (db.proc.args.init) {
+    if (args.init) {
         const init = await (import('#core/init'));
         info(['Init', 'YELLOW'], ['Making directories']);
         init.make_default_directory();
