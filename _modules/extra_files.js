@@ -7,9 +7,9 @@ const Module = {
         if(!config) return -1;
         let source_path = config?.from ?? 'extra';
         let extra_file = config?.list;
-        if(!extra_file instanceof Array) return;
+        if(!Array.isArray(extra_file)) return;
         for (let k of extra_file) {
-            cp(join(source_path, k), join(PUBLIC_DIRECTORY, k), () => { });
+            cp(join(source_path, k), join(PUBLIC_DIRECTORY, k), {recursive:true}, (e) => {if(e)throw e});
         }
     }
 }

@@ -53,7 +53,7 @@ function site() {
                     categoriesMap.get(cname).add(file_data.id);
                 } else {
                     categoriesMap.set(cname,new Category(cname, [file_data.id]));
-                    categories[cname] = categoriesMap.get(cname);
+                    categories[cname] = new Category(cname, [file_data.id]);
                     used_categories.push(cname);
                 }
             }
@@ -64,7 +64,7 @@ function site() {
                     tagsMap.get(cname).add(file_data.id);
                 } else {
                     tagsMap.set(cname,new Tag(cname, [file_data.id]));
-                    tags[cname] = tagsMap.get(cname);
+                    tags[cname] = new Tag(cname, [file_data.id]);
                     used_tags.push(cname);
                 }
             }
