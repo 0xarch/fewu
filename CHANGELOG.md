@@ -4,6 +4,7 @@
 
 ## REL1.2.3 - 2024-05-10 [WIP]
 * Removed `descriptive_class` , split `Tag` ... to separate files.
+* Fixed multi posts in one tag/category.
 
 ## REL1.2.2 - 2024-04-10
 * `License` property `type` moved to public
