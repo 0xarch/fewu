@@ -177,11 +177,12 @@ class Post {
                 this.foreword = GString.parse(db.settings.get('build.no_foreword_text') || '', new Collection(coll_strict));
         }
 
-        this.fuzzyDate = new FuzzyDate({
-            y: gz[0],
-            m: gz[1],
-            d: gz[2]
-        });
+        // this.fuzzyDate = new FuzzyDate({
+        //     y: gz[0],
+        //     m: gz[1],
+        //     d: gz[2]
+        // });
+        this.fuzzyDate = new FuzzyDate(getted.date);
         this.datz = this.fuzzyDate;
         this.ECMA262Date = this.date.toDateString();
 
@@ -189,13 +190,20 @@ class Post {
 
         this.id = id;
         
-        let tempor_val = `read/${(+gz.join("")).toString(36)}${new Buffer.from(relative(db.dirs.posts,path)).toString("base64")}`;
-
-        this.path.website = `/${tempor_val}/`
-        this.path.local = `${tempor_val}/index.html`
-        this.paths = this.path
-        this.parsed.content = minify(parse(this.content,{mangle:false,headerIds:false}),{removeComments:true,collapseWhitespace:true})
-        this.parsed.foreword = minify(parse(this.foreword,{mangle:false,headerIds:false}),{removeComments:true,collapseWhitespace:true})
+        // Path process
+        if(db.config?.enabledFeatures?.includes('flatPath')){
+            let tempor_val = `read/${(+gz.join("")).toString(36)}${new Buffer.from(relative(db.dirs.posts,path)).toString("base64")}`;
+            this.path.website = `/${tempor_val}/`;
+            this.path.local = `${tempor_val}/index.html`;
+            this.paths = this.path;
+        } else {
+            let tempor_val = `read/${gz.join('/')}/${relative(db.dirs.posts,path).replace(/\//g,':')}`;
+            this.path.website = `/${tempor_val}/`;
+            this.path.local = `${tempor_val}/index.html`;
+            this.paths = this.path;
+        }
+        this.parsed.content = minify(parse(this.content,{mangle:false,headerIds:false}),{removeComments:true,collapseWhitespace:true});
+        this.parsed.foreword = minify(parse(this.foreword,{mangle:false,headerIds:false}),{removeComments:true,collapseWhitespace:true});
     }
     setPath(path) {
         this.pathto = path;

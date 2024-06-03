@@ -59,6 +59,7 @@ let db = {
         api_required: void 0,
         exposed: void 0,
         plugin: void 0,
+        features: []
     },
     theme: {
         /**

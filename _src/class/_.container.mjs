@@ -1,5 +1,3 @@
-import Post from "./post.mjs";
-
 class _PostContainer {
     by;
     label;
@@ -8,7 +6,7 @@ class _PostContainer {
      * 
      * @param {string} by 
      * @param {string} label 
-     * @param {Post[]} posts 
+     * @param {number[]} posts
      */
     constructor(by,label,posts){
         this.by = by;
@@ -28,6 +26,13 @@ class _PostContainer {
     }
     add(I){
         this.included.push(I);
+    }
+    sort(postIdMap){
+        this.included.sort((a,b)=>{
+            let Ra = postIdMap.get(a);
+            let Rb = postIdMap.get(b);
+            return Ra.fuzzyDate.compareWith(Rb.fuzzyDate)
+        });
     }
 }
 

@@ -2,9 +2,13 @@
 
 **RELEASE**
 
-## REL1.2.3 - 2024-05-10 [WIP]
+## REL1.2.3 - 2024-06-03
 * Removed `descriptive_class` , split `Tag` ... to separate files.
 * Fixed multi posts in one tag/category.
+* Fixed unsorted in tag/category
+* Easier construction for `FuzzyDate`
+* new "enabledFeatures[]" section in configuration, this will collect some separate config keys.
+* flatPath is now a `Feature`, which need to enable manually
 
 ## REL1.2.2 - 2024-04-10
 * `License` property `type` moved to public

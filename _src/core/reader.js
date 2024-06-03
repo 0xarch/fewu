@@ -49,22 +49,18 @@ function site() {
         } else {
             for (let cname of file_data.category) {
                 if (used_categories.includes(cname)) {
-                    categories[cname].add(file_data.id);
                     categoriesMap.get(cname).add(file_data.id);
                 } else {
                     categoriesMap.set(cname,new Category(cname, [file_data.id]));
-                    categories[cname] = new Category(cname, [file_data.id]);
                     used_categories.push(cname);
                 }
             }
 
             for (let cname of file_data.tags) {
                 if (used_tags.includes(cname)) {
-                    tags[cname].add(file_data.id);
                     tagsMap.get(cname).add(file_data.id);
                 } else {
                     tagsMap.set(cname,new Tag(cname, [file_data.id]));
-                    tags[cname] = new Tag(cname, [file_data.id]);
                     used_tags.push(cname);
                 }
             }
@@ -72,12 +68,15 @@ function site() {
         }
         bid++;
     }
+
     let prev_id;
     posts.sort(Post.sort);
     posts.forEach((v, i, a) => {
         v.setPrev(prev_id);
         prev_id = v.id;
-        a[i - 1] && a[i - 1].setNext(v.id);
+        if(a[i-1]){
+            a[i-1].setNext(v.id);
+        }
     });
     /**
      * @type {Map<number,Post>}
@@ -86,6 +85,16 @@ function site() {
     posts.forEach(v=>{
         ID.set(v.id,v);
     });
+
+    categoriesMap.forEach((v,k)=>{
+        v.sort(ID);
+        categories[k] = v; // old compat
+    });
+    tagsMap.forEach((v,k)=>{
+        v.sort(ID);
+        tags[k] = v; // old compat
+    });
+
     return {
         posts,
         excluded_posts,
