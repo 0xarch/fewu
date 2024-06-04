@@ -3,6 +3,8 @@ import { writeFile } from 'fs';
 
 const db = database;
 
+let root_url = database.config?.website?.URL ?? database.config?.site_url ?? '';
+
 /**
  * 
  * @param {string} blog_title 
@@ -32,7 +34,7 @@ ${articles.map(v =>
 
 function exec() {
     let conf = db.config.modules.rss ?? {};
-    let text = getRSSFeedXml(conf.title,db.config.site_url,conf.description,db.site.posts);
+    let text = getRSSFeedXml(conf.title,root_url,conf.description,db.site.posts);
     writeFile(join(PUBLIC_DIRECTORY,'feed.xml'),text,(e)=>{if(e)throw e});
 }
 

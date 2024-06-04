@@ -164,7 +164,7 @@ async function processTemplate(template, provide_variables, path_write_to) {
     } catch (e) { }
     writeFile(path_write_to, result, (e) => {
         if (e) throw e
-        info([path_write_to, 'YELLOW'], ['SUCCESS', "GREEN"]);
+        info(['SUCCESS','GREEN'],[path_write_to, 'YELLOW']);
     });
 }
 

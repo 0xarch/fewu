@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { writeFile } from 'fs';
 
-let root_url = database.config?.site_url;
+let root_url = database.config?.website?.URL ?? database.config?.site_url ?? '';
 
 function txt(){
     let result = root_url + '\n';

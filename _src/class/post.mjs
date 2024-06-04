@@ -4,8 +4,9 @@ import Collection from '#class/collection';
 import db from '#core/database';
 import GString from '#core/gstring';
 import { relative } from 'path';
+import { marked } from 'marked';
+import { gfmHeadingId } from 'marked-gfm-heading-id';
 import { minify } from 'html-minifier';
-import { parse } from 'marked';
 import { statSync,readFileSync } from 'fs';
 import TEXT from '#core/text_process';
 import { warn } from '#core/run';
@@ -150,38 +151,42 @@ class Post {
         // Automatically parse a title to content.
         // So there is no need to manually write a heading
         // if it's the same as title
-        if (!Post.testHasH1(this.content)) this.content = '# ' + this.title + '\n' + this.content;
+        if (!Post.testHasH1(this.content)){
+            this.content = '# ' + this.title + '\n' + this.content;
+        }
 
         this.foreword = lines.slice(i, (moreIndex !== -1) ? moreIndex : 5).join('\n').replace(/\#*/g, '');
-        let fwc = TEXT.getTotalWordCount(this.foreword);
         this.wordCount = TEXT.getTotalWordCount(this.content);
 
         // Warn the users if they write their foreword
         // too long or too short
-        if (fwc <= 1) {
-            warn(['NO FOREWORD', 'RED'], [this.title, 'MAGENTA', 'NONE']);
-        } else if (fwc < 25) {
-            warn(['TOO SHORT FOREWORD', 'YELLOW'], [this.title, 'MAGENTA', 'NONE']);
-        } else if (fwc > 200) {
-            warn(['TOO LONG FOREWORD', 'RED'], [this.title, 'MAGENTA', 'NONE']);
-        }
+        // Feature: <markdown:foreword/warn>
+        (()=>{
+            let fwc = TEXT.getTotalWordCount(this.foreword);
+            if(db.config.enabledFeatures?.includes('markdown:foreword/warn')){
+                let borderShort = db.config.featureConfig?.['foreword/warn']?.short ?? 25;
+                let borderLong = db.config.featureConfig?.['foreword/warn']?.long ?? 200;
+                if (fwc <= 1) {
+                    warn(['No Foreword for', 'RED'], [this.title, 'MAGENTA', 'NONE']);
 
-        {
-            let coll_strict = {
-                category: this.category.join(", "),
-                tags: this.tags.join(", "),
-                title: this.title,
-                author: this.author
+                } else if (fwc < borderShort) {
+                    warn(['Foreword is too short for', 'YELLOW'], [this.title, 'MAGENTA', 'NONE']);
+                } else if (fwc > borderLong) {
+                    warn(['Foreword is too long for', 'YELLOW'], [this.title, 'MAGENTA', 'NONE']);
+                }
             }
-            if (this.foreword == '')
-                this.foreword = GString.parse(db.settings.get('build.no_foreword_text') || '', new Collection(coll_strict));
-        }
+            // Feature: <markdown:foreword/nullOnDefault>
+            if(! db.config.enabledFeatures?.includes('markdown:foreword/nullOnDefault') && fwc <=1){
+                let coll_strict = {
+                    category: this.category.join(", "),
+                    tags: this.tags.join(", "),
+                    title: this.title,
+                    author: this.author
+                }
+                this.foreword = GString.parse(db.config?.default?.foreword || '', new Collection(coll_strict));
+            }
+        })();
 
-        // this.fuzzyDate = new FuzzyDate({
-        //     y: gz[0],
-        //     m: gz[1],
-        //     d: gz[2]
-        // });
         this.fuzzyDate = new FuzzyDate(getted.date);
         this.datz = this.fuzzyDate;
         this.ECMA262Date = this.date.toDateString();
@@ -191,7 +196,8 @@ class Post {
         this.id = id;
         
         // Path process
-        if(db.config?.enabledFeatures?.includes('flatPath')){
+        // Feature <fewu:path/flat>
+        if(db.config?.enabledFeatures?.includes('fewu:path/flat')){
             let tempor_val = `read/${(+gz.join("")).toString(36)}${new Buffer.from(relative(db.dirs.posts,path)).toString("base64")}`;
             this.path.website = `/${tempor_val}/`;
             this.path.local = `${tempor_val}/index.html`;
@@ -202,8 +208,27 @@ class Post {
             this.path.local = `${tempor_val}/index.html`;
             this.paths = this.path;
         }
-        this.parsed.content = minify(parse(this.content,{mangle:false,headerIds:false}),{removeComments:true,collapseWhitespace:true});
-        this.parsed.foreword = minify(parse(this.foreword,{mangle:false,headerIds:false}),{removeComments:true,collapseWhitespace:true});
+
+        // Parse content
+        (()=>{
+            let parsedContent, parsedForeword;
+            // Feature <markdown:noHeaderId>
+            if(db.config?.enabledFeatures?.includes('markdown:noHeaderId')){
+                parsedContent = marked(this.content,{mangle:false,headerIds:false});
+                parsedForeword = marked(this.foreword,{mangle:false,headerIds:false});
+            } else {
+                marked.use(gfmHeadingId({}));
+                parsedContent = marked(this.content,{mangle:false});
+                parsedForeword = marked(this.foreword,{mangle:false});
+            }
+            // Feature <markdown:HTMLMinifier>
+            if(db.config?.enabledFeatures?.includes('markdown:HTMLMinifier')){
+                parsedContent = minify(parsedContent,{removeComments:true,collapseWhitespace:true});
+                parsedForeword = minify(parsedForeword,{removeComments:true,collapseWhitespace:true});
+            }
+            this.parsed.content = parsedContent;
+            this.parsed.foreword = parsedForeword;
+        })();
     }
     setPath(path) {
         this.pathto = path;

@@ -2,6 +2,13 @@
 
 **RELEASE**
 
+## REL1.2.4 - 2024-06-10 [WIP]
+* rename feature flatPath to `fewu:path/flat`
+* `config.site_url` is moved to `config.website.URL`
+* new feature `fewu:path/url/autoRoot` auto set website root for file reference
+* new feature `markdown:HTMLMinifier` minify generated HTML (default before, manual now)
+* new feature `markdown:noHeaderId` disable header id generation in markdown parser (default before, manual now)
+
 ## REL1.2.3 - 2024-06-03
 * Removed `descriptive_class` , split `Tag` ... to separate files.
 * Fixed multi posts in one tag/category.

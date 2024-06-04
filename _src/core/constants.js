@@ -2,7 +2,7 @@ import db from '#db';
 import * as os from 'os';
 
 const CONSTANTS = {
-    FEWU_RELEASE_VERSION: "1.2.3",
+    FEWU_RELEASE_VERSION: "1.2.4",
     // FEWU_INSIDER_VERSION: "2.4.2",
     FEWU_SYMBOLS: ["AR", "NPM", "GH"],
     NODE_CORE_VERSION: process.versions.node,
