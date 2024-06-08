@@ -11,7 +11,7 @@ README.zh-CN.md：说明文件。
 # Fewu
 
 `Fewu` 是一个自动化静态博客生成器。
-> 注意：你可以在 npm 上看见这个东西了！
+> npm: fewu
 
 ## 使用 Fewu
 
@@ -83,3 +83,7 @@ fewu
 
 1. 0xarch(soloev)
 2. Anverinmontu(Mento)
+
+## 赞助
+
+1. [Mango](https://github.com/EvanHsieh0415)
