@@ -10,6 +10,7 @@
 * New feature `markdown:noHeaderId` disable header id generation in markdown parser (default before, manual now)
 * Fix bugs in builtin modules
 * Fixed incorrect file mode (755->644) of most files
+* Preature `Database` API
 
 ## REL1.2.3 - 2024-06-03
 * Removed `descriptive_class` , split `Tag` ... to separate files.

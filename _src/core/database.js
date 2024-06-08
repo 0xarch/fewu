@@ -1,4 +1,105 @@
 import { Collection } from "#struct";
+import { readFileSync } from "fs";
+import { join } from "path";
+
+class ThemeData {
+    config;
+    settings;
+    variables;
+
+    /**
+    * @type {{
+    *  root: string,
+    *  layout: string,
+    *  extra: string,
+    *  files: string
+    * }}
+    */
+    dirs;
+
+    name;
+
+    constructor(name) {
+        this.name = name;
+        this.dirs.root = join('_themes', name);
+        this.dirs.extra = join(this.dirs.root, 'extra');
+        this.dirs.layout = join(this.dirs.root, 'layouts');
+        this.dirs.files = join(this.dirs.root, 'files');
+
+        this.config = JSON.parse(readFileSync(join(this.dirs.root,'theme.json')).toString());
+        this.settings = new Collection(Object.assign({},this.config));
+        this.variables = JSON.parse(readFileSync(join(this.dirs.root,'variables.json')).toString());
+    }
+}
+
+class Database {
+    config;
+    theme;
+    settings;
+
+    /**
+     * @type {{
+     *  public: string,
+     *  post: string,
+     *  root: string,
+     * }}
+     */
+    dirs = {};
+
+    feature = {
+        enabled,
+        config,
+    };
+    module = {
+        enabled,
+        config
+    };
+
+    /**
+     * 
+     * @param {object} rawJson 
+     */
+    constructor(rawJson) {
+        this.settings = new Collection(rawJson);
+        this.config = rawJson;
+
+        this.feature.enabled = rawJson.feature?.enabled ?? rawJson.enabledFeatures ?? []; // WWW CHANGE API
+        this.feature.config = rawJson.feature?.config;
+
+        this.module.enabled = rawJson.module?.enabled ?? [];
+        this.module.config = rawJson?.mode.config;
+
+        this.dirs.public = rawJson.publicDirectory ?? rawJson.public_directory ?? rawJson.build?.publicDirectory ?? rawJson.build?.public_directory ?? 'public'; //fallback
+        this.dirs.post = rawJson.postDirectory ?? rawJson.post_directory ?? rawJson.build?.postDirectory ?? rawJson.build?.post_directory ?? 'post';
+
+        // resolve root
+        if (this.enabledFeatures.includes('fewu:path/url/autoRoot')) {
+            let urlRegex = /(?:.*?:\/\/)?(?:.*?\.).*?\..*?\//;
+
+            if (urlRegex.test(rawJson.website?.URL)) {
+                let urlRoot = urlRegex.exec(rawJson.website.URL)[0];
+                let relativeUrl = rawJson.website.URL.replace(urlRoot, '');
+                if (relativeUrl.endsWith('/')) {
+                    relativeUrl = relativeUrl.slice(0, -1);
+                }
+                info(['AUTO DETECT'], ['DETECTED: ' + relativeUrl + '/', 'WHITE']);
+                this.dirs.root = relativeUrl;
+            } else {
+                this.dirs.root = '';
+            }
+        } else {
+            if (rawJson.build?.root && !['/', ''].includes(rawJson.build.root)) {
+                this.dirs.root = rawJson.build.root;
+            } else if (rawJson.build?.site_root && !['/', ''].includes(rawJson.build.site_root)) { //fallback
+                this.dirs.root = rawJson.build.site_root;
+            } else {
+                this.dirs.root = '';
+            }
+        }
+
+        this.theme = new ThemeData(args['theme'] ?? rawJson.theme.name);
+    }
+}
 
 let db = {
     /**
@@ -27,7 +128,7 @@ let db = {
         root: "/",
         /**
          * @deprecated since v2.2.6
-         * @instead db.themes.dirs
+         * @instead thiss.dirs
          */
         theme: {
             root: '',
@@ -89,3 +190,7 @@ let db = {
 global.database = db;
 
 export default db;
+
+export {
+    Database
+}
