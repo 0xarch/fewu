@@ -47,10 +47,9 @@ function displayHelp() {
         console.log()
     }
 
-    console.log('-'.repeat(pad))
-    console.log('Fewu', CONSTANTS.FEWU_RELEASE_VERSION)
-    console.log('Insider',CONSTANTS.FEWU_INSIDER_VERSION)
-    console.log('OS',CONSTANTS.OS_UNAME)
+    console.log('-'.repeat(pad));
+    console.log('Fewu', CONSTANTS.FEWU_RELEASE_VERSION);
+    console.log('OS',CONSTANTS.OS_UNAME);
 }
 
 export default displayHelp;
