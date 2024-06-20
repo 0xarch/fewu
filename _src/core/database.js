@@ -1,105 +1,4 @@
-import { Collection } from "#struct";
-import { readFileSync } from "fs";
-import { join } from "path";
-
-class ThemeData {
-    config;
-    settings;
-    variables;
-
-    /**
-    * @type {{
-    *  root: string,
-    *  layout: string,
-    *  extra: string,
-    *  files: string
-    * }}
-    */
-    dirs;
-
-    name;
-
-    constructor(name) {
-        this.name = name;
-        this.dirs.root = join('_themes', name);
-        this.dirs.extra = join(this.dirs.root, 'extra');
-        this.dirs.layout = join(this.dirs.root, 'layouts');
-        this.dirs.files = join(this.dirs.root, 'files');
-
-        this.config = JSON.parse(readFileSync(join(this.dirs.root,'theme.json')).toString());
-        this.settings = new Collection(Object.assign({},this.config));
-        this.variables = JSON.parse(readFileSync(join(this.dirs.root,'variables.json')).toString());
-    }
-}
-
-class Database {
-    config;
-    theme;
-    settings;
-
-    /**
-     * @type {{
-     *  public: string,
-     *  post: string,
-     *  root: string,
-     * }}
-     */
-    dirs = {};
-
-    feature = {
-        enabled,
-        config,
-    };
-    module = {
-        enabled,
-        config
-    };
-
-    /**
-     * 
-     * @param {object} rawJson 
-     */
-    constructor(rawJson) {
-        this.settings = new Collection(rawJson);
-        this.config = rawJson;
-
-        this.feature.enabled = rawJson.feature?.enabled ?? rawJson.enabledFeatures ?? []; // WWW CHANGE API
-        this.feature.config = rawJson.feature?.config;
-
-        this.module.enabled = rawJson.module?.enabled ?? [];
-        this.module.config = rawJson?.mode.config;
-
-        this.dirs.public = rawJson.publicDirectory ?? rawJson.public_directory ?? rawJson.build?.publicDirectory ?? rawJson.build?.public_directory ?? 'public'; //fallback
-        this.dirs.post = rawJson.postDirectory ?? rawJson.post_directory ?? rawJson.build?.postDirectory ?? rawJson.build?.post_directory ?? 'post';
-
-        // resolve root
-        if (this.enabledFeatures.includes('fewu:path/url/autoRoot')) {
-            let urlRegex = /(?:.*?:\/\/)?(?:.*?\.).*?\..*?\//;
-
-            if (urlRegex.test(rawJson.website?.URL)) {
-                let urlRoot = urlRegex.exec(rawJson.website.URL)[0];
-                let relativeUrl = rawJson.website.URL.replace(urlRoot, '');
-                if (relativeUrl.endsWith('/')) {
-                    relativeUrl = relativeUrl.slice(0, -1);
-                }
-                info(['AUTO DETECT'], ['DETECTED: ' + relativeUrl + '/', 'WHITE']);
-                this.dirs.root = relativeUrl;
-            } else {
-                this.dirs.root = '';
-            }
-        } else {
-            if (rawJson.build?.root && !['/', ''].includes(rawJson.build.root)) {
-                this.dirs.root = rawJson.build.root;
-            } else if (rawJson.build?.site_root && !['/', ''].includes(rawJson.build.site_root)) { //fallback
-                this.dirs.root = rawJson.build.site_root;
-            } else {
-                this.dirs.root = '';
-            }
-        }
-
-        this.theme = new ThemeData(args['theme'] ?? rawJson.theme.name);
-    }
-}
+import { join } from 'path';
 
 let db = {
     /**
@@ -115,7 +14,9 @@ let db = {
      */
     config: void 0,
     /**
-     * @type {object}
+     * @type {{
+     *      posts: Post[]
+     * }}
      */
     site: void 0,
     /**
@@ -136,6 +37,14 @@ let db = {
             layout: '',
             files: ''
         }
+    },
+    feature: {
+        enabled: [],
+        config: {}
+    },
+    module: {
+        enabled: [],
+        config: {}
     },
     modules: {
         enabled: [],
@@ -183,14 +92,57 @@ let db = {
     proc: {
         time: new Date()
     },
-    constants: void 0
+    constants: void 0,
+    $: {
+        resolveDirectories(config, db) {
+            db.dirs.posts = config.postDirectory ?? config.post_directory ?? config.build?.post_directory ?? "posts";
+            db.dirs.public = config.publicDirectory ?? config.public_directory ?? config.build?.public_directory ?? "public";
+            
+            if(!db.config.website){
+                db.config.website = { URL: db.config.site_url };
+            } else if (!db.config.website.URL){
+                db.config.website.URL = db.config.website.url ?? db.config.site_url;
+            }
+
+            // resolve root
+            if (config?.feature?.enable?.includes('fewu:path/url/autoRoot') || config?.enabledFeatures?.includes('fewu:path/url/autoRoot')) {
+                let urlRegex = /(?:.*?:\/\/)?(?:.*?\.).*?\..*?\//;
+
+                if (urlRegex.test(config.website?.URL)) {
+                    let urlRoot = urlRegex.exec(config.website.URL)[0];
+                    let relativeUrl = config.website.URL.replace(urlRoot, '');
+                    if (relativeUrl.endsWith('/')) {
+                        relativeUrl = relativeUrl.slice(0, -1);
+                    }
+                    db.dirs.root = relativeUrl;
+                } else {
+                    db.dirs.root = '';
+                }
+            } else {
+                if (config.build?.root && !['/', ''].includes(config.build.root)) {
+                    db.dirs.root = config.build.root;
+                } else if (config.build?.site_root && !['/', ''].includes(config.build.site_root)) { //fallback
+                    db.dirs.root = config.build.site_root;
+                } else {
+                    db.dirs.root = '';
+                }
+            }
+
+            db.theme.dirs.root = join('_themes', args['theme'] || config.theme?.name);
+            db.theme.dirs.extra = join(db.theme.dirs.root, 'extra');
+            db.theme.dirs.layout = join(db.theme.dirs.root, 'layouts');
+            db.theme.dirs.files = join(db.theme.dirs.root, 'files');
+        },
+        setFallbackValues(config, db){
+            // Module
+            if(config.module && !db.config?.modules){
+                // Needs Impl in 1.2.5
+            }
+        }
+    }
 };
 
 // Mount on global
 global.database = db;
 
 export default db;
-
-export {
-    Database
-}

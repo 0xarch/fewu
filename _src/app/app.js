@@ -49,41 +49,11 @@ async function App(override_argv) {
     }
     const argv = db.proc.args;
 
-    info(['ENABLED FEATURES: '+(db.config.enabledFeatures??''),'WHITE']);
+    info(['Enabled features: '+(db.config?.feature?.enable??''),'WHITE']);
 
-    db.dirs.posts = db.config.post_directory ?? db.config.build?.post_directory ?? "posts";
-    db.dirs.public = db.config.public_directory ?? db.config.build?.public_directory ?? "public";
-    // db.dirs.root = (!['/', '', undefined].includes(db.config.build?.root) && db.config.build?.root)||(!['/', '', undefined].includes(db.config.build?.site_root) && db.config.build.site_root)|| '';
-    db.theme.dirs.root = join('_themes', argv['theme'] || db.settings.get('theme.name'));
-    db.theme.dirs.extra = join(db.theme.dirs.root, 'extra');
-    db.theme.dirs.layout = join(db.theme.dirs.root, 'layouts');
-    db.theme.dirs.files = join(db.theme.dirs.root, 'files');
-    db.dirs.theme = db.theme.dirs;
+    db.$.resolveDirectories(db.config,db);
 
-    // Feature <fewu:path/url/autoRoot>
-    if(db.config.enabledFeatures?.includes('fewu:path/url/autoRoot')){
-        let urlRegex = /(?:.*?:\/\/)?(?:.*?\.).*?\..*?\//;
-
-        if(urlRegex.test(db.config.website?.URL)){
-            let urlRoot = urlRegex.exec(db.config.website.URL)[0];
-            let relativeUrl = db.config.website.URL.replace(urlRoot,'');
-            if(relativeUrl.endsWith('/')){
-                relativeUrl = relativeUrl.slice(0,-1);
-            }
-            info(['AUTO DETECT'],['DETECTED: '+relativeUrl+'/','WHITE']);
-            db.dirs.root = relativeUrl;
-        } else {
-            db.dirs.root = '';
-        }
-    } else {
-        if(db.config.build?.root &&! ['/',''].includes(db.config.build.root)){
-            db.dirs.root = db.config.build.root;
-        } else if(db.config.build?.site_root &&! ['/',''].includes(db.config.build.site_root)){
-            db.dirs.root = db.config.build.site_root;
-        } else {
-            db.dirs.root = '';
-        }
-    }
+    info(['Will build pages at: '+(db.dirs.root)+'/','WHITE']);
 
     // Mount on global
     global.PUBLIC_DIRECTORY = db.dirs.public;
@@ -108,7 +78,7 @@ async function App(override_argv) {
     db.builder.type = db.theme.config.parser;
     db.builder.parser_name = db.theme.config.parser;
     db.language = argv['language'] ?? db.config.language ?? 'en-US';
-    db.site = site();
+    db.site = await site();
     db.sort = sort(db.site.posts);
     db.file = get_file_relative_dir;
     db.modules.enabled = db.config.modules?.enabled instanceof Array ? db.config.modules.enabled : [];
