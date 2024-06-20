@@ -2,23 +2,41 @@
 
 **RELEASE**
 
-## REL1.2.4 - 2024-06-10 [WIP]
-* Rename feature flatPath to `fewu:path/flat`
-* Move config section `config.site_url` to `config.website.URL`
-* New feature `fewu:path/url/autoRoot` auto set website root for file reference
-* New feature `markdown:HTMLMinifier` minify generated HTML (default before, manual now)
-* New feature `markdown:noHeaderId` disable header id generation in markdown parser (default before, manual now)
-* Fix bugs in builtin modules
-* Fixed incorrect file mode (755->644) of most files
-* Preature `Database` API
+## REL1.2.4 - 2024-06-20 [WIP]
+
+### New
+* Optional Features:
+    * `fewu:path/url/autoRoot` : Fewu automatically detects website root for file references.
+    * `markdown:HTMLMinifier` : Fewu uses HTMLMinifier to reduce generated file size. (default before, manual now)
+    * `markdown:noHeaderId` : Fewu will disable header id generation. (default before, manual now)
+* Preature _Database_ API `db.$<>`
+* Util `dynamicImport`
+
+### Removed
+* Deprecated API on _class_ `Post` : `Post<>.paths`.
+
+### Changed
+* Feature `fewu:path/flat` (before: `flatPath` ) now do: Flatten `read/yyyy/mm/dd/POST_NAME.md` to `read:yyyy-mm-dd:POST_NAME.md`.
+* Builder will now ignore fail builds and log failure in console. (Behavior before: `throw` and STOP ).
+* Section `site_url` in _Config_ moved to `website.URL` or `website.url`.
+
+### Fixed
+* Fixed incorrect file mode of most files (755 -> 644).
+* Fixed some bugs in builtin modules
 
 ## REL1.2.3 - 2024-06-03
-* Removed `descriptive_class` , split `Tag` ... to separate files.
-* Fixed multi posts in one tag/category.
-* Fixed unsorted in tag/category
-* Easier construction for `FuzzyDate`
+
+### New
+* Easier construction for `FuzzyDate`.
 * new "enabledFeatures[]" section in configuration, this will collect some separate config keys.
-* flatPath is now a `Feature`, which need to enable manually
+* flatPath is now a `Feature`, which need to enable manually. [**This has been removed since 1.2.4**]
+
+### Fixed
+* Fixed multi posts in one tag/category.
+* Fixed unsorted posts in tag/category.
+
+### Removed
+* Removed `descriptive_class` , split `Tag` ... to separate files.
 
 ## REL1.2.2 - 2024-04-10
 * `License` property `type` moved to public
