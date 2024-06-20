@@ -27,7 +27,6 @@ async function write(collection, file) {
             filename: file.correspond().from
         }
     );
-    const opt = file.option();
     const opt_split = file.getSplitOptions();
     const opt_foreach = file.getForeachOptions();
 
@@ -163,8 +162,11 @@ async function processTemplate(template, provide_variables, path_write_to) {
         }
     } catch (e) { }
     writeFile(path_write_to, result, (e) => {
-        if (e) throw e
-        info(['SUCCESS','GREEN'],[path_write_to, 'YELLOW']);
+        if (e) {
+            info.red(['FAILURE','RED'],[path_write_to, 'YELLOW']);
+        } else {
+            info(['SUCCESS','GREEN'],[path_write_to, 'YELLOW']);
+        }
     });
 }
 

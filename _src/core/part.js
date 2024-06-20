@@ -29,7 +29,7 @@ async function resolveThemeOperations() {
         }
     });
 
-    info(['OPERATION.THEME', 'MAGENTA', 'BOLD'], ['COMPLETE', 'GREEN']);
+    info(['COMPLETE', 'GREEN'], ['OPERATION.THEME', 'MAGENTA', 'BOLD']);
 }
 
 async function copyFiles() {
@@ -37,7 +37,7 @@ async function copyFiles() {
     cp(db.theme.dirs.files, join(publicDir, 'files'), { recursive: true }, () => { });
     cp('resources', join(publicDir, 'resources'), { recursive: true }, () => { });
 
-    info(['OPERATION.COPY', 'MAGENTA', 'BOLD'], ['COMPLETE', 'GREEN']);
+    info(['COMPLETE', 'GREEN'], ['OPERATION.COPY', 'MAGENTA', 'BOLD']);
 }
 
 async function buildPosts() {
@@ -51,7 +51,7 @@ async function buildPosts() {
             }
         );
     db.site.posts.forEach(async item => {
-        let destname = join(db.dirs.public, item.paths.local);
+        let destname = join(db.dirs.public, item.path.local);
         const STAT = procFinal(build_template,{
             ...db.builder.api_required,
             filename,

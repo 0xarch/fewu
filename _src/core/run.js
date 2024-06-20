@@ -61,6 +61,10 @@ function info(...ARG) {
     console.log(SHELL_STYLE('INFO', 'GREEN', 'NONE'), ...ARG.map(v => SHELL_STYLE(...v)));
 }
 
+info.red = function(...ARG){
+    console.log(SHELL_STYLE('INFO', 'RED', 'NONE'), ...ARG.map(v => SHELL_STYLE(...v)));
+}
+
 /**
  * 
  * @param  {...[CONTENT:any,COLOR:string,EFFECT:string]} ARG 
