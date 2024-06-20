@@ -50,7 +50,8 @@ const SettingsTemplate = {
 }
 
 /**
- * @since 1.2.3
+ * @since 1.3.0
+ * This is still under development. DO NOT USE
  */
 const UserConfigurationTemplate = {
     protocolVersion: 2,
@@ -87,26 +88,27 @@ const UserConfigurationTemplate = {
     default: {
         forewordText: "The author of this post has not yet set the foreword.\n\nCategory(ies): {{category}} \n\nTag(s): {{tags}}"
     },
-    enabledFeatures: [
-        /*
-        some developer-only features for user.
-        Available:
-
-        */
-    ],
-    // Module settings
-    modules: {
-        enabled: ['sitemap','rss'],
-        sitemap: {
-            type: "XML",
-            name: "sitemap.xml"
-        },
-        rss: {
-            title: "No title",
-            link: "/",
-            description: "No Description"
-        }
+    feature: {
+        enable: [],
+        config: {}
     },
+    module: {
+        enable: [],
+        config: {}
+    },
+    // Module settings
+    // modules: {
+    //     enabled: ['sitemap','rss'],
+    //     sitemap: {
+    //         type: "XML",
+    //         name: "sitemap.xml"
+    //     },
+    //     rss: {
+    //         title: "No title",
+    //         link: "/",
+    //         description: "No Description"
+    //     }
+    // },
     // Theme settings
     theme: {
         name: "Arch",
