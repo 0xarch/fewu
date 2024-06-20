@@ -21,8 +21,9 @@ function traverse(Directory) {
  * @param {number} id
  * @returns { Post }
  */
-function initializePost(content, id = undefined) {
+async function initializePost(content, id = undefined) {
     let article = new Post(content, id);
+    await article.doAsynchronousConstructTasks();
     return article;
 }
 
@@ -30,7 +31,7 @@ function initializePost(content, id = undefined) {
  * 
  * @returns {{posts:[Post],excluded_posts:object,categories:[Category],tags:[Tag]}}
  */
-function site() {
+async function site() {
     let bid = 1;
     let posts = [],
         excluded_posts = {},
@@ -42,7 +43,7 @@ function site() {
         tagsMap = new Map;
     for (let path of traverse(db.dirs.posts)) {
         let item = basename(path, db.dirs.posts);
-        let file_data = initializePost(path, bid);
+        let file_data = await initializePost(path, bid);
 
         if (db.config.excluded_posts.includes(item)){
             excluded_posts[item] = file_data;

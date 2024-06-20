@@ -6,10 +6,13 @@ import GString from '#core/gstring';
 import { relative } from 'path';
 import { marked } from 'marked';
 import { gfmHeadingId } from 'marked-gfm-heading-id';
-import { minify } from 'html-minifier';
+// import { minify } from 'html-minifier';
 import { statSync,readFileSync } from 'fs';
 import TEXT from '#core/text_process';
 import { warn } from '#core/run';
+import dynamicImport from '#util/dynamicImport';
+
+let minifier;
 
 class Post {
     static sort(a, b) {
@@ -65,13 +68,6 @@ class Post {
      * @deprecated use [fuzzyDate]
      */
     datz;
-    /**
-     * @deprecated use path
-     */
-    paths = {
-        website: '',
-        local: ''
-    }
 
 
     /**
@@ -197,38 +193,47 @@ class Post {
         
         // Path process
         // Feature <fewu:path/flat>
-        if(db.config?.enabledFeatures?.includes('fewu:path/flat')){
-            let tempor_val = `read/${(+gz.join("")).toString(36)}${new Buffer.from(relative(db.dirs.posts,path)).toString("base64")}`;
+        if(db.config?.feature?.enable?.includes('fewu:path/flat') || db.config?.enabledFeatures?.includes('fewu:path/flat')){
+            let tempor_val = `read/${gz.join('')}/${relative(db.dirs.posts,path).replace(/\//g,':')}`;
             this.path.website = `/${tempor_val}/`;
             this.path.local = `${tempor_val}/index.html`;
-            this.paths = this.path;
+            // this.paths = this.path;
         } else {
             let tempor_val = `read/${gz.join('/')}/${relative(db.dirs.posts,path).replace(/\//g,':')}`;
             this.path.website = `/${tempor_val}/`;
             this.path.local = `${tempor_val}/index.html`;
-            this.paths = this.path;
+            // this.paths = this.path;
         }
 
-        // Parse content
-        (()=>{
-            let parsedContent, parsedForeword;
-            // Feature <markdown:noHeaderId>
-            if(db.config?.enabledFeatures?.includes('markdown:noHeaderId')){
-                parsedContent = marked(this.content,{mangle:false,headerIds:false});
-                parsedForeword = marked(this.foreword,{mangle:false,headerIds:false});
-            } else {
-                marked.use(gfmHeadingId({}));
-                parsedContent = marked(this.content,{mangle:false});
-                parsedForeword = marked(this.foreword,{mangle:false});
+    }
+
+    // Consturctor does not support native asynchronous function.
+    async doAsynchronousConstructTasks(){
+        let parsedContent, parsedForeword;
+        // Feature <markdown:noHeaderId>
+        if(db.config?.feature?.enable?.includes('markdown:noHeaderId')){
+            parsedContent = marked(this.content,{mangle:false,headerIds:false});
+            parsedForeword = marked(this.foreword,{mangle:false,headerIds:false});
+        } else {
+            marked.use(gfmHeadingId({}));
+            parsedContent = marked(this.content,{mangle:false});
+            parsedForeword = marked(this.foreword,{mangle:false});
+        }
+        // Feature <markdown:HTMLMinifier>
+        if(db.config?.feature?.enable?.includes('markdown:HTMLMinifier')){
+            if(minifier === undefined){
+                minifier = await dynamicImport('html-minifier');
+                if(minifier === null){
+                    warn(['[Post]'],['Failed to import html-minifier. Ignoring feature <markdown:HTMLMinifier>. Please install html-minifier.']);
+                }
             }
-            // Feature <markdown:HTMLMinifier>
-            if(db.config?.enabledFeatures?.includes('markdown:HTMLMinifier')){
-                parsedContent = minify(parsedContent,{removeComments:true,collapseWhitespace:true});
-                parsedForeword = minify(parsedForeword,{removeComments:true,collapseWhitespace:true});
+            if(minifier){
+                parsedContent = minifier.minify(parsedContent,{removeComments:true,collapseWhitespace:true});
+                parsedForeword = minifier.minify(parsedForeword,{removeComments:true,collapseWhitespace:true});
             }
-            this.parsed.content = parsedContent;
-            this.parsed.foreword = parsedForeword;
-        })();
+        }
+        this.parsed.content = parsedContent;
+        this.parsed.foreword = parsedForeword;
     }
     setPath(path) {
         this.pathto = path;
