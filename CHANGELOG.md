@@ -2,7 +2,7 @@
 
 **RELEASE**
 
-## REL1.2.4 - 2024-06-20 [WIP]
+## REL1.2.4 - 2024-06-20
 
 ### New
 * Optional Features:
