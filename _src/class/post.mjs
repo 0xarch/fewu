@@ -13,13 +13,17 @@ import { warn } from '#core/run';
 import dynamicImport from '#util/dynamicImport';
 
 let minifier;
+let regExps = {
+    MATCH_H1: /\n# /,
+    NO_SUFFIX: /\..*?$/
+};
 
 class Post {
     static sort(a, b) {
         return a.fuzzyDate.compareWith(b.fuzzyDate);
     }
     static testHasH1(string) {
-        return /\n# /.test(string);
+        return regExps.MATCH_H1.test(string);
     }
     raw_string= '';
     content= '';
@@ -192,11 +196,14 @@ class Post {
         this.id = id;
         
         // Path process
+        if(db.config?.feature?.enable?.includes('fewu:path/local/noSuffix')){
+            path = path.replace(regExps.NO_SUFFIX,'');
+        }
         // Feature <fewu:path/flat>
         if(db.config?.feature?.enable?.includes('fewu:path/flat') || db.config?.enabledFeatures?.includes('fewu:path/flat')){
-            let tempor_val = `read/${gz.join('')}/${relative(db.dirs.posts,path).replace(/\//g,':')}`;
-            this.path.website = `/${tempor_val}/`;
-            this.path.local = `${tempor_val}/index.html`;
+            let tempor_val = `read/${this.fuzzyDate.toString()}:${relative(db.dirs.posts,path).replace(/\//g,':')}`;
+            this.path.website = `/${tempor_val}.html`;
+            this.path.local = `${tempor_val}.html`;
             // this.paths = this.path;
         } else {
             let tempor_val = `read/${gz.join('/')}/${relative(db.dirs.posts,path).replace(/\//g,':')}`;

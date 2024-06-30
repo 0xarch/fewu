@@ -2,6 +2,15 @@
 
 **RELEASE**
 
+## BET1.2.5 - 2024-06-30
+
+### new
+* Optional Features:
+    * `fewu:path/local/noSuffix` : Fewu removes suffix in generated directries.
+
+### Fixed
+* `fewu:path/flat` generates wrong path.
+
 ## REL1.2.4 - 2024-06-20
 
 ### New

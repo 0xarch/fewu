@@ -20,7 +20,11 @@
 
 #### fewu:path/flat
 
-禁用层叠文件夹。启用此特征后，所有文章都将生成于根目录。
+禁用层叠文件夹。启用此特征后，所有文章都将生成于根目录/read/yyyy-mm-dd:LocalPath.html。
+
+#### fewu:path/local/noSuffix
+
+删除后缀。启用此特征后，所有文章目录名将移除文件后缀(如.md)。
 
 #### fewu:path/url/autoRoot
 
