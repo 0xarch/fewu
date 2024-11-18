@@ -2,11 +2,15 @@
 
 **RELEASE**
 
-## BET1.2.5 - 2024-06-30
+## REL1.2.5 - 2024-11-18
 
-### new
+### New
 * Optional Features:
     * `fewu:path/local/noSuffix` : Fewu removes suffix in generated directries.
+    * `markdown:markedExtras` : Allow user to dynamically load marked extensions module to fit their posts.
+
+### Changed
+* Rebuild search module.
 
 ### Fixed
 * `fewu:path/flat` generates wrong path.
