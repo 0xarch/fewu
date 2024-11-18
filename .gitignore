@@ -8,5 +8,6 @@ _src/Trashed/
 _src/test.js
 config.json
 package-lock.json
+.directory
 # clean-workspace.sh
 # run-test.sh
