@@ -217,6 +217,17 @@ class Post {
     // Consturctor does not support native asynchronous function.
     async doAsynchronousConstructTasks(){
         let parsedContent, parsedForeword;
+        // Feature <markdown:markedExtras>
+        if(db.config?.feature?.enable?.includes('markdown:markedExtras')){
+            if(Array.isArray(db.config?.feature?.markdown?.markedExtras)){
+                for(let exName of db.config.feature.markdown.markedExtras) {
+                    let extension = await dynamicImport(exName);
+                    if(typeof extension.default === 'function'){
+                        marked.use(extension.default());
+                    }
+                }
+            }
+        }
         // Feature <markdown:noHeaderId>
         if(db.config?.feature?.enable?.includes('markdown:noHeaderId')){
             parsedContent = marked(this.content,{mangle:false,headerIds:false});
