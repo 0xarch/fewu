@@ -224,6 +224,12 @@ class Post {
                     let extension = await dynamicImport(exName);
                     if(typeof extension.default === 'function'){
                         marked.use(extension.default());
+                    } else {
+                        warn(['[Post]'],[`In Feature <markdown:markedExtras>: ${exName} did not export default as a function. valueOf=${extension.default.valueOf()}.`]);
+                        if(typeof extension.default.default === 'object') {
+                            warn(['[Post]'],[`Trying to load default.default as default().`]);
+                            marked.use(extension.default.default);
+                        }
                     }
                 }
             }

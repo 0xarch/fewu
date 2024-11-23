@@ -2,6 +2,15 @@
 
 **RELEASE**
 
+## DEV1.3.0 - 2024-11-23
+
+### New
+* Optional Features:
+    * `markdown:markedExtras` : Specific tricks for some marked extensions that does not follow the common usage. (like `marked-admonition-extension`)
+
+### Changed
+* Rebuild `fewu --new` with human-friendly argument parser.
+
 ## REL1.2.5 - 2024-11-18
 
 ### New
