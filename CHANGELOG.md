@@ -8,6 +8,10 @@
 * Optional Features:
     * `markdown:markedExtras` : Specific tricks for some marked extensions that does not follow the common usage. (like `marked-admonition-extension`)
 
+* Use `split` `foreach` instead of `cycling` `varias` in working (as `cycling` and `varias` are hard to understand)
+>> NOTE that `foreach` will be `each` in page template.
+>> THIS IS UNSTABLE CHANGE.
+
 ### Changed
 * Rebuild `fewu --new` with human-friendly argument parser.
 

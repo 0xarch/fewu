@@ -98,6 +98,7 @@ async function write(collection, file) {
                     ...addition,
                     ...addition_in_iter,
                     cycling: result,
+                    split: result
                 }, result.path);
             }
         } else {
