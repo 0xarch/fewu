@@ -1,3 +1,5 @@
+import database from '#database';
+
 import { join } from 'path';
 import { readFileSync, cp} from 'fs';
 import db from '#db';
@@ -52,6 +54,8 @@ async function App(override_argv) {
     info(['Enabled features: '+(db.config?.feature?.enable??''),'WHITE']);
 
     db.$.resolveDirectories(db.config,db);
+
+    console.log(db.dirs,database.data.directory);
 
     info(['Will build pages at: '+(db.dirs.root)+'/','WHITE']);
 
