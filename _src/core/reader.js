@@ -24,6 +24,7 @@ function traverse(Directory) {
 async function initializePost(content, id = undefined) {
     let article = new Post(content, id);
     await article.doAsynchronousConstructTasks();
+    await article.done;
     return article;
 }
 

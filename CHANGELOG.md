@@ -22,6 +22,7 @@
 * Rebuild `Database`. **WORKING**
 >> `user` and `proc` section is now available, `feature` section use symbols different from current.
 >> The old db API will be kept until 2.0.0 (maybe?)
+* Rebuild `Post`. **WORKING**
 * `markdown:markedExtras` renamed to `generator/allow-custom-marked-extension`
 * `markdown:noHeaderId` renamed to `generator/markdown-no-header-id`
 
