@@ -5,7 +5,7 @@ import { gopt } from "#core/run";
 let opt = gopt(process.argv);
 
 if (opt.new) {
-    (await import("../app/new.js")).default(opt);
+    (await import("../app/new.js")).default();
 } else if (opt.init) {
     const init = await (import('#core/init'));
     const { info } = await (import('#core/run'));

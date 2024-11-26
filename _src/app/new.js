@@ -1,6 +1,6 @@
 import { writeFile, existsSync, statSync } from "fs";
 
-async function createNew(argv){
+async function createNew(){
     const AnchorArguments = ['--tag','--category','-t','-c'];
     let args = Array.from(process.argv.slice(3))
         .filter((v,i,a) => !AnchorArguments.includes(v) || (AnchorArguments.includes(v) && !AnchorArguments.includes(a[i+1])));
