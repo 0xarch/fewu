@@ -7,7 +7,8 @@ class Markdown {
      * @type {import("marked").MarkedOptions}
      */
     #parseOptions = {
-        mangle: false
+        mangle: false,
+        noHeaderIds: false
     };
 
     /**
