@@ -1,12 +1,11 @@
 import _PostContainer from "./_.container.mjs";
-import Post from "./post.mjs";
 
 class ContainerCategory extends _PostContainer {
     catename;
     /**
      * 
      * @param {string} label 
-     * @param {Post[]} posts 
+     * @param {number[]} posts 
      */
     constructor(label,posts){
         super('category',label,posts);
