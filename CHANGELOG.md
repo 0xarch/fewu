@@ -8,12 +8,26 @@
 * Optional Features:
     * `markdown:markedExtras` : Specific tricks for some marked extensions that does not follow the common usage. (like `marked-admonition-extension`)
 
+* New util `Markdown`. This provides a simple interface to interact with marked (or other parser may be added).
+* New util `Text`. Replacing `#core/text_process`.
+* New util `NewPromise` with static functions to support Node.js 20:
+    * `NewPromise.withResolvers`, which is similar to `Promise.withResolvers`
+* New `AbstractPost` class, which stores type declarations. (Do not use TypeScript)
 * Use `split` `foreach` instead of `cycling` `varias` in working (as `cycling` and `varias` are hard to understand)
 >> NOTE that `foreach` will be `each` in page template.
 >> THIS IS UNSTABLE CHANGE.
 
 ### Changed
 * Rebuild `fewu --new` with human-friendly argument parser.
+* Rebuild `Database`. **WORKING**
+>> `user` and `proc` section is now available, `feature` section use symbols different from current.
+>> The old db API will be kept until 2.0.0 (maybe?)
+* `markdown:markedExtras` renamed to `generator/allow-custom-marked-extension`
+* `markdown:noHeaderId` renamed to `generator/markdown-no-header-id`
+
+### Removed
+* Feature `markdown:foreword/nullOnDefault`
+* Feature `markdown:foreword/warn`
 
 ## REL1.2.5 - 2024-11-18
 

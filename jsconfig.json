@@ -6,7 +6,9 @@
             "#db": ["./_src/core/database.js"],
             "#struct": ["./_src/core/bridge.class.js"],
             "#class/*": ["./_src/class/*.mjs"],
-            "#modules": ["./_modules"]
+            "#modules": ["./_modules"],
+            "#util/*": ["./_src/util/*.mjs"],
+            "#database": ["./_src/database/main.mjs"]
         }
     },
     "exclude": [
