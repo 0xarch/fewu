@@ -1,9 +1,15 @@
+import DefaultSection from "./default.mjs";
+import DirectorySection from "./directory.mjs";
 import FeatureSection from "./feature.mjs";
+import GeneralSection from "./general.mjs";
 import ProcessSection from "./process.mjs";
 import UserSection from "./user.mjs";
 
 class DataStore {
+    directory;
+    default;
     feature;
+    general;
     process;
     user;
 
@@ -13,8 +19,14 @@ class DataStore {
      * @param {Database} database 
      */
     constructor(config, database) {
+        // section: default
+        this.default = new DefaultSection(config);
+        // section: directory
+        this.directory = new DirectorySection(config);
         // section: feature
         this.feature = new FeatureSection(config);
+        // section: general
+        this.general = new GeneralSection(config);
         // section: process
         this.process = new ProcessSection(config);
         // section: user
@@ -28,7 +40,10 @@ class DataStore {
      */
     async #init(database) {
         Promise.allSettled([
+            this.default.$done,
+            this.directory.$done,
             this.feature.$done,
+            this.general.$done,
             this.process.$done,
             this.user.$done
         ]).then((value)=>{
