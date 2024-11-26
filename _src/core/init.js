@@ -1,8 +1,7 @@
 import { join } from 'path';
-import * as fs from 'fs';
+import { existsSync } from 'fs';
+import { writeFile, mkdir, rm } from 'fs/promises';
 import { SettingsTemplate } from '#core/config_template';
-
-const Nil = ()=>{};
 
 const POST_TEMPLATE =
     `---
@@ -23,45 +22,28 @@ function get_default_configuration() {
 }
 
 function make_default_directory() {
-    fs.mkdir('posts', {}, Nil);
-    fs.mkdir('public', {}, Nil);
-    fs.mkdir('resources', {}, Nil);
-    fs.mkdir('extra', {}, Nil);
-    fs.mkdir('_themes',{},Nil);
-    fs.mkdir('_modules',{},Nil);
+    mkdir('posts');
+    mkdir('public');
+    mkdir('resources');
+    mkdir('extra');
+    mkdir('_themes');
+    mkdir('_modules');
 }
 
 function make_common_file() {
-    safeWriteFile(join('posts', 'about.md'), POST_TEMPLATE, Nil);
-    safeWriteFile(join('posts', 'template.md'), POST_TEMPLATE, Nil);
-    safeWriteFile('./config.json', JSON.stringify(SettingsTemplate, null, 4), Nil);
+    safeWriteFile(join('posts', 'about.md'), POST_TEMPLATE);
+    safeWriteFile(join('posts', 'template.md'), POST_TEMPLATE);
+    safeWriteFile('./config.json', JSON.stringify(SettingsTemplate, null, 4));
 }
 
 function remove_directory() {
-    rm('posts');
-    rm('public');
+    rm('posts', {recursive: true});
+    rm('public',{recursive: true});
 }
 
-function rm(path) {
-    if (fs.statSync(path).isFile()) {
-        fs.rm(path);
-        return;
-    }
-    for (let path_ of fs.readdirSync(path)) {
-        if (path_[0] != '.') {
-            path_ = join(path, path_);
-            if (fs.statSync(path_).isFile()) {
-                fs.rm(path, Nil);
-            } else {
-                fs.rmdir(path, Nil);
-            }
-        }
-    }
-}
-
-function safeWriteFile(path, data, callback) {
-    if (fs.existsSync(path)) return;
-    else fs.writeFile(path, data, callback);
+function safeWriteFile(path, data) {
+    if (existsSync(path)) return;
+    else writeFile(path, data);
 }
 
 export {
