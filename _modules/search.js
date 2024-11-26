@@ -8,29 +8,28 @@ async function generateSearchStrings() {
         console.log('[INFO] [Module/search] Your theme does not support Search.');
         return;
     }
-    // db.builder.api_required.nexo.searchStringUrl = db.file('searchStrings.json');
     let config = db.theme.config.module.search;
     if (config.use) {
     console.log('[INFO] [Module/search] Generating...');
-        let search_config = config.use;
-        let arr = [];
-        let title = search_config.includes('title'),
-            id = search_config.includes('id'),
-            content = search_config.includes('content'),
-            date = search_config.includes('date');
-        for (const article of db.site.posts) {
-            let href = db.file(article.path.website);
-            let atitle = article.title;
-            let acontent = '';
-            if (title) acontent += '%%%' + article.title;
-            if (id) acontent += '%%%' + article.id;
-            if (content) acontent += '%%%' + article.content.replace(/(\n)|([\u0020\n]{2,})/g, ' ').replace(/[#*]/g, '');
-            if (date) acontent += '%%%' + article.date.toDateString();
-            arr.push({ 'content': acontent, href, atitle });
-        }
-        writeFile(join(PUBLIC_DIRECTORY, 'searchStrings.json'), JSON.stringify(arr), () => {
-            console.log('[INFO] [Module/search] Generation complete.');
-        });
+    let search_config = config.use;
+    let arr = [];
+    let title = search_config.includes('title'),
+        id = search_config.includes('id'),
+        content = search_config.includes('content'),
+        date = search_config.includes('date');
+    for (const article of db.site.posts) {
+        let href = db.file(article.path.website);
+        let atitle = article.title;
+        let acontent = '';
+        if (title) acontent += '%%%' + article.title;
+        if (id) acontent += '%%%' + article.id;
+        if (content) acontent += '%%%' + article.content.replace(/(\n)|([\u0020\n]{2,})/g, ' ').replace(/[#*]/g, '');
+        if (date) acontent += '%%%' + article.date.toDateString();
+        arr.push({ 'content': acontent, href, atitle });
+    }
+    writeFile(join(PUBLIC_DIRECTORY, 'searchStrings.json'), JSON.stringify(arr), () => {
+        console.log('[INFO] [Module/search] Generation complete.');
+    });
     }
 }
 
