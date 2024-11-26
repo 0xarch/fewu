@@ -1,3 +1,5 @@
+import NewPromise from "#util/NewPromise";
+
 import { basename, join } from "path";
 import * as fs from "fs";
 import db from "#db";
@@ -19,13 +21,16 @@ function traverse(Directory) {
  * 
  * @param {string} content 
  * @param {number} id
- * @returns { Post }
+ * @returns { Promise<Post> }
  */
 async function initializePost(content, id = undefined) {
     let article = new Post(content, id);
-    await article.doAsynchronousConstructTasks();
+    let {promise,resolve} = NewPromise.withResolvers();
     await article.done;
-    return article;
+    article.done.then(()=>{
+        resolve(article)
+    })
+    return promise;
 }
 
 /**

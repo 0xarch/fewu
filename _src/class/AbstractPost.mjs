@@ -16,6 +16,7 @@ class AbstractPost {
     static resolveContent(content){
         const lines = content.split("\n");
         let postContent = '';
+        let postIntroduction = '';
         let properties = {
             title: "Untitled",
             date: '1970-1-1',
@@ -37,14 +38,18 @@ class AbstractPost {
         let moreIndex = lines.indexOf('<!--more-->');
 
         if (moreIndex === -1) {
-            /* No foreword provided */
+            /* No introduction provided */
             postContent = lines.slice(i).join('\n');
         } else {
             postContent = lines.slice(moreIndex).join('\n');
         }
+
+        postIntroduction = lines.slice(i, (moreIndex !== -1) ? moreIndex : 5).join('\n').replace(/\#*/g, '');
+
         return {
             properties,
-            postContent
+            postContent,
+            postIntroduction
         };
     }
 
@@ -53,7 +58,6 @@ class AbstractPost {
      * @since 1.3.0
      */
     done;
-
     /**
      * @type {import("node:fs").Stats}
      * @since 1.3.0
@@ -133,6 +137,10 @@ class AbstractPost {
     }
     parsed = {
         content: '',
+        introduction: '',
+        /**
+         * @deprecated use [parsed.introduction]
+         */
         foreword: ''
     }
 

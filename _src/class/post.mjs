@@ -2,22 +2,22 @@
     This file uses experimental Database 2.0 in some parts.
 */
 import AbstractPost from '#class/AbstractPost';
+import License from '#class/license';
+import FuzzyDate from '#class/fuzzydate';
+
 import database from '#database';
+
+import dynamicImport from '#util/dynamicImport';
 import Markdown from '#util/Markdown';
+import TemplateString from '#util/TemplateString';
 import Text from '#util/Text';
 import NewPromise from '#util/NewPromise';
 import {stat,readFile} from "node:fs/promises";
 
-import License from '#class/license';
-import FuzzyDate from '#class/fuzzydate';
-import Collection from '#class/collection';
-import db from '#core/database';
-import GString from '#core/gstring';
+import { warn } from '#core/run';
+
 import { relative } from 'path';
 import { gfmHeadingId } from 'marked-gfm-heading-id';
-import { statSync,readFileSync } from 'fs';
-import { warn } from '#core/run';
-import dynamicImport from '#util/dynamicImport';
 
 let markdown = new Markdown();
 // do markdown initialization
@@ -54,7 +54,6 @@ let markdownInit = (async function(){
 
 let minifier;
 let regExps = {
-    MATCH_H1: /\n# /,
     NO_SUFFIX: /\..*?$/
 };
 
@@ -75,134 +74,76 @@ class Post extends AbstractPost {
             let rawString = buffer.toString();
             this.fileContent = rawString;
 
-            let { properties, postContent } = Post.resolveContent(rawString);
+            let { properties, postContent, postIntroduction } = Post.resolveContent(rawString);
             this.properties = properties;
             this.postContent = postContent;
+            this.postIntroduction = postIntroduction;
 
-            this.date = new Date(properties.date);
-            this.license = new License(properties.license);
-        }).then(()=>{
-            resolve();
-        });
-        let fstat = statSync(path);
-        this.lastModifiedDate = fstat.ctime;
-        let raw_string = readFileSync(path).toString();
-        this.raw_string = raw_string;
-        const lines = raw_string.split("\n");
-        let getted = {
-            title: "Untitled",
-            date: '1970-1-1',
-            category: " ",
-            tags: " ",
-            license: 'CC BY-NC-SA 4.0'
-        };
-        let i = 0;
-        if (lines[i] === "---") {
-            i++;
-            while (lines[i] !== "---") {
-                let __tempor_val = lines[i].split(":");
-                getted[__tempor_val.shift()] = __tempor_val.map(v => v[0] == ' ' ? v.replace(' ', '') : v).join(":");
-                i++;
+            if(!database.data.feature.enabled.includes('generator/leave-no-h1')){
+                if(!Post.hasH1(this.postContent)){
+                    this.postContent = `# ${properties.title}\n` + this.postContent;
+                }
             }
-            i++;
-        }
+            
+            this.title = properties.title;
+            this.author = properties.author ?? database.data.user.name;
+            this.categories = properties.category.split(" ");
+            this.tags = properties.tags.split(" ");
+            this.date = new Date(properties.date);
+            this.fuzzyDate = new FuzzyDate(properties.date);
+            this.license = new License(properties.license);
+            this.wordCount = Text.wordCount(postContent);
 
-        /*
-         The [property] property
-         is used to store atestHll the configuration
-* `AbstractPost`
-         in a post. 
-         That's because we could not set up a
-         property just because a user used it.
-         So theme should use [property] to
-         get some unnecessary configuration.
-         e.g. Highlight
-        */
-        this.property = getted;
+            this.generalId = id;
 
-        this.title = getted.title;
-        this.author = getted.author ?? db.config.user?.name;
-        this.category = getted.category.split(" ").filter(v => v != '');
-        this.tags = getted.tags.split(" ").filter(v => v != '');
-        this.imageUrl = getted.imageUrl || '';
+            let calcPath = path;
 
-        /*
-         As the [old] property is being deprecated
-         that we disabled this warning.
-         Use [property.old] if you need to detect
-         whether it is an old format post.
-        */
-        // if (this.old) {
-        //     warn(['OLD POST', 'YELLOW'], [this.title, 'MAGENTA']);
-        // }
+            if(database.data.feature.enabled.includes('path/no-md-suffix')){
+                calcPath = calcPath.replace(regExps.NO_SUFFIX,'');
+            }
 
-        this.keywords = getted.keywords?.split(" ").filter(v => v != '') ?? this.tags;
-        // this.keywords = getted.keywords.split(" ").filter(v => v != '');
-
-        // parse this to FuzzyDate constructor
-        let gz = getted.date.split(/[\ \-\.]/).filter(v => v).map(v => parseInt(v));
-
-        let moreIndex = lines.indexOf('<!--more-->');
-
-        if (moreIndex === -1) {
-            /* No foreword provided */
-            this.content = lines.slice(i).join('\n');
-        } else {
-            this.content = lines.slice(moreIndex).join('\n');
-        }
-        // Automatically parse a title to content.
-        // So there is no need to manually write a heading
-        // if it's the same as title
-        if (!Post.hasH1(this.content)){
-            this.content = '# ' + this.title + '\n' + this.content;
-        }
-
-        this.foreword = lines.slice(i, (moreIndex !== -1) ? moreIndex : 5).join('\n').replace(/\#*/g, '');
-        if(Text.wordCount(this.foreword)<=1){
-            let forewordCollection = new Collection({
-                category: this.category.join(", "),
-                tags: this.tags.join(", "),
-                title: this.title,
-                author: this.author
-            });
-            this.foreword = GString.parse(db.config?.default?.foreword ?? '', forewordCollection);
-        }
-
-        this.wordCount = Text.wordCount(this.content);
-
-        this.fuzzyDate = new FuzzyDate(getted.date);
-        this.datz = this.fuzzyDate;
-
-        this.transformedTitle = Text.removeSymbols(getted.title);
-
-        this.id = id;
-        
-        // Path process
-        if(db.config?.feature?.enable?.includes('fewu:path/local/noSuffix')){
-            path = path.replace(regExps.NO_SUFFIX,'');
-        }
-        // Feature <fewu:path/flat>
-        if(db.config?.feature?.enable?.includes('fewu:path/flat') || db.config?.enabledFeatures?.includes('fewu:path/flat')){
-            let tempor_val = `read/${this.fuzzyDate.toString()}:${relative(db.dirs.posts,path).replace(/\//g,':')}`;
-            this.path.website = `/${tempor_val}.html`;
-            this.path.local = `${tempor_val}.html`;
-            // this.paths = this.path;
-        } else {
-            let tempor_val = `read/${gz.join('/')}/${relative(db.dirs.posts,path).replace(/\//g,':')}`;
-            this.path.website = `/${tempor_val}/`;
-            this.path.local = `${tempor_val}/index.html`;
-            // this.paths = this.path;
-        }
-
+            if(database.data.feature.enabled.includes('path/flatten')){
+                let tempor_val = `read/${this.fuzzyDate.toString()}:${relative(database.data.directory.postDirectory,calcPath).replace(/\//g,':')}`;
+                this.path.website = `/${tempor_val}.html`;
+                this.path.local = `${tempor_val}.html`;
+            } else {
+                let tempor_val = `read/${this.fuzzyDate.toString('/')}/${relative(database.data.directory.postDirectory,calcPath).replace(/\//g,':')}`;
+                this.path.website = `/${tempor_val}/`;
+                this.path.local = `${tempor_val}/index.html`;
+            }
+        }).then(()=>{
+            if(Text.wordCount(this.postIntroduction)<=1){
+                let informations = {
+                    category: this.categories.join(", "),
+                    tags: this.tags.join(", "),
+                    title: this.title,
+                    author: this.author
+                };
+                this.postIntroduction = TemplateString.parse(database.data.default.introduction, informations);
+            }
+            this.foreword = this.postIntroduction;
+            this.category = this.categories;
+            this.datz = this.fuzzyDate;
+            this.id = this.generalId;
+            this.keywords = this.properties.keywords?.split(" ") ?? this.tags;
+            this.raw_string = this.fileContent;
+            this.lastModifiedDate = this.fileStat.ctime;
+            this.property = this.properties;
+            this.#doParse().then(resolve);
+        });
     }
 
-    // Consturctor does not support native asynchronous function.
-    async doAsynchronousConstructTasks(){
+    /**
+     * @deprecated
+     */
+    async doAsynchronousConstructTasks(){}
+
+    async #doParse(){
         await markdownInit;
-        let parsedContent = markdown.parse(this.content);
-        let parsedForeword = markdown.parse(this.foreword);
+        let parsedContent = markdown.parse(this.postContent);
+        let parsedIntroduction = markdown.parse(this.postIntroduction);
         // Feature <markdown:HTMLMinifier>
-        if(db.config?.feature?.enable?.includes('markdown:HTMLMinifier')){
+        if(database.data.feature.enabled.includes('generator/use-minifier')){
             if(minifier === undefined){
                 minifier = await dynamicImport('html-minifier');
                 if(minifier === null){
@@ -211,19 +152,20 @@ class Post extends AbstractPost {
             }
             if(minifier){
                 parsedContent = minifier.minify(parsedContent,{removeComments:true,collapseWhitespace:true});
-                parsedForeword = minifier.minify(parsedForeword,{removeComments:true,collapseWhitespace:true});
+                parsedIntroduction = minifier.minify(parsedIntroduction,{removeComments:true,collapseWhitespace:true});
             }
         }
         this.parsed.content = parsedContent;
-        this.parsed.foreword = parsedForeword;
+        this.parsed.introduction = parsedIntroduction;
+        this.parsed.foreword = parsedIntroduction;
     }
-    setPath(path) {
-        this.pathto = path;
-    }
+    
     setPrev(id) {
+        this.previousId = id;
         this.prevID = id;
     }
     setNext(id) {
+        this.nextId = id;
         this.nextID = id;
     }
 }
