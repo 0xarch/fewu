@@ -1,5 +1,7 @@
+import database from '#database';
+import { readFile, cp } from 'fs/promises';
+
 import { join } from 'path';
-import { cp,readFileSync } from 'fs';
 import db from '#db';
 import { info } from '#core/run';
 import { procFinal } from '#core/builder';
@@ -15,14 +17,14 @@ async function resolveThemeOperations() {
                     if (v.from.charAt(0) == '@') {
                         switch (v.from) {
                             case "@posts":
-                                cp('posts', join(db.dirs.public, v.to), {}, () => { });
+                                cp('posts', join(db.dirs.public, v.to), { recursive: true });
                                 break;
                             case "@icon":
-                                cp('_assets', join(db.dirs.public, v.to), {}, () => { });
+                                cp('_assets', join(db.dirs.public, v.to), { recursive: true });
                                 break;
                         }
                     } else {
-                        cp(join(db.theme.dirs.extra, v.from), join(db.dirs.public, v.to), { recursive: true }, () => { });
+                        cp(join(db.theme.dirs.extra, v.from), join(db.dirs.public, v.to), { recursive: true });
                     }
                 }
                 break;
@@ -33,7 +35,7 @@ async function resolveThemeOperations() {
 }
 
 async function copyFiles() {
-    let publicDir = db.dirs.public;
+    let publicDir = database.data.directory.publicDirectory;
     cp(db.theme.dirs.files, join(publicDir, 'files'), { recursive: true }, () => { });
     cp('resources', join(publicDir, 'resources'), { recursive: true }, () => { });
 
@@ -42,22 +44,22 @@ async function copyFiles() {
 
 async function buildPosts() {
     let filename = join(db.theme.dirs.layout, db.theme.config.template);
+    let template = (await readFile(filename)).toString();
     let build_template = new BuildTemplate(
             db.builder.parser_name,
-            readFileSync(filename).toString(),
+            template,
             {
                 basedir: db.theme.dirs.layout,
                 filename
             }
         );
-    db.site.posts.forEach(async item => {
-        let destname = join(db.dirs.public, item.path.local);
-        const STAT = procFinal(build_template,{
+    db.site.posts.forEach(item => {
+        let destname = join(database.data.directory.publicDirectory, item.path.local);
+        procFinal(build_template,{
             ...db.builder.api_required,
             filename,
             post: item
         },destname);
-        if (STAT == 'Ok') info(['SUCCESS', "GREEN"], [item.title, 'MAGENTA'], [destname, 'YELLOW']);
     });
 }
 
