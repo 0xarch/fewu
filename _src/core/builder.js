@@ -1,27 +1,30 @@
-import { mkdirSync, readFileSync } from "fs";
-import { writeFile } from "fs";
+import database from "#database";
+
+import TemplateString from "#util/TemplateString";
+
+import { mkdir, readFile, writeFile } from "fs/promises";
+
 import { dirname, join as join_path } from "path";
-import { errno, info } from "#core/run";
-import { Collection, Correspond, BuildTemplate, Layout } from "#struct";
+import { Correspond, BuildTemplate, Layout } from "#struct";
 import parsers from "#core/build_compat";
 import GObject from "#core/gobject";
-import GString from "#core/gstring";
 import db from "#db";
 
 /**
- * d
- * @param {Collection} collection 
+ * 
+ * @param {import("#class/collection").default} collection 
  * @param {Layout} file
  */
 async function write(collection, file) {
-    let public_directory = db.config.public_directory ?? db.config.build?.public_directory ?? 'public';
+    let public_directory = database.data.directory.publicDirectory;
     let absolute_correspond = Correspond(
         join_path(db.theme.dirs.layout, file.correspond().from),
         join_path(public_directory, file.correspond().to, 'index.html'));
 
     // _______ get
+    let templateContent = (await readFile(absolute_correspond.from)).toString();
     let build_template = new BuildTemplate(db.builder.parser_name,
-        readFileSync(absolute_correspond.from).toString(),
+        templateContent,
         {
             basedir: db.theme.dirs.layout,
             filename: file.correspond().from
@@ -43,7 +46,7 @@ async function write(collection, file) {
     }
     if (file.useForeachBuild()) {
         if (!opt_foreach) {
-            errno(8102);
+            console.error(`[Builder] ${file.name} declares foreach-build using but not configured!`);
             return;
         }
         iter = {};
@@ -71,12 +74,11 @@ async function write(collection, file) {
         let addition_in_iter = iter[key];
         let path_write_to_prefix = public_directory;
         if (addition_in_iter.varias) {
-            if (GString.test(file.correspond().to, 1)) {
-                // The New (Experimental) GString format
-                let collection = new Collection({
-                    each: addition_in_iter.varias,
+            if (TemplateString.test(file.correspond().to, 1)) {
+                // The New TemplateString format
+                path_write_to_prefix += '/' + TemplateString.parse(file.correspond().to,{
+                    each: addition_in_iter.each
                 });
-                path_write_to_prefix += '/' + GString.parse(file.correspond().to, collection);
             } else {
                 // The Old ${ } format.
                 let varias = addition_in_iter.varias; varias; //used in eval
@@ -87,7 +89,7 @@ async function write(collection, file) {
         }
         if (file.useSplitBuild()) {
             if (!opt_split) {
-                errno(8103);
+                console.error(`[Builder] ${file.name} declares split-build using but not configured!`);
                 return;
             }
             let c_parent = collection.get(opt_split.parent) ?? GObject.getProperty(addition_in_iter, opt_split.parent) ?? GObject.getProperty(addition, opt_split.parent);
@@ -145,28 +147,21 @@ function cycling(parent, every, prefix = '') {
  * @param {string} path_write_to
  */
 async function processTemplate(template, provide_variables, path_write_to) {
-    let procer;
-    switch (template.type) {
-        // Fix for Jade(Old name of pug)
-        case 'JADE':
-            procer = parsers.pug;
-            break;
-        default:
-            procer = parsers[template.type.toLowerCase()];
-    }
-    mkdirSync(dirname(path_write_to), { recursive: true });
+    let procer = parsers[template.type.toLowerCase()];
+    await mkdir(dirname(path_write_to),{recursive: true});
     let result = procer(template.text, template.getBase(), provide_variables);
     try {
-        if (readFileSync(path_write_to).toString() === result) {
-            info(['SKIPPED', "GREEN"], [path_write_to, 'MAGENTA']);
-            return
+        let testContent = (await readFile(path_write_to)).toString();
+        if(testContent === result){
+            console.info(`[Builder] Skipped write operation of ${path_write_to}`);
+            return;
         }
     } catch (e) { }
     writeFile(path_write_to, result, (e) => {
         if (e) {
-            info.red(['FAILURE','RED'],[path_write_to, 'YELLOW']);
+            console.error(`[Builder] Build failed: In writing to ${path_write_to}. Message: ${e.message}`);
         } else {
-            info(['SUCCESS','GREEN'],[path_write_to, 'YELLOW']);
+            console.log(`[Builder] Build success: ${path_write_to}`);
         }
     });
 }
