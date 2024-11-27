@@ -1,5 +1,6 @@
 import database from "#database";
 
+import Console from "#util/Console";
 import TemplateString from "#util/TemplateString";
 
 import { mkdir, readFile, writeFile } from "fs/promises";
@@ -16,6 +17,7 @@ import db from "#db";
  * @param {Layout} file
  */
 async function write(collection, file) {
+    Console.log(`[Builder] Building ${file.name()}`);
     let public_directory = database.data.directory.publicDirectory;
     let absolute_correspond = Correspond(
         join_path(db.theme.dirs.layout, file.correspond().from),
@@ -95,7 +97,7 @@ async function write(collection, file) {
             let c_parent = collection.get(opt_split.parent) ?? GObject.getProperty(addition_in_iter, opt_split.parent) ?? GObject.getProperty(addition, opt_split.parent);
             let cycling_results = cycling(c_parent, opt_split.every, path_write_to_prefix);
             for (const result of cycling_results) {
-                await processTemplate(build_template, {
+                processTemplate(build_template, {
                     ...collection.asObject(),
                     ...addition,
                     ...addition_in_iter,
@@ -105,7 +107,7 @@ async function write(collection, file) {
             }
         } else {
             let path = path_write_to_prefix + '/index.html';
-            await processTemplate(build_template, {
+            processTemplate(build_template, {
                 ...collection.asObject(),
                 ...addition,
                 ...addition_in_iter,
@@ -144,24 +146,25 @@ function cycling(parent, every, prefix = '') {
  * 
  * @param {BuildTemplate} template 
  * @param {object} provide_variables 
- * @param {string} path_write_to
+ * @param {string} targetPath
  */
-async function processTemplate(template, provide_variables, path_write_to) {
+async function processTemplate(template, provide_variables, targetPath) {
+    Console.log(`[Builder] Processing ${targetPath}`);
     let procer = parsers[template.type.toLowerCase()];
-    await mkdir(dirname(path_write_to),{recursive: true});
+    await mkdir(dirname(targetPath),{recursive: true});
     let result = procer(template.text, template.getBase(), provide_variables);
     try {
-        let testContent = (await readFile(path_write_to)).toString();
+        let testContent = (await readFile(targetPath)).toString();
         if(testContent === result){
-            console.info(`[Builder] Skipped write operation of ${path_write_to}`);
+            Console.info(`[Builder] Skipped write operation of ${targetPath}`);
             return;
         }
     } catch (e) { }
-    writeFile(path_write_to, result, (e) => {
+    writeFile(targetPath, result, (e) => {
         if (e) {
-            console.error(`[Builder] Build failed: In writing to ${path_write_to}. Message: ${e.message}`);
+            Console.error(`[Builder] Build failed: In writing to ${targetPath}. Message: ${e.message}`);
         } else {
-            console.log(`[Builder] Build success: ${path_write_to}`);
+            Console.log(`[Builder] Build success: ${targetPath}`);
         }
     });
 }
