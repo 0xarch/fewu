@@ -29,33 +29,16 @@ async function App(override_argv) {
 
 
     db.proc.args = args;
-    
-    // init
-    if (args.init) {
-        const init = await (import('#core/init'));
-        info(['Init', 'YELLOW'], ['Making directories']);
-        init.make_default_directory();
-        info(['Init', 'YELLOW'], ['Touching templates']);
-        init.make_common_file();
-        return;
-    }
 
-    try{
-        db.config = GObject.mix(SettingsTemplate, JSON.parse(
-            readFileSync(db.proc.args['config'] || 'config.json').toString()), true);
-        // Object.assign created a clone
-        db.settings = new Collection(Object.assign({},db.config));
-    } catch (e) {
-        ErrorLogger.couldNotLoadConfig();
-        return;
-    }
+    await database.initDone();
+    db.config = database.data.general.config;
+    db.settings = new Collection(Object.assign({},db.config));
+
     const argv = db.proc.args;
 
     info(['Enabled features: '+(db.config?.feature?.enable??''),'WHITE']);
 
     db.$.resolveDirectories(db.config,db);
-
-    console.log(db.dirs,database.data.directory);
 
     info(['Will build pages at: '+(db.dirs.root)+'/','WHITE']);
 
