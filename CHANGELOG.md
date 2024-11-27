@@ -9,11 +9,13 @@
     * `generator/allow-custom-marked-extension` : Specific tricks for some marked extensions that does not follow the common usage. (like `marked-admonition-extension`)
     * `generator/leave-no-h1` : Do not automatically add heading to posts.
 
-* New util `Markdown`. This provides a simple interface to interact with marked (or other parser may be added).
-* New util `Text`. Replacing `#core/text_process`.
-* New util `NewPromise` with static functions to support Node.js 20:
-    * `NewPromise.withResolvers`, which is similar to `Promise.withResolvers`
-* New util `TemplateString`. Replacing `#core/gstring` (Originally `GString`, but with some tweaks)
+* New utilities:
+    * `Argv`: Provides parsed program arguments. Replacing `gopt` in `#core/run`.
+    * `Console`: Replaces `info,info.red,warn` in `#core/run`
+    * `Markdown`: Provides a simple interface to interact with marked (or other parser may be added).
+    * `NewPromise`: Add some Promise features that are not supported in Node.js 20.
+    * `Text`: Replaces `#core/text_process`.
+    * `TemplateString`: Replaces `#core/gstring`. (Formerly `GString`, but with some tweaks)
 
 * New `AbstractPost` class, which stores type declarations. (Do not use TypeScript)
 
@@ -24,9 +26,10 @@
 ### Changed
 * Rebuild `fewu --new` with human-friendly argument parser.
 * Rebuild `Database`. **WORKING**
->> `user` and `proc` section is now available, `feature` section use symbols different from current.
->> The old db API will be kept until 2.0.0 (maybe?)
-* Rebuild `Post`. **WORKING**
+> `default` `directory` `feature` `general` `process` `theme` `user` section is now available.
+> `feature` section use symbols different from current.
+> The old db API will be kept until 2.0.0 (maybe?)
+* Rebuild `Post`.
 * `markdown:markedExtras` renamed to `generator/allow-custom-marked-extension`.
 * `markdown:noHeaderId` renamed to `generator/markdown-no-header-id`.
 * `fewu/path/noSuffix` renamed to `path/no-md-suffix`.
