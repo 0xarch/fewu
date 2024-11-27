@@ -3,6 +3,7 @@ import DirectorySection from "./directory.mjs";
 import FeatureSection from "./feature.mjs";
 import GeneralSection from "./general.mjs";
 import ProcessSection from "./process.mjs";
+import ThemeSection from "./theme.mjs";
 import UserSection from "./user.mjs";
 
 class DataStore {
@@ -11,6 +12,7 @@ class DataStore {
     feature;
     general;
     process;
+    theme;
     user;
 
     /**
@@ -29,6 +31,8 @@ class DataStore {
         this.general = new GeneralSection(config);
         // section: process
         this.process = new ProcessSection(config);
+        // section: theme
+        this.theme = new ThemeSection(config);
         // section: user
         this.user = new UserSection(config);
         this.#init(database);
@@ -45,8 +49,15 @@ class DataStore {
             this.feature.$done,
             this.general.$done,
             this.process.$done,
+            this.theme.$done,
             this.user.$done
         ]).then((value)=>{
+            value.forEach(v=>{
+                if(v.status === "rejected"){
+                    database.setInitStatus("fail",v);
+                    return;
+                }
+            });
             database.setInitStatus('done',value);
         });
     }

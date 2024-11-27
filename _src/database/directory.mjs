@@ -1,10 +1,17 @@
 import { AbstractSection } from "./abstract.mjs";
+import Argv from "#util/Argv";
 import NewPromise from "#util/NewPromise";
 
 class DirectorySection extends AbstractSection {
     postDirectory = '';
     publicDirectory = '';
     buildRootDirectory = '';
+    theme = {
+        rootDirectory: '',
+        extraDirectory: '',
+        layoutDirectory: '',
+        fileDirectory: ''
+    }
 
     constructor(config){
         let {promise,resolve} = NewPromise.withResolvers();
@@ -27,6 +34,11 @@ class DirectorySection extends AbstractSection {
                 return '';
             }
         })();
+        let themeName = Argv['--theme'] ??  Argv['-t'] ?? config['theme-name'] ?? config.theme?.name ?? 'Wacal';
+        this.theme.rootDirectory = `_themes/${themeName}`;
+        this.theme.extraDirectory = `_themes/${themeName}/extra`;
+        this.theme.fileDirectory = `_themes/${themeName}/files`;
+        this.theme.layoutDirectory = `_themes/${themeName}/layouts`;
         resolve('diretory');
     }
 }

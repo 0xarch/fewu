@@ -4,6 +4,10 @@ import Argv from "#util/Argv";
 
 class GeneralSection extends AbstractSection {
     /**
+     * @type {object}
+     */
+    config;
+    /**
      * @type {string}
      */
     lang;
@@ -13,6 +17,7 @@ class GeneralSection extends AbstractSection {
         super({
             mutable: false
         },promise);
+        this.config = config;
         this.lang = config.general?.lang ?? config.language ?? Argv['--lang'] ?? process.env.lang.replace(/\..*?$/,'').replace(/_/,'-');
         resolve('general');
     }
