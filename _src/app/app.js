@@ -1,17 +1,16 @@
 import database from '#database';
 
 import { join } from 'path';
-import { readFileSync, cp} from 'fs';
+import { cp } from 'fs';
 import db from '#db';
 import Collection from '#class/collection';
-import { gopt, info, fewu_logo, } from '#core/run';
+import { gopt, fewu_logo, } from '#core/run';
 import GObject from '#core/gobject';
 import * as part from '#core/part';
 import { site, sort, get_file_relative_dir } from '#core/reader';
-import { SettingsTemplate } from '#core/config_template';
 import i18n from '#core/i18n';
-import ErrorLogger from '#core/error_logger';
 import { loadPlugin,loadModules } from '#core/loader';
+import Console from '#util/Console';
 
 /**
  * @DOCUMENT_OF_APP
@@ -36,11 +35,7 @@ async function App(override_argv) {
 
     const argv = db.proc.args;
 
-    info(['Enabled features: '+(db.config?.feature?.enable??''),'WHITE']);
-
     db.$.resolveDirectories(db.config,db);
-
-    info(['Will build pages at: '+(db.dirs.root)+'/','WHITE']);
 
     // Mount on global
     global.PUBLIC_DIRECTORY = db.dirs.public;
@@ -51,26 +46,36 @@ async function App(override_argv) {
         return;
     }
 
-    try {
-        db.theme.name = argv['theme'] ?? db.config.theme?.name;
-        db.theme.config = JSON.parse(readFileSync(join(db.theme.dirs.root,'theme.json')).toString());
-        db.theme.settings = new Collection(Object.assign({},db.theme.config));
-        db.theme.variables = JSON.parse(readFileSync(join(db.theme.dirs.root,'variables.json')).toString());
-    } catch(e) {
-        ErrorLogger.couldNotLoadTheme();
-        return;
-    }
+    database.data.builder.site = await site();
+    database.data.builder.sort = sort(database.data.builder.site.posts);
+
+    db.theme.name = database.data.theme.name;
+    db.theme.config = database.data.theme.config;
+    db.theme.settings = new Collection(Object.assign({},database.data.theme.config));
+    db.theme.variables = database.data.theme.variables;
+
 
     db.builder.mode = argv['devel'] ? 'devel' : 'release';
     db.builder.type = db.theme.config.parser;
     db.builder.parser_name = db.theme.config.parser;
     db.language = argv['language'] ?? db.config.language ?? 'en-US';
-    db.site = await site();
-    db.sort = sort(db.site.posts);
+    db.site = database.data.builder.site;
+    db.sort = database.data.builder.sort;
     db.file = get_file_relative_dir;
     db.modules.enabled = db.config.modules?.enabled instanceof Array ? db.config.modules.enabled : [];
 
-    info(['BUILD MODE'], [db.builder.mode, 'GREEN']);
+    Console.info('[App] Build mode is ',{
+        color: 'GREEN',
+        msg: database.data.builder.mode
+    },' .');
+    Console.info('[App] Target directory is ',{
+        color: 'GREEN',
+        msg: database.data.directory.buildRootDirectory
+    },' .');
+    Console.info('[App] Enabled features: ',{
+        color: 'MAGENTA',
+        msg: database.data.feature.enabled.join(", ")
+    },' .');
 
     i18n.autoSetFile();
 
@@ -104,7 +109,6 @@ async function App(override_argv) {
             return fix + ' ' + sep + ' ' + type;
         }
     })();
-
 
     let provided_theme_config = GObject.mix(db.theme.variables, db.config.theme?.options ?? {}, true);
 

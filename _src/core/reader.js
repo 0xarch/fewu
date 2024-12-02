@@ -1,3 +1,4 @@
+import database from "#database";
 import NewPromise from "#util/NewPromise";
 
 import { basename, join } from "path";
@@ -38,6 +39,8 @@ async function initializePost(content, id = undefined) {
  * @returns {{posts:[Post],excluded_posts:object,categories:[Category],tags:[Tag]}}
  */
 async function site() {
+    await database.initDone();
+    const POST_DIRECTORY = database.data.directory.postDirectory;
     let bid = 1;
     let posts = [],
         excluded_posts = {},
@@ -47,8 +50,8 @@ async function site() {
         tags = {};
     let categoriesMap = new Map,
         tagsMap = new Map;
-    for (let path of traverse(db.dirs.posts)) {
-        let item = basename(path, db.dirs.posts);
+    for (let path of traverse(POST_DIRECTORY)) {
+        let item = basename(path, POST_DIRECTORY);
         let file_data = await initializePost(path, bid);
 
         if (db.config.excluded_posts.includes(item)){

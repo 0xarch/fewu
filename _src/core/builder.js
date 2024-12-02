@@ -18,17 +18,18 @@ import db from "#db";
  */
 async function write(collection, file) {
     Console.log(`[Builder] Building ${file.name()}`);
-    let public_directory = database.data.directory.publicDirectory;
+    const PUBLIC_DIRECTORY = database.data.directory.publicDirectory;
+    const THEME_LAYOUT_DIRECTORY = database.data.directory.theme.layoutDirectory;
     let absolute_correspond = Correspond(
-        join_path(db.theme.dirs.layout, file.correspond().from),
-        join_path(public_directory, file.correspond().to, 'index.html'));
+        join_path(THEME_LAYOUT_DIRECTORY, file.correspond().from),
+        join_path(PUBLIC_DIRECTORY, file.correspond().to, 'index.html'));
 
     // _______ get
     let templateContent = (await readFile(absolute_correspond.from)).toString();
     let build_template = new BuildTemplate(db.builder.parser_name,
         templateContent,
         {
-            basedir: db.theme.dirs.layout,
+            basedir: THEME_LAYOUT_DIRECTORY,
             filename: file.correspond().from
         }
     );
@@ -74,7 +75,7 @@ async function write(collection, file) {
 
     for (const key in iter) {
         let addition_in_iter = iter[key];
-        let path_write_to_prefix = public_directory;
+        let path_write_to_prefix = PUBLIC_DIRECTORY;
         if (addition_in_iter.varias) {
             if (TemplateString.test(file.correspond().to, 1)) {
                 // The New TemplateString format
