@@ -1,3 +1,4 @@
+import BuilderSection from "./builder.mjs";
 import DefaultSection from "./default.mjs";
 import DirectorySection from "./directory.mjs";
 import FeatureSection from "./feature.mjs";
@@ -7,6 +8,7 @@ import ThemeSection from "./theme.mjs";
 import UserSection from "./user.mjs";
 
 class DataStore {
+    builder;
     directory;
     default;
     feature;
@@ -21,6 +23,7 @@ class DataStore {
      * @param {Database} database 
      */
     constructor(config, database) {
+        this.builder = new BuilderSection(config);
         // section: default
         this.default = new DefaultSection(config);
         // section: directory
@@ -44,6 +47,7 @@ class DataStore {
      */
     async #init(database) {
         Promise.allSettled([
+            this.builder.$done,
             this.default.$done,
             this.directory.$done,
             this.feature.$done,
@@ -69,6 +73,9 @@ class DataStore {
  * To access data, use database.data
  */
 class Database {
+    /**
+     * @type {DataStore}
+     */
     data;
     #initPromise;
     #initResolve;
