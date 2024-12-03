@@ -67,6 +67,7 @@ class Post extends AbstractPost {
         let filePath = path;
         let {promise, resolve} = NewPromise.withResolvers();
         this.done = promise;
+        this.filePath = filePath;
         stat(filePath).then((stat) => {
             this.fileStat = stat;
             return readFile(filePath);
@@ -74,10 +75,11 @@ class Post extends AbstractPost {
             let rawString = buffer.toString();
             this.fileContent = rawString;
 
-            let { properties, postContent, postIntroduction } = Post.resolveContent(rawString);
+            let { properties, postContent, postIntroduction, referencedImages } = Post.resolveContent(rawString);
             this.properties = properties;
             this.postContent = postContent;
             this.postIntroduction = postIntroduction;
+            this.referencedImages = referencedImages;
 
             if(!database.data.feature.enabled.includes('generator/leave-no-h1')){
                 if(!Post.hasH1(this.postContent)){

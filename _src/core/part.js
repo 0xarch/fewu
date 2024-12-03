@@ -1,12 +1,14 @@
 import database from '#database';
-import { readFile, cp } from 'fs/promises';
+import { readFile, cp, mkdir } from 'fs/promises';
 
-import { join } from 'path';
+import { dirname, join } from 'path';
 import db from '#db';
 import { info } from '#core/run';
 import { procFinal } from '#core/builder';
 import { BuildTemplate, Collection, Layout } from '#struct';
 import { write } from '#core/builder';
+import { existsSync } from 'fs';
+import Console from '#util/Console';
 
 async function resolveThemeOperations() {
     let operations = db.theme.config.operations;
@@ -43,24 +45,45 @@ async function copyFiles() {
 }
 
 async function buildPosts() {
-    let filename = join(db.theme.dirs.layout, db.theme.config.template);
+    const LAYOUT_DIRECTORY = database.data.directory.theme.layoutDirectory;
+    const PUBLIC_DIRECTORY = database.data.directory.publicDirectory;
+    let filename = join(LAYOUT_DIRECTORY, database.data.theme.config.template);
     let template = (await readFile(filename)).toString();
     let build_template = new BuildTemplate(
-            db.builder.parser_name,
-            template,
-            {
-                basedir: db.theme.dirs.layout,
-                filename
-            }
-        );
-    db.site.posts.forEach(item => {
+        db.builder.parser_name,
+        template,
+        {
+            basedir: LAYOUT_DIRECTORY,
+            filename
+        }
+    );
+    /**
+     * @param {import("#class/post").default} item
+     */
+    const process = (item)=>{
         let destname = join(database.data.directory.publicDirectory, item.path.local);
         procFinal(build_template,{
             ...db.builder.api_required,
             filename,
             post: item
-        },destname);
-    });
+        },destname).then(()=>{
+            if(database.data.feature.enabled.includes('generator/copy-next-image')){
+                item.referencedImages.forEach(async imageUrl => {
+                    let itemDirectory = dirname(item.filePath);
+                    let originPath = join(itemDirectory,imageUrl);
+                    let targetPath = join(PUBLIC_DIRECTORY,dirname(item.path.local),imageUrl);
+                    if(existsSync(originPath)){
+                        mkdir(dirname(targetPath),{recursive: true}).then((str)=>{
+                            cp(originPath,targetPath,{recursive: true}).then(()=>{
+                                Console.log(`[Part] Copied ${originPath} to ${targetPath}`)
+                            });
+                        })
+                    }
+                });
+            }
+        });
+    }
+    database.data.builder.site.posts.forEach(process);
 }
 
 async function buildPages(){

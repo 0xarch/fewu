@@ -1,5 +1,6 @@
 let regExps = {
-    MATCH_H1: /\n# /
+    MATCH_H1: /\n# /,
+    MATCH_IMAGE: /\!\[([^\]]*?)\]\(([^\n]+?)\)/g,
 };
 
 class AbstractPost {
@@ -24,6 +25,7 @@ class AbstractPost {
             tags: " ",
             license: 'CC BY-NC-SA 4.0'
         };
+        let referencedImages = [];
         let i = 0;
         if (lines[i] === "---") {
             i++;
@@ -46,10 +48,13 @@ class AbstractPost {
 
         postIntroduction = lines.slice(i, (moreIndex !== -1) ? moreIndex : 5).join('\n').replace(/\#*/g, '');
 
+        referencedImages = [...postContent.matchAll(regExps.MATCH_IMAGE)].map(v=>v[2]);
+
         return {
             properties,
             postContent,
-            postIntroduction
+            postIntroduction,
+            referencedImages
         };
     }
 
@@ -58,6 +63,11 @@ class AbstractPost {
      * @since 1.3.0
      */
     done;
+    /**
+     * @type {string}
+     * @since 1.3.0
+     */
+    filePath;
     /**
      * @type {import("node:fs").Stats}
      * @since 1.3.0
@@ -131,6 +141,10 @@ class AbstractPost {
      * @since 1.3.0
      */
     properties;
+    /**
+     * @type {string[]}
+     */
+    referencedImages = [];
     path = {
         website: '',
         local: ''

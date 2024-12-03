@@ -8,7 +8,7 @@
 * Optional Features:
     * `generator/allow-custom-marked-extension` : Specific tricks for some marked extensions that does not follow the common usage. (like `marked-admonition-extension`)
     * `generator/leave-no-h1` : Do not automatically add heading to posts.
-
+    * `generator/copy-next-image` : Get images referenced in post and put it into generated folder. (Only works with images next to post.md)
 * New utilities:
     * `Argv`: Provides parsed program arguments. Replacing `gopt` in `#core/run`.
     * `Console`: Replaces `info,info.red,warn` in `#core/run`
@@ -41,6 +41,9 @@
 * Remove feature `markdown:foreword/nullOnDefault`.
 * Remove feature `markdown:foreword/warn`.
 * Remove feature `fewu:path/autoRoot`, it's now a built-in fallback when `general.site-relative-root` is not configured (We recommend auto-configure, chich needs to fill `website.url` with website url (like `0xarch.github.io`)).
+
+### Fixed
+* All files under post directory are recognized as post.
 
 ## REL1.2.5 - 2024-11-18
 
