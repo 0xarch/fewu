@@ -1,7 +1,7 @@
 import database from "#database";
 import NewPromise from "#util/NewPromise";
 
-import { basename, join } from "path";
+import { basename, join, extname } from "path";
 import * as fs from "fs";
 import db from "#db";
 import { Category, Tag } from "#struct";
@@ -51,6 +51,7 @@ async function site() {
     let categoriesMap = new Map,
         tagsMap = new Map;
     for (let path of traverse(POST_DIRECTORY)) {
+        if(extname(path) != '.md') continue;
         let item = basename(path, POST_DIRECTORY);
         let file_data = await initializePost(path, bid);
 
