@@ -136,7 +136,7 @@ class Database {
      * Promise for some tasks that need to do after database is built.
      */
     async initDone() {
-        await this.#initPromise;
+        return this.#initPromise;
     }
 };
 
