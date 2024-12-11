@@ -10,8 +10,11 @@ import { write } from '#core/builder';
 import { existsSync } from 'fs';
 import Console from '#util/Console';
 
+const { publicDirectory } = database.data.directory;
+const { extraDirectory, fileDirectory,layoutDirectory } = database.data.directory.theme;
+
 async function resolveThemeOperations() {
-    let operations = db.theme.config.operations;
+    let operations = database.data.theme.config.operations;
     operations.forEach(async (v) => {
         switch (v.do) {
             case "copy":
@@ -26,7 +29,7 @@ async function resolveThemeOperations() {
                                 break;
                         }
                     } else {
-                        cp(join(db.theme.dirs.extra, v.from), join(db.dirs.public, v.to), { recursive: true });
+                        cp(join(extraDirectory, v.from), join(db.dirs.public, v.to), { recursive: true });
                     }
                 }
                 break;
@@ -37,23 +40,20 @@ async function resolveThemeOperations() {
 }
 
 async function copyFiles() {
-    let publicDir = database.data.directory.publicDirectory;
-    cp(db.theme.dirs.files, join(publicDir, 'files'), { recursive: true }, () => { });
-    cp('resources', join(publicDir, 'resources'), { recursive: true }, () => { });
+    cp(fileDirectory, join(publicDirectory, 'files'), { recursive: true }, () => { });
+    cp('resources', join(publicDirectory, 'resources'), { recursive: true }, () => { });
 
     info(['COMPLETE', 'GREEN'], ['OPERATION.COPY', 'MAGENTA', 'BOLD']);
 }
 
 async function buildPosts() {
-    const LAYOUT_DIRECTORY = database.data.directory.theme.layoutDirectory;
-    const PUBLIC_DIRECTORY = database.data.directory.publicDirectory;
-    let filename = join(LAYOUT_DIRECTORY, database.data.theme.config.template);
+    let filename = join(layoutDirectory, database.data.theme.config.template);
     let template = (await readFile(filename)).toString();
     let build_template = new BuildTemplate(
         db.builder.parser_name,
         template,
         {
-            basedir: LAYOUT_DIRECTORY,
+            basedir: layoutDirectory,
             filename
         }
     );
@@ -71,7 +71,7 @@ async function buildPosts() {
                 item.referencedImages.forEach(async imageUrl => {
                     let itemDirectory = dirname(item.filePath);
                     let originPath = join(itemDirectory,imageUrl);
-                    let targetPath = join(PUBLIC_DIRECTORY,dirname(item.path.local),imageUrl);
+                    let targetPath = join(publicDirectory,dirname(item.path.local),imageUrl);
                     if(existsSync(originPath)){
                         mkdir(dirname(targetPath),{recursive: true}).then((str)=>{
                             cp(originPath,targetPath,{recursive: true}).then(()=>{
@@ -87,7 +87,7 @@ async function buildPosts() {
 }
 
 async function buildPages(){
-    for (let item of db.theme.config.layouts) {
+    for (let item of database.data.theme.config.layouts) {
         write(new Collection({ ...db.builder.api_required }), new Layout(item));
     }
 }
