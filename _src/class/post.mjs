@@ -22,7 +22,7 @@ import { gfmHeadingId } from 'marked-gfm-heading-id';
 let markdown = new Markdown();
 // do markdown initialization
 let markdownInit = (async function(){
-    await database.initDone();
+    await globalThis.DATABASE_INIT_DONE;
     if(database.data.feature.enabled.includes('generator/allow-custom-marked-extension')){
         let extensionList = database.data.feature.options?.['generator/allow-custom-marked-extension']?.extensions;
         let canOperate = true;
@@ -109,9 +109,9 @@ class Post extends AbstractPost {
                 this.path.website = `/${tempor_val}.html`;
                 this.path.local = `${tempor_val}.html`;
             } else {
-                let tempor_val = `read/${this.fuzzyDate.toString('/')}/${relative(database.data.directory.postDirectory,calcPath).replace(/\//g,':')}`;
-                this.path.website = `/${tempor_val}/`;
-                this.path.local = `${tempor_val}/index.html`;
+                let tempor_val = `read/${this.fuzzyDate.toString('/')}/${relative(database.data.directory.postDirectory,calcPath)}`;
+                this.path.website = `/${tempor_val}.html`;
+                this.path.local = `${tempor_val}.html`;
             }
         }).then(()=>{
             if(Text.wordCount(this.postIntroduction)<=1){
