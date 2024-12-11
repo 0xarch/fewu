@@ -1,7 +1,5 @@
 import database from '#database';
 
-import { join } from 'path';
-import { cp } from 'fs';
 import db from '#db';
 import Collection from '#class/collection';
 import { gopt, fewu_logo, } from '#core/run';
@@ -26,10 +24,10 @@ async function App(override_argv) {
     // mount
     global.args = override_argv || gopt(process.argv);
 
-
     db.proc.args = args;
 
-    await database.initDone();
+    await globalThis.DATABASE_INIT_DONE;
+    console.log(`Starting build..`);
     db.config = database.data.general.config;
     db.settings = new Collection(Object.assign({},db.config));
 
@@ -40,24 +38,12 @@ async function App(override_argv) {
     // Mount on global
     global.PUBLIC_DIRECTORY = db.dirs.public;
 
-    if (argv['only'] == 'updateTheme') {
-        cp(db.theme.dirs.files, join(db.dirs.public, 'files'), { recursive: true }, () => { });
-        cp('sources', join(db.dirs.public, 'sources'), { recursive: true }, () => { });
-        return;
-    }
-
     database.data.builder.site = await site();
     database.data.builder.sort = sort(database.data.builder.site.posts);
 
-    db.theme.name = database.data.theme.name;
-    db.theme.config = database.data.theme.config;
-    db.theme.settings = new Collection(Object.assign({},database.data.theme.config));
-    db.theme.variables = database.data.theme.variables;
-
-
     db.builder.mode = argv['devel'] ? 'devel' : 'release';
-    db.builder.type = db.theme.config.parser;
-    db.builder.parser_name = db.theme.config.parser;
+    db.builder.type = database.data.theme.config.parser;
+    db.builder.parser_name = database.data.theme.config.parser;
     db.language = argv['language'] ?? db.config.language ?? 'en-US';
     db.site = database.data.builder.site;
     db.sort = database.data.builder.sort;
@@ -110,7 +96,7 @@ async function App(override_argv) {
         }
     })();
 
-    let provided_theme_config = GObject.mix(db.theme.variables, db.config.theme?.options ?? {}, true);
+    let provided_theme_config = GObject.mix(database.data.theme.variables, database.data.general.config.theme?.options ?? database.data.general.config['theme-options'] ?? {}, true);
 
     // Load theme-side plugin
     db.builder.plugin = await loadPlugin(PROVISION);
