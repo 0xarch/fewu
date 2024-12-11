@@ -1,7 +1,8 @@
+import database from '#database';
+import Console from '#util/Console';
+
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import db from '#db';
-import ErrorLogger from '#core/error_logger';
 
 let langfile = {};
 let lang_fallback = {};
@@ -11,19 +12,20 @@ function setFile(json) {
 }
 
 function autoSetFile() {
+    const EXTRA_DIRECTORY = database.data.directory.theme.extraDirectory;
     try {
-        let lang_fb_json = JSON.parse(readFileSync(join(db.theme.dirs.extra, 'i18n.default.json')).toString())
+        let lang_fb_json = JSON.parse(readFileSync(join(EXTRA_DIRECTORY, 'i18n.default.json')).toString())
         lang_fallback = lang_fb_json;
     } catch (e) {
-        ErrorLogger.couldNotLoadI18nDefault();
+        Console.error(`Could not read default i18n profile.`);
     }
     {
-        let lang_file_path = join(db.theme.dirs.extra, 'i18n.' + db.language + '.json');
+        const LANG_FILE_PATH = join(EXTRA_DIRECTORY, `i18n.${database.data.general.lang}.json`);
         try {
-            let lang_fl_json = JSON.parse(readFileSync(lang_file_path).toString())
+            let lang_fl_json = JSON.parse(readFileSync(LANG_FILE_PATH).toString())
             langfile = lang_fl_json;
         } catch (e) {
-            ErrorLogger.couldNotLoadI18nFile();
+            Console.error(`Could not read default i18n profile. ${LANG_FILE_PATH}`);
         }
     }
 }
