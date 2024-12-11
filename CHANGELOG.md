@@ -18,6 +18,9 @@
     * `TemplateString`: Replaces `#core/gstring`. (Formerly `GString`, but with some tweaks)
 
 * New `AbstractPost` class, which stores type declarations. (Do not use TypeScript)
+* New `AbstractExposedApi` class.
+* New `PostIdentifier` class, which replaces `Container` class.
+* New `PostIdentifierCollection` class.
 
 * Use `split` `foreach` instead of `cycling` `varias` in working (as `cycling` and `varias` are hard to understand)
 >> NOTE that `foreach` will be `each` in page template.
@@ -36,11 +39,22 @@
 * `#core/init` now mainly uses `fs/promises`.
 * `#core/init` now uses `fs/promises`.
 * `#core/builder` now uses `fs/promises`.
+* use `${name}.html` instead of `${name}/index.html` for posts.
+* Built-in module `search` now use formatted log.
+* Rebuild `main-enter.js`.
+* `database.initDone()` will be replaced as `globalThis.DATABASE_INIT_DONE`
+* `i18n` now uses new apis.
+* `loader` now partially uses new apis.
+* `part` now partially uses new apis.
+* `database/builder` now stores data by `AbstractExposedApi`
 
 ### Removed
 * Remove feature `markdown:foreword/nullOnDefault`.
 * Remove feature `markdown:foreword/warn`.
 * Remove feature `fewu:path/autoRoot`, it's now a built-in fallback when `general.site-relative-root` is not configured (We recommend auto-configure, chich needs to fill `website.url` with website url (like `0xarch.github.io`)).
+* Remove unused code in `app.js`.
+* Dropped all `db.theme` and `db.dirs.theme`.
+
 
 ### Fixed
 * All files under post directory are recognized as post.
