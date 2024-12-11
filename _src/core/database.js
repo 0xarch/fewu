@@ -31,12 +31,12 @@ let db = {
          * @deprecated since v2.2.6
          * @instead thiss.dirs
          */
-        theme: {
-            root: '',
-            extra: '',
-            layout: '',
-            files: ''
-        }
+        // theme: {
+        //     root: '',
+        //     extra: '',
+        //     layout: '',
+        //     files: ''
+        // }
     },
     feature: {
         enabled: [],
@@ -70,24 +70,6 @@ let db = {
         exposed: void 0,
         plugin: void 0,
         features: []
-    },
-    theme: {
-        /**
-         * @type {object}
-         */
-        config: void 0,
-        /**
-         * @type {Collection}
-         */
-        settings: void 0,
-        name: '',
-        variables: '',
-        dirs: {
-            root: '',
-            extra: '',
-            layout: '',
-            files: ''
-        }
     },
     proc: {
         time: new Date()
@@ -128,10 +110,10 @@ let db = {
                 }
             }
 
-            db.theme.dirs.root = join('_themes', args['theme'] || config.theme?.name);
-            db.theme.dirs.extra = join(db.theme.dirs.root, 'extra');
-            db.theme.dirs.layout = join(db.theme.dirs.root, 'layouts');
-            db.theme.dirs.files = join(db.theme.dirs.root, 'files');
+            // db.theme.dirs.root = join('_themes', args['theme'] || config.theme?.name);
+            // db.theme.dirs.extra = join(db.theme.dirs.root, 'extra');
+            // db.theme.dirs.layout = join(db.theme.dirs.root, 'layouts');
+            // db.theme.dirs.files = join(db.theme.dirs.root, 'files');
         },
         setFallbackValues(config, db){
             // Module
