@@ -1,3 +1,11 @@
+import NewPromise from "#util/NewPromise";
+
+let { promise: DATABASE_INIT_DONE, resolve: DATABASE_INIT_RESOLVE } = NewPromise.withResolvers();
+
+globalThis.DATABASE_INIT_DONE = DATABASE_INIT_DONE;
+
+// we must mount DATABASE_INIT_DONE on globalThis before importing other components, as there may be errors
+
 import Database from "./database.mjs";
 import Argv from "#util/Argv";
 import { readFileSync, existsSync } from "fs";
@@ -19,5 +27,7 @@ try {
 }
 
 const database = new Database(config);
+
+database.initDone().then(DATABASE_INIT_RESOLVE);
 
 export default database;
