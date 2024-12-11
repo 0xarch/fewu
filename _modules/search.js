@@ -1,17 +1,18 @@
+import database from "#database";
 import db from "#db";
 import { writeFile } from "fs";
 import { join } from "path";
 
 async function generateSearchStrings() {
-    console.log('[INFO] [Module/search] Search is enabled.');
-    if (!db.theme.config?.module?.search){
-        console.log('[INFO] [Module/search] Your theme does not support Search.');
+    const THEME_CONFIG = database.data.theme.config.module?.search;
+    console.log('[INFO]  [Module/search] Search is enabled.');
+    if (!THEME_CONFIG){
+        console.log('[INFO]  [Module/search] Your theme does not support Search.');
         return;
     }
-    let config = db.theme.config.module.search;
-    if (config.use) {
-    console.log('[INFO] [Module/search] Generating...');
-    let search_config = config.use;
+    if (THEME_CONFIG.use) {
+    console.log('[INFO]  [Module/search] Generating...');
+    let search_config = THEME_CONFIG.use;
     let arr = [];
     let title = search_config.includes('title'),
         id = search_config.includes('id'),
@@ -28,7 +29,7 @@ async function generateSearchStrings() {
         arr.push({ 'content': acontent, href, atitle });
     }
     writeFile(join(PUBLIC_DIRECTORY, 'searchStrings.json'), JSON.stringify(arr), () => {
-        console.log('[INFO] [Module/search] Generation complete.');
+        console.log('[INFO]  [Module/search] Generation complete.');
     });
     }
 }
