@@ -18,7 +18,7 @@ class GeneralSection extends AbstractSection {
             mutable: false
         },promise);
         this.config = config;
-        this.lang = config.general?.lang ?? config.language ?? Argv['--lang'] ?? process.env.lang.replace(/\..*?$/,'').replace(/_/,'-');
+        this.lang = (config.general?.lang ?? config.language ?? Argv['--lang'] ?? process.env.lang).replace(/\..*?$/,'').replace(/_/,'-');
         resolve('general');
     }
 }
