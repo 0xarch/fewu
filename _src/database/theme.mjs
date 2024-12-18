@@ -18,6 +18,11 @@ class ThemeSection extends AbstractSection {
      */
     name;
 
+    /**
+     * @type {object}
+     */
+    mixedVariables;
+
     constructor(config){
         let {promise,resolve,reject} = NewPromise.withResolvers();
         super({

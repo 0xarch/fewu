@@ -24,14 +24,14 @@ async function App(override_argv) {
     // mount
     global.args = override_argv || gopt(process.argv);
 
-    db.proc.args = args;
+    // db.proc.args = args;
 
     await globalThis.DATABASE_INIT_DONE;
     console.log(`Starting build..`);
     db.config = database.data.general.config;
     db.settings = new Collection(Object.assign({},db.config));
 
-    const argv = db.proc.args;
+    const argv = args;
 
     db.$.resolveDirectories(db.config,db);
 
@@ -65,13 +65,11 @@ async function App(override_argv) {
 
     i18n.autoSetFile();
 
-    db.constants = (await import('#core/constants')).default;
-
     const PROVISION = {
         db,
-        site: db.site,
-        proc: db.proc,
-        CONSTANTS: db.constants,
+        site: database.data.builder.site,
+        sort: database.data.builder.sort,
+        CONSTANTS: database.data.constant,
         fewu: {
             logo: fewu_logo,
         },
@@ -96,7 +94,7 @@ async function App(override_argv) {
         }
     })();
 
-    let provided_theme_config = GObject.mix(database.data.theme.variables, database.data.general.config.theme?.options ?? database.data.general.config['theme-options'] ?? {}, true);
+    database.data.theme.mixedVariables = GObject.mix(database.data.theme.variables, database.data.general.config.theme?.options ?? database.data.general.config['theme-options'] ?? {}, true);
 
     // Load theme-side plugin
     db.builder.plugin = await loadPlugin(PROVISION);
@@ -104,26 +102,30 @@ async function App(override_argv) {
 
     loadModules(PROVISION);
 
-    db.builder.api_required = {
-        Plugin: db.builder.plugin,
+    database.data.builder.exposedApi = {
         plugin: db.builder.plugin,
         posts: db.site.posts,
         excluded_posts: db.site.excluded_posts,
-        sort: db.sort,
         ID: db.sort.ID,
         IDMap: db.site.ID,
-        settings: db.config,
-        theme: provided_theme_config,
-        user: db.config.user,
-        __root_directory__: db.dirs.root,
+        settings: database.data.general.config,
+        user: database.data.user,
+        __root_directory__: database.data.directory.buildRootDirectory,
         __title__: __get_title,
         file: db.file,
         i18n: i18n.i18n,
         mix: GObject.mix,
-        has_property: (...I) => GObject.hasProperty(...I),
+        has_property: GObject.hasProperty,
         get_property: GObject.getProperty,
-        ...PROVISION
-    };
+        GObject,
+        db,
+        site: database.data.builder.site,
+        sort: database.data.builder.sort,
+        theme: database.data.theme.mixedVariables,
+        CONSTANTS: database.data.constant,
+    }
+
+    db.builder.api_required = database.data.builder.exposedApi;
 
     part.buildPages();
 

@@ -22,7 +22,7 @@ class DirectorySection extends AbstractSection {
         this.publicDirectory = config.general['public-directory'] ?? config.build?.public ?? config.build?.public_directory ?? config.publicDirectory ?? config.public_directory ?? "public";
         this.buildRootDirectory = config.general['site-relative-root'] ?? config.build?.root ?? (()=>{
             let urlRegex = /(?:.*?:\/\/)?(?:.*?\.).*?\..*?\//;
-            let configuredPageUrl = config.website?.url ?? config.website?.URL;
+            let configuredPageUrl = config.general.url ?? config.website?.url ?? config.website?.URL;
             if (urlRegex.test(configuredPageUrl)) {
                 let urlRoot = urlRegex.exec(configuredPageUrl)[0];
                 let relativeUrl = configuredPageUrl.replace(urlRoot, '');

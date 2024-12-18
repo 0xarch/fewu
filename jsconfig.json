@@ -8,7 +8,8 @@
             "#class/*": ["./_src/class/*.mjs"],
             "#modules": ["./_modules"],
             "#util/*": ["./_src/util/*.mjs"],
-            "#database": ["./_src/database/main.mjs"]
+            "#database": ["./_src/database/main.mjs"],
+            "#common/*": ["./_src/common/*.mjs"]
         }
     },
     "exclude": [

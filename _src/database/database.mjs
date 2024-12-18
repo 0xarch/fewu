@@ -1,18 +1,22 @@
 import BuilderSection from "./builder.mjs";
+import ConstantSection from "./constants.mjs";
 import DefaultSection from "./default.mjs";
 import DirectorySection from "./directory.mjs";
 import FeatureSection from "./feature.mjs";
 import GeneralSection from "./general.mjs";
+import ModuleSection from "./module.mjs";
 import ProcessSection from "./process.mjs";
 import ThemeSection from "./theme.mjs";
 import UserSection from "./user.mjs";
 
 class DataStore {
     builder;
+    constant;
     directory;
     default;
     feature;
     general;
+    module;
     process;
     theme;
     user;
@@ -24,6 +28,8 @@ class DataStore {
      */
     constructor(config, database) {
         this.builder = new BuilderSection(config);
+        // section: constant
+        this.constant = new ConstantSection(config);
         // section: default
         this.default = new DefaultSection(config);
         // section: directory
@@ -32,6 +38,8 @@ class DataStore {
         this.feature = new FeatureSection(config);
         // section: general
         this.general = new GeneralSection(config);
+        // section: module
+        this.module = new ModuleSection(config);
         // section: process
         this.process = new ProcessSection(config);
         // section: theme
@@ -48,10 +56,12 @@ class DataStore {
     async #init(database) {
         Promise.allSettled([
             this.builder.$done,
+            this.constant.$done,
             this.default.$done,
             this.directory.$done,
             this.feature.$done,
             this.general.$done,
+            this.module.$done,
             this.process.$done,
             this.theme.$done,
             this.user.$done

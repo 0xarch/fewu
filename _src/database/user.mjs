@@ -14,7 +14,7 @@ class UserSection extends AbstractSection {
         this.name = config.name;
         this.url = config.url ?? '/';
         this.avatar = config.avatar;
-        this.data = Object.fromEntries(Object.entries(config.data ?? {}));
+        this.data = Object.fromEntries(Object.entries(config.user?.data ?? {}));
 
         resolve('user');
     }
