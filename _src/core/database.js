@@ -1,5 +1,3 @@
-import { join } from 'path';
-
 let db = {
     /**
      * @type {Collection}
@@ -67,14 +65,9 @@ let db = {
          * @type {object}
          */
         api_required: void 0,
-        exposed: void 0,
         plugin: void 0,
         features: []
     },
-    proc: {
-        time: new Date()
-    },
-    constants: void 0,
     $: {
         resolveDirectories(config, db) {
             db.dirs.posts = config.postDirectory ?? config.post_directory ?? config.build?.post_directory ?? "posts";

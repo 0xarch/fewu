@@ -1,4 +1,3 @@
-let common_arg = [], tag = [], category = [];
 let args = process.argv;
 let Argv = {
     0: args[0],

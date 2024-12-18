@@ -1,18 +1,3 @@
-const TERMINAL_STYLE_END = `\x1b[0m`;
-const TERMINAL_COLOR = {
-    BLACK: '30', RED: '31',
-    GREEN: '32', YELLOW: '33',
-    BLUE: '34', MAGENTA: '35',
-    CYAN: '36', LIGHTGREY: '37',
-    WHITE: '39'
-};
-const TERMINAL_EFFECT = {
-    BOLD: ';1',
-    ITALIC: ';3',
-    UNDERLINE: ';4',
-    NONE: ''
-};
-
 class Console {
     static controlStart = '\x1b[';
     static controlEnd = '\x1b[0m';
