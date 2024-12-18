@@ -28,6 +28,7 @@
 
 ### Changed
 * Rebuild `fewu --new` with human-friendly argument parser.
+* Rebuild `fewu --init`.
 * Rebuild `Database`. **WORKING**
 > `default` `directory` `feature` `general` `process` `theme` `user` section is now available.
 > `feature` section use symbols different from current.
