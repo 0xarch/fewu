@@ -1,64 +1,59 @@
 # CHANGELOG
 
-**RELEASE**
+Latest release version: REL1.2.5
+Developing version: DEV1.3.0 (alias 1.3.0-devel, or 2.0.0)
 
 ## DEV1.3.0 - 2024-11-23
 
-### New
-* Optional Features:
-    * `generator/allow-custom-marked-extension` : Specific tricks for some marked extensions that does not follow the common usage. (like `marked-admonition-extension`)
-    * `generator/leave-no-h1` : Do not automatically add heading to posts.
-    * `generator/copy-next-image` : Get images referenced in post and put it into generated folder. (Only works with images next to post.md)
-* New utilities:
-    * `Argv`: Provides parsed program arguments. Replacing `gopt` in `#core/run`.
-    * `Console`: Replaces `info,info.red,warn` in `#core/run`
-    * `Markdown`: Provides a simple interface to interact with marked (or other parser may be added).
-    * `NewPromise`: Add some Promise features that are not supported in Node.js 20.
-    * `Text`: Replaces `#core/text_process`.
-    * `TemplateString`: Replaces `#core/gstring`. (Formerly `GString`, but with some tweaks)
+### Changes in features
 
+#### Renamed optional features
+* `markdown:markedExtras` renamed to `generator/allow-custom-marked-extension`.
+* `markdown:noHeaderId` renamed to `generator/markdown-no-header-id`.
+* `fewu/path/noSuffix` renamed to `path/no-md-suffix`.
+
+#### New (functions in) optional features
+* `generator/allow-custom-marked-extension` : Specific tricks for some marked extensions that does not follow the common usage. (like `marked-admonition-extension`)
+* `generator/leave-no-h1` : Do not automatically add heading to posts.
+* `generator/copy-next-image` : Get images referenced in post and put it into generated folder. (Only works with images next to post.md)
+
+#### Removed optional features
+* Remove feature `markdown:foreword/nullOnDefault`.
+* Remove feature `markdown:foreword/warn`.
+* Remove feature `fewu:path/autoRoot`, it's now a built-in fallback when `general.site-relative-root` is not configured (We recommend auto-configure, chich needs to fill `website.url` with website url (like `0xarch.github.io`)).
+
+### Changes in interaction
+The main entrance has rebuilt to be more flexible
+* Rebuild `fewu --new` with human-friendly argument parser.
+* Rebuild `fewu --init`.
+
+### Utilities
+
+#### New utilities
+* `Argv`: Provides parsed program arguments. Replacing `gopt` in `#core/run`.
+* `Console`: Replaces `info,info.red,warn` in `#core/run`
+* `Markdown`: Provides a simple interface to interact with marked (or other parser may be added).
+* `NewPromise`: Add some Promise features that are not supported in Node.js 20.
+* `Text`: Replaces `#core/text_process`.
+* `TemplateString`: Replaces `#core/gstring`. (Formerly `GString`, but with some tweaks)
+
+### Code
 * New `AbstractPost` class, which stores type declarations. (Do not use TypeScript)
 * New `AbstractExposedApi` class.
 * New `PostIdentifier` class, which replaces `Container` class.
 * New `PostIdentifierCollection` class.
-
-* Use `split` `foreach` instead of `cycling` `varias` in working (as `cycling` and `varias` are hard to understand)
->> NOTE that `foreach` will be `each` in page template.
->> THIS IS UNSTABLE CHANGE.
-
-### Changed
-* Rebuild `fewu --new` with human-friendly argument parser.
-* Rebuild `fewu --init`.
 * Rebuild `Database`. **WORKING**
-> `default` `directory` `feature` `general` `process` `theme` `user` section is now available.
-> `feature` section use symbols different from current.
 > The old db API will be kept until 2.0.0 (maybe?)
 * Rebuild `Post`.
-* `markdown:markedExtras` renamed to `generator/allow-custom-marked-extension`.
-* `markdown:noHeaderId` renamed to `generator/markdown-no-header-id`.
-* `fewu/path/noSuffix` renamed to `path/no-md-suffix`.
-* `#core/init` now mainly uses `fs/promises`.
-* `#core/init` now uses `fs/promises`.
 * `#core/builder` now uses `fs/promises`.
 * use `${name}.html` instead of `${name}/index.html` for posts.
 * Built-in module `search` now use formatted log.
-* Rebuild `main-enter.js`.
-* `database.initDone()` will be replaced as `globalThis.DATABASE_INIT_DONE`
-* `i18n` now uses new apis.
-* `loader` now partially uses new apis.
-* `part` now partially uses new apis.
-* `database/builder` now stores data by `AbstractExposedApi`
+* Fixed a bug that all files under post directory are recognized as a post file.
 
-### Removed
-* Remove feature `markdown:foreword/nullOnDefault`.
-* Remove feature `markdown:foreword/warn`.
-* Remove feature `fewu:path/autoRoot`, it's now a built-in fallback when `general.site-relative-root` is not configured (We recommend auto-configure, chich needs to fill `website.url` with website url (like `0xarch.github.io`)).
-* Remove unused code in `app.js`.
-* Dropped all `db.theme` and `db.dirs.theme`.
-
-
-### Fixed
-* All files under post directory are recognized as post.
+### Critical changes
+* Use `split` `foreach` instead of `cycling` `varias` in working (as `cycling` and `varias` are hard to understand)
+>> NOTE that `foreach` will be `each` in page template.
+>> THIS IS UNSTABLE CHANGE.
 
 ## REL1.2.5 - 2024-11-18
 
