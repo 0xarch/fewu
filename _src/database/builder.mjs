@@ -21,7 +21,7 @@ class BuilderSection extends AbstractSection {
         super({
             mutable: false
         },promise);
-        this.mode = Argv['--mode']?.[0] == 'devel' ? 'devel' : 'release' ?? Argv['devel'] ? 'devel' : 'release';
+        this.mode = Argv['--mode']?.[0] == 'devel' ? 'devel' : 'release' ?? Argv['-D'] ? 'devel' : 'release';
         this.exposedApi = new AbstractExposedApi();
         resolve('builder');
     }
