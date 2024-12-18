@@ -14,8 +14,6 @@ import Text from '#util/Text';
 import NewPromise from '#util/NewPromise';
 import {stat,readFile} from "node:fs/promises";
 
-import { warn } from '#core/run';
-
 import { relative } from 'path';
 import { gfmHeadingId } from 'marked-gfm-heading-id';
 
@@ -36,9 +34,9 @@ let markdownInit = (async function(){
                 if(typeof extension.default === 'function'){
                     markdown.use(extension.default());
                 } else {
-                    warn(['[Post]'],[`In Feature <generator/allow-custom-marked-extension>: ${exName} did not export default as a function. valueOf=${extension.default.valueOf()}.`]);
+                    Console.warn(`[Post/Preparation] In Feature <generator/allow-custom-marked-extension>: ${exName} did not export default as a function. valueOf=${extension.default.valueOf()}.`);
                     if(typeof extension.default.default === 'object') {
-                        warn(['[Post]'],[`Trying to load default.default as default().`]);
+                        Console.warn(`[Post/Preparation] Trying to load default.default as default().`);
                         markdown.use(extension.default.default);
                     }
                 }
@@ -149,7 +147,7 @@ class Post extends AbstractPost {
             if(minifier === undefined){
                 minifier = await dynamicImport('html-minifier');
                 if(minifier === null){
-                    warn(['[Post]'],['Failed to import html-minifier. Ignoring feature <markdown:HTMLMinifier>. Please install html-minifier.']);
+                    Console.warn(['[Post] Failed to import html-minifier. Ignoring feature <markdown:HTMLMinifier>. Please install html-minifier.']);
                 }
             }
             if(minifier){

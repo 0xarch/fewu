@@ -34,12 +34,8 @@ class Cache {
 
 // macros
 function Correspond(from, to) { return new BuiltinCorrespond(from, to) }
-function NULL_OBJECT() {
-    return Object.create(null);
-}
 
 export {
     Cache,
-    Correspond,
-    NULL_OBJECT
+    Correspond
 }

@@ -2,13 +2,13 @@ import database from '#database';
 
 import db from '#db';
 import Collection from '#class/collection';
-import { gopt, fewu_logo, } from '#core/run';
 import GObject from '#core/gobject';
 import * as part from '#core/part';
 import { site, sort, get_file_relative_dir } from '#core/reader';
 import i18n from '#core/i18n';
 import { loadPlugin,loadModules } from '#core/loader';
 import Console from '#util/Console';
+import { value as programLogo } from '#common/logo';
 
 /**
  * @DOCUMENT_OF_APP
@@ -20,35 +20,28 @@ import Console from '#util/Console';
  * 
  * **NOTE** Working in progress
  */
-async function App(override_argv) {
-    // mount
-    global.args = override_argv || gopt(process.argv);
-
-    // db.proc.args = args;
-
+async function App() {
     await globalThis.DATABASE_INIT_DONE;
     console.log(`Starting build..`);
     db.config = database.data.general.config;
     db.settings = new Collection(Object.assign({},db.config));
 
-    const argv = args;
-
     db.$.resolveDirectories(db.config,db);
 
     // Mount on global
-    global.PUBLIC_DIRECTORY = db.dirs.public;
+    globalThis.PUBLIC_DIRECTORY = db.dirs.public;
 
     database.data.builder.site = await site();
     database.data.builder.sort = sort(database.data.builder.site.posts);
 
-    db.builder.mode = argv['devel'] ? 'devel' : 'release';
+    db.builder.mode = database.data.builder.mode;
     db.builder.type = database.data.theme.config.parser;
     db.builder.parser_name = database.data.theme.config.parser;
-    db.language = argv['language'] ?? db.config.language ?? 'en-US';
+    db.language = database.data.general.lang;
     db.site = database.data.builder.site;
     db.sort = database.data.builder.sort;
     db.file = get_file_relative_dir;
-    db.modules.enabled = db.config.modules?.enabled instanceof Array ? db.config.modules.enabled : [];
+    db.modules.enabled = database.data.module.enabled;
 
     Console.info('[App] Build mode is ',{
         color: 'GREEN',
@@ -71,7 +64,7 @@ async function App(override_argv) {
         sort: database.data.builder.sort,
         CONSTANTS: database.data.constant,
         fewu: {
-            logo: fewu_logo,
+            logo: programLogo
         },
         GObject,
     }
@@ -123,6 +116,9 @@ async function App(override_argv) {
         sort: database.data.builder.sort,
         theme: database.data.theme.mixedVariables,
         CONSTANTS: database.data.constant,
+        fewu: {
+            logo: programLogo
+        }
     }
 
     db.builder.api_required = database.data.builder.exposedApi;

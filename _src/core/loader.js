@@ -3,7 +3,6 @@ import database from "#database";
 import db from "#db";
 import { join } from 'path';
 import { readFileSync,existsSync } from "fs";
-import { warn } from "#core/run";
 import Console from "#util/Console";
 
 async function loadPlugin(PROVISION) {
@@ -17,7 +16,7 @@ async function loadPlugin(PROVISION) {
             const RETURN_VALUE = PLUGIN.install(PROVISION);
 
             if (RETURN_VALUE === -1) {
-                warn(['The'], ['plugin', 'YELLOW'], ['returns -1, please check it.']);
+                Console.warn(`The plugin in ${PLUGIN_PATH} returns -1, please check it.`);
             }
             theme_plugin_provide = PLUGIN.provide;
         } catch (e) {
@@ -50,7 +49,7 @@ async function loadModules(PROVISION) {
             let Module = (await import(module_path)).default;
             const RETURN_VALUE = Module.exec(PROVISION);
             if(RETURN_VALUE === -1){
-                warn(['The module'],[module_name,'YELLOW'],['returns -1, please check it.']);
+                Console.warn(`The module ${module_name} returns -1, please check it.`);
             }
         } catch (e) {
             Console.error(`Error while loading module ${module_name} ${e}`);

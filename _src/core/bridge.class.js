@@ -10,7 +10,6 @@ import Post from '#class/post';
 import {
     Cache,
     Correspond,
-    NULL_OBJECT,
 } from '#core/struct';
 
 export {
@@ -25,5 +24,4 @@ export {
     Collection,
     Cache,
     Correspond,
-    NULL_OBJECT
 }

@@ -1,6 +1,6 @@
-import { info } from "#core/run";
 import { existsSync, readFileSync } from "fs";
 import { join } from 'path';
+import Console from "./Console.mjs";
 
 async function dynamicImport(id){
     let path = id;
@@ -15,7 +15,7 @@ async function dynamicImport(id){
                 result = await import(join(path,packageJson.main));
             }
         } catch (e) {
-            info.red(['FAILURE','RED'],['Failed to import'],[id,'YELLOW']);
+            Console.error(`[Util/DynamicImport] Failed to import ${id}, returns with null.`);
             return null;
         }
     }

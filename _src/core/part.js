@@ -3,13 +3,13 @@ import { readFile, cp, mkdir } from 'fs/promises';
 
 import { dirname, join } from 'path';
 import db from '#db';
-import { info } from '#core/run';
 import { procFinal } from '#core/builder';
 import { BuildTemplate, Collection, Layout } from '#struct';
 import { write } from '#core/builder';
 import { existsSync } from 'fs';
 import Console from '#util/Console';
 
+await globalThis.DATABASE_INIT_DONE;
 const { publicDirectory } = database.data.directory;
 const { extraDirectory, fileDirectory,layoutDirectory } = database.data.directory.theme;
 
@@ -22,28 +22,28 @@ async function resolveThemeOperations() {
                     if (v.from.charAt(0) == '@') {
                         switch (v.from) {
                             case "@posts":
-                                cp('posts', join(db.dirs.public, v.to), { recursive: true });
+                                cp('posts', join(publicDirectory, v.to), { recursive: true });
                                 break;
                             case "@icon":
-                                cp('_assets', join(db.dirs.public, v.to), { recursive: true });
+                                cp('_assets', join(publicDirectory, v.to), { recursive: true });
                                 break;
                         }
                     } else {
-                        cp(join(extraDirectory, v.from), join(db.dirs.public, v.to), { recursive: true });
+                        cp(join(extraDirectory, v.from), join(publicDirectory, v.to), { recursive: true });
                     }
                 }
                 break;
         }
     });
 
-    info(['COMPLETE', 'GREEN'], ['OPERATION.THEME', 'MAGENTA', 'BOLD']);
+    Console.info(`[Workflow/Operation] Theme operations are completed.`);
 }
 
 async function copyFiles() {
     cp(fileDirectory, join(publicDirectory, 'files'), { recursive: true }, () => { });
     cp('resources', join(publicDirectory, 'resources'), { recursive: true }, () => { });
 
-    info(['COMPLETE', 'GREEN'], ['OPERATION.COPY', 'MAGENTA', 'BOLD']);
+    Console.info(`[Workflow/Operation] Copy operations are completed.`);
 }
 
 async function buildPosts() {
@@ -88,7 +88,7 @@ async function buildPosts() {
 
 async function buildPages(){
     for (let item of database.data.theme.config.layouts) {
-        write(new Collection({ ...db.builder.api_required }), new Layout(item));
+        write(new Collection({ ...database.data.builder.exposedApi }), new Layout(item));
     }
 }
 

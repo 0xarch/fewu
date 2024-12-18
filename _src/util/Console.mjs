@@ -15,18 +15,18 @@ class Console {
         NONE: ''
     }
 
-    static #parseMessage(messages){
+    static #parseMessage(messages) {
         let parsedMessage = [];
-        for(let message of messages){
-            if(message.msg){
+        for (let message of messages) {
+            if (message.msg) {
                 let prefix = '';
-                if(message.color && message.color in Console.colors){
+                if (message.color && message.color in Console.colors) {
                     prefix += Console.colors[message.color];
                 }
-                if(message.effect && message.effect in Console.effects){
+                if (message.effect && message.effect in Console.effects) {
                     prefix += Console.effects[message.effect];
                 }
-                parsedMessage.push(Console.controlStart+prefix+'m',message.msg,Console.controlEnd);
+                parsedMessage.push(Console.controlStart + prefix + 'm', message.msg, Console.controlEnd);
             } else {
                 parsedMessage.push(message);
             }
@@ -38,27 +38,36 @@ class Console {
      * 
      * @param  {...{color:keyof Console.colors,effect:keyof Console.effects,msg:any}|any} messages 
      */
-    static info(...messages){
+    static info(...messages) {
         let parsedMessage = Console.#parseMessage(messages);
-        console.info(`${Console.controlStart}${Console.colors.GREEN}m[INFO] ${Console.controlEnd}`,...parsedMessage);
+        console.info(`${Console.controlStart}${Console.colors.GREEN}m[INFO] ${Console.controlEnd}`, ...parsedMessage);
     }
 
     /**
      * 
      * @param  {...{color:keyof Console.colors,effect:keyof Console.effects,msg:any}|any} messages 
      */
-    static error(...messages){
+    static error(...messages) {
         let parsedMessage = Console.#parseMessage(messages);
-        console.error(`${Console.controlStart}${Console.colors.RED}m[ERROR]${Console.controlEnd}`,...parsedMessage);
+        console.error(`${Console.controlStart}${Console.colors.RED}m[ERROR]${Console.controlEnd}`, ...parsedMessage);
     }
 
     /**
      * 
      * @param  {...{color:keyof Console.colors,effect:keyof Console.effects,msg:any}|any} messages 
      */
-    static log(...messages){
+    static log(...messages) {
         let parsedMessage = Console.#parseMessage(messages);
-        console.log(`${Console.controlStart}${Console.colors.GREEN}m[LOG]  ${Console.controlEnd}`,...parsedMessage);
+        console.log(`${Console.controlStart}${Console.colors.GREEN}m[LOG]  ${Console.controlEnd}`, ...parsedMessage);
+    }
+
+    /**
+     * 
+     * @param  {...{color:keyof Console.colors,effect:keyof Console.effects,msg:any}|any} messages 
+     */
+    static warn(...messages) {
+        let parsedMessage = Console.#parseMessage(messages);
+        console.log(`${Console.controlStart}${Console.colors.YELLOW}m[WARN] ${Console.controlEnd}`, ...parsedMessage);
     }
 }
 

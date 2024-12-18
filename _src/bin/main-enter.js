@@ -1,9 +1,6 @@
 #!/usr/bin/env node
-import Argv from "#util/Argv";
 
-import { gopt } from "#core/run";
-
-let opt = gopt(process.argv);
+import "#util/Argv";
 
 async function navigation(){
     let executing_task;
@@ -16,7 +13,7 @@ async function navigation(){
     } else {
         executing_task = (await import("../app/app.js")).default;
     }
-    executing_task(opt);
+    executing_task();
 }
 
 navigation();

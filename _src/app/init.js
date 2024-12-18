@@ -25,7 +25,7 @@ async function App() {
     }
     safeWriteFile(join('posts', 'about.md'), POST_TEMPLATE);
     safeWriteFile(join('posts', 'template.md'), POST_TEMPLATE);
-    safeWriteFile('./config.json', JSON.stringify(config, undefined, 4));
+    safeWriteFile('./config.json', config());
 }
 
 export default App;
