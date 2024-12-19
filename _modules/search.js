@@ -1,5 +1,5 @@
+import { get_file_relative_dir } from "#core/reader";
 import database from "#database";
-import db from "#db";
 import { writeFile } from "fs";
 import { join } from "path";
 
@@ -18,8 +18,8 @@ async function generateSearchStrings() {
         id = search_config.includes('id'),
         content = search_config.includes('content'),
         date = search_config.includes('date');
-    for (const article of db.site.posts) {
-        let href = db.file(article.path.website);
+    for (const article of database.data.builder.site.posts) {
+        let href = get_file_relative_dir(article.path.website);
         let atitle = article.title;
         let acontent = '';
         if (title) acontent += '%%%' + article.title;

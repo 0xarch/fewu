@@ -1,4 +1,4 @@
-import GObject from "#core/gobject";
+import GObject from "#util/GObject";
 
 class Collection {
     #obj

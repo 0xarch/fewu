@@ -30,4 +30,6 @@ const database = new Database(config);
 
 database.initDone().then(DATABASE_INIT_RESOLVE);
 
+globalThis.database = database;
+
 export default database;

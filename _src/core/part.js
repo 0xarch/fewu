@@ -2,7 +2,6 @@ import database from '#database';
 import { readFile, cp, mkdir } from 'fs/promises';
 
 import { dirname, join } from 'path';
-import db from '#db';
 import { procFinal } from '#core/builder';
 import { BuildTemplate, Collection, Layout } from '#struct';
 import { write } from '#core/builder';
@@ -50,7 +49,7 @@ async function buildPosts() {
     let filename = join(layoutDirectory, database.data.theme.config.template);
     let template = (await readFile(filename)).toString();
     let build_template = new BuildTemplate(
-        db.builder.parser_name,
+        database.data.theme.config.parser,
         template,
         {
             basedir: layoutDirectory,
@@ -63,7 +62,7 @@ async function buildPosts() {
     const process = (item)=>{
         let destname = join(database.data.directory.publicDirectory, item.path.local);
         procFinal(build_template,{
-            ...db.builder.api_required,
+            ...database.data.builder.exposedApi,
             filename,
             post: item
         },destname).then(()=>{

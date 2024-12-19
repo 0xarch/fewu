@@ -3,6 +3,7 @@ class GObject {
     static isObject(obj) {
         return Object.prototype.toString.call(obj) === '[object Object]';
     }
+
     /**
      * 
      * @param {object} object 
@@ -60,14 +61,6 @@ class GObject {
         return result;
     }
 
-    /**
-     * @deprecated use TEXT.deleteEscapingCharacters
-     * @param {string} str 
-     * @returns {string}
-     */
-    static deleteEscapingChar(str) {
-        return str.replace(/[\,\.\<\>\ \-\+\=\~\`\?\/\|\\\!\@\#\$\%\^\&\*\(\)\[\]\{\}\:\;"'～·「」；：‘’“”，。《》？！￥…、（）]+/g, '');
-    }
 }
 
 function getPropertyPathFrom(property_path) {
@@ -80,8 +73,5 @@ function getPropertyPathFrom(property_path) {
     }
     return path;
 }
-
-// Mount on global
-global.GObject = GObject;
 
 export default GObject;

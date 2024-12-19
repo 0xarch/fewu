@@ -2,14 +2,13 @@ import database from "#database";
 
 import Console from "#util/Console";
 import TemplateString from "#util/TemplateString";
+import GObject from "#util/GObject";
 
 import { mkdir, readFile, writeFile } from "fs/promises";
 
 import { dirname, join as join_path } from "path";
 import { Correspond, BuildTemplate, Layout } from "#struct";
 import parsers from "#core/build_compat";
-import GObject from "#core/gobject";
-import db from "#db";
 
 /**
  * 
@@ -26,7 +25,7 @@ async function write(collection, file) {
 
     // _______ get
     let templateContent = (await readFile(absolute_correspond.from)).toString();
-    let build_template = new BuildTemplate(db.builder.parser_name,
+    let build_template = new BuildTemplate(database.data.theme.config.parser,
         templateContent,
         {
             basedir: THEME_LAYOUT_DIRECTORY,

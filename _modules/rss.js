@@ -1,9 +1,7 @@
 import { join } from 'path';
 import { writeFile } from 'fs';
 
-const db = database;
-
-let root_url = database.config?.website?.URL ?? database.config?.site_url ?? '';
+let root_url = globalThis.database.data.directory.buildRootDirectory;
 
 /**
  * 
@@ -33,8 +31,8 @@ ${articles.map(v =>
 }
 
 function exec() {
-    let conf = db.config.modules.rss ?? {};
-    let text = getRSSFeedXml(conf.title,root_url,conf.description,db.site.posts);
+    const config = globalThis.database.data.module.options.rss ?? {};
+    let text = getRSSFeedXml(config.title,root_url,config.description,globalThis.database.data.builder.site.posts);
     writeFile(join(PUBLIC_DIRECTORY,'feed.xml'),text,(e)=>{if(e)throw e});
 }
 

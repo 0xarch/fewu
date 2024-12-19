@@ -3,7 +3,6 @@ import NewPromise from "#util/NewPromise";
 
 import { basename, join, extname } from "path";
 import * as fs from "fs";
-import db from "#db";
 import { Category, Tag } from "#struct";
 import Post from "#class/post";
 
@@ -41,6 +40,7 @@ async function initializePost(content, id = undefined) {
 async function site() {
     await database.initDone();
     const POST_DIRECTORY = database.data.directory.postDirectory;
+    const EXCLUDED_POSTS = database.data.general.config.excluded_posts ?? [];
     let bid = 1;
     let posts = [],
         excluded_posts = {},
@@ -55,7 +55,7 @@ async function site() {
         let item = basename(path, POST_DIRECTORY);
         let file_data = await initializePost(path, bid);
 
-        if (db.config.excluded_posts.includes(item)){
+        if (EXCLUDED_POSTS.includes(item)){
             excluded_posts[item] = file_data;
         } else {
             for (let cname of file_data.category) {
@@ -157,10 +157,11 @@ function sort(posts) {
  * @returns {string}
  */
 function get_file_relative_dir(file_dir) {
-    if (!file_dir) return db.dirs.root + '/';
+    const ROOT_DIRECTORY = database.data.directory.buildRootDirectory;
+    if (!file_dir) return ROOT_DIRECTORY + '/';
     if (file_dir.startsWith('/'))
         file_dir = file_dir.substring(1);
-    return join(db.dirs.root, '/', file_dir);
+    return join(ROOT_DIRECTORY, '/', file_dir);
 }
 
 export {

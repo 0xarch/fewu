@@ -36,14 +36,15 @@ The main entrance has rebuilt to be more flexible
 * `NewPromise`: Add some Promise features that are not supported in Node.js 20.
 * `Text`: Replaces `#core/text_process`.
 * `TemplateString`: Replaces `#core/gstring`. (Formerly `GString`, but with some tweaks)
+* `GObject`: Moved out of `core`.
+* `I18n`: Abstracted i18n utility.
 
 ### Code
 * New `AbstractPost` class, which stores type declarations. (Do not use TypeScript)
 * New `AbstractExposedApi` class.
 * New `PostIdentifier` class, which replaces `Container` class.
 * New `PostIdentifierCollection` class.
-* Rebuild `Database`. **WORKING**
-> The old db API will be kept until 2.0.0 (maybe?)
+* Rebuild `Database`.
 * Rebuild `Post`.
 * `#core/builder` now uses `fs/promises`.
 * use `${name}.html` instead of `${name}/index.html` for posts.
@@ -51,6 +52,7 @@ The main entrance has rebuilt to be more flexible
 * Fixed a bug that all files under post directory are recognized as a post file.
 
 ### Critical changes
+* The old `database` or `db` API has been removed. Compatibility of `db.config` will be kept until 2.1.0.
 * Use `split` `foreach` instead of `cycling` `varias` in working (as `cycling` and `varias` are hard to understand)
 >> NOTE that `foreach` will be `each` in page template.
 >> THIS IS UNSTABLE CHANGE.
