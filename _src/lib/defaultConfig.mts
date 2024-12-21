@@ -8,7 +8,9 @@ const defaultConfig = {
     root: '/',
     source_dir: 'source',
     public_dir: 'public',
-    theme: 'Neo'
+    theme: 'Neo',
+    features: [] as string[],
+    modules: [] as string[]
 }
 
 export default defaultConfig;
