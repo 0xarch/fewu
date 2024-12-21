@@ -10,7 +10,9 @@ const app = new StandaloneApp({
 async function App(){
     console.info(app.humanize());
 
-    const [title, file_location]: [string,string] = Argv['--new'].reverse();
+    // const [title, file_location]: [string,string?] = (Argv['--new'] as string[]).reverse();
+    const title = (Argv['--new'] as string[]).reverse()[0];
+    const file_location = (Argv['--new'] as string[]).reverse()[1];
     const tags: string[] = Array.from<string>(Argv['-t'] ?? []).concat(...Array.from<string>(Argv['--tag'] ?? []));
     const categories: string[] = Array.from<string>(Argv['-c'] ?? []).concat(...Array.from<string>(Argv['--category'] ?? []));
 
