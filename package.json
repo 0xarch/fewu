@@ -1,6 +1,6 @@
 {
     "name": "fewu",
-    "main": "_src/app/app.js",
+    "main": "_dist/app/app.js",
     "version": "2.0.0",
     "dependencies": {
         "ejs": "^3.1.5",
@@ -9,7 +9,7 @@
         "marked-gfm-heading-id": "^3.1.3",
         "marked-mangle": "^1.1.7",
         "pug": "^3.0.2",
-        "ts-node": "^10.9.2"
+        "typescript": "^5.7.2"
     },
     "imports": {
         "#core/*": "./_dist/core/*.js",
