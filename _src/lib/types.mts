@@ -1,3 +1,3 @@
-import { defaultConfigType } from "./defaultConfig.mjs";
+import { defaultConfigType } from "./fewu/defaultConfig.mjs";
 
 export declare interface Config extends defaultConfigType {};

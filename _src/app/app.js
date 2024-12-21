@@ -1,3 +1,5 @@
+import Context from '#lib/fewu/context';
+
 import database from '#database';
 
 import i18n from '#core/i18n';
@@ -19,6 +21,8 @@ import { value as programLogo } from '#common/logo';
  * **NOTE** Working in progress
  */
 async function App() {
+    const ctx = new Context();
+    ctx.emit('startup');
     await globalThis.DATABASE_INIT_DONE;
     console.log(`Starting build..`);
     // db.config = database.data.general.config;

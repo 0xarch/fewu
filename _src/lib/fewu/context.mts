@@ -1,7 +1,10 @@
-import { Config } from "./types.mjs";
+import { Config } from "../types.mjs";
 import { version } from "./fewu.mjs";
 import defaultConfig from "./defaultConfig.mjs";
 
+import Argv from "#util/ts/Argv";
+
+import { readFile } from "fs";
 import { join } from "path";
 import { EventEmitter } from "events";
 
@@ -27,6 +30,7 @@ class Context extends EventEmitter {
     public readonly PUBLIC_DIRECTORY: string;
     public readonly SOURCE_DIRECTORY: string;
     public readonly THEME_DIRECTORY: string;
+    public readonly CONFIG_PATH: string;
 
     constructor(baseDirectory = process.cwd()) {
         super();
@@ -38,6 +42,11 @@ class Context extends EventEmitter {
         this.PUBLIC_DIRECTORY = join(baseDirectory, 'public');
         this.SOURCE_DIRECTORY = join(baseDirectory, 'source');
         this.THEME_DIRECTORY = join(baseDirectory, 'themes', this.config.theme);
+        this.CONFIG_PATH = join(baseDirectory,Argv['-C']?.[0] ?? 'config.json');
+
+        (async (ctx: Context)=>{
+
+        })(this);
     }
 }
 
