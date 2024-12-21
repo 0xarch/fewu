@@ -9,7 +9,7 @@ async function navigation(){
     } else if (process.argv.includes('--init')) {
         executing_task = (await import("../app/init.mjs")).default;
     } else if (process.argv.includes('--help') || process.argv.includes('-h')) {
-        executing_task = (await import("../app/help.js")).default;
+        executing_task = (await import("../app/help.mjs")).default;
     } else {
         executing_task = (await import("../app/app.js")).default;
     }

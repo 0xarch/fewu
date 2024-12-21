@@ -1,6 +1,18 @@
-function displayHelp() {
+import StandaloneApp from "#util/ts/StandaloneApp";
+
+const app = new StandaloneApp({
+    version: '1.0.0',
+    name: 'io.fewu.help'
+});
+
+declare interface display {
+    [key: string]: string | string[]
+}
+
+async function App() {
+    console.info(app.humanize());
     let pad = 0
-    let displays = {
+    let displays: display = {
         '--new <path> <title> <--arguments-->': [
             `Touch a markdown file with basic information frame in the posts directory.`,
             `This argument will override all arguments.`],
@@ -39,8 +51,8 @@ function displayHelp() {
             displays[k].forEach(v =>
                 console.log(' '.repeat(pad), v))
         }
-        console.log()
+        console.log();
     }
 }
 
-export default displayHelp;
+export default App;
