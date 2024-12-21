@@ -1,9 +1,9 @@
-#!/usr/bin/node --experimental-strip-types
+#!/usr/bin/env node
 
 import "#util/Argv";
 
 async function navigation(){
-    let executing_task;
+    let executing_task: Function;
     if(process.argv.includes('--new') || process.argv.includes('-n')){
         executing_task = (await import("../app/new.js")).default;
     } else if (process.argv.includes('--init')) {

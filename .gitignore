@@ -6,6 +6,7 @@ resources/
 _themes/*
 _src/Trashed/
 _src/test.js
+_dist
 config.json
 package-lock.json
 .directory

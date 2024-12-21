@@ -1,0 +1,19 @@
+{
+    "extends": "ts-node/node16/tsconfig.json",
+
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "ESNext",
+        "outDir": "./_dist",
+        "noEmit": false,
+        "allowJs": true,
+        "strict": true
+    },
+    "exclude": [
+        "./node_modules",
+        "./_themes",
+        "./_modules",
+        "./_dist",
+        "./_src/Trashed"
+    ]
+}
