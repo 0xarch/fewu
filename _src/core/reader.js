@@ -40,7 +40,7 @@ async function site() {
         tags = {};
     let categoriesMap = new Map,
         tagsMap = new Map;
-    let postPaths = (await ExtendedFS.traverse(POST_DIRECTORY)).value;
+    let postPaths = (await ExtendedFS.traverse(POST_DIRECTORY));
     for (let path of postPaths) {
         if(extname(path) != '.md') continue;
         let item = basename(path, POST_DIRECTORY);

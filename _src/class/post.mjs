@@ -10,11 +10,11 @@ import database from '#database';
 import dynamicImport from '#util/dynamicImport';
 import Markdown from '#util/Markdown';
 import TemplateString from '#util/TemplateString';
-import Text from '#util/Text';
 import NewPromise from '#util/NewPromise';
-import {stat,readFile} from "node:fs/promises";
+import Text from '#util-ts/Text';
 
-import { relative } from 'path';
+import {stat,readFile} from "node:fs/promises";
+import { relative } from 'node:path';
 import { gfmHeadingId } from 'marked-gfm-heading-id';
 
 let markdown = new Markdown();
