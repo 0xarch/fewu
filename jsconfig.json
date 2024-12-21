@@ -2,19 +2,43 @@
     "compilerOptions": {
         "baseUrl": "./",
         "paths": {
-            "#core/*": ["./_src/core/*.js"],
-            "#db": ["./_src/core/database.js"],
-            "#struct": ["./_src/core/bridge.class.js"],
-            "#class/*": ["./_src/class/*.mjs"],
-            "#modules": ["./_modules"],
-            "#util/*": ["./_src/util/*.mjs"],
-            "#util-ts/*": ["./_src/util/ts/*.mts"],
-            "#database": ["./_src/database/main.mjs"],
-            "#common/*": ["./_src/common/*.mjs"],
-            "#lib/*": ["./_src/lib/*.mts"]
+            "#core/*": [
+                "./_src/core/*.js"
+            ],
+            "#db": [
+                "./_src/core/database.js"
+            ],
+            "#struct": [
+                "./_src/core/bridge.class.js"
+            ],
+            "#class/*": [
+                "./_src/class/*.mjs"
+            ],
+            "#modules": [
+                "./_modules"
+            ],
+            "#util/*": [
+                "./_src/util/*.mjs",
+                "./_src/util/*.mts"
+            ],
+            "#util-ts/*": [
+                "./_src/util/ts/*.mts"
+            ],
+            "#database": [
+                "./_src/database/main.mjs"
+            ],
+            "#common/*": [
+                "./_src/common/*.mjs"
+            ],
+            "#lib/*": [
+                "./_src/lib/*.mts"
+            ]
         }
     },
     "exclude": [
-        "_assets","_doc","_themes","_dist"
+        "_assets",
+        "_doc",
+        "_themes",
+        "_dist"
     ]
 }
