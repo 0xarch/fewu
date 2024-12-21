@@ -17,8 +17,10 @@
         "#class/*": "./_src/class/*.mjs",
         "#modules/*": "./_modules/*",
         "#util/*": "./_src/util/*.mjs",
+        "#util-ts/*": "./_src/util/ts/*.mts",
         "#database": "./_src/database/main.mjs",
-        "#common/*": "./_src/common/*.mjs"
+        "#common/*": "./_src/common/*.mjs",
+        "#lib/*": "./_src/lib/*.mjs"
     },
     "bin": {
         "fewu": "_src/bin/main-enter.js"
@@ -29,8 +31,7 @@
         "dev": "node _src/bin/main-enter.js --devel",
         "rel": "node _src/bin/main-enter.js --release",
         "init": "node _src/bin/main-enter.js --init",
-        "test": " node _src/test.js",
-        "update-theme": "node _src/bin/main-enter.js --only updateTheme"
+        "test": " node _src/test.js"
     },
     "type": "module"
 }

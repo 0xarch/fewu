@@ -3,6 +3,9 @@
 Latest release version: REL1.2.5
 Developing version: DEV1.3.0 (alias 1.3.0-devel, or 2.0.0)
 
+## CAUTION
+Version above 2.0.0 requires node.js with TypeScript support.
+
 ## DEV1.3.0 - 2024-11-23
 
 ### Changes in features

@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/node --experimental-strip-types
 
 import "#util/Argv";
 

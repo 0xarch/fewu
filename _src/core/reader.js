@@ -1,21 +1,11 @@
 import database from "#database";
 import NewPromise from "#util/NewPromise";
+import ExtendedFS from "#util-ts/ExtendedFS";
 
 import { basename, join, extname } from "path";
-import * as fs from "fs";
 import { Category, Tag } from "#struct";
 import Post from "#class/post";
 
-function traverse(Directory) {
-    let returns = [];
-    for (let item of fs.readdirSync(Directory)) {
-        let path = join(Directory, item);
-        let stat = fs.statSync(path);
-        if (stat.isDirectory()) returns.push(...traverse(path));
-        else returns.push(path);
-    }
-    return returns;
-}
 
 /**
  * 
@@ -50,7 +40,7 @@ async function site() {
         tags = {};
     let categoriesMap = new Map,
         tagsMap = new Map;
-    for (let path of traverse(POST_DIRECTORY)) {
+    for (let path of await ExtendedFS.traverse(POST_DIRECTORY)) {
         if(extname(path) != '.md') continue;
         let item = basename(path, POST_DIRECTORY);
         let file_data = await initializePost(path, bid);
