@@ -4,7 +4,7 @@ import Argv from "#util/Argv";
 
 class GeneralSection extends AbstractSection {
     /**
-     * @type {object}
+     * @type {any}
      */
     config;
     /**

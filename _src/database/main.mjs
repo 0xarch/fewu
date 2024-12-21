@@ -32,4 +32,7 @@ database.initDone().then(DATABASE_INIT_RESOLVE);
 
 globalThis.database = database;
 
+await globalThis.DATABASE_INIT_DONE;
+globalThis.PUBLIC_DIRECTORY = database.data.directory.publicDirectory;
+
 export default database;

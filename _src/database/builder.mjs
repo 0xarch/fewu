@@ -16,6 +16,8 @@ class BuilderSection extends AbstractSection {
      */
     exposedApi;
 
+    plugin;
+
     constructor(){
         let {promise,resolve} = NewPromise.withResolvers();
         super({

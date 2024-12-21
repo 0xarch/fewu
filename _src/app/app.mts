@@ -10,26 +10,13 @@ import Console from '#util-ts/Console';
 import GObject from '#util/GObject';
 import { value as programLogo } from '#common/logo';
 
-/**
- * @DOCUMENT_OF_APP
- * @argument config [file] Configuration file for Nexo.
- * @argument theme [string] Use specified theme.
- * @argument init [void] Use init module
- * @argument release [void] build as release mode (for theme, **DEFAULT**)
- * @argument devel [void] build as developer mode (for theme)
- * 
- * **NOTE** Working in progress
- */
 async function App() {
     const ctx = new Context();
     ctx.emit('startup');
     await globalThis.DATABASE_INIT_DONE;
-    console.log(`Starting build..`);
-    // db.config = database.data.general.config;
+    ctx.emit('beforeDeploy');
 
-    // Mount on global
-    globalThis.PUBLIC_DIRECTORY = database.data.directory.publicDirectory;
-
+    ctx.emit('beforeProcess');
     database.data.builder.site = await site();
     database.data.builder.sort = sort(database.data.builder.site.posts);
 
@@ -58,8 +45,7 @@ async function App() {
         },
         GObject,
     }
-
-    let __get_title = (function () {
+    const __getTitle: (fix: string, type: string) => string = (()=>{
         let sep = '|';
         let theme = database.data.general.config.theme;
         if (theme) {
@@ -94,9 +80,9 @@ async function App() {
         settings: database.data.general.config,
         user: database.data.user,
         __root_directory__: database.data.directory.buildRootDirectory,
-        __title__: __get_title,
+        __title__: __getTitle,
         file: get_file_relative_dir,
-        i18n: (k) => i18n.translate(k),
+        i18n: (k: string) => i18n.translate(k),
         mix: GObject.mix,
         has_property: GObject.hasProperty,
         get_property: GObject.getProperty,
@@ -110,18 +96,34 @@ async function App() {
         CONSTANTS: database.data.constant,
         fewu: {
             logo: programLogo
-        }
+        },
+
+        config: database.data.general.config,
+        page: {
+            sort
+        },
+        url: database.data.general.config.general?.url,
+        path: database.data.directory.buildRootDirectory
     }
+
+    ctx.emit('afterProcess');
+    ctx.emit('beforeGenerate');
 
     // db.builder.api_required = database.data.builder.exposedApi;
 
     part.buildPages();
 
     part.buildPosts();
+    
+    ctx.emit('afterGenerate');
 
     part.resolveThemeOperations();
     
     part.copyFiles();
+
+    ctx.emit('afterDeploy');
+    ctx.emit('ready');
+    ctx.emit('exit');
 }
 
 export default App;

@@ -15,8 +15,8 @@ declare interface _ConsoleEffects {
 
 declare type ConsoleComponent = {
     msg: string,
-    color: keyof _ConsoleColors | undefined,
-    effect: keyof _ConsoleEffects | undefined
+    color?: keyof _ConsoleColors | undefined,
+    effect?: keyof _ConsoleEffects | undefined
 };
 
 declare type ConsoleAcceptableArgument = ConsoleComponent | string;
