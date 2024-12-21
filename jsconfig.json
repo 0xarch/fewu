@@ -11,7 +11,7 @@
             "#util-ts/*": ["./_src/util/ts/*.mts"],
             "#database": ["./_src/database/main.mjs"],
             "#common/*": ["./_src/common/*.mjs"],
-            "#lib/*": ["./_src/lib/*.mjs"]
+            "#lib/*": ["./_src/lib/*.mts"]
         }
     },
     "exclude": [
