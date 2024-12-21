@@ -32,6 +32,26 @@ class AbstractExposedApi {
      */
     url;
 
+    plugin;
+    posts;
+    excluded_posts;
+    ID;
+    IDMap;
+    settings;
+    user;
+    __root_directory__;
+    __title__;
+    file;
+    i18n;
+    mix;
+    has_property;
+    get_property;
+    GObject;
+    db;
+    sort;
+    CONSTANTS;
+    fewu;
+
     constructor(){}
 }
 
