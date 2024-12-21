@@ -1,12 +1,12 @@
 # CHANGELOG
 
-Latest release version: REL1.2.5
-Developing version: DEV1.3.0 (alias 1.3.0-devel, or 2.0.0)
+Latest release version: REL2.0.0
+Developing version: DEV2.0.1
 
 ## CAUTION
-Version above 2.0.0 requires node.js with TypeScript support.
+Version >= 2.0.0 requires node.js with TypeScript support.
 
-## DEV1.3.0 - 2024-11-23
+## REL2.0.0 - 2024-12-21
 
 ### Changes in features
 

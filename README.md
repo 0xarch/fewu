@@ -1,5 +1,4 @@
 README.md：说明文件。  
-README.zh-CN.md：说明文件。
 
 版权所有 (C) 2020-2024 0xarch(soloev) 
 本程序为自由软件：你可以依据自由软件基金会所发布的第三版或更高版本的GNU通用公共许可证重新发布、修改本程序。
@@ -10,14 +9,14 @@ README.zh-CN.md：说明文件。
 
 # Fewu
 
-`Fewu` 是一个自动化静态博客生成器。
-> npm: fewu
+`Fewu` 是一个自动化静态博客生成器。Fewu 被设计为固定的、快速的、无随机性的。这意味着使用同一份配置文件在任何地方都应得到相同结果。
 
 ## 使用 Fewu
 
 ### 依赖
-* node.js
+* node.js (带有 --experimental-strip-types 支持)
 * npm
+* Linux 发行版
 
 ### 部署
 
@@ -47,9 +46,7 @@ fewu
 ```
 > `fewu` 本身是对 `fewu --config config.json --release` 的简写。
 
-> 你也可以使用 `fewu --devel` 生成开发版网站。发布版与开发版的区别由主题决定。但大多数情况下，发布版会使用 CDN 服务器获取资源文件，而开发版会从网站服务器获取资源文件。如果一个主题的更新速度并不快，我们推荐使用发布版。
-
-> Fewu 在写入网页的时候会首先将已有的网页文件内容与生成的内容比对。如果内容相同，则不会继续写入文件。同时你会在日志输出中看到 SKIPPED 一词。
+> Fewu 在写入网页的时候会首先将已有的网页文件内容与生成的内容比对。如果内容相同，则不会继续写入文件。
 
 5. 你的网站已经在 `public` 目录可用了！
 
@@ -61,29 +58,11 @@ fewu
 
 请参阅 [主题文档](/_doc/Theme.md)。
 
-> 最快速的方法是从 0xarch 开发的 [Arch](//github.com/0xarch/fewu-theme-arch) 开始，这也是 Fewu 的默认主题。
-
-> See [en-US Document](/_doc/Theme.en-US.md) if you are stupid.
-
 ## Code Hack
 
 请 fork 此仓库。
 
-## 为 Fewu 作出贡献
+## 作出贡献
 
 你可以发起 Issue ，或提交 Pull Request 来为 Fewu 作出贡献。我们非常重视你的意见。
-> 请耐心。
-
-### 在本地调试
-
-`package.json>scripts` 中包含了对 `fewu` 的模拟。你可以使用 `npm run $SOME_COMMAND` 达到同样的效果，而不必通过软链接到全局目录中。
-> `npm run bin` 与直接调用 `fewu` 基本相同。不同的是，你需要通过 `--` 来传递参数。 示例：`npm run bin -- --new`
-
-## 开发者
-
-1. 0xarch(soloev)
-2. Anverinmontu(Mento)
-
-## 赞助
-
-1. [Mango](https://github.com/EvanHsieh0415)
+> 耐心。
