@@ -2,7 +2,7 @@ import { Config } from "../types.mjs";
 import { version } from "./fewu.mjs";
 import defaultConfig from "./defaultConfig.mjs";
 
-import Argv from "#util/ts/Argv";
+import Argv from "#util/Argv";
 
 import { readFile } from "fs";
 import { join } from "path";

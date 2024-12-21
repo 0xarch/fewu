@@ -1,5 +1,5 @@
 import database from "#database";
-import NewPromise from "#util/NewPromise";
+import NewPromise from "#util-ts/NewPromise";
 import ExtendedFS from "#util-ts/ExtendedFS";
 
 import { basename, join, extname } from "path";

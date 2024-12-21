@@ -1,6 +1,6 @@
 import { writeFile, existsSync, statSync } from "fs";
 import StandaloneApp from "#util/ts/StandaloneApp";
-import Argv from "#util/ts/Argv";
+import Argv from "#util/Argv";
 
 const app = new StandaloneApp({
     version: '2.0.0',

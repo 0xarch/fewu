@@ -1,6 +1,3 @@
-/*
-    This file uses experimental Database 2.0 in some parts.
-*/
 import AbstractPost from '#class/AbstractPost';
 import License from '#class/license';
 import FuzzyDate from '#class/fuzzydate';
@@ -10,7 +7,7 @@ import database from '#database';
 import dynamicImport from '#util/dynamicImport';
 import Markdown from '#util/Markdown';
 import TemplateString from '#util/TemplateString';
-import NewPromise from '#util/NewPromise';
+import NewPromise from '#util-ts/NewPromise';
 import Text from '#util-ts/Text';
 
 import {stat,readFile} from "node:fs/promises";
