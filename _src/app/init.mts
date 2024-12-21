@@ -2,6 +2,12 @@ import { join } from 'path';
 import { existsSync } from 'fs';
 import { writeFile, mkdir } from 'fs/promises';
 import { value as config } from '#common/config.json';
+import StandaloneApp from '#util/ts/StandaloneApp';
+
+const app = new StandaloneApp({
+    version: '2.0.0',
+    name: 'io.fewu.initWorkspace'
+});
 
 const POST_TEMPLATE =
     `---
@@ -13,12 +19,13 @@ category: CATEGORY
 SOME FOREWORDS
 <!--more-->`;
 
-async function safeWriteFile(path, data) {
+async function safeWriteFile(path: string, data: string) {
     if (existsSync(path)) return;
     else writeFile(path, data);
 }
 
 async function App() {
+    console.info(app.humanize());
     const requiredDirectories = ['posts', 'public', 'resources', 'extra', '_themes', '_modules'];
     for (let directory of requiredDirectories) {
         mkdir(directory, { recursive: true });
