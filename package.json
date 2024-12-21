@@ -33,5 +33,8 @@
         "rel": "tsc; node _dist/bin/fewu.js --release",
         "init": "tsc; node _dist/bin/fewu.js --init"
     },
-    "type": "module"
+    "type": "module",
+    "devDependencies": {
+        "@types/pug": "^2.0.10"
+    }
 }

@@ -1,13 +1,44 @@
 {
     "extends": "ts-node/node16/tsconfig.json",
-
     "compilerOptions": {
         "target": "ES6",
         "module": "ESNext",
         "outDir": "./_dist",
         "noEmit": false,
         "allowJs": true,
-        "strict": true
+        "strict": true,
+        "paths": {
+            "#core/*": [
+                "./_src/core/*.js"
+            ],
+            "#db": [
+                "./_src/core/database.js"
+            ],
+            "#struct": [
+                "./_src/core/bridge.class.js"
+            ],
+            "#class/*": [
+                "./_src/class/*.mjs"
+            ],
+            "#modules": [
+                "./_modules"
+            ],
+            "#util/*": [
+                "./_src/util/*.mjs"
+            ],
+            "#util-ts/*": [
+                "./_src/util/ts/*.mts"
+            ],
+            "#database": [
+                "./_src/database/main.mjs"
+            ],
+            "#common/*": [
+                "./_src/common/*.mjs"
+            ],
+            "#lib/*": [
+                "./_src/lib/*.mts"
+            ]
+        }
     },
     "exclude": [
         "./node_modules",
