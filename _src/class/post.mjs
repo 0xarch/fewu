@@ -7,7 +7,7 @@ import database from '#database';
 import dynamicImport from '#util/dynamicImport';
 import Markdown from '#util/Markdown';
 import TemplateString from '#util/TemplateString';
-import NewPromise from '#util-ts/NewPromise';
+import NewPromise from '#util/NewPromise';
 import Text from '#util-ts/Text';
 
 import {stat,readFile} from "node:fs/promises";

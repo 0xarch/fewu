@@ -1,8 +1,7 @@
 {
-    "extends": "ts-node/node16/tsconfig.json",
     "compilerOptions": {
         "target": "ES6",
-        "module": "ESNext",
+        "module": "NodeNext",
         "outDir": "./_dist",
         "noEmit": false,
         "allowJs": true,
@@ -38,7 +37,8 @@
             "#lib/*": [
                 "./_src/lib/*.mts"
             ]
-        }
+        },
+        "moduleResolution": "nodenext"
     },
     "exclude": [
         "./node_modules",
