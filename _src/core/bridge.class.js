@@ -8,7 +8,6 @@ import License from '#class/license';
 import Post from '#class/post';
 
 import {
-    Cache,
     Correspond,
 } from '#core/struct';
 
@@ -22,6 +21,5 @@ export {
     Post,
     Layout,
     Collection,
-    Cache,
     Correspond,
 }
