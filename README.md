@@ -14,9 +14,8 @@ README.md：说明文件。
 ## 使用 Fewu
 
 ### 依赖
-* node.js (带有 --experimental-strip-types 支持)
+* node.js
 * npm
-* Linux 发行版
 
 ### 部署
 
@@ -35,8 +34,6 @@ fewu --init
 ```sh
 fewu --new
 ```
-> 这个命令会在 `posts` 目录下生成一个 {{Y}}{{m}}{{d}}-new.md 的 Markdown 文档。
-> 如果目录下已经有了，则会生成 {{Y}}{{m}}{{d}}-new-{{JUMP_NUMBER}}.md
 
 4. 生成发布版网站
 ```sh
