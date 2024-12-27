@@ -50,26 +50,26 @@ async function site() {
             excluded_posts[item] = file_data;
         } else {
             for (let cname of file_data.category) {
-                if (used_categories.includes(cname)) {
+                if(categoriesMap.has(cname)){
                     categoriesMap.get(cname).add(file_data.id);
                 } else {
                     categoriesMap.set(cname,new Category(cname, [file_data.id]));
-                    used_categories.push(cname);
                 }
             }
 
             for (let cname of file_data.tags) {
-                if (used_tags.includes(cname)) {
+                if(tagsMap.has(cname)){
                     tagsMap.get(cname).add(file_data.id);
                 } else {
                     tagsMap.set(cname,new Tag(cname, [file_data.id]));
-                    used_tags.push(cname);
                 }
             }
             posts.push(file_data);
         }
         bid++;
     }
+    used_categories = categoriesMap.keys();
+    used_tags = tagsMap.keys();
 
     let prev_id;
     posts.sort(Post.sort);
