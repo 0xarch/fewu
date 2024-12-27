@@ -6,7 +6,7 @@ import Argv from "#util/Argv";
 
 import { join } from "path";
 import { EventEmitter } from "events";
-import { readFileSync } from "fs";
+import { existsSync } from "fs";
 import { readConfig } from "#lib/local/config";
 
 interface Context {
@@ -37,7 +37,12 @@ class Context extends EventEmitter {
         // construct EventEmitter
         super();
 
-        const CONFIG_PATH = join(baseDirectory, Argv['-C']?.[0] ?? 'config.json');
+        let CONFIG_PATH = join(baseDirectory, Argv['-C']?.[0] ?? 'config.yaml');
+
+        // temporaily compatibility patch
+        if(!existsSync(CONFIG_PATH)){
+            CONFIG_PATH = join(baseDirectory, Argv['-C']?.[0] ?? 'config.json');
+        }
 
         // const configuration
         const CONFIG = mixConfig(defaultConfig, readConfig(baseDirectory, CONFIG_PATH));
