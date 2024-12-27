@@ -1,29 +1,31 @@
 import Context from '#lib/fewu/context';
-import Console from '#util/Console';
+import { assignBasicLog } from '#lib/interface/log';
 
 async function App() {
 
     const ctx = new Context();
 
-    ctx.emit('startup');
+    assignBasicLog(ctx);
 
-    ctx.emit('afterStartup');
+    ctx.emit('startup', ctx);
 
-    ctx.emit('beforeProcess');
+    ctx.emit('afterStartup', ctx);
 
-    ctx.emit('afterProcess');
+    ctx.emit('beforeProcess', ctx);
 
-    ctx.emit('beforeGenerate');
+    ctx.emit('afterProcess', ctx);
 
-    ctx.emit('afterGenerate');
+    ctx.emit('beforeGenerate', ctx);
 
-    ctx.emit('beforeDeploy');
+    ctx.emit('afterGenerate', ctx);
 
-    ctx.emit('afterDeploy');
+    ctx.emit('beforeDeploy', ctx);
 
-    ctx.emit('ready');
+    ctx.emit('afterDeploy', ctx);
 
-    ctx.emit('exit');
+    ctx.emit('ready', ctx);
+
+    ctx.emit('exit', ctx);
 }
 
 export default App;
