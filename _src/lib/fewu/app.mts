@@ -6,8 +6,6 @@ async function App() {
 
     ctx.emit('startup');
 
-    ctx.emit('beforeDeploy');
-
     ctx.emit('beforeProcess');
 
     ctx.emit('afterProcess');
@@ -15,6 +13,8 @@ async function App() {
     ctx.emit('beforeGenerate');
 
     ctx.emit('afterGenerate');
+
+    ctx.emit('beforeDeploy');
 
     ctx.emit('afterDeploy');
 

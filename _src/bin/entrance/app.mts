@@ -5,7 +5,7 @@ import database from '#database';
 import i18n from '#core/i18n';
 import * as part from '#core/part';
 import { site, sort, get_file_relative_dir } from '#core/reader';
-import { loadPlugin,loadModules } from '#core/loader';
+import { loadPlugin, loadModules } from '#core/loader';
 import Console from '#util-ts/Console';
 import GObject from '#util/GObject';
 import { value as programLogo } from '#common/logo';
@@ -14,24 +14,23 @@ async function App() {
     const ctx = new Context();
     ctx.emit('startup');
     await globalThis.DATABASE_INIT_DONE;
-    ctx.emit('beforeDeploy');
 
     ctx.emit('beforeProcess');
     database.data.builder.site = await site();
     database.data.builder.sort = sort(database.data.builder.site.posts);
 
-    Console.info('[App] Build mode is ',{
+    Console.info('[App] Build mode is ', {
         color: 'GREEN',
         msg: database.data.builder.mode
-    },' .');
-    Console.info('[App] Target directory is ',{
+    }, ' .');
+    Console.info('[App] Target directory is ', {
         color: 'GREEN',
         msg: database.data.directory.buildRootDirectory
-    },' .');
-    Console.info('[App] Enabled features: ',{
+    }, ' .');
+    Console.info('[App] Enabled features: ', {
         color: 'MAGENTA',
         msg: database.data.feature.enabled.join(", ")
-    },' .');
+    }, ' .');
 
     const PROVISION = {
         db: {
@@ -45,7 +44,7 @@ async function App() {
         },
         GObject,
     }
-    const __getTitle: (fix: string, type: string) => string = (()=>{
+    const __getTitle: (fix: string, type: string) => string = (() => {
         let sep = '|';
         let theme = database.data.general.config.theme;
         if (theme) {
@@ -114,11 +113,13 @@ async function App() {
     part.buildPages();
 
     part.buildPosts();
-    
+
     ctx.emit('afterGenerate');
 
+    ctx.emit('beforeDeploy');
+
     part.resolveThemeOperations();
-    
+
     part.copyFiles();
 
     ctx.emit('afterDeploy');

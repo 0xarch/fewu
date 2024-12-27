@@ -10,11 +10,11 @@ import { readFileSync } from "fs";
 
 interface Context {
     on(event: 'startup', listenter: (ctx: Context, ...args: any[]) => any): this;
-    on(event: 'beforeDeploy', listenter: (ctx: Context, ...args: any[]) => any): this;
     on(event: 'beforeProcess', listenter: (ctx: Context, ...args: any[]) => any): this;
     on(event: 'afterProcess', listenter: (ctx: Context, ...args: any[]) => any): this;
     on(event: 'beforeGenerate', listenter: (ctx: Context, ...args: any[]) => any): this;
     on(event: 'afterGenerate', listenter: (ctx: Context, ...args: any[]) => any): this;
+    on(event: 'beforeDeploy', listenter: (ctx: Context, ...args: any[]) => any): this;
     on(event: 'afterDeploy', listenter: (ctx: Context, ...args: any[]) => any): this;
     on(event: 'ready', listenter: (ctx: Context, ...args: any[]) => any): this;
     on(event: 'exit', listenter: (ctx: Context, ...args: any[]) => any): this;
