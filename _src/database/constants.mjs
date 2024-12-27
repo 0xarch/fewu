@@ -2,10 +2,11 @@ import { AbstractSection } from "./abstract.mjs";
 import NewPromise from "#util/NewPromise";
 import Argv from "#util/Argv";
 import * as os from "node:os";
+import { version } from "#lib/fewu/fewu";
 
 class ConstantSection extends AbstractSection {
     fewu = {
-        RELEASE_VERSION: "2.1.0",
+        RELEASE_VERSION: version,
         DEBUG_ENABLED: Argv['--debug'] || Argv['-D'] || false
     };
     node = {

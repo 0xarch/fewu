@@ -28,11 +28,11 @@ let markdownInit = (async function(){
         if(canOperate){
             for(let exName of extensionList) {
                 let extension = await dynamicImport(exName);
-                if(typeof extension.default === 'function'){
-                    markdown.use(extension.default());
+                if(typeof extension?.default === 'function'){
+                    markdown.use(extension?.default?.());
                 } else {
                     Console.warn(`[Post/Preparation] In Feature <generator/allow-custom-marked-extension>: ${exName} did not export default as a function. valueOf=${extension.default.valueOf()}.`);
-                    if(typeof extension.default.default === 'object') {
+                    if(typeof extension?.default?.default === 'object') {
                         Console.warn(`[Post/Preparation] Trying to load default.default as default().`);
                         markdown.use(extension.default.default);
                     }
