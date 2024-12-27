@@ -24,5 +24,9 @@ export function mixConfig(defaultConfig: defaultConfigType, userConfig: partialC
     Object.assign(mixedConfig, defaultConfig);
     Object.assign(mixedConfig, userConfig);
 
+    if(typeof mixedConfig.theme !== 'string'){
+        mixedConfig.theme = 'Neo';
+    }
+
     return mixedConfig as defaultConfigType;
 };
