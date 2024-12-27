@@ -4,7 +4,7 @@ import { Renderer } from "../render.mjs";
 import { compile, compileFile } from "pug";
 
 class RendererPug extends Renderer {
-    static render(template: string, templatePath: string, variables: object): string {
+    static async render(template: string, templatePath: string, variables: object): Promise<string> {
         let compiled = compile(template, {
             filename: templatePath,
             basedir: dirname(templatePath)
@@ -12,8 +12,8 @@ class RendererPug extends Renderer {
         return compiled(variables);
     }
 
-    static renderFile(templatePath: string, variables: object): string {
-        return compileFile(templatePath,{
+    static async renderFile(templatePath: string, variables: object): Promise<string> {
+        return compileFile(templatePath, {
             filename: templatePath,
             basedir: dirname(templatePath)
         })(variables);
