@@ -11,6 +11,8 @@ README.md：说明文件。
 
 `Fewu` 是一个自动化静态博客生成器。Fewu 被设计为固定的、快速的、无随机性的。这意味着使用同一份配置文件在任何地方都应得到相同结果。
 
+对于 Fewu >= 2.1.0，已经使用 tsc 预先编译，无须 node.js 支持 --experimental-strip-types
+
 ## 使用 Fewu
 
 ### 依赖
