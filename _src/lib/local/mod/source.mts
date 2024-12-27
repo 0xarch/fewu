@@ -1,13 +1,13 @@
 import Context from "#lib/fewu/context";
 import { Post } from "#lib/types";
+import { resolveContent } from "#lib/local/mod/post"
 
 import ExtendedFS from "#util/ts/ExtendedFS";
+import Text from "#util/ts/Text";
 
 import { readFile, stat } from "fs/promises";
-import { join } from "path";
-import { resolveContent } from "./post.mjs";
+import { join } from "path";;
 import moment from "moment";
-import Text from "#util/ts/Text";
 
 declare type SourceTypes = 'draft' | 'post';
 
