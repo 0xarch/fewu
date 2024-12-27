@@ -11,11 +11,8 @@ import GObject from '#util/GObject';
 import { value as programLogo } from '#common/logo';
 
 async function App() {
-    const ctx = new Context();
-    ctx.emit('startup');
     await globalThis.DATABASE_INIT_DONE;
 
-    ctx.emit('beforeProcess');
     database.data.builder.site = await site();
     database.data.builder.sort = sort(database.data.builder.site.posts);
 
@@ -104,27 +101,11 @@ async function App() {
         url: database.data.general.config.general?.url,
         path: database.data.directory.buildRootDirectory
     }
-
-    ctx.emit('afterProcess');
-    ctx.emit('beforeGenerate');
-
-    // db.builder.api_required = database.data.builder.exposedApi;
-
+    
     part.buildPages();
-
     part.buildPosts();
-
-    ctx.emit('afterGenerate');
-
-    ctx.emit('beforeDeploy');
-
     part.resolveThemeOperations();
-
     part.copyFiles();
-
-    ctx.emit('afterDeploy');
-    ctx.emit('ready');
-    ctx.emit('exit');
 }
 
 export default App;
