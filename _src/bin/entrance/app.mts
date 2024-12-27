@@ -1,5 +1,3 @@
-import Context from '#lib/fewu/context';
-
 import database from '#database';
 
 import i18n from '#core/i18n';
@@ -12,6 +10,12 @@ import { value as programLogo } from '#common/logo';
 
 async function App() {
     await globalThis.DATABASE_INIT_DONE;
+
+    if(database.data.general.config['EXPERIMENTAL-V3']){
+        Console.warn('The EXPERIMENTAL-V3 flag is on. The old v2 process will terminate.');
+        (await import('#lib/fewu/app')).default();
+        return;
+    }
 
     database.data.builder.site = await site();
     database.data.builder.sort = sort(database.data.builder.site.posts);
@@ -101,7 +105,7 @@ async function App() {
         url: database.data.general.config.general?.url,
         path: database.data.directory.buildRootDirectory
     }
-    
+
     part.buildPages();
     part.buildPosts();
     part.resolveThemeOperations();
