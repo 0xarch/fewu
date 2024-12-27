@@ -1,11 +1,11 @@
 import { Stats } from "node:fs";
 import { Moment } from "moment";
-import { defaultConfigType } from "./fewu/defaultConfig.mjs";
+import { defaultConfigType } from "./fewu/config.mjs";
 
 export declare interface Config extends defaultConfigType { };
 
 export declare interface Post {
-    id?: string | number;
+    id?: string;  // non-standard API
     title?: string;
     author?: string;
     language: string;
@@ -15,7 +15,7 @@ export declare interface Post {
     categories: string[];
     license: string;
     length: number;
-    properties: { [key: string]: string };
+    properties: { [key: string]: string }; // non-standard API
 
     layout?: string;
     comments: string;
@@ -28,5 +28,5 @@ export declare interface Post {
     total: number;
 
     source: string;
-    stat: Stats;
+    stat: Stats;  // non-standard API
 }

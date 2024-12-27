@@ -1,23 +1,23 @@
 import { Config } from "../types.mjs";
 import { version } from "./fewu.mjs";
-import defaultConfig from "./defaultConfig.mjs";
+import defaultConfig, { mixConfig } from "./config.mjs";
 
 import Argv from "#util/Argv";
 
-import { readFile } from "fs";
 import { join } from "path";
 import { EventEmitter } from "events";
+import { readFileSync } from "fs";
 
 interface Context {
-    on(event: 'startup', listenter: (...args: any[]) => any): this;
-    on(event: 'beforeDeploy', listenter: (...args: any[]) => any): this;
-    on(event: 'beforeProcess', listenter: (...args: any[]) => any): this;
-    on(event: 'afterProcess', listenter: (...args: any[]) => any): this;
-    on(event: 'beforeGenerate', listenter: (...args: any[]) => any): this;
-    on(event: 'afterGenerate', listenter: (...args: any[]) => any): this;
-    on(event: 'afterDeploy', listenter: (...args: any[]) => any): this;
-    on(event: 'ready', listenter: (...args: any[]) => any): this;
-    on(event: 'exit', listenter: (...args: any[]) => any): this;
+    on(event: 'startup', listenter: (ctx: Context,...args: any[]) => any): this;
+    on(event: 'beforeDeploy', listenter: (ctx: Context,...args: any[]) => any): this;
+    on(event: 'beforeProcess', listenter: (ctx: Context,...args: any[]) => any): this;
+    on(event: 'afterProcess', listenter: (ctx: Context,...args: any[]) => any): this;
+    on(event: 'beforeGenerate', listenter: (ctx: Context,...args: any[]) => any): this;
+    on(event: 'afterGenerate', listenter: (ctx: Context,...args: any[]) => any): this;
+    on(event: 'afterDeploy', listenter: (ctx: Context,...args: any[]) => any): this;
+    on(event: 'ready', listenter: (ctx: Context,...args: any[]) => any): this;
+    on(event: 'exit', listenter: (ctx: Context,...args: any[]) => any): this;
 }
 
 class Context extends EventEmitter {
@@ -33,20 +33,23 @@ class Context extends EventEmitter {
     public readonly CONFIG_PATH: string;
 
     constructor(baseDirectory = process.cwd()) {
+        // construct EventEmitter
         super();
+
+        const CONFIG_PATH = join(baseDirectory,Argv['-C']?.[0] ?? 'config.json');
+
+        // const configuration
+        const CONFIG = mixConfig(defaultConfig, JSON.parse(readFileSync(CONFIG_PATH).toString()));
+
         this.VERSION = version;
-        this.config = { ...defaultConfig };
+        this.config = { ...CONFIG };
         this.env = process.env;
 
         this.BASE_DIRECTORY = baseDirectory;
-        this.PUBLIC_DIRECTORY = join(baseDirectory, 'public');
-        this.SOURCE_DIRECTORY = join(baseDirectory, 'source');
-        this.THEME_DIRECTORY = join(baseDirectory, 'themes', this.config.theme);
-        this.CONFIG_PATH = join(baseDirectory,Argv['-C']?.[0] ?? 'config.json');
-
-        (async (ctx: Context)=>{
-
-        })(this);
+        this.PUBLIC_DIRECTORY = join(baseDirectory, CONFIG.public_dir);
+        this.SOURCE_DIRECTORY = join(baseDirectory, CONFIG.source_dir);
+        this.THEME_DIRECTORY = join(baseDirectory, 'themes', CONFIG.theme);
+        this.CONFIG_PATH = CONFIG_PATH;
     }
 }
 
