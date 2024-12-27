@@ -5,7 +5,7 @@ import * as os from "node:os";
 
 class ConstantSection extends AbstractSection {
     fewu = {
-        RELEASE_VERSION: "2.0.0",
+        RELEASE_VERSION: "2.1.0",
         DEBUG_ENABLED: Argv['--debug'] || Argv['-D'] || false
     };
     node = {
