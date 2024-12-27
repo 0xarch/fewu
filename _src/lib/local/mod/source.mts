@@ -41,7 +41,7 @@ export default class Source {
         let post: Partial<Post> = {};
         post.author = resolved.properties.author as string ?? ctx.config.author;
         post.categories = String(resolved.properties.categories).split(" ");
-        post.comments = '';
+        post.comments = resolved.postIntroduction;
         post.content = content;
         post.date = moment(resolved.properties.date);
         post.language = resolved.properties.language as string ?? ctx.config.language;
