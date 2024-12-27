@@ -19,3 +19,5 @@ class RendererPug extends Renderer {
         })(variables);
     }
 }
+
+export default RendererPug;
