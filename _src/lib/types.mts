@@ -1,8 +1,13 @@
 import { Stats } from "node:fs";
 import { Moment } from "moment";
+import Context from "./fewu/context.mjs";
 import { defaultConfigType } from "./fewu/config.mjs";
 
 export declare interface Config extends defaultConfigType { };
+
+export {
+    Context
+};
 
 export declare interface Post {
     id?: string;  // non-standard API

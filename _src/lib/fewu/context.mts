@@ -7,6 +7,7 @@ import Argv from "#util/Argv";
 import { join } from "path";
 import { EventEmitter } from "events";
 import { readFileSync } from "fs";
+import { readConfig } from "#lib/local/config";
 
 interface Context {
     on(event: 'startup', listenter: (ctx: Context, ...args: any[]) => any): this;
@@ -39,7 +40,7 @@ class Context extends EventEmitter {
         const CONFIG_PATH = join(baseDirectory, Argv['-C']?.[0] ?? 'config.json');
 
         // const configuration
-        const CONFIG = mixConfig(defaultConfig, JSON.parse(readFileSync(CONFIG_PATH).toString()));
+        const CONFIG = mixConfig(defaultConfig, readConfig(baseDirectory, CONFIG_PATH));
 
         this.VERSION = version;
         this.config = { ...CONFIG };
