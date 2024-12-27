@@ -9,7 +9,7 @@ import { existsSync } from 'fs';
 import Console from '#util-ts/Console';
 
 await globalThis.DATABASE_INIT_DONE;
-const { publicDirectory } = database.data.directory;
+const { publicDirectory, postDirectory } = database.data.directory;
 const { extraDirectory, fileDirectory,layoutDirectory } = database.data.directory.theme;
 
 async function resolveThemeOperations() {
@@ -21,7 +21,7 @@ async function resolveThemeOperations() {
                     if (v.from.charAt(0) == '@') {
                         switch (v.from) {
                             case "@posts":
-                                cp('posts', join(publicDirectory, v.to), { recursive: true });
+                                cp(postDirectory, join(publicDirectory, v.to), { recursive: true });
                                 break;
                             case "@icon":
                                 cp('_assets', join(publicDirectory, v.to), { recursive: true });
