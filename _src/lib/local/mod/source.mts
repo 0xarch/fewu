@@ -18,7 +18,7 @@ export default class Source {
         let files = await ExtendedFS.traverse(path, {
             includeDirectory: false
         });
-        files = files.filter(value => excluded.includes(value));
+        files = files.filter(value => !excluded.includes(value));
         return files;
     }
 

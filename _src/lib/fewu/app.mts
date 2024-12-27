@@ -1,5 +1,7 @@
+import PostDeployer from '#lib/deploy/post';
 import Context from '#lib/fewu/context';
 import { assignBasicLog } from '#lib/interface/log';
+import { Source } from '#lib/local/local';
 
 async function App() {
 
@@ -20,6 +22,9 @@ async function App() {
     ctx.emit('afterGenerate', ctx);
 
     ctx.emit('beforeDeploy', ctx);
+
+    let posts = await Source.traverse(ctx,'post',[]);
+    PostDeployer.deployAll(ctx, posts);
 
     ctx.emit('afterDeploy', ctx);
 

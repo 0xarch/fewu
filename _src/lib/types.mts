@@ -5,10 +5,6 @@ import { defaultConfigType } from "./fewu/config.mjs";
 
 export declare interface Config extends defaultConfigType { };
 
-export {
-    Context
-};
-
 export declare interface Post {
     id?: string;  // non-standard API
     title?: string;
@@ -34,8 +30,19 @@ export declare interface Post {
 
     source: string;
     stat: Stats;  // non-standard API
-}
+};
 
 export declare interface Scaffold {
     content: string;
+};
+
+export declare type ResultStatus = 'Ok' | 'Err';
+
+export declare interface Result<T> {
+    status: ResultStatus,
+    information?: T
 }
+
+export {
+    Context
+};
