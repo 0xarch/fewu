@@ -3,8 +3,9 @@
 Latest release version: REL2.0.0
 Developing version: DEV2.0.1
 
-## CAUTION
-Version >= 2.0.0 requires node.js with TypeScript support.
+## DEV2.0.99 - 2024-12-27
+
+TypeScript & (Partial) Hexo compatibility.
 
 ## REL2.0.0 - 2024-12-21
 
