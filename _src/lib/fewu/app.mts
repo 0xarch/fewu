@@ -3,7 +3,7 @@ import Context from '#lib/fewu/context';
 async function App() {
 
     const ctx = new Context();
-    
+
     ctx.emit('startup');
 
     ctx.emit('beforeDeploy');
