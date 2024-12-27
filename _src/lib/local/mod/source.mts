@@ -1,5 +1,5 @@
 import Context from "#lib/fewu/context";
-import { Post } from "#lib/types";
+import { Post, Scaffold } from "#lib/types";
 import { resolveContent } from "#lib/local/mod/post"
 
 import ExtendedFS from "#util/ts/ExtendedFS";
@@ -9,7 +9,7 @@ import { readFile, stat } from "fs/promises";
 import { join } from "path";;
 import moment from "moment";
 
-declare type SourceTypes = 'draft' | 'post';
+declare type SourceTypes = 'draft' | 'post' | 'scaffold';
 
 export default class Source {
 
@@ -22,17 +22,18 @@ export default class Source {
         return files;
     }
 
-    static async read(ctx: Context, type: 'post', path: string): Promise<Post>;
+    static async read(ctx: Context, type: 'post' | 'draft', path: string): Promise<Post>;
+    static async read(ctx: Context, type: 'scaffold', path: string): Promise<Scaffold>;
 
     static async read(ctx: Context, type: SourceTypes, path: string) {
         let content = (await readFile(path)).toString();
-        if (type === 'post') {
+        if (type === 'post' || type === 'draft') {
             return this.read_post(ctx, path, content);
+        } else if (type === 'scaffold') {
+            return {
+                content
+            };
         }
-    }
-
-    private static async read_draft(ctx: Context, path: string, content: string): Promise<void> {
-
     }
 
     private static async read_post(ctx: Context, path: string, content: string): Promise<Post> {

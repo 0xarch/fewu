@@ -30,3 +30,7 @@ export declare interface Post {
     source: string;
     stat: Stats;  // non-standard API
 }
+
+export declare interface Scaffold {
+    content: string;
+}
