@@ -1,10 +1,13 @@
 import Context from '#lib/fewu/context';
+import Console from '#util/Console';
 
 async function App() {
 
     const ctx = new Context();
 
     ctx.emit('startup');
+
+    ctx.emit('afterStartup');
 
     ctx.emit('beforeProcess');
 

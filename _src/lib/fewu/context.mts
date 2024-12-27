@@ -11,6 +11,7 @@ import { readConfig } from "#lib/local/config";
 
 interface Context {
     on(event: 'startup', listenter: (ctx: Context, ...args: any[]) => any): this;
+    on(event: 'afterStartup', listenter: (ctx: Context, ...args: any[]) => any): this;
     on(event: 'beforeProcess', listenter: (ctx: Context, ...args: any[]) => any): this;
     on(event: 'afterProcess', listenter: (ctx: Context, ...args: any[]) => any): this;
     on(event: 'beforeGenerate', listenter: (ctx: Context, ...args: any[]) => any): this;
