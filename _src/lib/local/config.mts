@@ -17,11 +17,13 @@ export function readConfig(baseDir = process.cwd(), configPath: string): partial
     let content = readFileSync(path).toString();
 
     switch (ext) {
-        case 'json': {
+        case '.json': {
             obj = JSON.parse(content);
+            break;
         }
-        case 'yaml': {
+        case '.yaml': {
             obj = parse(content);
+            break;
         }
     }
 

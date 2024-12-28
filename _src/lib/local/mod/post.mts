@@ -8,16 +8,16 @@ let regExps = {
 export function resolveContent(content: string) {
     let postContent = '';
     let postIntroduction = '';
+    let [postProp, i] = resolve(content)
     let properties: Record<string, string> = {
         title: "Untitled",
         date: '1970-1-1',
         category: " ",
         tags: " ",
         license: 'CC BY-NC-SA 4.0',
-        ...resolve(content)
+        ...postProp
     };
     let referencedImages = [];
-    let i = 0;
     const lines = content.split("\n");
 
     let moreIndex = lines.indexOf('<!--more-->');

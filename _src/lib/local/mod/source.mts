@@ -6,8 +6,24 @@ import ExtendedFS from "#util/ts/ExtendedFS";
 import Text from "#util/ts/Text";
 
 import { readFile, stat } from "fs/promises";
-import { join } from "path";;
+import { extname, join } from "path";;
 import moment from "moment";
+
+const ignoredFileTypes = [
+    '.png', '.gif', '.webp', '.bmp', /^\.pptx?$/, /^\.jpe?g?$/, /^\..*?ignore$/
+];
+
+function isIgnoredFileType(type: string) {
+    for (let tester of ignoredFileTypes) {
+        if (typeof tester === 'string') {
+            if (type === tester)
+                return true;
+        }
+        else if (tester.test(type)) {
+            return true;
+        }
+    }
+}
 
 declare type SourceTypes = 'draft' | 'post' | 'scaffold';
 
@@ -18,7 +34,7 @@ export default class Source {
         let files = await ExtendedFS.traverse(path, {
             includeDirectory: false
         });
-        files = files.filter(value => !excluded.includes(value));
+        files = files.filter(value => !excluded.includes(value) && !isIgnoredFileType(extname(value)));
         return files;
     }
 
@@ -43,10 +59,10 @@ export default class Source {
         post.author = resolved.properties.author as string ?? ctx.config.author;
         post.categories = String(resolved.properties.categories).split(" ");
         post.comments = resolved.postIntroduction;
-        post.content = content;
+        post.content = resolved.postContent;
         post.date = moment(resolved.properties.date);
         post.language = resolved.properties.language as string ?? ctx.config.language;
-        post.layout = 'default';
+        post.layout = resolved.properties.layout ?? ctx.config.deafult_layout;
         post.length = Text.wordCount(content);
         post.license = resolved.properties.license as string ?? 'default';
         post.properties = resolved.properties;

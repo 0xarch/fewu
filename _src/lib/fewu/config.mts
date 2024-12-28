@@ -6,6 +6,7 @@ const defaultConfig = {
     timezone: 'Asia/Shanghai',
     url: 'https://blog.example.org',
     root: '/',
+    deafult_layout: 'default',
     source_dir: 'source',
     public_dir: 'public',
     theme: 'Neo',

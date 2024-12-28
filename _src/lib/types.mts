@@ -40,7 +40,7 @@ export declare type ResultStatus = 'Ok' | 'Err';
 
 export declare interface Result<T> {
     status: ResultStatus,
-    information?: T
+    value?: T
 }
 
 export {
