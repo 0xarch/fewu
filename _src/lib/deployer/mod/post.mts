@@ -1,5 +1,4 @@
-import { Source } from "#lib/local/local";
-import { render, renderFile } from "#lib/render/render";
+import { renderFile } from "#lib/render/render";
 import { Context, Post, Result } from "#lib/types";
 import { getHelpers } from "#lib/interface/helper";
 import ExtendedFS from "#util/ts/ExtendedFS";
