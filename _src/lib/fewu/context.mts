@@ -8,6 +8,7 @@ import { join } from "path";
 import { EventEmitter } from "events";
 import { existsSync } from "fs";
 import { readConfig } from "#lib/local/config";
+import DataStorage from "#lib/data/data";
 
 interface Context {
     on(event: 'startup', listenter: (ctx: Context, ...args: any[]) => any): this;
@@ -27,6 +28,7 @@ class Context extends EventEmitter {
     public readonly VERSION: string;
     public readonly config: Config;
     public readonly env: typeof process.env;
+    public readonly data: DataStorage;
 
     public readonly BASE_DIRECTORY: string;
     public readonly PUBLIC_DIRECTORY: string;
@@ -51,6 +53,7 @@ class Context extends EventEmitter {
         this.VERSION = version;
         this.config = { ...CONFIG };
         this.env = process.env;
+        this.data = new DataStorage();
 
         this.BASE_DIRECTORY = baseDirectory;
         this.PUBLIC_DIRECTORY = join(baseDirectory, CONFIG.public_dir);

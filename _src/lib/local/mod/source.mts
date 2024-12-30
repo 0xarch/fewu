@@ -6,8 +6,9 @@ import ExtendedFS from "#util/ts/ExtendedFS";
 import Text from "#util/ts/Text";
 
 import { readFile, stat } from "fs/promises";
-import { extname, join } from "path";;
+import { extname, join, relative } from "path";;
 import moment from "moment";
+import { render } from "#lib/render/render";
 
 const ignoredFileTypes = [
     '.png', '.gif', '.webp', '.bmp', /^\.pptx?$/, /^\.jpe?g?$/, /^\..*?ignore$/
@@ -30,11 +31,17 @@ declare type SourceTypes = 'draft' | 'post' | 'scaffold';
 export default class Source {
 
     static async traverse(ctx: Context, type: SourceTypes, excluded: string[]): Promise<string[]> {
+        console.log(`Reading ${type} with blacklist: [${excluded.join(',')}]`);
         const path = join(ctx.SOURCE_DIRECTORY, type + 's');
         let files = await ExtendedFS.traverse(path, {
             includeDirectory: false
         });
-        files = files.filter(value => !excluded.includes(value) && !isIgnoredFileType(extname(value)));
+        files = files.filter(value => {
+            let absoluteIncluded = excluded.includes(value);
+            let relativeIncluded = excluded.includes(relative(ctx.SOURCE_DIRECTORY,value));
+            let isIgnored = isIgnoredFileType(extname(value));
+            return !absoluteIncluded && !relativeIncluded && !isIgnored;
+        });
         return files;
     }
 
@@ -57,18 +64,20 @@ export default class Source {
         let resolved = resolveContent(content);
         let post: Partial<Post> = {};
         post.author = resolved.properties.author as string ?? ctx.config.author;
-        post.categories = String(resolved.properties.categories).split(" ");
-        post.comments = resolved.postIntroduction;
-        post.content = resolved.postContent;
+        post.categories = String(resolved.properties.categories ?? resolved.properties.category).split(" ").filter(v=>v!=='');
+        post.comments = resolved.properties.comments ? true : false;
+        post.content = await render(resolved.postContent, path, { ctx });
         post.date = moment(resolved.properties.date);
+        post.excerpt = resolved.postIntroduction;
         post.language = resolved.properties.language as string ?? ctx.config.language;
         post.layout = resolved.properties.layout ?? ctx.config.deafult_layout;
         post.length = Text.wordCount(content);
         post.license = resolved.properties.license as string ?? 'default';
+        post.more = resolved.postContent;
         post.properties = resolved.properties;
         post.source = path;
         post.stat = fileStat;
-        post.tags = String(resolved.properties.tags).split(" ");
+        post.tags = String(resolved.properties.tags ?? resolved.properties.tag).split(" ").filter(v=>v!=='');
         post.title = resolved.properties.title ?? "Untitled";
         post.updated = moment(fileStat.ctime);
         return post as Post;

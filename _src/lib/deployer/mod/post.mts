@@ -11,10 +11,9 @@ export default class PostDeployer {
         let target = join(ctx.PUBLIC_DIRECTORY, relative(ctx.SOURCE_DIRECTORY, post.source), 'index.html');
 
         let layoutDir = join(ctx.THEME_DIRECTORY, 'layout');
-        let content = await render(post.content, post.source, { ctx });
         let result = await renderFile(join(layoutDir, `post.${post.layout}.pug`), {
-            post,
-            content,
+            page: post,
+            site: ctx.data,
             ctx,
             ...getHelpers(ctx)
         });
@@ -26,10 +25,9 @@ export default class PostDeployer {
         };
     }
 
-    static async deployAll(ctx: Context, files: string[]): Promise<Result<Result<void>[]>> {
+    static async deployAll(ctx: Context): Promise<Result<Result<void>[]>> {
         let results: Result<void>[] = [], hasErr = false;
-        for await (let path of files) {
-            let post = await Source.read(ctx, "post", path);
+        for await (let post of ctx.data.posts) {
             let result = await PostDeployer.deploy(ctx, post);
             if (result.status === 'Err') {
                 hasErr = true;

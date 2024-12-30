@@ -1,6 +1,7 @@
 import Context from '#lib/fewu/context';
 import { assignBasicLog } from '#lib/interface/log';
 import Deployer from '#lib/deployer/deployer';
+import collectData from '#lib/data/collect';
 
 async function App() {
 
@@ -13,6 +14,8 @@ async function App() {
     ctx.emit('afterStartup', ctx);
 
     ctx.emit('beforeProcess', ctx);
+
+    await collectData(ctx);
 
     ctx.emit('afterProcess', ctx);
 

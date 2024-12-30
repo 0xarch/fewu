@@ -5,21 +5,21 @@ import { defaultConfigType } from "./fewu/config.mjs";
 
 export declare interface Config extends defaultConfigType { };
 
-export declare interface Post {
+export declare interface Page {
     id?: string;  // non-standard API
     title?: string;
     author?: string;
     language: string;
     date: Moment;
     updated: Moment;
-    tags: string[];
-    categories: string[];
     license: string;
     length: number;
+    excerpt: string;
+    more: string;
     properties: { [key: string]: string }; // non-standard API
 
     layout?: string;
-    comments: string;
+    comments: boolean;
     content: string;
 
     prev?: Post;
@@ -30,6 +30,12 @@ export declare interface Post {
 
     source: string;
     stat: Stats;  // non-standard API
+}
+
+export declare interface Post extends Page {
+    tags: string[];
+    categories: string[];
+    properties: { [key: string]: string }; // non-standard API
 };
 
 export declare interface Scaffold {

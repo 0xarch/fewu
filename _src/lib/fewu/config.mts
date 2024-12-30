@@ -10,6 +10,7 @@ const defaultConfig = {
     source_dir: 'source',
     public_dir: 'public',
     theme: 'Neo',
+    excluded_files: [] as string[],
     features: [] as string[],
     modules: [] as string[]
 }
