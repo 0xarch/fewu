@@ -6,7 +6,7 @@ import { writeFile } from "fs/promises";
 import { join, relative } from "path";
 
 export default class PostDeployer {
-    static async deploy(ctx: Context, post: Post): Promise<Result<void>> {
+    private static async deploy_single(ctx: Context, post: Post): Promise<Result<void>> {
         let target = join(ctx.PUBLIC_DIRECTORY, relative(ctx.SOURCE_DIRECTORY, post.source), 'index.html');
 
         let layoutDir = join(ctx.THEME_DIRECTORY, 'layout');
@@ -24,10 +24,10 @@ export default class PostDeployer {
         };
     }
 
-    static async deployAll(ctx: Context): Promise<Result<Result<void>[]>> {
+    static async deploy(ctx: Context): Promise<Result<Result<void>[]>> {
         let results: Result<void>[] = [], hasErr = false;
         for await (let post of ctx.data.posts) {
-            let result = await PostDeployer.deploy(ctx, post);
+            let result = await PostDeployer.deploy_single(ctx, post);
             if (result.status === 'Err') {
                 hasErr = true;
             }
