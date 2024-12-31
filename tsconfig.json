@@ -17,7 +17,7 @@
                 "./_src/core/bridge.class.js"
             ],
             "#class/*": [
-                "./_src/class/*.mjs"
+                "./_src/v2/class/*.mjs"
             ],
             "#modules": [
                 "./_modules"
