@@ -25,7 +25,7 @@ async function initializePost(content, id = undefined) {
 
 /**
  * 
- * @returns {{posts:[Post],excluded_posts:object,categories:[Category],tags:[Tag]}}
+ * @returns {Promise<{posts:[Post],excluded_posts:object,categories:[Category],tags:[Tag]}>}
  */
 async function site() {
     await database.initDone();
