@@ -11,12 +11,6 @@ import { value as programLogo } from '#common/logo';
 async function App() {
     await globalThis.DATABASE_INIT_DONE;
 
-    if(database.data.general.config['EXPERIMENTAL-V3']){
-        Console.warn('The EXPERIMENTAL-V3 flag is on. The old v2 process will terminate.');
-        (await import('#lib/fewu/app')).default();
-        return;
-    }
-
     database.data.builder.site = await site();
     database.data.builder.sort = sort(database.data.builder.site.posts);
 

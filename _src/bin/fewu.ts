@@ -11,7 +11,7 @@ async function navigation(){
     } else if (process.argv.includes('--help') || process.argv.includes('-h')) {
         executing_task = (await import("./entrance/help.mjs")).default;
     } else {
-        executing_task = (await import("./entrance/app.mjs")).default;
+        executing_task = (await import("./entrance/switcher.mjs")).default;
     }
     executing_task();
 }
