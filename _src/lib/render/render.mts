@@ -33,8 +33,8 @@ export const availableRenderers: availableRenderer[] = [
 ];
 
 export function isTypeSupported(type: string): Result<Renderer | null> {
-    for(let render of availableRenderers){
-        if(render.matcher.test(type)){
+    for (let render of availableRenderers) {
+        if (render.matcher.test(type)) {
             return {
                 status: 'Ok',
                 value: render.renderer
@@ -49,15 +49,15 @@ export function isTypeSupported(type: string): Result<Renderer | null> {
 
 export async function render(content: string, templatePath: string, variables?: object): Promise<string> {
     let ext = extname(templatePath), matchedRenderer: availableRenderer | undefined;
-    for(let renderer of availableRenderers){
-        if(renderer.matcher.test(ext)){
+    for (let renderer of availableRenderers) {
+        if (renderer.matcher.test(ext)) {
             matchedRenderer = renderer;
         }
     }
-    if(!matchedRenderer){
+    if (!matchedRenderer) {
         throw new Error(`Some content requires a renderer that has not been supported: ${templatePath} requires ${ext}.`);
     } else {
-        Console.info(`Render ${templatePath} using matcher: ${matchedRenderer.matcher}`);
+        Console.may.info(`Render ${templatePath} using matcher: ${matchedRenderer.matcher}`);
     }
 
     let result = matchedRenderer.renderer.render(content, templatePath, variables);
@@ -68,5 +68,5 @@ export async function render(content: string, templatePath: string, variables?: 
 export async function renderFile(templatePath: string, variables?: object): Promise<string> {
     let buffer = await readFile(templatePath);
     let content = buffer.toString();
-    return render(content,templatePath,variables);
+    return render(content, templatePath, variables);
 }
