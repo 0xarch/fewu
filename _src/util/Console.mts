@@ -1,3 +1,5 @@
+import Argv from "./Argv.mjs";
+
 declare interface _ConsoleColors {
     BLACK: string, RED: string,
     GREEN: string, YELLOW: string,
@@ -76,6 +78,33 @@ class Console {
     static warn(...messages: ConsoleAcceptableArgument[]) {
         let parsedMessage = Console.#parseMessage(messages);
         console.log(`${Console.controlStart}${Console.colors.YELLOW}m[WARN] ${Console.controlEnd}`, ...parsedMessage);
+    }
+
+    static may = Argv['-Q'] || Argv['--quiet'] ? {
+        info() { },
+        error() { },
+        log() { },
+        warn() { }
+    } : {
+        info(...messages: ConsoleAcceptableArgument[]) {
+            let parsedMessage = Console.#parseMessage(messages);
+            console.info(`${Console.controlStart}${Console.colors.GREEN}m[INFO] ${Console.controlEnd}`, ...parsedMessage);
+        },
+
+        error(...messages: ConsoleAcceptableArgument[]) {
+            let parsedMessage = Console.#parseMessage(messages);
+            console.error(`${Console.controlStart}${Console.colors.RED}m[ERROR]${Console.controlEnd}`, ...parsedMessage);
+        },
+
+        log(...messages: ConsoleAcceptableArgument[]) {
+            let parsedMessage = Console.#parseMessage(messages);
+            console.log(`${Console.controlStart}${Console.colors.GREEN}m[LOG]  ${Console.controlEnd}`, ...parsedMessage);
+        },
+
+        warn(...messages: ConsoleAcceptableArgument[]) {
+            let parsedMessage = Console.#parseMessage(messages);
+            console.log(`${Console.controlStart}${Console.colors.YELLOW}m[WARN] ${Console.controlEnd}`, ...parsedMessage);
+        },
     }
 }
 
