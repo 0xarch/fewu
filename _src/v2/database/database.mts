@@ -26,10 +26,10 @@ class DataStore {
      * @param {any} config 
      * @param {Database} database 
      */
-    constructor(config, database) {
-        this.builder = new BuilderSection(config);
+    constructor(config: any, database: Database) {
+        this.builder = new BuilderSection();
         // section: constant
-        this.constant = new ConstantSection(config);
+        this.constant = new ConstantSection();
         // section: default
         this.default = new DefaultSection(config);
         // section: directory
@@ -53,7 +53,7 @@ class DataStore {
      * 
      * @param {Database} database 
      */
-    async #init(database) {
+    async #init(database: Database) {
         Promise.allSettled([
             this.builder.$done,
             this.constant.$done,
@@ -83,37 +83,16 @@ class DataStore {
  * To access data, use database.data
  */
 class Database {
-    /**
-     * @type {DataStore}
-     */
-    data;
+    data: DataStore;
     #initPromise;
-    #initResolve;
-    #initReject; //do we need this?
+    #initResolve?: (...args: any[]) => void;
+    #initReject?: (...args: any[]) => void; //do we need this?
     #initIsDone = false;
-    constructor(config) {
+    constructor(config: any) {
         let dataStore = new DataStore(config, this);
         this.data = new Proxy(dataStore, {
-            get: (target, p) => {
-                if (!this.#initIsDone) {
-                    throw new Error(`[Database] Trying to get data ${p} before initialization is done!`);
-                }
-                if (!target[p]) {
-                    throw new Error(`[Database] No such property ${p} to get in ${target}!`);
-                }
-                return target[p];
-            },
-            set: (target, p, newValue) => {
-                if (!target[p]) {
-                    throw new Error(`[Database] No such property ${p} declared in ${target}!`);
-                }
-                if (!target[p].$mutable) {
-                    throw new Error(`[Database] Property ${p} is immutable!`);
-                }
-                target[p] = newValue;
-            }
         });
-        this.#initPromise = new Promise((resolve, reject) => {
+        this.#initPromise = new Promise<any>((resolve, reject) => {
             this.#initResolve = resolve;
             this.#initReject = reject;
         }).catch((reason) => {
@@ -126,19 +105,14 @@ class Database {
         });
     }
 
-    /**
-     * 
-     * @param {'done'|'fail'} status 
-     * @param {...string} message 
-     */
-    setInitStatus(status, ...message) {
+    setInitStatus(status: 'done' | 'fail', ...message: any[]) {
         switch (status) {
             case 'done':
-                this.#initResolve(message);
+                this.#initResolve?.(message);
                 break;
             case 'fail':
             default:
-                this.#initReject(message);
+                this.#initReject?.(message);
         }
     }
 
@@ -149,6 +123,16 @@ class Database {
         return this.#initPromise;
     }
 };
+
+export class DataSection {
+    $mutable: boolean;
+    $done: Promise<any>;
+
+    constructor({mutable=false}={},promise: Promise<any>){
+        this.$mutable = mutable;
+        this.$done = promise;
+    }
+}
 
 export default Database;
 

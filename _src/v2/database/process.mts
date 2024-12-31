@@ -1,15 +1,15 @@
-import { AbstractSection } from "./abstract.mjs";
 import * as os from 'node:os';
 import NewPromise from "#util/NewPromise";
+import { DataSection } from "./database.mjs";
 
-class ProcessSection extends AbstractSection {
+class ProcessSection extends DataSection {
     arguments;
     buildTime;
     hostPlatform;
     hostType;
     hostVersion;
     nodeVersion;
-    constructor(config){
+    constructor(config: any){
         let {promise,resolve} = NewPromise.withResolvers();
         super({
             mutable: false

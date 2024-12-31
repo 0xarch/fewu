@@ -63,7 +63,7 @@ async function App() {
         }
     })();
 
-    database.data.theme.mixedVariables = GObject.mix(database.data.theme.variables, database.data.general.config.theme?.options ?? database.data.general.config['theme-options'] ?? {}, true);
+    database.data.theme.mixedVariables = GObject.mix(database.data.theme.variables as object, database.data.general.config.theme?.options ?? database.data.general.config['theme-options'] ?? {}, true);
 
     // Load theme-side plugin
     database.data.builder.plugin = await loadPlugin(PROVISION);
