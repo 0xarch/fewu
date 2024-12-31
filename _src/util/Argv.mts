@@ -12,10 +12,8 @@ let in_arg = 'main';
 for(let i = 2;i<process.argv.length;i++){
     if(process.argv[i].startsWith('-')){
         in_arg = process.argv[i];
+        Argv[in_arg] ??= [];
         continue;
-    }
-    if(!Argv[in_arg]){
-        Argv[in_arg] = [];
     }
     (Argv[in_arg] as string[]).push(process.argv[i]);
 }
