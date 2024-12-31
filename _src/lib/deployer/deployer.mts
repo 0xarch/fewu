@@ -1,15 +1,17 @@
 import { Context } from "#lib/types";
+import PageDeployer from "./mod/page.mjs";
 import PostDeployer from "./mod/post.mjs";
 import SourceDeployer from "./mod/source.mjs";
 
-declare interface _Deployer {
-    deploy(ctx: Context): Promise<any>;
+export abstract declare class Deployable {
+    static deploy(ctx: Context): Promise<any>;
 
     [key: string]: any;
 }
 
-const deployers: _Deployer[] = [
+const deployers: Deployable[] = [
     PostDeployer,
+    PageDeployer,
     SourceDeployer
 ];
 

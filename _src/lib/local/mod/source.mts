@@ -69,13 +69,14 @@ export default class Source {
         post.content = await render(resolved.postContent, path, { ctx });
         post.date = moment(resolved.properties.date);
         post.excerpt = resolved.postIntroduction;
+        post.full_source = path;
         post.language = resolved.properties.language as string ?? ctx.config.language;
         post.layout = resolved.properties.layout ?? ctx.config.deafult_layout;
         post.length = Text.wordCount(content);
         post.license = resolved.properties.license as string ?? 'default';
         post.more = resolved.postContent;
         post.properties = resolved.properties;
-        post.source = path;
+        post.source = relative(ctx.SOURCE_DIRECTORY,path);
         post.stat = fileStat;
         post.tags = String(resolved.properties.tags ?? resolved.properties.tag).split(" ").filter(v=>v!=='');
         post.title = resolved.properties.title ?? "Untitled";

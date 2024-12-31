@@ -3,11 +3,12 @@ import { Context, Post, Result } from "#lib/types";
 import { getHelpers } from "#lib/interface/helper";
 import ExtendedFS from "#util/ts/ExtendedFS";
 import { writeFile } from "fs/promises";
-import { join, relative } from "path";
+import { join } from "path";
+import { Deployable } from "../deployer.mjs";
 
-export default class PostDeployer {
+export default class PostDeployer implements Deployable {
     private static async deploy_single(ctx: Context, post: Post): Promise<Result<void>> {
-        let target = join(ctx.PUBLIC_DIRECTORY, relative(ctx.SOURCE_DIRECTORY, post.source), 'index.html');
+        let target = join(ctx.PUBLIC_DIRECTORY, post.source, 'index.html');
 
         let layoutDir = join(ctx.THEME_DIRECTORY, 'layout');
         let result = await renderFile(join(layoutDir, `post.${post.layout}.pug`), {

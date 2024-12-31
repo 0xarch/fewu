@@ -29,6 +29,7 @@ export declare interface Page {
     total: number;
 
     source: string;
+    full_source: string;
     stat: Stats;  // non-standard API
 }
 

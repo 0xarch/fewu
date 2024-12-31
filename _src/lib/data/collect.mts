@@ -11,6 +11,7 @@ export default async function collectData(ctx: Context) {
         ctx.data.categories.push(...categories);
         ctx.data.tags.push(...tags);
     })()));
+    ctx.data.posts.sort((a,b)=> a.date.isBefore(b.date) ? 1 : a.date.isSame(b.date) ? 0 : -1);
     ctx.data.categories = [...new Set(ctx.data.categories)];
     ctx.data.tags = [...new Set(ctx.data.tags)];
 }
