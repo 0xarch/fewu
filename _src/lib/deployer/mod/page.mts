@@ -17,7 +17,6 @@ class PageDeployer implements Deployable {
     private static async deploy_single(ctx: Context, pagable: Pagable, path: string): Promise<Result<void>> {
         let targets = pagable.get(ctx);
         let tasks: Promise<Result<void>>[] = [];
-        console.log(path);
         for (let i = 0; i < targets.length; i++) {
             const target = targets[i];
             const page: Page = {
@@ -37,7 +36,7 @@ class PageDeployer implements Deployable {
                 });
                 await ExtendedFS.ensure(target);
                 await writeFile(target, result);
-                Console.info('Deploy success:', target);
+                Console.may.info('Deploy success:', target);
                 return {
                     status: 'Ok'
                 }
