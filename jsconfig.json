@@ -25,7 +25,7 @@
                 "./_src/util/ts/*.mts"
             ],
             "#database": [
-                "./_src/database/main.mjs"
+                "./_src/v2/database/main.mjs"
             ],
             "#common/*": [
                 "./_src/common/*.mjs"
