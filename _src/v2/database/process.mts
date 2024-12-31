@@ -1,6 +1,6 @@
 import * as os from 'node:os';
 import NewPromise from "#util/NewPromise";
-import { DataSection } from "./database.mjs";
+import { DataSection } from "./abstract.mjs";
 
 class ProcessSection extends DataSection {
     arguments;

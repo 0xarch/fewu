@@ -2,7 +2,7 @@ import Argv from "#util/Argv";
 import NewPromise from "#util/NewPromise";
 import { existsSync } from "fs";
 import { readFile } from "fs/promises";
-import { DataSection } from "./database.mjs";
+import { DataSection } from "./abstract.mjs";
 
 class ThemeSection extends DataSection {
     config: any;

@@ -3,13 +3,10 @@
         "baseUrl": "./",
         "paths": {
             "#core/*": [
-                "./_src/core/*.js"
-            ],
-            "#db": [
-                "./_src/core/database.js"
+                "./_src/v2/core/*.js"
             ],
             "#struct": [
-                "./_src/core/bridge.class.js"
+                "./_src/v2/core/bridge.class.js"
             ],
             "#class/*": [
                 "./_src/v2/class/*.mjs"

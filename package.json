@@ -14,14 +14,13 @@
         "yaml": "^2.6.1"
     },
     "imports": {
-        "#core/*": "./_dist/core/*.js",
-        "#db": "./_dist/core/database.js",
-        "#struct": "./_dist/core/bridge.class.js",
-        "#class/*": "./_dist/class/*.mjs",
+        "#core/*": "./_dist/v2/core/*.js",
+        "#struct": "./_dist/v2/core/bridge.class.js",
+        "#class/*": "./_dist/v2/class/*.mjs",
         "#modules/*": "./_modules/*",
         "#util/*": "./_dist/util/*.mjs",
         "#util-ts/*": "./_dist/util/ts/*.mjs",
-        "#database": "./_dist/database/main.mjs",
+        "#database": "./_dist/v2/database/main.mjs",
         "#common/*": "./_dist/common/*.mjs",
         "#lib/*": "./_dist/lib/*.mjs"
     },
