@@ -38,7 +38,7 @@ export default class Source {
         });
         files = files.filter(value => {
             let absoluteIncluded = excluded.includes(value);
-            let relativeIncluded = excluded.includes(relative(ctx.SOURCE_DIRECTORY,value));
+            let relativeIncluded = excluded.includes(relative(ctx.SOURCE_DIRECTORY, value));
             let isIgnored = isIgnoredFileType(extname(value));
             return !absoluteIncluded && !relativeIncluded && !isIgnored;
         });
@@ -64,7 +64,7 @@ export default class Source {
         let resolved = resolveContent(content);
         let post: Partial<Post> = {};
         post.author = resolved.properties.author as string ?? ctx.config.author;
-        post.categories = String(resolved.properties.categories ?? resolved.properties.category).split(" ").filter(v=>v!=='');
+        post.categories = String(resolved.properties.categories ?? resolved.properties.category).split(" ").filter(v => v !== '');
         post.comments = resolved.properties.comments ? true : false;
         post.content = await render(resolved.postContent, path, { ctx });
         post.date = moment(resolved.properties.date);
@@ -76,11 +76,12 @@ export default class Source {
         post.license = resolved.properties.license as string ?? 'default';
         post.more = resolved.postContent;
         post.properties = resolved.properties;
-        post.source = relative(ctx.SOURCE_DIRECTORY,path);
+        post.source = relative(ctx.SOURCE_DIRECTORY, path);
         post.stat = fileStat;
-        post.tags = String(resolved.properties.tags ?? resolved.properties.tag).split(" ").filter(v=>v!=='');
+        post.tags = String(resolved.properties.tags ?? resolved.properties.tag).split(" ").filter(v => v !== '');
         post.title = resolved.properties.title ?? "Untitled";
         post.updated = moment(fileStat.ctime);
+        post.path = join(ctx.PUBLIC_DIRECTORY, post.source);
         return post as Post;
     }
 }

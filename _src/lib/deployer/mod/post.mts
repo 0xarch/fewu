@@ -15,7 +15,7 @@ export default class PostDeployer implements Deployable {
             page: post,
             site: ctx.data,
             ctx,
-            ...getHelpers(ctx)
+            ...getHelpers(ctx,post)
         });
         await ExtendedFS.ensure(target);
         await writeFile(target, result);

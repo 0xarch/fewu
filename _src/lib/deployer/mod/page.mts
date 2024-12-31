@@ -1,64 +1,43 @@
-import { Context, Page, Result } from "#lib/types";
-import { basename, extname, join } from "path";
+import { Context, Pagable, Page, Result } from "#lib/types";
+import { basename, extname, join, relative } from "path";
 import { Deployable } from "../deployer.mjs";
 import { readdir, stat, writeFile } from "fs/promises";
 import { renderFile } from "#lib/render/render";
 import { getHelpers } from "#lib/interface/helper";
 import ExtendedFS from "#util/ExtendedFS";
 import Console from "#util/Console";
-
-declare interface Pagable {
-    type: string;
-    get(ctx: Context): string[];
-};
+import defaultPages from "./page/defaultPage.mjs";
 
 async function isDir(path: string): Promise<boolean> {
     let _stat = await stat(path);
     return _stat.isDirectory();
 }
 
-const defaultPages: Pagable[] = [
-    {
-        type: 'index',
-        get(ctx: Context) {
-            return [
-                join(ctx.PUBLIC_DIRECTORY, 'index.html')
-            ];
-        }
-    },
-    {
-        type: 'archive',
-        get(ctx: Context) {
-            let count = Math.ceil(ctx.data.posts.length / 10);
-            let targets: string[] = [];
-            while (count--) {
-                targets.push(join(ctx.PUBLIC_DIRECTORY, 'archives', count.toString()));
-            }
-            targets.reverse();
-            return targets;
-        }
-    }
-];
-
 class PageDeployer implements Deployable {
     private static async deploy_single(ctx: Context, pagable: Pagable, path: string): Promise<Result<void>> {
         let targets = pagable.get(ctx);
         let tasks: Promise<Result<void>>[] = [];
+        console.log(path);
         for (let i = 0; i < targets.length; i++) {
             const target = targets[i];
+            const page: Page = {
+                language: ctx.config.language,
+                current: i,
+                total: targets.length,
+                path: relative(ctx.PUBLIC_DIRECTORY, target),
+                source: path,
+                full_source: path
+            };
             let task = (async (): Promise<Result<void>> => {
                 const result = await renderFile(path, {
                     site: ctx.data,
-                    page: {
-                        current: i,
-                        total: targets.length
-                    } as Page,
+                    page,
                     ctx,
-                    ...getHelpers(ctx)
+                    ...getHelpers(ctx, page as Page)
                 });
                 await ExtendedFS.ensure(target);
                 await writeFile(target, result);
-                Console.info('Deploy success:',target);
+                Console.info('Deploy success:', target);
                 return {
                     status: 'Ok'
                 }

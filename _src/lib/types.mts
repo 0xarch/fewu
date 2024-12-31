@@ -10,17 +10,16 @@ export declare interface Page {
     title?: string;
     author?: string;
     language: string;
-    date: Moment;
-    updated: Moment;
-    license: string;
-    length: number;
-    excerpt: string;
-    more: string;
-    properties: { [key: string]: string }; // non-standard API
+    date?: Moment;
+    updated?: Moment;
+    length?: number;
+    excerpt?: string;
+    more?: string;
+    properties?: { [key: string]: string }; // non-standard API
 
     layout?: string;
-    comments: boolean;
-    content: string;
+    comments?: boolean;
+    content?: string;
 
     prev?: Post;
     next?: Post;
@@ -30,10 +29,13 @@ export declare interface Page {
 
     source: string;
     full_source: string;
-    stat: Stats;  // non-standard API
+    path: string;
+    stat?: Stats;  // non-standard API
 }
 
 export declare interface Post extends Page {
+    date: Moment;
+    license: string;
     tags: string[];
     categories: string[];
     properties: { [key: string]: string }; // non-standard API
@@ -41,6 +43,11 @@ export declare interface Post extends Page {
 
 export declare interface Scaffold {
     content: string;
+};
+
+export declare interface Pagable {
+    type: string;
+    get(ctx: Context): string[];
 };
 
 export declare type ResultStatus = 'Ok' | 'Err';
