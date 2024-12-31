@@ -1,8 +1,8 @@
-import { Post } from "#lib/types";
+import { PageContainer, Post } from "#lib/types";
 
 class DataStorage {
-    tags: string[] = [];
-    categories: string[] = [];
+    tags: PageContainer[] = [];
+    categories: PageContainer[] = [];
     posts: Post[] = [];
 }
 

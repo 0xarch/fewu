@@ -45,6 +45,11 @@ export declare interface Scaffold {
     content: string;
 };
 
+export declare interface PageContainer {
+    key: string;
+    values: Page[];
+}
+
 export declare interface Pagable {
     type: string;
     get(ctx: Context): string[];
