@@ -18,7 +18,8 @@ class PageDeployer implements Deployable {
                 language: ctx.config.language,
                 current: i,
                 total: targets.length,
-                path: relative(ctx.PUBLIC_DIRECTORY, target),
+                path: target,
+                relative_path: relative(ctx.PUBLIC_DIRECTORY, target),
                 source: path,
                 full_source: path
             };

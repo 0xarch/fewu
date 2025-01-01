@@ -80,6 +80,7 @@ export default class Source {
         post.stat = fileStat;
         post.tags = String(resolved.properties.tags ?? resolved.properties.tag).split(" ").filter(v => v !== '');
         post.title = resolved.properties.title ?? "Untitled";
+        post.relative_path = post.source;
         post.updated = moment(fileStat.ctime);
         post.path = join(ctx.PUBLIC_DIRECTORY, post.source);
         return post as Post;

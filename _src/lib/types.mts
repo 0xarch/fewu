@@ -30,6 +30,7 @@ export declare interface Page {
     source: string;
     full_source: string;
     path: string;
+    relative_path: string;
     stat?: Stats;  // non-standard API
 }
 
