@@ -1,5 +1,5 @@
 import { Context, PageContainer, Page, Post } from "#lib/types";
-import { Source } from "#lib/local/local";
+import { Source, Theme } from "#lib/local/local";
 
 function post_sort(a: Page, b: Page): number {
     return a?.date?.isBefore(b.date) ? 1 : a?.date?.isSame(b.date) ? 0 : -1;
@@ -38,4 +38,5 @@ export default async function collectData(ctx: Context) {
     ctx.data.posts.sort(post_sort);
     ctx.data.categories.sort((a, b) => a.key > b.key ? 1 : -1);
     ctx.data.tags.sort((a, b) => a.key > b.key ? 1 : -1);
+    await Theme.executePlugins(ctx);
 }

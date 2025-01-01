@@ -43,5 +43,6 @@ export function getHelpers(ctx: Context, page: Page): Helpers {
                 throw new Error('Invalid type passed to helper: _key_of');
             }
         },
+        ...ctx.plugin.helpers
     }
 }

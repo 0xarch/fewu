@@ -34,6 +34,14 @@ class ExtendedFS {
             }
         }
     }
+
+    static async isDir(path: string): Promise<boolean> {
+        if(!existsSync(path)){
+            return false;
+        }
+        let _stat = await stat(path);
+        return _stat.isDirectory();
+    }
 }
 
 export default ExtendedFS;

@@ -1,17 +1,12 @@
 import { Context, Pagable, Page, Result } from "#lib/types";
 import { basename, extname, join, relative } from "path";
 import { Deployable } from "../deployer.mjs";
-import { readdir, stat, writeFile } from "fs/promises";
+import { readdir, writeFile } from "fs/promises";
 import { renderFile } from "#lib/render/render";
 import { getHelpers } from "#lib/interface/helper";
 import ExtendedFS from "#util/ExtendedFS";
 import Console from "#util/Console";
 import defaultPages from "./page/defaultPage.mjs";
-
-async function isDir(path: string): Promise<boolean> {
-    let _stat = await stat(path);
-    return _stat.isDirectory();
-}
 
 class PageDeployer implements Deployable {
     private static async deploy_single(ctx: Context, pagable: Pagable, path: string): Promise<Result<void>> {
@@ -54,10 +49,11 @@ class PageDeployer implements Deployable {
         let files = (await readdir(layoutDir)).map(v => join(layoutDir, v));
 
         let tasks: Promise<Result<void>>[] = [];
+        let validPages = [...defaultPages, ...ctx.plugin.append_pages];
         for (const file of files) {
             let filename = basename(file, extname(file));
-            if (!await isDir(file)) {
-                for (let pagable of defaultPages) {
+            if (!await ExtendedFS.isDir(file)) {
+                for (let pagable of validPages) {
                     if (pagable.type === filename) {
                         let task = PageDeployer.deploy_single(ctx, pagable, file);
                         tasks.push(task);

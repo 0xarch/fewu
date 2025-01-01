@@ -55,6 +55,11 @@ export declare interface Pagable {
     get(ctx: Context): string[];
 };
 
+export declare interface AppPlugin {
+    append_pages: Pagable[];
+    helpers: Record<string, Function>;
+}
+
 export declare type ResultStatus = 'Ok' | 'Err';
 
 export declare interface Result<T> {
