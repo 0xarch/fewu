@@ -36,6 +36,12 @@ export default async function collectData(ctx: Context) {
         ctx.data.posts.push(post);
     })()));
     ctx.data.posts.sort(post_sort);
+    ctx.data.posts.forEach((v, i, a) => {
+        v.current = i;
+        v.total = a.length;
+        v.prev = a[i - 1];
+        v.next = a[i + 1];
+    });
     ctx.data.categories.sort((a, b) => a.key > b.key ? 1 : -1);
     ctx.data.tags.sort((a, b) => a.key > b.key ? 1 : -1);
     await Theme.executePlugins(ctx);
