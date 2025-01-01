@@ -27,7 +27,7 @@ export declare interface Page {
     current: number;
     total: number;
 
-    raw: string;
+    raw?: string;
     source: string;
     full_source: string;
     path: string;
