@@ -76,6 +76,7 @@ export default class Source {
         post.license = resolved.properties.license as string ?? 'default';
         post.more = resolved.postContent;
         post.properties = resolved.properties;
+        post.raw = resolved.postContent;
         post.source = relative(ctx.SOURCE_DIRECTORY, path);
         post.stat = fileStat;
         post.tags = String(resolved.properties.tags ?? resolved.properties.tag).split(" ").filter(v => v !== '');
