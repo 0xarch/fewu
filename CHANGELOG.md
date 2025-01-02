@@ -3,6 +3,10 @@
 Latest release version: REL3.0.0
 Developing version: REL3.0.0
 
+## REL3.0.1 - 2025-01-02
+
+Fix a bug where `SourceDeployer` causes error when `public` directory is not existed at start.
+
 ## REL3.0.0 - 2025-01-02
 
 ### CRITICAL CHANGES
