@@ -34,12 +34,18 @@ export default class ObjectParser {
     }
 
     static async parse(content: string, options: _DirectOptions): Promise<object | null> {
-        let _extname = options.type ?? basename(options?.path, extname(options.path));
+        let _extname = options.type ?? extname(options.path);
+        let parser: Parser | undefined;
         for (let availableParser of ObjectParser.availableParsers) {
             if (availableParser.type.test(_extname)) {
-                return await availableParser.parser.parse(content);
+                parser = availableParser.parser;
+                break;
             }
         }
-        return null;
+        if(!parser){
+            return null;
+        } else {
+            return await parser.parse(content);
+        }
     }
 }
