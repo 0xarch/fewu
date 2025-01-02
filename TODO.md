@@ -9,11 +9,11 @@
 
 ## REL2.0.0
 
-31 [ ] 声明/实现 Parser 基准类
+31 [Y] 声明/实现 Parser 基准类
 
-30 [ ] 使用 Hexo 风格的配置文件
+30 [Y] 使用 Hexo 风格的配置文件
 
-29 [ ] 使用 TypeScript 更新代码
+29 [Y] 使用 TypeScript 更新代码
 
 ## REL1.3.0
 
