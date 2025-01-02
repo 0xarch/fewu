@@ -1,4 +1,4 @@
-/**
+/*
  * Marked Admonition Extension
  * 
  * This is a fork of xiefucai's marked-admonition-extension project, as the origin project lacks maintenance.
@@ -32,15 +32,15 @@ const admonitionTypes = [
     "warning"
 ];
 const startReg =
-    new RegExp(`^(?:!!!)|(?:\:\:\:)\\s+(${admonitionTypes.join('|')})(?:\\s+)?(.*)$`);
-const endReg = /^(?:!!!)|(?:\:\:\:)\s*$/;
+    new RegExp(`^!!!\\s+(${admonitionTypes.join('|')})(?:\\s+)?(.*)$`);
+const endReg = /^!!!\s*$/;
 let config: Config = { nodeName: 'div', className: 'admonition', title: { nodeName: 'p' } };
 
 const admonitionPlugin: TokenizerExtension | RendererExtension = {
     name: 'admonition',
     level: 'block',
     start(this: TokenizerThis, src: string) {
-        const index = src.match(new RegExp(`(^|[\\r\\n])(?:!!!)|(?:\:\:\:)\\s+(${admonitionTypes.join('|')})(?:\\s+)?(.*)`))?.index;
+        const index = src.match(new RegExp(`(^|[\\r\\n])!!!\\s+(${admonitionTypes.join('|')})(?:\\s+)?(.*)`))?.index;
         return index;
     },
     tokenizer(src: string, _tokens): Tokens.Generic | void {
@@ -102,6 +102,10 @@ const setConfig = (data: Config) => {
 
 export { admonitionTypes, setConfig };
 
-const admonition: () => MarkedExtension = () => ({ extensions });
+const admonition: () => MarkedExtension = () => {
+    return {
+        extensions
+    }
+};
 
 export default admonition;

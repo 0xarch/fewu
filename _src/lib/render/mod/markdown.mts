@@ -7,9 +7,7 @@ import admonition from "./mod/markdown-admonition.mjs";
 
 const marked = new Marked();
 
-marked.use(mangle());
-marked.use(gfmHeadingId());
-marked.use(admonition());
+marked.use(mangle(), gfmHeadingId(), admonition());
 
 export default class RendererMarkdown implements Renderer {
     async render(template: string, templatePath?: string, variables?: object): Promise<string> {
