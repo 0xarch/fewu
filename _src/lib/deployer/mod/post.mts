@@ -15,14 +15,21 @@ export default class PostDeployer implements Deployable {
             page: post,
             site: ctx.data,
             ctx,
-            ...getHelpers(ctx,post)
+            ...getHelpers(ctx, post)
         });
-        await ExtendedFS.ensure(target);
-        await writeFile(target, result);
+        try {
+            await ExtendedFS.ensure(target);
+            await writeFile(target, result);
 
-        return {
-            status: 'Ok'
-        };
+            return {
+                status: 'Ok'
+            };
+        } catch (e) {
+            console.error(e);
+            return {
+                status: 'Err'
+            }
+        }
     }
 
     static async deploy(ctx: Context): Promise<Result<Result<void>[]>> {

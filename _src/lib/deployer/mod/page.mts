@@ -30,11 +30,18 @@ class PageDeployer implements Deployable {
                     ctx,
                     ...getHelpers(ctx, page as Page)
                 });
-                await ExtendedFS.ensure(target);
-                await writeFile(target, result);
-                Console.may.info('Deploy success:', target);
-                return {
-                    status: 'Ok'
+                try {
+                    await ExtendedFS.ensure(target);
+                    await writeFile(target, result);
+                    Console.may.info('Deploy success:', target);
+                    return {
+                        status: 'Ok'
+                    }
+                } catch (e) {
+                    console.error(e);
+                    return {
+                        status: 'Err'
+                    }
                 }
             })();
             tasks.push(task);
