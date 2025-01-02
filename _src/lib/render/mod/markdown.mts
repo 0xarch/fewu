@@ -3,11 +3,13 @@ import { Renderer } from "../render.mjs";
 import { Marked } from "marked";
 import { mangle } from "marked-mangle";
 import { gfmHeadingId } from "marked-gfm-heading-id";
+import admonition from "./mod/markdown-admonition.mjs";
 
 const marked = new Marked();
 
 marked.use(mangle());
 marked.use(gfmHeadingId());
+marked.use(admonition());
 
 export default class RendererMarkdown implements Renderer {
     async render(template: string, templatePath?: string, variables?: object): Promise<string> {
