@@ -36,6 +36,7 @@
     },
     "type": "module",
     "devDependencies": {
+        "@types/marked": "^5.0.2",
         "@types/node": "^22.10.2",
         "@types/pug": "^2.0.10"
     }
