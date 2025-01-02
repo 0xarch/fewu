@@ -1,7 +1,48 @@
 # CHANGELOG
 
-Latest release version: REL2.0.0
-Developing version: DEV2.0.1
+Latest release version: REL3.0.0
+Developing version: REL3.0.0
+
+## REL3.0.0 - 2025-01-02
+
+### CRITICAL CHANGES
+
+All codes (except some utilities) are re-written. Compatibility for version REL2.0.0 is still kept, but will remove in further versions.
+
+#### Utilities
+
+* Argv(MTS)
+* Console(MTS)
+* fn/dynamicImport(MJS)
+* ExtendedFS(MTS)
+* GObject(MJS)
+* I18n(Deprecated,used in v2,MJS)
+* Markdown(Deprecated, used in v2,MJS)
+* NewPromise(Deprecated, used in v2,MTS)
+* StandaloneApp(Deprecated, used in v2,MTS)
+* TemplateString(Deprecated, used in v2,MJS)
+* Text(MTS)
+
+#### Renderers
+
+* Markdown(Builtin,MTS)
+* Pug(Builtin,MTS)
+
+#### Object Parsers
+
+* JSON(Builtin,MTS)
+* Yaml(Builtin,MTS)
+
+#### Helpers
+
+* __: I18n support helper
+* url_for: URL helper
+* full_url_for: URL helper
+* css: HTML helper
+* js: HTML helper
+* \_container\_of: Logic helper
+* \_dir\_of: Logic helper
+* moment: Logic helper
 
 ## DEV2.0.99 - 2024-12-27
 
