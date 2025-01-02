@@ -1,4 +1,4 @@
-import { Config, AppPlugin } from "../types.mjs";
+import { Config, AppPlugin, I18nUsable } from "../types.mjs";
 import { version } from "./fewu.mjs";
 import defaultConfig, { mixConfig } from "./config.mjs";
 
@@ -30,6 +30,7 @@ class Context extends EventEmitter {
     public readonly env: typeof process.env;
     public readonly data: DataStorage;
     public plugin: AppPlugin;
+    public i18ns: I18nUsable[];
 
     public readonly BASE_DIRECTORY: string;
     public readonly PUBLIC_DIRECTORY: string;
@@ -59,6 +60,7 @@ class Context extends EventEmitter {
             append_pages: [],
             helpers: {}
         };
+        this.i18ns = [];
 
         this.BASE_DIRECTORY = baseDirectory;
         this.PUBLIC_DIRECTORY = join(baseDirectory, CONFIG.public_dir);

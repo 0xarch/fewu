@@ -62,6 +62,11 @@ export declare interface AppPlugin {
     helpers: Record<string, Function>;
 }
 
+export declare interface I18nUsable {
+    id: string;
+    value: Record<string,string>
+}
+
 export declare type ResultStatus = 'Ok' | 'Err';
 
 export declare interface Result<T> {

@@ -1,8 +1,9 @@
-import { Context, Page, PageContainer } from "#lib/types";
+import { Context, I18nUsable, Page, PageContainer } from "#lib/types";
 import moment from "moment";
 import { join } from "path";
 
 declare interface Helpers {
+    __(text: string): string;
     url_for(path: string): string;
     full_url_for(path: string): string;
     css(param0: string | object | string[] | object[]): string;
@@ -31,6 +32,34 @@ export function getHelpers(ctx: Context, page: Page): Helpers {
         return tag;
     });
     return {
+        __(key) {
+            let currentI18n: Record<string, string> = {};
+            let fallbackI18n: Record<string, string> = {};
+            for (let i18nUsable of ctx.i18ns) {
+                if (i18nUsable.id === page.language) {
+                    currentI18n = i18nUsable.value;
+                    break;
+                } else if (i18nUsable.id === 'default' || i18nUsable.id === 'fallback') {
+                    fallbackI18n = i18nUsable.value;
+                }
+            }
+            let result = '';
+            if (/[0-9]/.test(key)) {
+                let replaceList: string[] = [];
+                for (let item of (/[0-9]+/g).exec(key) ?? []) {
+                    key = key.replace(item, '{NUMBER}');
+                    replaceList.push(item);
+                }
+                result = currentI18n[key] ?? fallbackI18n[key] ?? key;
+                for (let item of replaceList) {
+                    result = result.replace('{NUMBER}', item);
+                }
+            }
+            else {
+                result = currentI18n[key] ?? fallbackI18n[key] ?? key;
+            }
+            return result;
+        },
         url_for(path) {
             if (path.startsWith('/')) {
                 return join(path);
