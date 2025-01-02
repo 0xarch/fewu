@@ -1,6 +1,11 @@
-import { Context, I18nUsable, Page, PageContainer } from "#lib/types";
+import { Context,  Page, PageContainer } from "#lib/types";
 import moment from "moment";
 import { join } from "path";
+
+declare interface _PageContainer extends PageContainer{
+    current: number;
+    total: number;
+}
 
 declare interface Helpers {
     __(text: string): string;
@@ -8,26 +13,34 @@ declare interface Helpers {
     full_url_for(path: string): string;
     css(param0: string | object | string[] | object[]): string;
     js(param0: string | object | string[] | object[]): string;
-    _container_of(type: string, current: number): PageContainer;
+    _container_of(type: string, current: number): _PageContainer;
     _dir_of(type: string): string;
     moment: typeof moment;
     [key: string]: Function;
 }
 
 export function getHelpers(ctx: Context, page: Page): Helpers {
-    let category: PageContainer[] = [];
-    let tag: PageContainer[] = [];
+    let category: _PageContainer[] = [];
+    let tag: _PageContainer[] = [];
     ctx.data.categories.map(v => {
         let splitCount = Math.ceil(v.values.length / 10);
         for (let i = 0; i < splitCount; i++) {
-            category.push(v);
+            category.push({
+                ...v,
+                current: i,
+                total: splitCount
+            });
         }
         return category;
     });
     ctx.data.tags.map(v => {
         let splitCount = Math.ceil(v.values.length / 10);
         for (let i = 0; i < splitCount; i++) {
-            tag.push(v);
+            tag.push({
+                ...v,
+                current: i,
+                total: splitCount
+            });
         }
         return tag;
     });
@@ -69,11 +82,11 @@ export function getHelpers(ctx: Context, page: Page): Helpers {
         full_url_for(path) {
             return join(ctx.config.url, path)
         },
-        _container_of(type, current) {
+        _container_of(type, _current) {
             if (type === 'category' || type === 'categories') {
-                return category[current];
+                return category[_current];
             } else if (type === 'tag' || type === 'tags') {
-                return tag[current];
+                return tag[_current];
             } else {
                 throw new Error('Invalid type passed to helper: _container_of');
             }
