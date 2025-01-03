@@ -3,6 +3,7 @@ import { cp } from "fs/promises";
 import { basename, extname, join, relative } from "path";
 import { Deployable } from "../deployer.mjs";
 import ExtendedFS from "#util/ExtendedFS";
+import cssProcessor from "./source/css.mjs";
 
 export declare interface Processor {
     type: RegExp,
@@ -10,7 +11,9 @@ export declare interface Processor {
 };
 
 class SourceDeployer implements Deployable {
-    static availableProcessors: Processor[] = [];
+    static availableProcessors: Processor[] = [
+        cssProcessor
+    ];
     static fallbackProcessor: Processor = {
         type: /\..*$/,
         processor: async (ctx, path) => {
