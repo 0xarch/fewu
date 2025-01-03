@@ -3,6 +3,14 @@
 Latest release version: REL3.0.0
 Developing version: REL3.0.0
 
+## REL3.1.0 - 2025-01-03
+
+Add compiler for `Sass` files. The `sass` file in themes' `source` folder will be compiled into `css`.
+
+`Renderer` now supports `EventEmitter`.
+
+`Deployer`, `Renderer`, `ObjectParser` now can be accessed through `Context`.
+
 ## REL3.0.1 - 2025-01-02
 
 Fix a bug where `SourceDeployer` causes error when `public` directory is not existed at start.
