@@ -1,4 +1,4 @@
-import { renderFile } from "#lib/render/render";
+import Renderer from "#lib/render/render";
 import { Context, Post, Result } from "#lib/types";
 import { getHelpers } from "#lib/interface/helper";
 import ExtendedFS from "#util/ts/ExtendedFS";
@@ -11,7 +11,7 @@ export default class PostDeployer implements Deployable {
         let target = join(ctx.PUBLIC_DIRECTORY, post.source, 'index.html');
 
         let layoutDir = join(ctx.THEME_DIRECTORY, 'layout');
-        let result = await renderFile(join(layoutDir, `post.${post.layout}.pug`), {
+        let result = await Renderer.renderFile(join(layoutDir, `post.${post.layout}.pug`), {
             page: post,
             site: ctx.data,
             ctx,

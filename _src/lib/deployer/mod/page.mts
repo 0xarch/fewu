@@ -2,7 +2,7 @@ import { Context, Pagable, Page, Result } from "#lib/types";
 import { basename, extname, join, relative } from "path";
 import { Deployable } from "../deployer.mjs";
 import { readdir, writeFile } from "fs/promises";
-import { renderFile } from "#lib/render/render";
+import Renderer from "#lib/render/render";
 import { getHelpers } from "#lib/interface/helper";
 import ExtendedFS from "#util/ExtendedFS";
 import Console from "#util/Console";
@@ -24,7 +24,7 @@ class PageDeployer implements Deployable {
                 full_source: path
             };
             let task = (async (): Promise<Result<void>> => {
-                const result = await renderFile(path, {
+                const result = await Renderer.renderFile(path, {
                     site: ctx.data,
                     page,
                     ctx,

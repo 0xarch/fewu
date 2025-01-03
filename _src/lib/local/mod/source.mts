@@ -8,7 +8,7 @@ import Text from "#util/ts/Text";
 import { readFile, stat } from "fs/promises";
 import { extname, join, relative } from "path";;
 import moment from "moment";
-import { render } from "#lib/render/render";
+import Renderer from "#lib/render/render";
 
 const ignoredFileTypes = [
     '.png', '.gif', '.webp', '.bmp', /^\.pptx?$/, /^\.jpe?g?$/, /^\..*?ignore$/
@@ -66,7 +66,7 @@ export default class Source {
         post.author = resolved.properties.author as string ?? ctx.config.author;
         post.categories = String(resolved.properties.categories ?? resolved.properties.category).split(" ").filter(v => v !== '');
         post.comments = resolved.properties.comments ? true : false;
-        post.content = await render(resolved.postContent, path, { ctx });
+        post.content = await Renderer.render(resolved.postContent, path, { ctx });
         post.date = moment(resolved.properties.date);
         post.excerpt = resolved.postIntroduction;
         post.full_source = path;

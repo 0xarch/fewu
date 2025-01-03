@@ -1,72 +1,82 @@
 import { extname } from "path";
-import RendererMarkdown from "./mod/markdown.mjs";
-import RendererPug from "./mod/pug.mjs";
-import { Result } from "#lib/types";
+import { Result, Wrapper } from "#lib/types";
 import { readFile } from "fs/promises";
 import Console from "#util/Console";
+import EventEmitter from "events";
+import pugProcessor from "./mod/pug.mjs";
+import markdownProcessor from "./mod/markdown.mjs";
 
-export declare interface Renderer {
+export declare interface Processor {
+    type: RegExp;
+
     render(template: string, templatePath?: string, variables?: object): Promise<string>;
 
     renderFile(templatePath: string, variables?: object): Promise<string>;
 }
 
-export const Renderers = {
-    pug: RendererPug,
-    markdown: RendererMarkdown
-};
+interface _Renderer {
+    on(event: 'beforeRender', fn: (wrapper: Wrapper<string>, ...args: any[]) => void): this;
+    on(event: 'afterRender', fn: (wrapper: Wrapper<string>, ...args: any[]) => void): this;
+}
 
-declare interface availableRenderer {
-    matcher: RegExp,
-    renderer: Renderer
-};
+class _Renderer extends EventEmitter {
+    availableProcessors: Processor[] = [
+        pugProcessor,
+        markdownProcessor
+    ]
 
-export const availableRenderers: availableRenderer[] = [
-    {
-        matcher: /^\.pug$/,
-        renderer: new RendererPug
-    },
-    {
-        matcher: /^\.(md)|(markdown)$/,
-        renderer: new RendererMarkdown
+    constructor() {
+        super();
     }
-];
 
-export function isTypeSupported(type: string): Result<Renderer | null> {
-    for (let render of availableRenderers) {
-        if (render.matcher.test(type)) {
-            return {
-                status: 'Ok',
-                value: render.renderer
+    isTypeSupported(type: string): Result<Processor | null> {
+        for (let render of this.availableProcessors) {
+            if (render.type.test(type)) {
+                return {
+                    status: 'Ok',
+                    value: render
+                }
             }
         }
-    }
-    return {
-        status: 'Err',
-        value: null
-    }
-}
-
-export async function render(content: string, templatePath: string, variables?: object): Promise<string> {
-    let ext = extname(templatePath), matchedRenderer: availableRenderer | undefined;
-    for (let renderer of availableRenderers) {
-        if (renderer.matcher.test(ext)) {
-            matchedRenderer = renderer;
+        return {
+            status: 'Err',
+            value: null
         }
     }
-    if (!matchedRenderer) {
-        throw new Error(`Some content requires a renderer that has not been supported: ${templatePath} requires ${ext}.`);
-    } else {
-        Console.may.info(`Render ${templatePath} using matcher: ${matchedRenderer.matcher}`);
+
+    async render(content: string, templatePath: string, variables?: object): Promise<string> {
+        let ext = extname(templatePath), matchedRenderer: Processor | undefined;
+        for (let renderer of this.availableProcessors) {
+            if (renderer.type.test(ext)) {
+                matchedRenderer = renderer;
+            }
+        }
+        if (!matchedRenderer) {
+            throw new Error(`Some content requires a renderer that has not been supported: ${templatePath} requires ${ext}.`);
+        } else {
+            Console.may.info(`Render ${templatePath} using matcher: ${matchedRenderer.type}`);
+        }
+
+        let resultWrapper: Wrapper<string> = {
+            value: content
+        };
+
+        this.emit('beforeRender', resultWrapper);
+
+        resultWrapper.value = await matchedRenderer.render(content, templatePath, variables);
+
+        this.emit('afterRender', resultWrapper);
+
+        return resultWrapper.value;
     }
 
-    let result = matchedRenderer.renderer.render(content, templatePath, variables);
-
-    return result;
+    async renderFile(templatePath: string, variables?: object): Promise<string> {
+        let buffer = await readFile(templatePath);
+        let content = buffer.toString();
+        return this.render(content, templatePath, variables);
+    }
 }
 
-export async function renderFile(templatePath: string, variables?: object): Promise<string> {
-    let buffer = await readFile(templatePath);
-    let content = buffer.toString();
-    return render(content, templatePath, variables);
-}
+const Renderer = new _Renderer();
+
+export default Renderer;

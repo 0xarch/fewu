@@ -1,5 +1,5 @@
 import { readFile } from "fs/promises";
-import { Renderer } from "../render.mjs";
+import { Processor } from "../render.mjs";
 import { Marked } from "marked";
 import { mangle } from "marked-mangle";
 import { gfmHeadingId } from "marked-gfm-heading-id";
@@ -9,7 +9,9 @@ const marked = new Marked();
 
 marked.use(mangle(), gfmHeadingId(), admonition());
 
-export default class RendererMarkdown implements Renderer {
+class MarkdownProcessor implements Processor {
+    type= /\.md$/;
+
     async render(template: string, templatePath?: string, variables?: object): Promise<string> {
         return marked.parse(template) as string;
     }
@@ -20,3 +22,7 @@ export default class RendererMarkdown implements Renderer {
         return this.render(content, templatePath, variables);
     }
 };
+
+const markdownProcessor = new MarkdownProcessor();
+
+export default markdownProcessor;

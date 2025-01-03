@@ -1,9 +1,11 @@
 import { dirname } from "path";
-import { Renderer } from "../render.mjs";
+import { Processor } from "../render.mjs";
 
 import { compile, compileFile } from "pug";
 
-class RendererPug implements Renderer {
+class PugProcessor implements Processor {
+    type= /\.pug$/;
+
     async render(template: string, templatePath: string, variables: object): Promise<string> {
         let compiled = compile(template, {
             filename: templatePath,
@@ -20,4 +22,6 @@ class RendererPug implements Renderer {
     }
 }
 
-export default RendererPug;
+const pugProcessor = new PugProcessor;
+
+export default pugProcessor;

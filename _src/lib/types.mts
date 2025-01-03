@@ -67,6 +67,10 @@ export declare interface I18nUsable {
     value: Record<string,string>
 }
 
+export declare interface Wrapper<T> {
+    value: T
+}
+
 export declare type ResultStatus = 'Ok' | 'Err';
 
 export declare interface Result<T> {
