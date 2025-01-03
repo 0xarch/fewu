@@ -9,6 +9,9 @@ import { EventEmitter } from "events";
 import { existsSync } from "fs";
 import { readConfig } from "#lib/local/config";
 import DataStorage from "#lib/data/data";
+import Renderer from "#lib/render/render";
+import ObjectParser from "#lib/object-parser/object-parser";
+import Deployer from "#lib/deployer/deployer";
 
 interface Context {
     on(event: 'startup', listenter: (ctx: Context, ...args: any[]) => any): this;
@@ -37,6 +40,10 @@ class Context extends EventEmitter {
     public readonly SOURCE_DIRECTORY: string;
     public readonly THEME_DIRECTORY: string;
     public readonly CONFIG_PATH: string;
+
+    public readonly Deployer = Deployer;
+    public readonly Renderer = Renderer;
+    public readonly ObjectParser = ObjectParser;
 
     constructor(baseDirectory = process.cwd()) {
         // construct EventEmitter
