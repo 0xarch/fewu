@@ -3,6 +3,12 @@
 Latest release version: REL3.0.0
 Developing version: REL3.0.0
 
+## REL3.2.0 - 2025-01-05
+
+Add Live Server support. While use `fewu --server <port=3000>` to call `fewu`, it will open a server in `<port>`. Server will watch the changes in `theme/<name>/`, and rerender files when it is nessary.
+
+When use this feature on non-win32 platforms, it will write file to `/tmp/io.fewu.server/` instead of `public_dir` configured in config.yaml to reduce file operations.
+
 ## REL3.1.0 - 2025-01-03
 
 Add compiler for `Sass` files. The `sass` file in themes' `source` folder will be compiled into `css`.
