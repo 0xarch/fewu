@@ -23,6 +23,13 @@ export function assignBasicLog(_ctx: Context) {
         });
     });
 
+    _ctx.on('afterDeploy',()=>{
+        Console.log({
+            msg: 'Deploy finished.',
+            color: 'GREEN'
+        })
+    });
+
     _ctx.on('ready', (ctx) => {
         Console.log({
             color: 'GREEN',
