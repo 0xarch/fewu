@@ -1,6 +1,5 @@
 import Context from '#lib/fewu/context';
 import { assignBasicLog } from '#lib/interface/log';
-import Deployer from '#lib/deployer/deployer';
 import collectData from '#lib/data/collect';
 
 async function App() {
@@ -25,9 +24,11 @@ async function App() {
 
     ctx.emit('beforeDeploy', ctx);
 
-    await Deployer.run(ctx);
+    await ctx.Deployer.run(ctx);
 
     ctx.emit('afterDeploy', ctx);
+
+    await ctx.callServer();
 
     ctx.emit('ready', ctx);
 

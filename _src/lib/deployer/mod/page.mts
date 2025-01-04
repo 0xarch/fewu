@@ -7,6 +7,7 @@ import { getHelpers } from "#lib/interface/helper";
 import ExtendedFS from "#util/ExtendedFS";
 import Console from "#util/Console";
 import defaultPages from "./page/defaultPage.mjs";
+import { existsSync } from "fs";
 
 class PageDeployer implements Deployable {
     private static async deploy_single(ctx: Context, pagable: Pagable, path: string): Promise<Result<void>> {
@@ -72,6 +73,31 @@ class PageDeployer implements Deployable {
         }
         return await Promise.all(tasks);
     }
+
+    static async deployWatch(ctx: Context, path: string): Promise<any> {
+        try {
+            let _fullpath = join(ctx.THEME_DIRECTORY, path);
+            if (!existsSync(_fullpath)) {
+                return;
+            }
+            if (path.startsWith('layout')) {
+                let validPages = [...defaultPages, ...ctx.plugin.append_pages];
+                let filename = basename(path, extname(path));
+
+                Console.log(`Rerendering page: ${filename}.`);
+
+                for (let pagable of validPages) {
+                    if (pagable.type === filename) {
+                        await this.deploy_single(ctx, pagable, path);
+                        break;
+                    }
+                }
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
 }
 
 export default PageDeployer;

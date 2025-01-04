@@ -12,6 +12,9 @@ import DataStorage from "#lib/data/data";
 import Renderer from "#lib/render/render";
 import ObjectParser from "#lib/object-parser/object-parser";
 import Deployer from "#lib/deployer/deployer";
+import Server from "#lib/server/server";
+import { Theme } from "#lib/local/local";
+import NewPromise from "#util/NewPromise";
 
 interface Context {
     on(event: 'startup', listenter: (ctx: Context, ...args: any[]) => any): this;
@@ -44,6 +47,7 @@ class Context extends EventEmitter {
     public readonly Deployer = Deployer;
     public readonly Renderer = Renderer;
     public readonly ObjectParser = ObjectParser;
+    public readonly Server = new Server();
 
     constructor(baseDirectory = process.cwd()) {
         // construct EventEmitter
@@ -52,7 +56,7 @@ class Context extends EventEmitter {
         let CONFIG_PATH = join(baseDirectory, Argv['-C']?.[0] ?? 'config.yaml');
 
         // temporaily compatibility patch
-        if(!existsSync(CONFIG_PATH)){
+        if (!existsSync(CONFIG_PATH)) {
             CONFIG_PATH = join(baseDirectory, Argv['-C']?.[0] ?? 'config.json');
         }
 
@@ -74,6 +78,23 @@ class Context extends EventEmitter {
         this.SOURCE_DIRECTORY = join(baseDirectory, CONFIG.source_dir);
         this.THEME_DIRECTORY = join(baseDirectory, 'themes', CONFIG.theme);
         this.CONFIG_PATH = CONFIG_PATH;
+
+        if (Argv['-S'] || Argv['--server']) {
+            if (process.platform !== 'win32') {
+                this.PUBLIC_DIRECTORY = `/tmp/io.fewu.server`;
+            }
+        }
+    }
+
+    async callServer() {
+        let { promise, resolve } = NewPromise.withResolvers();
+        if (Argv['-S'] || Argv['--server']) {
+            this.Server.create(this).listen(parseInt(Argv['-S']?.[0] || Argv['--server']?.[0]) || 3000);
+            Theme.watch(this, (ctx, type, path) => {
+                ctx.Deployer.runWatch(ctx, path);
+            });
+        }
+        return promise;
     }
 }
 

@@ -5,6 +5,8 @@ import ExtendedFS from "#util/ts/ExtendedFS";
 import { writeFile } from "fs/promises";
 import { join } from "path";
 import { Deployable } from "../deployer.mjs";
+import { existsSync } from "fs";
+import Console from "#util/Console";
 
 export default class PostDeployer implements Deployable {
     private static async deploy_single(ctx: Context, post: Post): Promise<Result<void>> {
@@ -44,6 +46,27 @@ export default class PostDeployer implements Deployable {
         return {
             status: hasErr ? 'Err' : 'Ok',
             value: results
+        }
+    }
+
+    static async deployWatch(ctx: Context, path: string): Promise<any> {
+        try {
+            let _fullpath = join(ctx.THEME_DIRECTORY,path);
+            if(!existsSync(_fullpath)){
+                return;
+            }
+            if(path.startsWith('layout/post.')){
+                let layoutName = path.replace('layout/post.','').replace(/\..*$/,'');
+                let attachedPosts = ctx.data.posts.filter(v => v.layout === layoutName);
+
+                Console.log(`Rerendering post: ${attachedPosts.map(v => v.title)} by layout changed.`);
+
+                for(let attachedPost of attachedPosts){
+                    await this.deploy_single(ctx, attachedPost);
+                }
+            }
+        } catch (e) {
+            console.error(e);
         }
     }
 }
