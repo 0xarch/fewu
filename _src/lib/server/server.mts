@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import Mime from "mime";
 import Console from '#util/Console';
+import { fileURLToPath } from 'node:url';
 
 class Server {
     serverInstance?: HttpServer;
@@ -16,7 +17,9 @@ class Server {
         this.serverInstance = createServer((req: IncomingMessage, res: ServerResponse) => {
             Console.log(`Request ${req.url} with method ${req.method}`);
 
-            let targetPath = join(ctx.PUBLIC_DIRECTORY, req.url as string);
+            let localUrl = decodeURI(req.url as string);
+
+            let targetPath = join(ctx.PUBLIC_DIRECTORY, localUrl);
 
             if (existsSync(targetPath)) {
                 if (statSync(targetPath).isDirectory()) {
@@ -25,7 +28,7 @@ class Server {
             }
 
             if (existsSync(targetPath)) {
-                let file = (readFileSync(targetPath)).toString();
+                let file = (readFileSync(targetPath));
                 let mimeType = Mime.getType(targetPath);
                 Console.log(`Response ${targetPath}<${mimeType}>`);
                 if (mimeType !== null) {

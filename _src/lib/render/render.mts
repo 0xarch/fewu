@@ -4,7 +4,7 @@ import { readFile } from "fs/promises";
 import Console from "#util/Console";
 import EventEmitter from "events";
 import pugProcessor from "./mod/pug.mjs";
-import markdownProcessor from "./mod/markdown.mjs";
+import fewuRendererMarkdown from "fewu-renderer-markdown";
 
 export declare interface Processor {
     type: RegExp;
@@ -22,7 +22,7 @@ interface _Renderer {
 class _Renderer extends EventEmitter {
     availableProcessors: Processor[] = [
         pugProcessor,
-        markdownProcessor
+        fewuRendererMarkdown
     ]
 
     constructor() {
