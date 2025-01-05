@@ -1,10 +1,8 @@
 import { url, version } from "#lib/fewu/fewu";
 import { Context } from "#lib/types";
 import Console from "#util/Console";
-import Argv from "#util/Argv";
 
 export function assignBasicLog(_ctx: Context) {
-    if (Argv['--quiet'] || Argv['-Q']) return;
     _ctx.on('startup', () => {
         Console.log({
             color: 'GREEN',
