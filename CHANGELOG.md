@@ -1,9 +1,13 @@
 # CHANGELOG
 
-Latest release version: REL3.2.0
-Developing version: DEV3.2.1
+Latest release version: REL3.2.1
+Developing version: DEV3.2.2
 
-## DEV3.2.1 - 2025-01-05
+## REL3.2.1 - 2025-01-05
+
+Switch `Marked` to `Markdown it`. 
+
+Split out Markdown renderer module. See [fewu-renderer-markdown](https://github.com/0xarch/fewu-renderer-markdown/)
 
 ## REL3.2.0 - 2025-01-05
 
