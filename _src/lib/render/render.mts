@@ -54,7 +54,7 @@ class _Renderer extends EventEmitter {
         if (!matchedRenderer) {
             throw new Error(`Some content requires a renderer that has not been supported: ${templatePath} requires ${ext}.`);
         } else {
-            Console.may.info(`Render ${templatePath} using matcher: ${matchedRenderer.type}`);
+            Console.may.info({ msg: `Render ${templatePath} using matcher: ${matchedRenderer.type}`, color: 'DARKGREY' });
         }
 
         let resultWrapper: Wrapper<string> = {
