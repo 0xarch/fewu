@@ -14,6 +14,7 @@ class Server {
     }
 
     create(ctx: Context) {
+        Console.log(`Starting live server on ${ctx.PUBLIC_DIRECTORY}.`);
         this.serverInstance = createServer((req: IncomingMessage, res: ServerResponse) => {
             Console.log(`Request ${req.url} with method ${req.method}`);
 
@@ -47,6 +48,15 @@ class Server {
         if (typeof this.serverInstance === 'undefined') {
             throw new Error(`Server must be create first.`);
         }
+        Console.log(`Server is alive on`, {
+            msg: `localhost:${port}`,
+            color: 'LIGHTGREY',
+            effect: 'BOLD'
+        }, '.\n        Press', {
+            msg: 'Ctrl + C',
+            effect: 'BOLD',
+            color: 'LIGHTGREY'
+        }, 'to stop.');
         this.serverInstance.listen(port);
         return this;
     }
