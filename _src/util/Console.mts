@@ -1,19 +1,9 @@
 import Argv from "./Argv.mjs";
 
-declare interface _ConsoleColors {
-    BLACK: string, RED: string,
-    GREEN: string, YELLOW: string,
-    BLUE: string, MAGENTA: string,
-    CYAN: string, LIGHTGREY: string,
-    WHITE: string
-}
 
-declare interface _ConsoleEffects {
-    BOLD: string,
-    ITALIC: string,
-    UNDERLINE: string,
-    NONE: string
-}
+declare type _ConsoleColors = typeof Console.colors;
+
+declare type _ConsoleEffects = typeof Console.effects;
 
 declare type ConsoleComponent = {
     msg: string,
@@ -26,14 +16,18 @@ declare type ConsoleAcceptableArgument = ConsoleComponent | string;
 class Console {
     static controlStart = '\x1b[';
     static controlEnd = '\x1b[0m';
-    static colors: _ConsoleColors = {
+    static colors = {
         BLACK: '30', RED: '31',
         GREEN: '32', YELLOW: '33',
         BLUE: '34', MAGENTA: '35',
         CYAN: '36', LIGHTGREY: '37',
-        WHITE: '39'
+        DARKGREY: '90',
+        LIGHTRED: '91', LIGHTGREEN: '92',
+        LIGHTYELLOW: '93', LIGHTBLUE: '94',
+        LIGHTMAGENTA: '95', LIGHTCYAN: '96',
+        WHITE: '97'
     };
-    static effects: _ConsoleEffects = {
+    static effects = {
         BOLD: ';1',
         ITALIC: ';3',
         UNDERLINE: ';4',
@@ -53,7 +47,7 @@ class Console {
                 if (message.effect !== undefined) {
                     prefix += Console.effects[message.effect];
                 }
-                parsedMessage.push(Console.controlStart + prefix + 'm', message.msg, Console.controlEnd);
+                parsedMessage.push(Console.controlStart + prefix + 'm' + message.msg + Console.controlEnd);
 
             }
         }
