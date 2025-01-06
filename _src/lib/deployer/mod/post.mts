@@ -3,7 +3,7 @@ import { Context, Post, Result } from "#lib/types";
 import { getHelpers } from "#lib/interface/helper";
 import ExtendedFS from "#util/ts/ExtendedFS";
 import { writeFile } from "fs/promises";
-import { join } from "path";
+import { basename, dirname, extname, join } from "path";
 import { Deployable } from "../deployer.mjs";
 import { existsSync } from "fs";
 import Console from "#util/Console";
@@ -55,8 +55,12 @@ export default class PostDeployer implements Deployable {
             if(!existsSync(_fullpath)){
                 return;
             }
-            if(path.startsWith('layout/post.')){
-                let layoutName = path.replace('layout/post.','').replace(/\..*$/,'');
+            if(dirname(path) === 'layout' && basename(path).startsWith('post.')){
+                let filename = basename(path, extname(path));
+                let layoutName = extname(filename).replace('.','');
+
+                Console.log(`Post layout changed: ${filename} -> ${layoutName}`);
+
                 let attachedPosts = ctx.data.posts.filter(v => v.layout === layoutName);
 
                 Console.log(`Rerendering post: ${attachedPosts.map(v => v.title)} by layout changed.`);

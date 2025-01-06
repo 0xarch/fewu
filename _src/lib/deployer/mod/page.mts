@@ -1,5 +1,5 @@
 import { Context, Pagable, Page, Result } from "#lib/types";
-import { basename, extname, join, relative } from "path";
+import { basename, dirname, extname, join, relative } from "path";
 import { Deployable } from "../deployer.mjs";
 import { readdir, writeFile } from "fs/promises";
 import Renderer from "#lib/render/render";
@@ -34,7 +34,13 @@ class PageDeployer implements Deployable {
                 try {
                     await ExtendedFS.ensure(target);
                     await writeFile(target, result);
-                    Console.may.info('Deploy success:', target);
+                    Console.may.info({
+                        msg: 'Deploy success',
+                        color: 'LIGHTGREEN'
+                    }, {
+                        msg: target,
+                        color: 'LIGHTGREY'
+                    });
                     return {
                         status: 'Ok'
                     }
@@ -80,15 +86,14 @@ class PageDeployer implements Deployable {
             if (!existsSync(_fullpath)) {
                 return;
             }
-            if (path.startsWith('layout')) {
+            if (dirname(path) === 'layout') {
                 let validPages = [...defaultPages, ...ctx.plugin.append_pages];
                 let filename = basename(path, extname(path));
 
-                Console.log(`Rerendering page: ${filename}.`);
-
                 for (let pagable of validPages) {
                     if (pagable.type === filename) {
-                        await this.deploy_single(ctx, pagable, path);
+                        Console.log(`Rerendering page: ${filename}.`);
+                        await this.deploy_single(ctx, pagable, _fullpath);
                         break;
                     }
                 }
