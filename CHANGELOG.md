@@ -3,6 +3,18 @@
 Latest release version: REL3.2.1
 Developing version: DEV3.2.2
 
+## REL3.2.2 - 2025-01-06
+
+* Fix a bug that `PageDeployer` throws an Error `ENOENT` and not re-render page in server mode.
+
+* Fix a bug that `PostDeployer` not render related page when layout changed in server mode.
+
+* Add log for enter server.
+
+* Fix a bug that `Console` inserts a whitespace before customized text unexpectedly.
+
+* Re-balanced log colors.
+
 ## REL3.2.1 - 2025-01-05
 
 Switch `Marked` to `Markdown it`. 
