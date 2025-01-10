@@ -1,4 +1,4 @@
-import { Context } from "#lib/types";
+import { Context, Result } from "#lib/types";
 import { cp } from "fs/promises";
 import { basename, extname, join, relative } from "path";
 import { Deployable } from "../deployer.mjs";
@@ -44,6 +44,8 @@ class SourceDeployer implements Deployable {
                     }
                 })(v)));
             })().then(resolve);
+        } else {
+            resolve();
         }
     }
     private async deploy_single(ctx: Context, file: string) {
@@ -60,7 +62,7 @@ class SourceDeployer implements Deployable {
         }
         await processor(ctx, file);
     }
-    async deploy(ctx: Context) {
+    async deploy(ctx: Context): Promise<Result<string>> {
         let sourceDir = join(ctx.THEME_DIRECTORY, 'source');
         try {
             await ExtendedFS.ensure(ctx.PUBLIC_DIRECTORY);
@@ -68,8 +70,16 @@ class SourceDeployer implements Deployable {
                 file = relative(sourceDir, file);
                 await this.deploy_single(ctx, file);
             }
-        } catch (e) {
+            return {
+                status: 'Ok',
+                value: 'Finish'
+            };
+        } catch (e: any) {
             console.error(e);
+            return {
+                status: 'Err',
+                value: e?.msg ?? 'Unknown error: '+e
+            }
         }
     }
     async deployWatch(ctx: Context, path: string): Promise<any> {
