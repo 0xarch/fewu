@@ -1,6 +1,6 @@
 # CHANGELOG
 
-Latest release version: REL3.2.2
+Latest release version: REL3.2.3
 Developing version: DEV3.2.3
 
 ## REL3.2.3 - 2025-01-10
