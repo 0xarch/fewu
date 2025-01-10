@@ -2,13 +2,11 @@ import Context from '#lib/fewu/context';
 import { assignBasicLog } from '#lib/interface/log';
 import collectData from '#lib/data/collect';
 
+const ctx = new Context();
+
 async function App() {
 
-    const ctx = new Context();
-
     assignBasicLog(ctx);
-
-    ctx.emit('startup', ctx);
 
     ctx.emit('afterStartup', ctx);
 
@@ -32,3 +30,7 @@ async function App() {
 }
 
 export default App;
+export {
+    App,
+    ctx
+}
