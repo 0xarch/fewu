@@ -22,7 +22,7 @@ export default async function App(){
             target = (await import("./app.mjs")).default;
         }
     } else {
-        throw new Error(`Neither config.yaml or config.json detected in current working directory.`);
+        target = (await import('#lib/fewu/app')).default;
     }
     await target();
 }
