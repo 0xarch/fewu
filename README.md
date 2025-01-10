@@ -11,19 +11,17 @@ README.md：说明文件。
 
 `Fewu` 是一个自动化静态博客生成器。Fewu 被设计为固定的、快速的、无随机性的。这意味着使用同一份配置文件在任何地方都应得到相同结果。
 
-对于 Fewu >= 2.1.0，已经使用 tsc 预先编译，无须 node.js 支持 --experimental-strip-types
-
 ## 使用 Fewu
 
 ### 依赖
-* node.js
+* node.js >= 16
 * npm
 
 ### 部署
 
 1. 下载 fewu-cli
 ```sh
-npm install fewu -g
+npm install -g fewu-cli
 ```
 
 2. 自动生成需要的目录和文件。
@@ -40,17 +38,13 @@ fewu --new
 4. 生成发布版网站
 ```sh
 fewu
-# The same as
-# fewu --config config.json --release
 ```
-> `fewu` 本身是对 `fewu --config config.json --release` 的简写。
-
 > Fewu 在写入网页的时候会首先将已有的网页文件内容与生成的内容比对。如果内容相同，则不会继续写入文件。
 
 5. 你的网站已经在 `public` 目录可用了！
 
 ## 修改配置
-请修改 `config.json`。  
+请修改 `config.yaml`。  
 如果你有多个配置文件，可以在运行`fewu`时使用`--config $CONFIG_FILE`手动制定
 
 ## 开发主题
