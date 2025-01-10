@@ -1,9 +1,10 @@
 import { writeFile, existsSync, statSync } from "fs";
 import StandaloneApp from "#util/ts/StandaloneApp";
 import Argv from "#util/Argv";
+import moment from "moment";
 
 const app = new StandaloneApp({
-    version: '2.0.0',
+    version: '2.0.1',
     name: 'io.fewu.createNew'
 });
 
@@ -17,6 +18,7 @@ async function App(){
     const categories: string[] = Array.from<string>(Argv['-c'] ?? []).concat(...Array.from<string>(Argv['--category'] ?? []));
 
     const date = new Date();
+    const _moment = moment();
 
     const y = date.getFullYear(),
         m = date.getMonth()+1,
@@ -46,7 +48,7 @@ async function App(){
     
     const text = `---
 title: ${title}
-date: ${y}-${m}-${d}
+date: ${_moment.format('YYYY-MM-DD HH:mm:ss')}
 tags: ${tags}
 category: ${categories}
 ---
