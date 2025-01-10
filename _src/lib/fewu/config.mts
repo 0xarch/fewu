@@ -9,15 +9,15 @@ const defaultConfig = {
     deafult_layout: 'default',
     source_dir: 'source',
     public_dir: 'public',
-    theme: 'Neo',
-    excluded_files: [] as string[],
-    features: [] as string[],
-    modules: [] as string[]
+    theme: 'Blank',
+    excluded_files: [] as string[]
 }
 
 export default defaultConfig;
 
-export declare type defaultConfigType = typeof defaultConfig;
+export declare type defaultConfigType = typeof defaultConfig & {
+    [key: string]: any,
+};
 
 export declare type partialConfigType = Partial<defaultConfigType>;
 
@@ -25,10 +25,6 @@ export function mixConfig(defaultConfig: defaultConfigType, userConfig: partialC
     const mixedConfig: partialConfigType = {};
     Object.assign(mixedConfig, defaultConfig);
     Object.assign(mixedConfig, userConfig);
-
-    if(typeof mixedConfig.theme !== 'string'){
-        mixedConfig.theme = 'Neo';
-    }
 
     return mixedConfig as defaultConfigType;
 };
