@@ -24,11 +24,51 @@ export function assignBasicLog(_ctx: Context) {
         });
     });
 
-    _ctx.on('afterDeploy', () => {
+    _ctx.on('beforeProcess',()=>{
         Console.log({
+            color: 'LIGHTBLUE',
+            effect: 'BOLD',
+            msg: 'START '
+        }, {
             color: 'LIGHTGREEN',
             effect: 'BOLD',
-            msg: 'Deploy finished.'
+            msg: 'PROCESS'
+        })
+    });
+
+    _ctx.on('afterProcess', () => {
+        Console.log({
+            color: 'LIGHTYELLOW',
+            effect: 'BOLD',
+            msg: 'FINISH'
+        },{
+            color: 'LIGHTGREEN',
+            effect: 'BOLD',
+            msg: 'PROCESS'
+        })
+    });
+
+    _ctx.on('beforeDeploy',() => {
+        Console.log({
+            color: 'LIGHTBLUE',
+            effect: 'BOLD',
+            msg: 'START '
+        }, {
+            color: 'LIGHTGREEN',
+            effect: 'BOLD',
+            msg: 'DEPLOY'
+        })
+    });
+
+    _ctx.on('afterDeploy', () => {
+        Console.log({
+            color: 'LIGHTYELLOW',
+            effect: 'BOLD',
+            msg: 'FINISH'
+        },{
+            color: 'LIGHTGREEN',
+            effect: 'BOLD',
+            msg: 'DEPLOY'
         })
     });
 
