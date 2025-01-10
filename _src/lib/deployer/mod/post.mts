@@ -9,7 +9,10 @@ import { existsSync } from "fs";
 import Console from "#util/Console";
 
 export default class PostDeployer implements Deployable {
-    private static async deploy_single(ctx: Context, post: Post): Promise<Result<void>> {
+    constructor(ctx: Context) {
+
+    }
+    private async deploy_single(ctx: Context, post: Post): Promise<Result<void>> {
         let target = join(ctx.PUBLIC_DIRECTORY, post.source, 'index.html');
 
         let layoutDir = join(ctx.THEME_DIRECTORY, 'layout');
@@ -34,10 +37,10 @@ export default class PostDeployer implements Deployable {
         }
     }
 
-    static async deploy(ctx: Context): Promise<Result<Result<void>[]>> {
+    async deploy(ctx: Context): Promise<Result<Result<void>[]>> {
         let results: Result<void>[] = [], hasErr = false;
         for await (let post of ctx.data.posts) {
-            let result = await PostDeployer.deploy_single(ctx, post);
+            let result = await this.deploy_single(ctx, post);
             if (result.status === 'Err') {
                 hasErr = true;
             }
@@ -49,15 +52,15 @@ export default class PostDeployer implements Deployable {
         }
     }
 
-    static async deployWatch(ctx: Context, path: string): Promise<any> {
+    async deployWatch(ctx: Context, path: string): Promise<any> {
         try {
-            let _fullpath = join(ctx.THEME_DIRECTORY,path);
-            if(!existsSync(_fullpath)){
+            let _fullpath = join(ctx.THEME_DIRECTORY, path);
+            if (!existsSync(_fullpath)) {
                 return;
             }
-            if(dirname(path) === 'layout' && basename(path).startsWith('post.')){
+            if (dirname(path) === 'layout' && basename(path).startsWith('post.')) {
                 let filename = basename(path, extname(path));
-                let layoutName = extname(filename).replace('.','');
+                let layoutName = extname(filename).replace('.', '');
 
                 Console.log(`Post layout changed: ${filename} -> ${layoutName}`);
 
@@ -65,7 +68,7 @@ export default class PostDeployer implements Deployable {
 
                 Console.log(`Rerendering post: ${attachedPosts.map(v => v.title)} by layout changed.`);
 
-                for(let attachedPost of attachedPosts){
+                for (let attachedPost of attachedPosts) {
                     await this.deploy_single(ctx, attachedPost);
                 }
             }

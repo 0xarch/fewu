@@ -10,7 +10,10 @@ import defaultPages from "./page/defaultPage.mjs";
 import { existsSync } from "fs";
 
 class PageDeployer implements Deployable {
-    private static async deploy_single(ctx: Context, pagable: Pagable, path: string): Promise<Result<void>> {
+    constructor(ctx: Context) {
+
+    }
+    private async deploy_single(ctx: Context, pagable: Pagable, path: string): Promise<Result<void>> {
         let targets = pagable.get(ctx);
         let tasks: Promise<Result<void>>[] = [];
         for (let i = 0; i < targets.length; i++) {
@@ -59,7 +62,7 @@ class PageDeployer implements Deployable {
         };
     }
 
-    static async deploy(ctx: Context): Promise<Result<void>[]> {
+    async deploy(ctx: Context): Promise<Result<void>[]> {
         const layoutDir = join(ctx.THEME_DIRECTORY, 'layout');
         let files = (await readdir(layoutDir)).map(v => join(layoutDir, v));
 
@@ -70,7 +73,7 @@ class PageDeployer implements Deployable {
             if (!await ExtendedFS.isDir(file)) {
                 for (let pagable of validPages) {
                     if (pagable.type === filename) {
-                        let task = PageDeployer.deploy_single(ctx, pagable, file);
+                        let task = this.deploy_single(ctx, pagable, file);
                         tasks.push(task);
                         break;
                     }
@@ -80,7 +83,7 @@ class PageDeployer implements Deployable {
         return await Promise.all(tasks);
     }
 
-    static async deployWatch(ctx: Context, path: string): Promise<any> {
+    async deployWatch(ctx: Context, path: string): Promise<any> {
         try {
             let _fullpath = join(ctx.THEME_DIRECTORY, path);
             if (!existsSync(_fullpath)) {
