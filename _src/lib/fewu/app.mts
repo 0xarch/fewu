@@ -18,10 +18,6 @@ async function App() {
 
     ctx.emit('afterProcess', ctx);
 
-    ctx.emit('beforeGenerate', ctx);
-
-    ctx.emit('afterGenerate', ctx);
-
     ctx.emit('beforeDeploy', ctx);
 
     await ctx.Deployer.run(ctx);
