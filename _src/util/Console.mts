@@ -11,7 +11,7 @@ declare type ConsoleComponent = {
     effect?: keyof _ConsoleEffects | undefined
 };
 
-declare type ConsoleAcceptableArgument = ConsoleComponent | string;
+declare type ConsoleAcceptableArgument = ConsoleComponent | string | Error | Array<string>;
 
 class Console {
     static controlStart = '\x1b[';
@@ -39,6 +39,10 @@ class Console {
         for (let message of messages) {
             if (typeof message === 'string') {
                 parsedMessage.push(message);
+            } else if (message instanceof Error) {
+                parsedMessage.push(message.message + '\n' + message.stack as string);
+            } else if (Array.isArray(message)) {
+                parsedMessage.push('[', ...message, ']');
             } else {
                 let prefix = '';
                 if (message.color !== undefined) {
