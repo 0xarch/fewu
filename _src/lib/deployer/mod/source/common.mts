@@ -3,7 +3,7 @@ import { join } from "path";
 import { Processor } from "../source.mjs";
 import { compile } from "sass";
 import ExtendedFS from "#util/ExtendedFS";
-import { writeFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 
 class CssProcessor implements Processor {
     type= /\.s?css$/;
@@ -17,6 +17,22 @@ class CssProcessor implements Processor {
     }
 }
 
-const cssProcessor = new CssProcessor();
+class JsProcessor implements Processor {
+    type = /\.m?js$/;
+    async processor(ctx: Context, path: string){
+        let origin = join(ctx.THEME_DIRECTORY,'source',path), target = join(ctx.PUBLIC_DIRECTORY,path);
+        let result = await readFile(origin);
+        await ExtendedFS.ensure(target);
+        await writeFile(target,result);
+    }
+}
 
-export default cssProcessor;
+const cssProcessor = new CssProcessor();
+const jsProcessor = new JsProcessor();
+
+const processors = [
+    cssProcessor,
+    jsProcessor,
+]
+
+export default processors;

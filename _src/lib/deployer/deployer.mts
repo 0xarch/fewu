@@ -1,7 +1,7 @@
 import { Context } from "#lib/types";
 import PageDeployer from "./mod/page.mjs";
 import PostDeployer from "./mod/post.mjs";
-import SourceDeployer from "./mod/source.mjs";
+import sourceDeployer from "./mod/source.mjs";
 
 export abstract declare class Deployable {
     static deploy(ctx: Context): Promise<any>;
@@ -13,7 +13,7 @@ export abstract declare class Deployable {
 const deployers: Deployable[] = [
     PostDeployer,
     PageDeployer,
-    SourceDeployer
+    sourceDeployer
 ];
 
 export default class Deployer {

@@ -3,7 +3,7 @@ import { cp } from "fs/promises";
 import { basename, extname, join, relative } from "path";
 import { Deployable } from "../deployer.mjs";
 import ExtendedFS from "#util/ExtendedFS";
-import cssProcessor from "./source/css.mjs";
+import processors from "./source/common.mjs";
 import { existsSync } from "fs";
 import Console from "#util/Console";
 
@@ -13,10 +13,10 @@ export declare interface Processor {
 };
 
 class SourceDeployer implements Deployable {
-    static availableProcessors: Processor[] = [
-        cssProcessor
+    availableProcessors: Processor[] = [
+        ...processors
     ];
-    static fallbackProcessor: Processor = {
+    fallbackProcessor: Processor = {
         type: /\..*$/,
         processor: async (ctx, path) => {
             let target = join(ctx.PUBLIC_DIRECTORY,path), origin = join(ctx.THEME_DIRECTORY,'source',path);
@@ -24,20 +24,20 @@ class SourceDeployer implements Deployable {
             await cp(origin,target);
         }
     };
-    private static async deploy_single(ctx: Context, file: string) {
+    private async deploy_single(ctx: Context, file: string) {
         if (basename(file).startsWith('_')) {
             return;
         }
         let _extname = extname(file);
-        let processor: Processor["processor"] = SourceDeployer.fallbackProcessor.processor;
-        for(let _processor of SourceDeployer.availableProcessors){
+        let processor: Processor["processor"] = this.fallbackProcessor.processor;
+        for(let _processor of this.availableProcessors){
             if(_processor.type.test(_extname)){
                 processor = _processor.processor;
             }
         }
         await processor(ctx,file);
     }
-    static async deploy(ctx: Context) {
+    async deploy(ctx: Context) {
         let sourceDir = join(ctx.THEME_DIRECTORY, 'source');
         try {
             await ExtendedFS.ensure(ctx.PUBLIC_DIRECTORY);
@@ -49,7 +49,7 @@ class SourceDeployer implements Deployable {
             console.error(e);
         }
     }
-    static async deployWatch(ctx: Context, path: string): Promise<any> {
+    async deployWatch(ctx: Context, path: string): Promise<any> {
         try {
             let _fullpath = join(ctx.THEME_DIRECTORY,path);
             if(!existsSync(_fullpath)){
@@ -68,4 +68,6 @@ class SourceDeployer implements Deployable {
     }
 }
 
-export default SourceDeployer;
+const sourceDeployer = new SourceDeployer();
+
+export default sourceDeployer;
