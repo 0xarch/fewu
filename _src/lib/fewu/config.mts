@@ -1,3 +1,6 @@
+import { ConfigNotParsableError } from "#lib/interface/error";
+import ObjectParser from "#lib/object-parser/object-parser";
+
 const defaultConfig = {
     title: 'Fewu',
     description: '',
@@ -28,3 +31,15 @@ export function mixConfig(defaultConfig: defaultConfigType, userConfig: partialC
 
     return mixedConfig as defaultConfigType;
 };
+
+export function readConfig(_baseDir = process.cwd(), configPath: string): partialConfigType {
+    let obj: partialConfigType | null = {};
+
+    obj = ObjectParser.parseFileSync(configPath);
+
+    if (!obj) {
+        throw new ConfigNotParsableError(configPath);
+    }
+
+    return obj;
+}
