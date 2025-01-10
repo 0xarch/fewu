@@ -5,6 +5,9 @@ class _YamlParser implements Parser {
     async parse(content: string){
         return parse(content);
     }
+    parseSync(content: string) {
+        return parse(content);
+    }
 }
 
 const YamlParser: availableParser = {

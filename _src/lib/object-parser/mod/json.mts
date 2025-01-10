@@ -1,7 +1,10 @@
 import { availableParser, Parser } from "../object-parser.mjs";
 
 class _JsonParser implements Parser {
-    async parse(content: string){
+    async parse(content: string) {
+        return this.parseSync(content);
+    }
+    parseSync(content: string) {
         try {
             return JSON.parse(content);
         } catch (e) {

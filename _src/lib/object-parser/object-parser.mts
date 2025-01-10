@@ -1,10 +1,12 @@
 import { readFile } from "fs/promises";
-import { basename, extname } from "path";
+import { extname } from "path";
 import JsonParser from "./mod/json.mjs";
 import YamlParser from "./mod/yaml.mjs";
+import { readFileSync } from "fs";
 
 export declare interface Parser {
     parse(content: string): Promise<object | null>;
+    parseSync(content: string): object | null;
 }
 
 export declare interface availableParser {
@@ -27,13 +29,7 @@ export default class ObjectParser {
         YamlParser
     ];
 
-    static async parseFile(path: string, options?: _Options): Promise<object | null> {
-        let content = (await readFile(path)).toString();
-        let result = await ObjectParser.parse(content, { ...options, path });
-        return result;
-    }
-
-    static async parse(content: string, options: _DirectOptions): Promise<object | null> {
+    private static _parse(content: string, options: _DirectOptions, isAsync = false): (object | null) | (Promise<object | null>) {
         let _extname = options.type ?? extname(options.path);
         let parser: Parser | undefined;
         for (let availableParser of ObjectParser.availableParsers) {
@@ -42,10 +38,35 @@ export default class ObjectParser {
                 break;
             }
         }
-        if(!parser){
+        if (!parser) {
             return null;
         } else {
-            return await parser.parse(content);
+            if (isAsync) {
+                return parser.parse(content);
+            } else {
+                return parser.parseSync(content);
+            }
         }
     }
+
+    static async parseFile(path: string, options?: _Options): Promise<object | null> {
+        let content = (await readFile(path)).toString();
+        let result = await this.parse(content, { ...options, path });
+        return result;
+    }
+
+    static parseFileSync(path: string, options?: _Options): object | null {
+        let content = (readFileSync(path)).toString();
+        let result = this.parseSync(content, { ...options, path });
+        return result;
+    }
+
+    static async parse(content: string, options: _DirectOptions): Promise<object | null> {
+        return this._parse(content, options, true);
+    }
+
+    static parseSync(content: string, options: _DirectOptions): object | null {
+        return this._parse(content, options, false);
+    }
+
 }
