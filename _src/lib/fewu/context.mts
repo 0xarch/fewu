@@ -1,20 +1,21 @@
 import { Config, AppPlugin, I18nUsable } from "../types.mjs";
 import { version } from "./fewu.mjs";
-import defaultConfig, { mixConfig } from "./config.mjs";
+import defaultConfig, { mixConfig, readConfig } from "./config.mjs";
 
 import Argv from "#util/Argv";
+import Console from "#util/Console";
+import NewPromise from "#util/NewPromise";
 
 import { join } from "path";
 import { EventEmitter } from "events";
 import { existsSync } from "fs";
-import { readConfig } from "#lib/local/config";
 import DataStorage from "#lib/data/data";
 import Renderer from "#lib/render/render";
 import ObjectParser from "#lib/object-parser/object-parser";
 import Deployer from "#lib/deployer/deployer";
 import Server from "#lib/server/server";
 import { Theme } from "#lib/local/local";
-import NewPromise from "#util/NewPromise";
+import { ConfigNotFoundError } from "#lib/interface/error";
 
 interface Context {
     on(event: 'startup', listenter: (ctx: Context, ...args: any[]) => any): this;
@@ -44,21 +45,26 @@ class Context extends EventEmitter {
     public readonly THEME_DIRECTORY: string;
     public readonly CONFIG_PATH: string;
 
-    public readonly Deployer = Deployer;
-    public readonly Renderer = Renderer;
-    public readonly ObjectParser = ObjectParser;
-    public readonly Server = new Server();
+    public readonly Deployer;
+    public readonly Renderer;
+    public readonly ObjectParser;
+    public readonly Server;
 
     constructor(baseDirectory = process.cwd()) {
         // construct EventEmitter
         super();
 
-        let CONFIG_PATH = join(baseDirectory, Argv['-C']?.[0] ?? 'config.yaml');
-
-        // temporaily compatibility patch
-        if (!existsSync(CONFIG_PATH)) {
-            CONFIG_PATH = join(baseDirectory, Argv['-C']?.[0] ?? 'config.json');
+        let configPaths = [...[Argv['-C']?.[0]].filter(Boolean), 'config.yaml', 'config.yml', '_config.yaml', '_config.yml', 'config.json'].map(v => join(baseDirectory, v));
+        let CONFIG_PATH: string | undefined;
+        for(let configPath of configPaths){
+            if(existsSync(configPath)){
+                CONFIG_PATH = configPath;
+            }
         }
+        if(!CONFIG_PATH){
+            throw new ConfigNotFoundError(configPaths);
+        }
+        Console.log(`Using config: ${CONFIG_PATH}`);
 
         // const configuration
         const CONFIG = mixConfig(defaultConfig, readConfig(baseDirectory, CONFIG_PATH));
@@ -84,6 +90,11 @@ class Context extends EventEmitter {
                 this.PUBLIC_DIRECTORY = `/tmp/io.fewu.server`;
             }
         }
+
+        this.Deployer = new Deployer(this);
+        this.Renderer = Renderer;
+        this.ObjectParser = ObjectParser;
+        this.Server = new Server();
     }
 
     async callServer() {
