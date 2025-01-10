@@ -1,7 +1,19 @@
 # CHANGELOG
 
-Latest release version: REL3.2.1
-Developing version: DEV3.2.2
+Latest release version: REL3.2.2
+Developing version: DEV3.2.3
+
+## REL3.2.3 - 2025-01-10
+
+* Fix a bug that changing JS file causes error in server mode.
+
+* Add some pre-defined error classes.
+
+* Support external source deployers (less, etc.) (Needs manual enabling).
+
+* Remove `afterGenerate` `beforeGenerate`.
+
+* Support `config.json`, `config.yaml`, `config.yml`, `_config.yaml`, `_config.yml` as configuration file name.
 
 ## REL3.2.2 - 2025-01-06
 
