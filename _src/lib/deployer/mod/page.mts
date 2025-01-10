@@ -10,7 +10,7 @@ import defaultPages from "./page/defaultPage.mjs";
 import { existsSync } from "fs";
 
 class PageDeployer implements Deployable {
-    constructor(ctx: Context) {
+    constructor(_ctx: Context) {
 
     }
     private async deploy_single(ctx: Context, pagable: Pagable, path: string): Promise<Result<void>> {
@@ -62,7 +62,7 @@ class PageDeployer implements Deployable {
         };
     }
 
-    async deploy(ctx: Context): Promise<Result<void>[]> {
+    async deploy(ctx: Context): Promise<Result<void>> {
         const layoutDir = join(ctx.THEME_DIRECTORY, 'layout');
         let files = (await readdir(layoutDir)).map(v => join(layoutDir, v));
 
@@ -80,7 +80,17 @@ class PageDeployer implements Deployable {
                 }
             }
         }
-        return await Promise.all(tasks);
+        let settledResults = await Promise.allSettled(tasks);
+        for(let settledResult of settledResults){
+            if(settledResult.status === 'rejected'){
+                return {
+                    status: 'Err'
+                }
+            }
+        }
+        return {
+            status: 'Ok'
+        }
     }
 
     async deployWatch(ctx: Context, path: string): Promise<any> {

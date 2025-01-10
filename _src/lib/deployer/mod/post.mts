@@ -9,7 +9,7 @@ import { existsSync } from "fs";
 import Console from "#util/Console";
 
 export default class PostDeployer implements Deployable {
-    constructor(ctx: Context) {
+    constructor(_ctx: Context) {
 
     }
     private async deploy_single(ctx: Context, post: Post): Promise<Result<void>> {
@@ -37,18 +37,23 @@ export default class PostDeployer implements Deployable {
         }
     }
 
-    async deploy(ctx: Context): Promise<Result<Result<void>[]>> {
-        let results: Result<void>[] = [], hasErr = false;
+    async deploy(ctx: Context): Promise<Result<string>> {
+        let tasks: Promise<Result<void>>[] = [];
         for await (let post of ctx.data.posts) {
-            let result = await this.deploy_single(ctx, post);
-            if (result.status === 'Err') {
-                hasErr = true;
+            tasks.push(this.deploy_single(ctx,post));
+        }
+        let settledResults = await Promise.allSettled(tasks);
+        for(let settledResult of settledResults){
+            if(settledResult.status === 'rejected'){
+                return {
+                    status: 'Err',
+                    value: settledResult.reason
+                }
             }
-            results.push(result);
         }
         return {
-            status: hasErr ? 'Err' : 'Ok',
-            value: results
+            status: 'Ok',
+            value: ''
         }
     }
 
