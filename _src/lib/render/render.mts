@@ -52,7 +52,8 @@ class _Renderer extends EventEmitter {
             }
         }
         if (!matchedRenderer) {
-            throw new Error(`Some content requires a renderer that has not been supported: ${templatePath} requires ${ext}.`);
+            Console.may.error(`Some content requires a renderer that has not been supported: ${templatePath} requires ${ext}.`);
+            return content;
         } else {
             Console.may.info({ msg: `Render ${templatePath} using matcher: ${matchedRenderer.type}`, color: 'DARKGREY' });
         }

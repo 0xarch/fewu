@@ -11,7 +11,7 @@ import moment from "moment";
 import Renderer from "#lib/render/render";
 
 const ignoredFileTypes = [
-    '.png', '.gif', '.webp', '.bmp', /^\.pptx?$/, /^\.jpe?g?$/, /^\..*?ignore$/
+    '.png', '.gif', '.webp', '.bmp', '.svg', /^\.pptx?$/, /^\.jpe?g?$/, /^\..*?ignore$/, /\.ignore\..*$/
 ];
 
 function isIgnoredFileType(type: string) {
