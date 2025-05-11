@@ -1,7 +1,8 @@
 # CHANGELOG
 
-Latest release version: REL3.2.3
-Developing version: DEV3.2.3
+## REL3.3.4 - 2025-05-11
+
+* Remove `#util-ts` (deprecated)
 
 ## REL3.2.3 - 2025-01-10
 
