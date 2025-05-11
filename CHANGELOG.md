@@ -2,7 +2,10 @@
 
 ## REL3.3.4 - 2025-05-11
 
-* Remove `#util-ts` (deprecated)
+* Remove `#util-ts` (deprecated).
+* Experimental unified renderer system in use.
+* TS Compiler now skips library check.
+* New `NodeMoudules` util to query local modules (global now implemented).
 
 ## REL3.2.3 - 2025-01-10
 
