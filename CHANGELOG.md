@@ -1,10 +1,13 @@
 # CHANGELOG
 
-## REL3.4.7 - 2025-05-11
+## REL3.4.8 - 2025-05-11
 
 3.4.4 is jumped due to a mistake.
 
-Merged with REL3.4.6, REL3.4.5, REL3.4.3, REL3.4.2, REL3.4.1, REL3.4.0
+Merged with REL3.4.7, REL3.4.6, REL3.4.5, REL3.4.3, REL3.4.2, REL3.4.1, REL3.4.0
+
+* Compiled.
+> The version REL3.4.7 is released without compiling
 
 * Fix bug that `renderer` not use dynamicImport.
 
