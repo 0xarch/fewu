@@ -1,3 +1,4 @@
+import { EOL } from "os";
 import Argv from "./Argv.mjs";
 
 
@@ -40,7 +41,7 @@ class Console {
             if (typeof message === 'string') {
                 parsedMessage.push(message);
             } else if (message instanceof Error) {
-                parsedMessage.push(message.message + '\n' + message.stack as string);
+                parsedMessage.push(message.message + EOL + message.stack as string);
             } else if (Array.isArray(message)) {
                 parsedMessage.push('[', ...message, ']');
             } else {

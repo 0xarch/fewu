@@ -1,8 +1,10 @@
+import { EOL } from "os";
 import { resolve } from "./frontMatter.mjs";
 
 let regExps = {
     MATCH_H1: /\n# /,
     MATCH_IMAGE: /\!\[([^\]]*?)\]\(([^\n]+?)\)/g,
+    MATCH_MORE: /< *! *-- *more *-- *>/,
 };
 
 export function resolveContent(content: string) {
@@ -18,18 +20,26 @@ export function resolveContent(content: string) {
         ...postProp
     };
     let referencedImages = [];
-    const lines = content.split("\n");
+    const lines = content.split(EOL);
 
-    let moreIndex = lines.indexOf('<!--more-->');
-
-    if (moreIndex === -1) {
-        /* No introduction provided */
-        postContent = lines.slice(i).join('\n');
-    } else {
-        postContent = lines.slice(moreIndex).join('\n');
+    let moreIndex = -1; 
+    
+    for(let line of lines) {
+        if(!regExps.MATCH_MORE.exec(line)){
+            moreIndex++;
+        } else {
+            break;
+        }
     }
 
-    postIntroduction = lines.slice(i, (moreIndex !== -1) ? moreIndex : 5).join('\n').replace(/\#*/g, '');
+    if (moreIndex === -1 || moreIndex == lines.length+1) {
+        /* No introduction provided */
+        postContent = lines.slice(i).join(EOL);
+    } else {
+        postContent = lines.slice(moreIndex).join(EOL);
+    }
+
+    postIntroduction = lines.slice(i, (moreIndex !== -1) ? moreIndex : 5).join(EOL).replace(/\#*/g, '');
 
     referencedImages = [...postContent.matchAll(regExps.MATCH_IMAGE)].map(v => v[2]);
 

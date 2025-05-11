@@ -1,5 +1,6 @@
 import { Context,  Page, PageContainer } from "#lib/types";
 import moment from "moment";
+import { EOL } from "os";
 import { join } from "path";
 
 declare interface _PageContainer extends PageContainer{
@@ -106,7 +107,7 @@ export function getHelpers(ctx: Context, page: Page): Helpers {
         },
         css(param0) {
             if (Array.isArray(param0)) {
-                return param0.map(v => this.css(v)).join('\n');
+                return param0.map(v => this.css(v)).join(EOL);
             }
             if (typeof param0 === 'string') {
                 return `<link rel='stylesheet' href=${param0}>`;
@@ -117,7 +118,7 @@ export function getHelpers(ctx: Context, page: Page): Helpers {
         },
         js(param0) {
             if (Array.isArray(param0)) {
-                return param0.map(v => this.js(v)).join('\n');
+                return param0.map(v => this.js(v)).join(EOL);
             }
             if (typeof param0 === 'string') {
                 return `<script src=${param0}></script>`;
