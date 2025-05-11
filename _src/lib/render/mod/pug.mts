@@ -3,7 +3,9 @@ import { dirname } from "path";
 import { compile, compileFile } from "pug";
 import { AbstractRenderer } from "@fewu-swg/abstract-types";
 
-class PugProcessor extends AbstractRenderer {
+class PugProcessor implements AbstractRenderer {
+    __fewu__ = 'renderer';
+
     type = /\.pug$/;
 
     async render(template: string, templatePath: string, variables: object): Promise<string> {

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## REL3.4.0 - 2025-05-11
+
+* The core package `@fewu-swg/fewu` now does not export a executable `fewu`. Use `fewu-cli` instead. See [Fewu Cli](//github.com/fewu-swg/fewu-cli).
+* Fix bug that renderer requires `abstract-types`.
+* Remove old files in `_dist`.
+
 ## REL3.3.4 - 2025-05-11
 
 * Move the repository to @fewu-swg.

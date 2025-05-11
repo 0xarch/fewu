@@ -1,7 +1,7 @@
 {
     "name": "@fewu-swg/fewu",
     "main": "_dist/lib/fewu/app.mjs",
-    "version": "3.3.4",
+    "version": "3.4.0",
     "dependencies": {
         "@fewu-swg/fewu-renderer-markdown": "^1.2.1",
         "ejs": "^3.1.10",
@@ -22,9 +22,6 @@
         "#database": "./_dist/v2/database/main.mjs",
         "#common/*": "./_dist/common/*.mjs",
         "#lib/*": "./_dist/lib/*.mjs"
-    },
-    "bin": {
-        "fewu": "_dist/bin/fewu.js"
     },
     "scripts": {
         "bin": "tsc; node _dist/bin/fewu.js",
