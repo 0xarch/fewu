@@ -3,14 +3,15 @@
     "main": "_dist/lib/fewu/app.mjs",
     "version": "3.3.4",
     "dependencies": {
-        "ejs": "^3.1.5",
-        "fewu-renderer-markdown": "^1.1.3",
-        "fs": "^0.0.1-security",
-        "mime": "^4.0.6",
+        "@fewu-swg/fewu-renderer-markdown": "^1.2.1",
+        "ejs": "^3.1.10",
+        "fewu-renderer-markdown": "^1.1.6",
+        "fs": "0.0.1-security",
+        "mime": "^4.0.7",
         "moment": "^2.30.1",
-        "pug": "^3.0.2",
-        "sass": "^1.83.0",
-        "yaml": "^2.6.1"
+        "pug": "^3.0.3",
+        "sass": "^1.88.0",
+        "yaml": "^2.7.1"
     },
     "imports": {
         "#core/*": "./_dist/v2/core/*.js",
@@ -34,8 +35,9 @@
     },
     "type": "module",
     "devDependencies": {
-        "@types/node": "^22.10.2",
+        "@fewu-swg/abstract-types": "^1.0.0",
+        "@types/node": "^22.15.17",
         "@types/pug": "^2.0.10",
-        "typescript": "^5.7.3"
+        "typescript": "^5.8.3"
     }
 }
