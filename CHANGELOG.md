@@ -6,6 +6,8 @@
 
 Merged with REL3.4.3, REL3.4.2, REL3.4.1, REL3.4.0
 
+* Fix bug that `renderer` not use dynamicImport.
+
 * Removed deprecated document.
 
 * Fix type error in `renderer`.
