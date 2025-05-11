@@ -4,6 +4,8 @@
 
 Merged with REL3.4.3, REL3.4.2, REL3.4.1, REL3.4.0
 
+* Removed deprecated document.
+
 * Fix type error in `renderer`.
 
 * Fix bug that dynamicImport causes error on NT platform.
