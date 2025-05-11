@@ -1,11 +1,13 @@
 # CHANGELOG
 
-## REL3.4.1 - 2025-05-11
+## REL3.4.2 - 2025-05-11
+
+Merged with REL3.4.1, REL3.4.0
+
+* Fix bug that theme script import causes error
 
 * Remove `bin` directory in dist files.
 * Fix bug that URS cannot import modules even if it's detected.
-
-## REL3.4.0 - 2025-05-11
 
 * The core package `@fewu-swg/fewu` now does not export a executable `fewu`. Use `fewu-cli` instead. See [Fewu Cli](//github.com/fewu-swg/fewu-cli).
 * Fix bug that renderer requires `abstract-types`.

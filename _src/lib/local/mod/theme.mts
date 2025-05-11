@@ -17,7 +17,7 @@ export default class Theme {
             if (await ExtendedFS.isDir(scriptPath)) {
                 continue;
             }
-            let script = (await import(scriptPath)).default;
+            let script = (await import('file://'+scriptPath)).default; // gs this file:// is really important I spend 2 hours to find out why it doesn't work
             if (typeof script === 'function') {
                 script(ctx);
             }
