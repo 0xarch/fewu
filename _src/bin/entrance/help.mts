@@ -1,4 +1,4 @@
-import StandaloneApp from "#util/ts/StandaloneApp";
+import StandaloneApp from "#util/StandaloneApp";
 
 const app = new StandaloneApp({
     version: '1.0.0',

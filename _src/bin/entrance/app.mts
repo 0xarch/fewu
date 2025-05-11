@@ -4,7 +4,7 @@ import i18n from '#core/i18n';
 import * as part from '#core/part';
 import { site, sort, get_file_relative_dir } from '#core/reader';
 import { loadPlugin, loadModules } from '#core/loader';
-import Console from '#util-ts/Console';
+import Console from '#util/Console';
 import GObject from '#util/GObject';
 import { value as programLogo } from '#common/logo';
 

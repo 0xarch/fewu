@@ -2,7 +2,7 @@ import database from "#database";
 
 import { join } from 'path';
 import { readFileSync,existsSync } from "fs";
-import Console from "#util-ts/Console";
+import Console from "#util/Console";
 
 async function loadPlugin(PROVISION) {
     const EXTRA_DIRECTORY = database.data.directory.theme.extraDirectory;

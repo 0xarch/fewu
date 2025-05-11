@@ -1,7 +1,7 @@
 import Renderer from "#lib/render/render";
 import { Context, Post, Result } from "#lib/types";
 import { getHelpers } from "#lib/interface/helper";
-import ExtendedFS from "#util/ts/ExtendedFS";
+import ExtendedFS from "#util/ExtendedFS";
 import { writeFile } from "fs/promises";
 import { basename, dirname, extname, join } from "path";
 import { Deployable } from "../deployer.mjs";

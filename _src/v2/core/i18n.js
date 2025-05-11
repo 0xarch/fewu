@@ -1,5 +1,5 @@
 import database from '#database';
-import Console from '#util-ts/Console';
+import Console from '#util/Console';
 import I18n from '#util/I18n';
 
 import { readFileSync } from 'fs';

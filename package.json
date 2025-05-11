@@ -18,7 +18,6 @@
         "#class/*": "./_dist/v2/class/*.mjs",
         "#modules/*": "./_modules/*",
         "#util/*": "./_dist/util/*.mjs",
-        "#util-ts/*": "./_dist/util/ts/*.mjs",
         "#database": "./_dist/v2/database/main.mjs",
         "#common/*": "./_dist/common/*.mjs",
         "#lib/*": "./_dist/lib/*.mjs"

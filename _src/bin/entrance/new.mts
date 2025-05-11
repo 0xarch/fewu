@@ -1,5 +1,5 @@
 import { writeFile, existsSync, statSync } from "fs";
-import StandaloneApp from "#util/ts/StandaloneApp";
+import StandaloneApp from "#util/StandaloneApp";
 import Argv from "#util/Argv";
 import moment from "moment";
 

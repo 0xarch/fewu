@@ -8,7 +8,7 @@ import dynamicImport from '#util/dynamicImport';
 import Markdown from '#util/Markdown';
 import TemplateString from '#util/TemplateString';
 import NewPromise from '#util/NewPromise';
-import Text from '#util-ts/Text';
+import Text from '#util/Text';
 
 import {stat,readFile} from "node:fs/promises";
 import { relative } from 'node:path';

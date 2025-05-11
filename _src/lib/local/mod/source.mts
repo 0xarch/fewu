@@ -2,8 +2,8 @@ import Context from "#lib/fewu/context";
 import { Post, Scaffold } from "#lib/types";
 import { resolveContent } from "#lib/local/mod/post"
 
-import ExtendedFS from "#util/ts/ExtendedFS";
-import Text from "#util/ts/Text";
+import ExtendedFS from "#util/ExtendedFS";
+import Text from "#util/Text";
 
 import { readFile, stat } from "fs/promises";
 import { extname, join, relative } from "path";;

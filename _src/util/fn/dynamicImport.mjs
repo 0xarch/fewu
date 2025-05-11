@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "fs";
 import { join } from 'path';
-import Console from "../ts/Console.mjs";
+import Console from "#util/Console";
 
 async function dynamicImport(id){
     let path = id;

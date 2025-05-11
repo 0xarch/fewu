@@ -3,7 +3,7 @@ import { existsSync } from 'fs';
 import { writeFile, mkdir } from 'fs/promises';
 import moment from 'moment';
 import { value as config } from '#common/config.yaml';
-import StandaloneApp from '#util/ts/StandaloneApp';
+import StandaloneApp from '#util/StandaloneApp';
 import { unzip, gunzip } from 'zlib';
 
 const app = new StandaloneApp({

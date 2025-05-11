@@ -6,7 +6,7 @@ import { procFinal } from '#core/builder';
 import { BuildTemplate, Collection, Layout } from '#struct';
 import { write } from '#core/builder';
 import { existsSync } from 'fs';
-import Console from '#util-ts/Console';
+import Console from '#util/Console';
 
 await globalThis.DATABASE_INIT_DONE;
 const { publicDirectory, postDirectory } = database.data.directory;

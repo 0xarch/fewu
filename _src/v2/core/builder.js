@@ -1,6 +1,6 @@
 import database from "#database";
 
-import Console from "#util-ts/Console";
+import Console from "#util/Console";
 import TemplateString from "#util/TemplateString";
 import GObject from "#util/GObject";
 

@@ -1,6 +1,6 @@
 import database from "#database";
 import NewPromise from "#util/NewPromise";
-import ExtendedFS from "#util-ts/ExtendedFS";
+import ExtendedFS from "#util/ExtendedFS";
 
 import { basename, join, extname } from "path";
 import { Category, Tag } from "#struct";
