@@ -1,11 +1,17 @@
 {
     "compilerOptions": {
-        "target": "ES6",
-        "module": "NodeNext",
+        "target": "ES2022",
+        "module": "ESNext",
+        "moduleResolution": "node",
         "outDir": "./_dist",
         "noEmit": false,
         "allowJs": true,
         "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "declaration": true,
+        "allowSyntheticDefaultImports": true,
         "paths": {
             "#core/*": [
                 "./_src/v2/core/*.js"
@@ -34,8 +40,7 @@
             "#lib/*": [
                 "./_src/lib/*.mts"
             ]
-        },
-        "moduleResolution": "nodenext"
+        }
     },
     "exclude": [
         "./node_modules",
