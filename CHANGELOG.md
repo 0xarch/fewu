@@ -2,6 +2,8 @@
 
 ## REL3.3.4 - 2025-05-11
 
+* Move the repository to @fewu-swg.
+* Move npm path from `fewu` to `@fewu-swg/fewu`.
 * Remove `#util-ts` (deprecated).
 * Experimental unified renderer system in use.
 * TS Compiler now skips library check.
