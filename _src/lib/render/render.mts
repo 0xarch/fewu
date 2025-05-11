@@ -4,7 +4,6 @@ import { readFile } from "fs/promises";
 import Console from "#util/Console";
 import EventEmitter from "events";
 import pugProcessor from "./mod/pug.mjs";
-import fewuRendererMarkdown from "fewu-renderer-markdown";
 import { AbstractRenderer } from '@fewu-swg/abstract-types';
 import NodeModules from "#util/NodeModules";
 
@@ -24,8 +23,7 @@ interface _Renderer {
 class _Renderer extends EventEmitter {
     // this feature should be deprecated as we use availableRenderers
     availableProcessors: Processor[] = [
-        pugProcessor,
-        fewuRendererMarkdown
+        pugProcessor
     ]
 
     availableRenderers: AbstractRenderer[] = [
