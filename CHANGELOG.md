@@ -1,6 +1,8 @@
 # CHANGELOG
 
-## REL3.4.4 - 2025-05-11
+## REL3.4.5 - 2025-05-11
+
+3.4.4 is jumped due to a mistake.
 
 Merged with REL3.4.3, REL3.4.2, REL3.4.1, REL3.4.0
 
