@@ -42,6 +42,11 @@ class _Renderer extends EventEmitter {
         let renderers = (await Promise.all(renderer_modules_list.map(async v => (await import(v)).renderer as AbstractRenderer)));
         renderers = renderers.filter(v=>v).filter(v => v.__fewu__ === 'renderer');
         this.availableRenderers.push(...renderers);
+
+        Console.info({
+            msg: 'Available renderers:',
+            color: 'GREEN'
+        }, this.availableRenderers as unknown as string); // this is a little trick. Will be removed when URS is complete. **NOTE**
     }
 
     isTypeSupported(type: string): Result<AbstractRenderer | null> {
