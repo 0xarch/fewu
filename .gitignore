@@ -9,6 +9,7 @@ _src/test.js
 _dist
 config.json
 package-lock.json
+pnpm-lock.yaml
 .directory
 # clean-workspace.sh
 # run-test.sh
