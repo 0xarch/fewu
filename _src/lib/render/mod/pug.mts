@@ -1,10 +1,10 @@
 import { dirname } from "path";
-import { Processor } from "../render.mjs";
 
 import { compile, compileFile } from "pug";
+import { AbstractRenderer } from "@fewu-swg/abstract-types";
 
-class PugProcessor implements Processor {
-    type= /\.pug$/;
+class PugProcessor extends AbstractRenderer {
+    type = /\.pug$/;
 
     async render(template: string, templatePath: string, variables: object): Promise<string> {
         let compiled = compile(template, {
