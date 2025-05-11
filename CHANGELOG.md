@@ -1,12 +1,16 @@
 # CHANGELOG
 
-## REL3.4.3 - 2025-05-11
+## REL3.4.4 - 2025-05-11
 
-Merged with REL3.4.2, REL3.4.1, REL3.4.0
+Merged with REL3.4.3, REL3.4.2, REL3.4.1, REL3.4.0
 
-* Fix bug that renderer still requires deprecated `fewu-renderer-markdown`
+* Fix type error in `renderer`.
 
-* Fix bug that theme script import causes error
+* Fix bug that dynamicImport causes error on NT platform.
+
+* Fix bug that renderer still requires deprecated `fewu-renderer-markdown`.
+
+* Fix bug that `Theme` script import causes error.
 
 * Remove `bin` directory in dist files.
 
