@@ -1,7 +1,7 @@
 {
     "name": "@fewu-swg/fewu",
     "main": "_dist/lib/fewu/app.mjs",
-    "version": "3.4.6",
+    "version": "3.4.7",
     "dependencies": {
         "@fewu-swg/fewu-renderer-markdown": "^1.2.1",
         "ejs": "^3.1.10",

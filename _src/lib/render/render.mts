@@ -38,7 +38,7 @@ class _Renderer extends EventEmitter {
     async init(){
         let all_modules = await NodeModules.getAllModules();
         let renderer_modules_list = all_modules.filter(v => v.replace(/^@.*[\/\\]/,'').startsWith('fewu-renderer'));
-        let renderers = (await Promise.all(renderer_modules_list.map(async v => new ((await dynamicImport(join(process.cwd(),"node_modules",v)) as {renderer: any})?.renderer) as AbstractRenderer))); // idk why node does not allow import("@**/*"), or host-path is required?
+        let renderers = (await Promise.all(renderer_modules_list.map(async v => new ((await dynamicImport(v) as {renderer: any})?.renderer) as AbstractRenderer))); // idk why node does not allow import("@**/*"), or host-path is required?
         renderers = renderers.filter(v=>v).filter(v => v.__fewu__ === 'renderer');
         this.availableRenderers.push(...renderers);
 
