@@ -39,5 +39,8 @@
         "@types/node": "^22.15.17",
         "@types/pug": "^2.0.10",
         "typescript": "^5.8.3"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }
