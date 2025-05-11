@@ -47,6 +47,7 @@
         "./_themes",
         "./_modules",
         "./_dist",
-        "./_src/Trashed"
+        "./_src/Trashed",
+        "./_src/bin"
     ]
 }

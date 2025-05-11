@@ -1,4 +1,4 @@
-import { extname } from "path";
+import { extname, join } from "path";
 import { Result, Wrapper } from "#lib/types";
 import { readFile } from "fs/promises";
 import Console from "#util/Console";
@@ -38,8 +38,8 @@ class _Renderer extends EventEmitter {
 
     async init(){
         let all_modules = await NodeModules.getAllModules();
-        let renderer_modules_list = all_modules.filter(v => v.startsWith('fewu-renderer'));
-        let renderers = (await Promise.all(renderer_modules_list.map(async v => (await import(v)).renderer as AbstractRenderer)));
+        let renderer_modules_list = all_modules.filter(v => v.replace(/^@.*[\/\\]/,'').startsWith('fewu-renderer'));
+        let renderers = (await Promise.all(renderer_modules_list.map(async v => (await import(join(process.cwd(),"node_modules",v))).renderer as AbstractRenderer))); // idk why node does not allow import("@**/*"), or host-path is required?
         renderers = renderers.filter(v=>v).filter(v => v.__fewu__ === 'renderer');
         this.availableRenderers.push(...renderers);
 
