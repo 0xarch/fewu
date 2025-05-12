@@ -28,9 +28,6 @@
             "#util/*": [
                 "./_src/util/*.mjs"
             ],
-            "#util-ts/*": [
-                "./_src/util/ts/*.mts"
-            ],
             "#database": [
                 "./_src/v2/database/main.mjs"
             ],
@@ -48,6 +45,7 @@
         "./_modules",
         "./_dist",
         "./_src/Trashed",
-        "./_src/bin"
+        "./_src/bin",
+        "./_src/v2"
     ]
 }
