@@ -1,5 +1,5 @@
 import { extname, join } from "path";
-import { Result, Wrapper } from "#lib/types";
+import { Context, Result, Wrapper } from "#lib/types";
 import { readFile } from "fs/promises";
 import Console from "#util/Console";
 import EventEmitter from "events";
@@ -31,7 +31,7 @@ class _Renderer extends EventEmitter {
         pugProcessor // built-in
     ];
 
-    constructor() {
+    constructor(ctx?: Context) {
         super();
     }
 
@@ -45,7 +45,7 @@ class _Renderer extends EventEmitter {
         Console.info({
             msg: 'Available renderers:',
             color: 'GREEN'
-        }, this.availableRenderers as unknown as string); // this is a little trick. Will be removed when URS is complete. **NOTE**
+        }, this.availableRenderers.map(v => v.toString()));
     }
 
     isTypeSupported(type: string): Result<AbstractRenderer | null> {
@@ -102,3 +102,7 @@ const Renderer = new _Renderer();
 await Renderer.init();
 
 export default Renderer;
+
+export {
+    _Renderer as RendererConstructor
+}
