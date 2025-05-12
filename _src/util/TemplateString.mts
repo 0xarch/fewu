@@ -1,7 +1,7 @@
-import Collection from "#class/collection";
+import GObject from "#util/GObject";
 
 class TemplateString {
-    static #get_array(str) {
+    static #get_array(str: string) {
         let is_locating_start = false, is_locating_end = false;
         let strs = [''], i = 0, is_in_val = false, skip_a_char = false;
         str.split("").filter(v => v != '').forEach((char) => {
@@ -48,14 +48,7 @@ class TemplateString {
         return strs;
     }
 
-    /**
-     * 
-     * @param {string} str 
-     * @param {number} valid_count_least
-     * @param {number} valid_count_most
-     * @returns {boolean}
-     */
-    static test(str, valid_count_least, valid_count_most) {
+    static test(str: string, valid_count_least: number, valid_count_most: number): boolean {
         let matches_start_count = 0;
         let matches_end_count = 0;
         let is_locating_start = false, is_locating_end = false;
@@ -94,57 +87,37 @@ class TemplateString {
         return true;
     }
 
-    /**
-     * 
-     * @param {Array} arr 
-     * @param {Collection|object} coll 
-     * @returns {string}
-     */
-    static #eval(arr, coll) {
+    static #eval(arr: Array<string>, coll: object): string {
         if (!coll) return this.toString();
-        let collection = (coll instanceof Collection) ? coll : new Collection(coll);
         let is_in_val = false, result = '';
         arr.forEach((v) => {
-            if (is_in_val) result += collection.get(v);
+            if (is_in_val) result += GObject.getProperty(coll, v);
             else result += v;
             is_in_val = !is_in_val;
         });
         return result;
     }
 
-    /**
-     * 
-     * @param {string} str 
-     * @returns {TemplateString}
-     */
-    static from(str) {
+    static from(str: string): TemplateString {
         let strs = TemplateString.#get_array(str);
         return new TemplateString(strs);
     }
 
-    /**
-     * Quick use of GString.from(str).eval(collection)
-     * @param {string} str 
-     * @param {Collection|object} collection
-     * @returns {string}
-     */
-    static parse(str, collection) {
-        return TemplateString.#eval(TemplateString.#get_array(str), collection);
+    static parse(str: string, variables: object): string {
+        return TemplateString.#eval(TemplateString.#get_array(str), variables);
     }
 
     #str_group;
-    constructor(strg) {
+    constructor(strg: Array<string>) {
         if (Array.isArray(strg)) {
             this.#str_group = strg;
-        } else throw new Error('TemplateString constructor : Argument is not any[]');
+        } else throw new Error('TemplateString constructor : Argument is not string[]');
     }
-    /**
-     * 
-     * @param {Collection|object} collection 
-     */
-    eval(collection) {
-        return TemplateString.#eval(collection);
+
+    eval(variables: object) {
+        return TemplateString.#eval(this.#str_group, variables);
     }
+
     toString() {
         return this.#str_group.join('');
     }
