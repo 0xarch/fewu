@@ -14,20 +14,21 @@ export declare interface Page {
     updated?: Moment;
     length?: number;
     excerpt?: string;
-    more?: string;
+    more?: string; // to be deprecated. Use item.excerpt
     properties?: { [key: string]: string }; // non-standard API
 
     layout?: string;
     comments?: boolean;
     content?: string;
 
-    prev?: Post;
-    next?: Post;
+    prev?: Page;
+    next?: Page;
 
     current: number;
     total: number;
 
     raw?: string;
+    raw_excerpt?: string; // non-standard API
     source: string;
     full_source: string;
     path: string;
