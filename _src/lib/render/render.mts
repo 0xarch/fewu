@@ -1,4 +1,4 @@
-import { extname, join } from "path";
+import { extname } from "path";
 import { Context, Result, Wrapper } from "#lib/types";
 import { readFile } from "fs/promises";
 import Console from "#util/Console";
@@ -7,6 +7,7 @@ import pugProcessor from "./mod/pug.mjs";
 import { AbstractRenderer } from '@fewu-swg/abstract-types';
 import NodeModules from "#util/NodeModules";
 import dynamicImport from "#util/dynamicImport";
+import NewPromise from "#util/NewPromise";
 
 export declare interface Processor {
     type: RegExp;
@@ -22,30 +23,33 @@ interface _Renderer {
 }
 
 class _Renderer extends EventEmitter {
-    // this feature should be deprecated as we use availableRenderers
-    availableProcessors: Processor[] = [
-        pugProcessor
-    ]
 
     availableRenderers: AbstractRenderer[] = [
         pugProcessor // built-in
     ];
 
-    constructor(ctx?: Context) {
+    #initialized = new Promise<void>(() => { });
+
+    constructor(ctx: Context) {
         super();
+        this.#init(ctx);
     }
 
-    async init(){
+    async #init(ctx: Context) {
+        let { promise, resolve } = NewPromise.withResolvers<void>();
+        this.#initialized = promise;
         let all_modules = await NodeModules.getAllModules();
-        let renderer_modules_list = all_modules.filter(v => v.replace(/^@.*[\/\\]/,'').startsWith('fewu-renderer'));
-        let renderers = (await Promise.all(renderer_modules_list.map(async v => new ((await dynamicImport(v) as {renderer: any})?.renderer) as AbstractRenderer))); // idk why node does not allow import("@**/*"), or host-path is required?
-        renderers = renderers.filter(v=>v).filter(v => v.__fewu__ === 'renderer');
+        let renderer_modules_list = all_modules.filter(v => v.replace(/^@.*[\/\\]/, '').startsWith('fewu-renderer'));
+        let renderers = (await Promise.all(renderer_modules_list.map(async v => new ((await dynamicImport(v) as { renderer: any })?.renderer) as AbstractRenderer))); // idk why node does not allow import("@**/*"), or host-path is required?
+        renderers = renderers.filter(v => v).filter(v => v.__fewu__ === 'renderer');
         this.availableRenderers.push(...renderers);
 
         Console.info({
             msg: 'Available renderers:',
             color: 'GREEN'
         }, this.availableRenderers.map(v => v.toString()));
+
+        resolve();
     }
 
     isTypeSupported(type: string): Result<AbstractRenderer | null> {
@@ -64,6 +68,7 @@ class _Renderer extends EventEmitter {
     }
 
     async render(content: string, templatePath: string, variables?: object): Promise<string> {
+        await this.#initialized;
         let ext = extname(templatePath), matchedRenderer: AbstractRenderer | undefined;
         for (let renderer of this.availableRenderers) {
             if (renderer.type.test(ext)) {
@@ -77,13 +82,17 @@ class _Renderer extends EventEmitter {
             Console.may.info({ msg: `Render ${templatePath} using matcher: ${matchedRenderer.type}`, color: 'DARKGREY' });
         }
 
-        let resultWrapper: Wrapper<string> = {
+        let contentWrapper: Wrapper<string> = {
             value: content
         };
 
-        this.emit('beforeRender', resultWrapper);
+        let resultWrapper: Wrapper<string> = {
+            value: ''
+        };
 
-        resultWrapper.value = await matchedRenderer.render(content, templatePath, variables ?? {});
+        this.emit('beforeRender', contentWrapper);
+
+        resultWrapper.value = await matchedRenderer.render(contentWrapper.value, templatePath, variables ?? {});
 
         this.emit('afterRender', resultWrapper);
 
@@ -91,17 +100,12 @@ class _Renderer extends EventEmitter {
     }
 
     async renderFile(templatePath: string, variables?: object): Promise<string> {
+        await this.#initialized;
         let buffer = await readFile(templatePath);
         let content = buffer.toString();
         return this.render(content, templatePath, variables);
     }
 }
-
-const Renderer = new _Renderer();
-
-await Renderer.init();
-
-export default Renderer;
 
 export {
     _Renderer as RendererConstructor
