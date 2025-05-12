@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## REL3.4.10 - 2025-05-12
+
+* Use `os.tmpdir()` to determine which directory should be used to generate content when in server mode.
+
+* Fix bug that `page.excerpt` is not renderered.
+
+* New _non-standard_ API in `Page`: `page.raw_excerpt`: Get raw excerpt content.
+
+* Add document for `Page`.
+
 ## REL3.4.9 - 2025-05-11
 
 3.4.4 is jumped due to a mistake.
