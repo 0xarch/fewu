@@ -1,39 +1,24 @@
 {
     "name": "@fewu-swg/fewu",
     "main": "_dist/lib/fewu/app.mjs",
-    "version": "3.4.13",
+    "version": "3.4.14",
     "dependencies": {
         "@fewu-swg/fewu-renderer-markdown": "^1.2.1",
-        "ejs": "^3.1.10",
         "fs": "0.0.1-security",
         "mime": "^4.0.7",
         "moment": "^2.30.1",
-        "pug": "^3.0.3",
         "sass": "^1.88.0",
         "yaml": "^2.7.1"
     },
     "imports": {
-        "#core/*": "./_dist/v2/core/*.js",
-        "#struct": "./_dist/v2/core/bridge.class.js",
-        "#class/*": "./_dist/v2/class/*.mjs",
         "#modules/*": "./_modules/*",
         "#util/*": "./_dist/util/*.mjs",
-        "#database": "./_dist/v2/database/main.mjs",
-        "#common/*": "./_dist/common/*.mjs",
         "#lib/*": "./_dist/lib/*.mjs"
-    },
-    "scripts": {
-        "bin": "tsc; node _dist/bin/fewu.js",
-        "new": "tsc; node _dist/bin/fewu.js --new",
-        "dev": "tsc; node _dist/bin/fewu.js --devel",
-        "rel": "tsc; node _dist/bin/fewu.js --release",
-        "init": "tsc; node _dist/bin/fewu.js --init"
     },
     "type": "module",
     "devDependencies": {
         "@fewu-swg/abstract-types": "^1.0.0",
         "@types/node": "^22.15.17",
-        "@types/pug": "^2.0.10",
         "typescript": "^5.8.3"
     },
     "publishConfig": {

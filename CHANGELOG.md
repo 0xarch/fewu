@@ -1,8 +1,16 @@
 # CHANGELOG
 
-## REL3.4.13 - 2024-05-12
+## REL3.4.14 - 2024-05-12
 
-Merged with REL3.4.12
+Merged with REL3.4.13, REL3.4.12
+
+* Support Array-style tag/category declaration.
+>e.g. in YAML
+> tags:
+>   - Tag1
+>   - Tag2
+
+* Removed untouchable imports in `package.json`.
 
 * Removed common files build. Move to `fewu-cli`.
 

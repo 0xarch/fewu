@@ -62,8 +62,10 @@ export default class Source {
         let fileStat = await stat(path);
         let resolved = resolveContent(content);
         let post: Partial<Post> = {};
+        let categoryProp = resolved.properties.categories ?? resolved.properties.category;
+        let tagProp = resolved.properties.tags ?? resolved.properties.tag;
         post.author = resolved.properties.author as string ?? ctx.config.author;
-        post.categories = String(resolved.properties.categories ?? resolved.properties.category).split(" ").filter(v => v !== '');
+        post.categories = Array.isArray(categoryProp) ? categoryProp : String(categoryProp).split(" ").filter(v => v !== '');
         post.comments = resolved.properties.comments ? true : false;
         post.content = await ctx.Renderer.render(resolved.postContent, path, { ctx });
         post.date = moment(resolved.properties.date);
@@ -79,7 +81,7 @@ export default class Source {
         post.raw_excerpt = resolved.postIntroduction;
         post.source = relative(ctx.SOURCE_DIRECTORY, path);
         post.stat = fileStat;
-        post.tags = String(resolved.properties.tags ?? resolved.properties.tag).split(" ").filter(v => v !== '');
+        post.tags = Array.isArray(tagProp) ? tagProp : String(tagProp).split(" ").filter(v => v !== '');
         post.title = resolved.properties.title ?? "Untitled";
         post.relative_path = post.source;
         post.updated = moment(fileStat.ctime);
