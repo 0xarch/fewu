@@ -13,27 +13,27 @@
         "declaration": true,
         "allowSyntheticDefaultImports": true,
         "paths": {
-            "#core/*": [
-                "./_src/v2/core/*.js"
-            ],
-            "#struct": [
-                "./_src/v2/core/bridge.class.js"
-            ],
-            "#class/*": [
-                "./_src/v2/class/*.mjs"
-            ],
+            // "#core/*": [
+            //     "./_src/v2/core/*.js"
+            // ],
+            // "#struct": [
+            //     "./_src/v2/core/bridge.class.js"
+            // ],
+            // "#class/*": [
+            //     "./_src/v2/class/*.mjs"
+            // ],
             "#modules": [
                 "./_modules"
             ],
             "#util/*": [
                 "./_src/util/*.mjs"
             ],
-            "#database": [
-                "./_src/v2/database/main.mjs"
-            ],
-            "#common/*": [
-                "./_src/common/*.mjs"
-            ],
+            // "#database": [
+            //     "./_src/v2/database/main.mjs"
+            // ],
+            // "#common/*": [
+            //     "./_src/common/*.mjs"
+            // ],
             "#lib/*": [
                 "./_src/lib/*.mts"
             ]
@@ -46,6 +46,7 @@
         "./_dist",
         "./_src/Trashed",
         "./_src/bin",
-        "./_src/v2"
+        "./_src/v2",
+        "./_src/common"
     ]
 }

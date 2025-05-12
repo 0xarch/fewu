@@ -3,7 +3,6 @@ import { Context, Result, Wrapper } from "#lib/types";
 import { readFile } from "fs/promises";
 import Console from "#util/Console";
 import EventEmitter from "events";
-import pugProcessor from "./mod/pug.mjs";
 import { AbstractRenderer } from '@fewu-swg/abstract-types';
 import NodeModules from "#util/NodeModules";
 import dynamicImport from "#util/dynamicImport";
@@ -25,7 +24,6 @@ interface _Renderer {
 class _Renderer extends EventEmitter {
 
     availableRenderers: AbstractRenderer[] = [
-        pugProcessor // built-in
     ];
 
     #initialized = new Promise<void>(() => { });

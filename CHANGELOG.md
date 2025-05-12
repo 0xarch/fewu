@@ -1,6 +1,14 @@
 # CHANGELOG
 
-## REL3.4.12 - 2025-05-12
+## REL3.4.13 - 2024-05-12
+
+Merged with REL3.4.12
+
+* Removed common files build. Move to `fewu-cli`.
+
+* Removed unused imports in `tsconfig.json`.
+
+* Removed built-in Pug renderer. Use `@fewu-swg/fewu-renderer-markdown` instead. This package should be depended by themes which uses pug as markup language.
 
 * Support npm packaged theme. NOTE npm package got high priority than traditional theme.
 
