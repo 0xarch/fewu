@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## REL3.4.11 - 2025-05-12
+
+* Dropped all v2 codes and dists since they are not referenced.
+
+* Dropped deprecated feature `#util/Markdown`, replaced by `@fewu-swg/fewu-renderer-markdown`.
+
+* `TemplateString` is now moved to TypeScript (mts).
+
+* `TemplateString` now uses `GObject.getProperty` rather than deprecated `Collection`.
+
+* Fix bug that `Renderer` not initialized properly.
+
+* `Deployer` now uses `Renderer` from `Context` rather than standalone import.
+
 ## REL3.4.10 - 2025-05-12
 
 * Use `os.tmpdir()` to determine which directory should be used to generate content when in server mode.
