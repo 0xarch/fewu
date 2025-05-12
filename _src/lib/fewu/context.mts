@@ -10,12 +10,13 @@ import { join } from "path";
 import { EventEmitter } from "events";
 import { existsSync } from "fs";
 import DataStorage from "#lib/data/data";
-import Renderer from "#lib/render/render";
+import { RendererConstructor } from "#lib/render/render";
 import ObjectParser from "#lib/object-parser/object-parser";
-import Deployer from "#lib/deployer/deployer";
+import { DeployerConstructor } from "#lib/deployer/deployer";
 import Server from "#lib/server/server";
 import { Theme } from "#lib/local/local";
 import { ConfigNotFoundError } from "#lib/interface/error";
+import { tmpdir } from "os";
 
 interface Context {
     on(event: 'startup', listenter: (ctx: Context, ...args: any[]) => any): this;
@@ -86,13 +87,11 @@ class Context extends EventEmitter {
         this.CONFIG_PATH = CONFIG_PATH;
 
         if (Argv['-S'] || Argv['--server']) {
-            if (process.platform !== 'win32') {
-                this.PUBLIC_DIRECTORY = `/tmp/io.fewu.server`;
-            }
+            this.PUBLIC_DIRECTORY = join(tmpdir(),'io.fewu-swg.fewu','live-server');
         }
 
-        this.Deployer = new Deployer(this);
-        this.Renderer = Renderer;
+        this.Deployer = new DeployerConstructor(this);
+        this.Renderer = new RendererConstructor(this);
         this.ObjectParser = ObjectParser;
         this.Server = new Server();
     }

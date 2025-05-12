@@ -11,7 +11,7 @@ export abstract declare class Deployable {
     [key: string]: any;
 }
 
-export default class Deployer {
+class Deployer {
     deployers: Deployable[] = [];
 
     constructor(ctx: Context) {
@@ -35,4 +35,10 @@ export default class Deployer {
     async runWatch(ctx: Context, path: string){
         await Promise.allSettled(this.deployers.map(v => v.deployWatch(ctx,path)));
     }
+}
+
+export default Deployer;
+
+export {
+    Deployer as DeployerConstructor
 }
