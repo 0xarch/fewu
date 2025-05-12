@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## REL3.4.12 - 2025-05-12
+
+* Support npm packaged theme. NOTE npm package got high priority than traditional theme.
+
 ## REL3.4.11 - 2025-05-12
 
 * Dropped all v2 codes and dists since they are not referenced.

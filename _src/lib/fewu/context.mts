@@ -86,6 +86,11 @@ class Context extends EventEmitter {
         this.THEME_DIRECTORY = join(baseDirectory, 'themes', CONFIG.theme);
         this.CONFIG_PATH = CONFIG_PATH;
 
+        // test if theme is in themes or node_modules (npm package)
+        if(existsSync(join(baseDirectory,"node_modules",CONFIG.theme))) {
+            this.THEME_DIRECTORY = join(baseDirectory,"node_modules",CONFIG.theme);
+        }
+
         if (Argv['-S'] || Argv['--server']) {
             this.PUBLIC_DIRECTORY = join(tmpdir(),'io.fewu-swg.fewu','live-server');
         }
