@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## REL3.4.14 - 2024-05-12
+## REL3.4.15 - 2025-05-13
+
+* Experimental support for pnpm.
+
+## REL3.4.14 - 2025-05-12
 
 Merged with REL3.4.13, REL3.4.12
 
