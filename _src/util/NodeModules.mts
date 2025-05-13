@@ -1,31 +1,47 @@
 import { join } from "path";
 import { readdir } from "fs/promises";
+import { existsSync } from "fs";
 
 export default class NodeModules {
-    static async getAllModules() {
-        let node_modules_dir = join(process.cwd(),'node_modules');
-        let init_travesing_result = await readdir(node_modules_dir);
-    
+    static async traverseModuleDirectory(modules_dir: string): Promise<string[]> {
+        let first_traverse_result = await readdir(modules_dir);
+
         let all_results: string[] = [], scoped_results: string[] = [];
-    
-        init_travesing_result.forEach(v => {
-            if(v.startsWith('.')){
+
+        first_traverse_result.forEach(result => {
+            if (result.startsWith('.')) {
                 return;
             }
-            if(v.startsWith('@')){
-                scoped_results.push(v);
+            if (result.startsWith('@')) {
+                scoped_results.push(join(modules_dir,result));
             } else {
-                all_results.push(v);
+                all_results.push(join(modules_dir,result));
             }
         });
-    
-        let scoped_query_results = await Promise.allSettled(scoped_results.map(async scope_name => {
-            let scoped_modules_dir = join(node_modules_dir,scope_name);
-            let scoped_packages = (await readdir(scoped_modules_dir)).filter(v => !v.startsWith('.')).map(a => join(scope_name,a));
-            all_results.push(...scoped_packages);
-            return scoped_packages;
+
+        await Promise.all(scoped_results.map(async scoped_result => {
+            let scoped_modules = await NodeModules.traverseModuleDirectory(scoped_result);
+            scoped_modules = scoped_modules.map(v => join(scoped_result, v));
+            all_results.push(...scoped_modules);
         }));
-    
+
+        await Promise.all(all_results.map(async result => {
+            let result_submodule_dir = join(result,"node_modules");
+            if(existsSync(result_submodule_dir)){
+                let submodules = await NodeModules.traverseModuleDirectory(result_submodule_dir);
+                submodules = submodules.map(v => join(result_submodule_dir,v));
+                all_results.push(...submodules);
+            }
+        }));
+
+        return all_results;
+    }
+
+    static async getAllModules() {
+        let node_modules_dir = join(process.cwd(), 'node_modules');
+        
+        let all_results = await this.traverseModuleDirectory(node_modules_dir);
+
         return all_results;
     }
 }
