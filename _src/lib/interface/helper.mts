@@ -45,18 +45,30 @@ export function getHelpers(ctx: Context, page: Page): Helpers {
         }
         return tag;
     });
+    let currentI18n: Record<string, string> = {};
+    let fallbackI18n: Record<string, string> = {};
+    let current_i18n_match = false;
+    for (let i18nUsable of ctx.i18ns) {
+        if (i18nUsable.id === page.language) {
+            currentI18n = i18nUsable.value;
+            current_i18n_match = true;
+            break;
+        } else if (i18nUsable.id === 'default' || i18nUsable.id === 'fallback') {
+            fallbackI18n = i18nUsable.value;
+        }
+    }
+    if(!current_i18n_match) {
+        let [page_wide_id] = page.language.split("-");
+        for(let i18nUsable of ctx.i18ns){
+            let [i18n_wide_id] = i18nUsable.id.split("-");
+            if(i18n_wide_id === page_wide_id){
+                currentI18n = i18nUsable.value;
+                break;
+            }
+        }
+    }
     return {
         __(key) {
-            let currentI18n: Record<string, string> = {};
-            let fallbackI18n: Record<string, string> = {};
-            for (let i18nUsable of ctx.i18ns) {
-                if (i18nUsable.id === page.language) {
-                    currentI18n = i18nUsable.value;
-                    break;
-                } else if (i18nUsable.id === 'default' || i18nUsable.id === 'fallback') {
-                    fallbackI18n = i18nUsable.value;
-                }
-            }
             let result = '';
             if (/[0-9]/.test(key)) {
                 let replaceList: string[] = [];
