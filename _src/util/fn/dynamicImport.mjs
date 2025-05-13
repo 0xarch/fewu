@@ -10,6 +10,9 @@ async function dynamicImport(id){
     } catch (e) {
         try {
             path = join(process.cwd(), 'node_modules', id);
+            if(!existsSync(path)){
+                path = id; // absolute import
+            }
             if(existsSync(path)){
                 let packageJson = JSON.parse(readFileSync(join(path, 'package.json')).toString());
                 result = await import('file://'+join(path,packageJson.main));
