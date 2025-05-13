@@ -31,5 +31,6 @@
         "./_dist",
         "./_src/Trashed",
         "./_src/v2",
+        "./*.mjs"
     ]
 }
