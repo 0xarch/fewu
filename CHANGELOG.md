@@ -1,12 +1,12 @@
 # CHANGELOG
 
-## REL3.4.16-beta - 2025-05-14
+## REL3.4.16 - 2025-05-14
 
-* Fix bug that NodeModules cannot handle scoped packages correctly.
+* Fix bug that `NodeModules` could not handle scoped packages correctly.
 
-* Experimental support for pnpm.
+* Pnpm support.
 
-* Experimental plugin-driving server (requires `--experimental-server-plugin`)
+* Plugin-driving server.
 
 ## REL3.4.15 - 2025-05-13
 
