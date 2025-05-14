@@ -4,7 +4,6 @@ import { join } from 'node:path';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import Mime from "mime";
 import Console from '#util/Console';
-import { fileURLToPath } from 'node:url';
 
 class Server {
     serverInstance?: HttpServer;

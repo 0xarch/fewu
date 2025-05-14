@@ -14,9 +14,10 @@ import { RendererConstructor } from "#lib/render/render";
 import ObjectParser from "#lib/object-parser/object-parser";
 import { DeployerConstructor } from "#lib/deployer/deployer";
 import Server from "#lib/server/server";
-import { Theme } from "#lib/local/local";
+import { Source, Theme } from "#lib/local/local";
 import { ConfigNotFoundError } from "#lib/interface/error";
 import { tmpdir } from "os";
+import registerServer from "#lib/server/server-plugin";
 
 interface Context {
     on(event: 'startup', listenter: (ctx: Context, ...args: any[]) => any): this;
@@ -39,6 +40,7 @@ class Context extends EventEmitter {
     public readonly data: DataStorage;
     public plugin: AppPlugin;
     public i18ns: I18nUsable[];
+    public locals = { Source, Theme };
 
     public readonly BASE_DIRECTORY: string;
     public readonly PUBLIC_DIRECTORY: string;
@@ -99,9 +101,15 @@ class Context extends EventEmitter {
         this.Renderer = new RendererConstructor(this);
         this.ObjectParser = ObjectParser;
         this.Server = new Server();
+
+        // experimental server plugin
+        if(Argv['--experimental-server-plugin']) {
+            registerServer(this);
+        }
     }
 
     async callServer() {
+        if(Argv['--experimental-server-plugin']) return;
         let { promise, resolve } = NewPromise.withResolvers();
         if (Argv['-S'] || Argv['--server']) {
             this.Server.create(this).listen(parseInt(Argv['-S']?.[0] || Argv['--server']?.[0]) || 3000);
