@@ -4,19 +4,17 @@ import defaultConfig, { mixConfig, readConfig } from "./config.mjs";
 
 import Argv from "#util/Argv";
 import Console from "#util/Console";
-import NewPromise from "#util/NewPromise";
 
 import { join } from "path";
 import { EventEmitter } from "events";
 import { existsSync } from "fs";
+import { tmpdir } from "os";
 import DataStorage from "#lib/data/data";
 import { RendererConstructor } from "#lib/render/render";
 import ObjectParser from "#lib/object-parser/object-parser";
 import { DeployerConstructor } from "#lib/deployer/deployer";
-import Server from "#lib/server/server";
 import { Source, Theme } from "#lib/local/local";
 import { ConfigNotFoundError } from "#lib/interface/error";
-import { tmpdir } from "os";
 import registerServer from "#lib/server/server-plugin";
 
 interface Context {
@@ -51,7 +49,6 @@ class Context extends EventEmitter {
     public readonly Deployer;
     public readonly Renderer;
     public readonly ObjectParser;
-    public readonly Server;
 
     constructor(baseDirectory = process.cwd()) {
         // construct EventEmitter
@@ -100,25 +97,10 @@ class Context extends EventEmitter {
         this.Deployer = new DeployerConstructor(this);
         this.Renderer = new RendererConstructor(this);
         this.ObjectParser = ObjectParser;
-        this.Server = new Server();
 
-        // experimental server plugin
-        if(Argv['--experimental-server-plugin']) {
-            registerServer(this);
-        }
+        registerServer(this);
     }
 
-    async callServer() {
-        if(Argv['--experimental-server-plugin']) return;
-        let { promise, resolve } = NewPromise.withResolvers();
-        if (Argv['-S'] || Argv['--server']) {
-            this.Server.create(this).listen(parseInt(Argv['-S']?.[0] || Argv['--server']?.[0]) || 3000);
-            Theme.watch(this, (ctx, type, path) => {
-                ctx.Deployer.runWatch(ctx, path);
-            });
-        }
-        return promise;
-    }
 }
 
 export default Context;

@@ -22,8 +22,6 @@ async function App() {
 
     ctx.emit('afterDeploy', ctx);
 
-    await ctx.callServer();
-
     ctx.emit('ready', ctx);
 
     ctx.emit('exit', ctx);
