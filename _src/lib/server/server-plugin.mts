@@ -8,8 +8,11 @@ export default function registerServer(ctx: Context) {
         if (Argv['-S'] || Argv['--server']) {
             ctx.on('afterDeploy',(_ctx) => {
                 server.create(_ctx).listen(parseInt(Argv['-S']?.[0] || Argv['--server']?.[0]) || 3000);
-                _ctx.locals.Theme.watch(_ctx, (_ctx, type, path) => {
-                    _ctx.Deployer.runWatch(_ctx, path);
+                _ctx.locals.Theme.watch(_ctx, (_ctx, _, path, from) => {
+                    _ctx.Deployer.runWatch(_ctx, path, from);
+                });
+                _ctx.locals.Source.watch(_ctx,(_ctx, _, path, from) => {
+                    _ctx.Deployer.runWatch(_ctx, path, from);
                 });
             });
         }

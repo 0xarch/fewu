@@ -8,6 +8,8 @@ import Text from "#util/Text";
 import { readFile, stat } from "fs/promises";
 import { extname, join, relative } from "path";;
 import moment from "moment";
+import { watch, WatchEventType } from "fs";
+import Console from "#util/Console";
 
 const ignoredFileTypes = [
     '.png', '.gif', '.webp', '.bmp', '.svg', /^\.pptx?$/, /^\.jpe?g?$/, /^\..*?ignore$/, /\.ignore\..*$/
@@ -87,5 +89,13 @@ export default class Source {
         post.updated = moment(fileStat.ctime);
         post.path = join(ctx.PUBLIC_DIRECTORY, post.source);
         return post as Post;
+    }
+
+    static async watch(ctx: Context, callback: (ctx: Context, type: WatchEventType, path: string, from: string) => void): Promise<void> {
+        watch(ctx.SOURCE_DIRECTORY, { recursive: true }, (event, filename) => {
+            Console.log(`Source file ${filename} has changed.`);
+            callback(ctx, event, filename as string, ctx.SOURCE_DIRECTORY);
+        });
+        return;
     }
 }

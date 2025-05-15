@@ -1,5 +1,6 @@
 import ObjectParser from "#lib/object-parser/object-parser";
 import { Context } from "#lib/types";
+import Console from "#util/Console";
 import ExtendedFS from "#util/ExtendedFS";
 import { existsSync, watch, WatchEventType } from "fs";
 import { readdir } from "fs/promises";
@@ -44,9 +45,10 @@ export default class Theme {
         }
     }
 
-    static async watch(ctx: Context, callback: (ctx: Context, type: WatchEventType, path: string) => void): Promise<void> {
+    static async watch(ctx: Context, callback: (ctx: Context, type: WatchEventType, path: string, from: string) => void): Promise<void> {
         watch(ctx.THEME_DIRECTORY, { recursive: true }, (event, filename) => {
-            callback(ctx, event, filename as string);
+            Console.log(`Theme file ${filename} has changed.`);
+            callback(ctx, event, filename as string, ctx.THEME_DIRECTORY);
         });
         return;
     }
