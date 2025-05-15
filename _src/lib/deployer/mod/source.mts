@@ -63,11 +63,11 @@ class SourceDeployer implements Deployable {
         await processor(ctx, file);
     }
     async deploy(ctx: Context): Promise<Result<string>> {
-        let sourceDir = join(ctx.THEME_DIRECTORY, 'source');
+        let themeSourceDir = join(ctx.THEME_DIRECTORY, 'source');
         try {
             await ExtendedFS.ensure(ctx.PUBLIC_DIRECTORY);
-            for (let file of await ExtendedFS.traverse(sourceDir)) {
-                file = relative(sourceDir, file);
+            for (let file of await ExtendedFS.traverse(themeSourceDir)) {
+                file = relative(themeSourceDir, file);
                 await this.deploy_single(ctx, file);
             }
             return {
