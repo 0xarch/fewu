@@ -1,33 +1,43 @@
-#!/bin/sh
+#!/bin/bash
 
-### TEST SUIT
-# This script will do a test for all functions in fewu.
-# It will do in $HOME/fewu-test
+### FUNCTION TEST UNIT ###
+### ****ONLY LINUX**** ###
+##########################
 
-cd "$HOME"
+PKG_DIR="$(pwd)"
+TEST_DIR="/tmp/io.fewu-swg.fewu/unittest"
 
 # ensure
-if [ ! -d "fewu-test" ]; then
-    echo "Directory fewu-test not found. try mkdir..."
-    mkdir "fewu-test"
+if [ ! -d "$TEST_DIR" ]; then
+    mkdir "$TEST_DIR" -p
 fi
 
-echo "Entering $HOME/fewu-test..."
-cd "$HOME/fewu-test"
+# find npm
+NPM=npm
+if which pnpm; then
+    NPM=pnpm
+fi
 
-echo "Display help..."
-fewu --help
+if ! which "$NPM"; then
+    echo "Abort on Error: no npm found!"
+    exit
+fi
 
-echo "Initializing..."
-rm -r posts
+cd "$TEST_DIR"
+
+pwd
+
+rm -r "$TEST_DIR/*"
+
+"$NPM" i "$PKG_DIR"
+"$NPM" i fewu-cli
+
 fewu --init
 
-echo "Touching 2 new fake posts..."
-fewu --new
-echo --new --tag TAG --category CATE
+"$NPM" i
 
-echo "Cloning default theme..."
-git clone "git@github.com:0xarch/fewu-theme-arch" _themes/Arch
+fewu --server
 
-echo "Deploying..."
-fewu
+xdg-open localhost:3000
+
+cd $PKG_DIR
