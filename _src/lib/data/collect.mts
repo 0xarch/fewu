@@ -34,6 +34,7 @@ export default async function collectData(ctx: Context) {
         store(post, post.categories, ctx.data.categories);
         store(post, post.tags, ctx.data.tags);
         ctx.data.posts.push(post);
+        ctx.data.sources[post.source] = post;
     })()));
     ctx.data.posts.sort(post_sort);
     ctx.data.posts.forEach((v, i, a) => {
@@ -46,4 +47,5 @@ export default async function collectData(ctx: Context) {
     ctx.data.tags.sort((a, b) => a.key > b.key ? 1 : -1);
     await Theme.executePlugins(ctx);
     await Theme.getI18n(ctx);
+    console.log(Object.keys(ctx.data.sources));
 }

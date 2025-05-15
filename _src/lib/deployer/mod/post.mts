@@ -6,6 +6,7 @@ import { basename, dirname, extname, join } from "path";
 import { Deployable } from "../deployer.mjs";
 import { existsSync } from "fs";
 import Console from "#util/Console";
+import { Source } from "#lib/local/local";
 
 export default class PostDeployer implements Deployable {
     constructor(_ctx: Context) {
@@ -38,12 +39,12 @@ export default class PostDeployer implements Deployable {
 
     async deploy(ctx: Context): Promise<Result<string>> {
         let tasks: Promise<Result<void>>[] = [];
-        for await (let post of ctx.data.posts) {
-            tasks.push(this.deploy_single(ctx,post));
+        for await (let [, post] of Object.entries(ctx.data.sources)) {
+            tasks.push(this.deploy_single(ctx, post));
         }
         let settledResults = await Promise.allSettled(tasks);
-        for(let settledResult of settledResults){
-            if(settledResult.status === 'rejected'){
+        for (let settledResult of settledResults) {
+            if (settledResult.status === 'rejected') {
                 return {
                     status: 'Err',
                     value: settledResult.reason
@@ -56,7 +57,15 @@ export default class PostDeployer implements Deployable {
         }
     }
 
-    async deployWatch(ctx: Context, path: string): Promise<any> {
+    async deployWatch(ctx: Context, path: string, from: string): Promise<any> {
+        if (from === ctx.SOURCE_DIRECTORY) {
+            Console.log(`Recollecting ${path}`);
+            let recollected = await ctx.locals.Source.read(ctx, "post", path);
+            ctx.data.sources[path] = recollected;
+            let result = await ctx.Deployer.run(ctx);
+            console.log(result);
+            return;
+        } else if (from)
         try {
             let _fullpath = join(ctx.THEME_DIRECTORY, path);
             if (!existsSync(_fullpath)) {
@@ -75,6 +84,7 @@ export default class PostDeployer implements Deployable {
                 for (let attachedPost of attachedPosts) {
                     await this.deploy_single(ctx, attachedPost);
                 }
+            } else {
             }
         } catch (e) {
             console.error(e);
