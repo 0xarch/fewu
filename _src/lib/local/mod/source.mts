@@ -32,7 +32,7 @@ declare type SourceTypes = 'draft' | 'post' | 'scaffold';
 export default class Source {
 
     static async traverse(ctx: Context, type: SourceTypes, excluded: string[]): Promise<string[]> {
-        console.log(`Reading ${type} with blacklist: [${excluded.join(',')}]`);
+        Console.log(`Reading ${type} with blacklist: [${excluded.join(',')}]`);
         const path = join(ctx.SOURCE_DIRECTORY, type + 's');
         let files = await ExtendedFS.traverse(path, {
             includeDirectory: false
@@ -93,7 +93,6 @@ export default class Source {
 
     static async watch(ctx: Context, callback: (ctx: Context, type: WatchEventType, path: string, from: string) => void): Promise<void> {
         watch(ctx.SOURCE_DIRECTORY, { recursive: true }, (event, filename) => {
-            Console.log(`Source file ${filename} has changed.`);
             callback(ctx, event, filename as string, ctx.SOURCE_DIRECTORY);
         });
         return;

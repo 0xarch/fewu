@@ -6,7 +6,6 @@ import { basename, dirname, extname, join } from "path";
 import { Deployable } from "../deployer.mjs";
 import { existsSync } from "fs";
 import Console from "#util/Console";
-import { Source } from "#lib/local/local";
 
 export default class PostDeployer implements Deployable {
     constructor(_ctx: Context) {
@@ -59,11 +58,9 @@ export default class PostDeployer implements Deployable {
 
     async deployWatch(ctx: Context, path: string, from: string): Promise<any> {
         if (from === ctx.SOURCE_DIRECTORY) {
-            Console.log(`Recollecting ${path}`);
-            let recollected = await ctx.locals.Source.read(ctx, "post", path);
+            let recollected = await ctx.locals.Source.read(ctx, "post", join(from,path));
             ctx.data.sources[path] = recollected;
-            let result = await ctx.Deployer.run(ctx);
-            console.log(result);
+            await ctx.Deployer.run(ctx);
             return;
         } else if (from)
         try {

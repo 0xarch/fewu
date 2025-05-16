@@ -47,7 +47,6 @@ export default class Theme {
 
     static async watch(ctx: Context, callback: (ctx: Context, type: WatchEventType, path: string, from: string) => void): Promise<void> {
         watch(ctx.THEME_DIRECTORY, { recursive: true }, (event, filename) => {
-            Console.log(`Theme file ${filename} has changed.`);
             callback(ctx, event, filename as string, ctx.THEME_DIRECTORY);
         });
         return;
