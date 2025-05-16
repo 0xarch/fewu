@@ -47,5 +47,4 @@ export default async function collectData(ctx: Context) {
     ctx.data.tags.sort((a, b) => a.key > b.key ? 1 : -1);
     await Theme.executePlugins(ctx);
     await Theme.getI18n(ctx);
-    console.log(Object.keys(ctx.data.sources));
 }
