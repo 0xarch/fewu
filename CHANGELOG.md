@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## REL3.4.17 - 2025-05-16
+
+* Support post preview-on-write in live server.
+
+* Remove default dependency `fewu-renderer-markdown`.
+
 ## REL3.4.16 - 2025-05-14
 
 * Fix bug that `NodeModules` could not handle scoped packages correctly.
