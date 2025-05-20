@@ -11,7 +11,7 @@ export default class PostDeployer implements Deployable {
     constructor(_ctx: Context) {
 
     }
-    private async deploy_single(ctx: Context, post: Post): Promise<Result<void>> {
+    async #deploySingle(ctx: Context, post: Post): Promise<Result<void>> {
         let target = join(ctx.PUBLIC_DIRECTORY, post.source, 'index.html');
 
         let layoutDir = join(ctx.THEME_DIRECTORY, 'layout');
@@ -39,7 +39,7 @@ export default class PostDeployer implements Deployable {
     async deploy(ctx: Context): Promise<Result<string>> {
         let tasks: Promise<Result<void>>[] = [];
         for await (let [, post] of Object.entries(ctx.data.sources)) {
-            tasks.push(this.deploy_single(ctx, post));
+            tasks.push(this.#deploySingle(ctx, post));
         }
         let settledResults = await Promise.allSettled(tasks);
         for (let settledResult of settledResults) {
@@ -79,7 +79,7 @@ export default class PostDeployer implements Deployable {
                 Console.log(`Rerendering post: ${attachedPosts.map(v => v.title)} by layout changed.`);
 
                 for (let attachedPost of attachedPosts) {
-                    await this.deploy_single(ctx, attachedPost);
+                    await this.#deploySingle(ctx, attachedPost);
                 }
             } else {
             }

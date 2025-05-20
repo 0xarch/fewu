@@ -29,7 +29,7 @@ export default class ObjectParser {
         YamlParser
     ];
 
-    private static _parse(content: string, options: _DirectOptions, isAsync = false): (object | null) | (Promise<object | null>) {
+    static #parse(content: string, options: _DirectOptions, isAsync = false): (object | null) | (Promise<object | null>) {
         let _extname = options.type ?? extname(options.path);
         let parser: Parser | undefined;
         for (let availableParser of ObjectParser.availableParsers) {
@@ -62,11 +62,11 @@ export default class ObjectParser {
     }
 
     static async parse(content: string, options: _DirectOptions): Promise<object | null> {
-        return this._parse(content, options, true);
+        return this.#parse(content, options, true);
     }
 
     static parseSync(content: string, options: _DirectOptions): object | null {
-        return this._parse(content, options, false);
+        return this.#parse(content, options, false);
     }
 
 }

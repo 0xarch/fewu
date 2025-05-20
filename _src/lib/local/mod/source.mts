@@ -52,7 +52,7 @@ export default class Source {
     static async read(ctx: Context, type: SourceTypes, path: string) {
         let content = (await readFile(path)).toString();
         if (type === 'post' || type === 'draft') {
-            return this.read_post(ctx, path, content);
+            return this.#readPost(ctx, path, content);
         } else if (type === 'scaffold') {
             return {
                 content
@@ -60,7 +60,7 @@ export default class Source {
         }
     }
 
-    private static async read_post(ctx: Context, path: string, content: string): Promise<Post> {
+    static async #readPost(ctx: Context, path: string, content: string): Promise<Post> {
         let fileStat = await stat(path);
         let resolved = resolveContent(content);
         let post: Partial<Post> = {};

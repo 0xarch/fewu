@@ -12,7 +12,7 @@ class PageDeployer implements Deployable {
     constructor(_ctx: Context) {
 
     }
-    private async deploy_single(ctx: Context, pagable: Pagable, path: string): Promise<Result<void>> {
+    async #deploySingle(ctx: Context, pagable: Pagable, path: string): Promise<Result<void>> {
         let targets = pagable.get(ctx);
         let tasks: Promise<Result<void>>[] = [];
         for (let i = 0; i < targets.length; i++) {
@@ -72,7 +72,7 @@ class PageDeployer implements Deployable {
             if (!await ExtendedFS.isDir(file)) {
                 for (let pagable of validPages) {
                     if (pagable.type === filename) {
-                        let task = this.deploy_single(ctx, pagable, file);
+                        let task = this.#deploySingle(ctx, pagable, file);
                         tasks.push(task);
                         break;
                     }
@@ -105,7 +105,7 @@ class PageDeployer implements Deployable {
                 for (let pagable of validPages) {
                     if (pagable.type === filename) {
                         Console.log(`Rerendering page: ${filename}.`);
-                        await this.deploy_single(ctx, pagable, _fullpath);
+                        await this.#deploySingle(ctx, pagable, _fullpath);
                         break;
                     }
                 }

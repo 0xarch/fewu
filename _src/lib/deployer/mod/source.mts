@@ -27,10 +27,10 @@ class SourceDeployer implements Deployable {
             await cp(origin, target);
         }
     };
-    private constructComplete: Promise<void> | undefined;
+    #constructComplete: Promise<void> | undefined;
     constructor(ctx: Context) {
         let { promise, resolve } = NewPromise.withResolvers<void>();
-        this.constructComplete = promise;
+        this.#constructComplete = promise;
         if (Array.isArray(ctx.config.external?.source_deployers)) {
             let externalSourceDeployers = ctx.config.external.source_deployers as string[];
             (async () => {
@@ -48,8 +48,8 @@ class SourceDeployer implements Deployable {
             resolve();
         }
     }
-    private async deploy_single(ctx: Context, file: string) {
-        await this.constructComplete;
+    async #deploySingle(ctx: Context, file: string) {
+        await this.#constructComplete;
         if (basename(file).startsWith('_')) {
             return;
         }
@@ -68,7 +68,7 @@ class SourceDeployer implements Deployable {
             await ExtendedFS.ensure(ctx.PUBLIC_DIRECTORY);
             for (let file of await ExtendedFS.traverse(themeSourceDir)) {
                 file = relative(themeSourceDir, file);
-                await this.deploy_single(ctx, file);
+                await this.#deploySingle(ctx, file);
             }
             return {
                 status: 'Ok',
@@ -93,7 +93,7 @@ class SourceDeployer implements Deployable {
 
                 Console.log(`Reprocessing source file: ${path}`);
 
-                await this.deploy_single(ctx, _path);
+                await this.#deploySingle(ctx, _path);
             }
         } catch (e) {
             console.error(e);
