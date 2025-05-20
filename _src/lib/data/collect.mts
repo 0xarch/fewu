@@ -2,7 +2,11 @@ import { Context, PageContainer, Page, Post } from "#lib/types";
 import { Source, Theme } from "#lib/local/local";
 
 function post_sort(a: Page, b: Page): number {
-    return a?.date?.isBefore(b.date) ? 1 : a?.date?.isSame(b.date) ? 0 : -1;
+    return a?.date?.isBefore(b.date) 
+        ? 1
+        : a?.date?.isSame(b.date) 
+            ? (Number(a.properties?.order ?? 1) > Number(b.properties?.order ?? 1) ? 1 : -1)
+            : -1;
 }
 
 function store(post: Post, keys: string[], targets: PageContainer[]) {
@@ -34,7 +38,6 @@ export default async function collectData(ctx: Context) {
         store(post, post.categories, ctx.data.categories);
         store(post, post.tags, ctx.data.tags);
         ctx.data.posts.push(post);
-        ctx.data.sources[post.source] = post;
     })()));
     ctx.data.posts.sort(post_sort);
     ctx.data.posts.forEach((v, i, a) => {
@@ -42,6 +45,7 @@ export default async function collectData(ctx: Context) {
         v.total = a.length;
         v.prev = a[i - 1];
         v.next = a[i + 1];
+        ctx.data.sources[v.source] = v;
     });
     ctx.data.categories.sort((a, b) => a.key > b.key ? 1 : -1);
     ctx.data.tags.sort((a, b) => a.key > b.key ? 1 : -1);
