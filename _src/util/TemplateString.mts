@@ -1,6 +1,6 @@
 import GObject from "#util/GObject";
 
-class TemplateString {
+export default class TemplateString {
     static #get_array(str: string) {
         let is_locating_start = false, is_locating_end = false;
         let strs = [''], i = 0, is_in_val = false, skip_a_char = false;
@@ -122,5 +122,3 @@ class TemplateString {
         return this.#str_group.join('');
     }
 }
-
-export default TemplateString;
