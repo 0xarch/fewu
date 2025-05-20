@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## REL3.4.18 - 2025-05-20
+
+* Move all private properties signed by TypeScript's `private` key to ECMA's `#` marker.
+
+* Port `GObject` to TypeScript.
+
+* Support post order.
+
+* Bug fixes.
+
 ## REL3.4.17 - 2025-05-16
 
 * Support post preview-on-write in live server.
