@@ -4,6 +4,8 @@
 
 * Bugfix: Version detector causes error in Node.js < 20.11.0
 
+* Feature: Automatically disable live change in server mode when `fs.watch` with `recursively` is not supported in current platform.
+
 ## REL3.4.18 - 2025-05-20
 
 * Move all private properties signed by TypeScript's `private` key to ECMA's `#` marker.
