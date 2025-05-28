@@ -2,9 +2,15 @@
 
 ## REL-NEXT - 2025-05-28
 
+* Experimental Dev Feature: Use `typescript/native-preview`(`tsgo`) to compile code.
+
+* Unused Function Removal: `#util/I18n` (Deprecated)
+
 * Bugfix: Version detector causes error in Node.js < 20.11.0
 
 * Feature: Automatically disable live change in server mode when `fs.watch` with `recursively` is not supported in current platform.
+
+* Port: DynamicImport is ported to TypeScript.
 
 ## REL3.4.18 - 2025-05-20
 

@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from "fs";
 import { join } from 'path';
 import Console from "#util/Console";
 
-async function dynamicImport(id){
+async function dynamicImport(id: string){
     let path = id;
     let result = null;
     try {
@@ -24,8 +24,5 @@ async function dynamicImport(id){
     }
     return result;
 }
-
-// Mount
-global.dynamicImport = dynamicImport;
 
 export default dynamicImport;

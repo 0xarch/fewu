@@ -21,12 +21,14 @@
     "devDependencies": {
         "@fewu-swg/abstract-types": "^1.0.0",
         "@types/node": "^22.15.17",
+        "@typescript/native-preview": "7.0.0-dev.20250528.1",
+        "@typescript/native-preview-linux-x64": "7.0.0-dev.20250528.1",
         "typescript": "^5.8.3"
     },
     "publishConfig": {
         "access": "public"
     },
     "scripts": {
-        "prepublish": "rm _dist/* -r; pnpm tsc"
+        "prepublish": "rm _dist/* -r; pnpm tsgo"
     }
 }
