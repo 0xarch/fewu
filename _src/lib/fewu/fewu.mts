@@ -1,7 +1,12 @@
 import { readFile } from "fs/promises";
-import { join } from "path";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
 
-let package_json_path = join(import.meta.dirname,"../../../package.json");
+// support node.js < 20.11.0
+
+let __dirname = dirname(fileURLToPath(import.meta.url));
+
+let package_json_path = join(__dirname,"../../../package.json");
 
 let package_json = JSON.parse((await readFile(package_json_path)).toString());
 
