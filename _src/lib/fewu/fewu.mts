@@ -12,4 +12,6 @@ let package_json = JSON.parse((await readFile(package_json_path)).toString());
 
 export const version = package_json.version;
 
-export const url = 'https://github.com/fewu-swg/fewu';
+export const url = package_json.repository.url;
+
+// export const url = 'https://github.com/fewu-swg/fewu';
