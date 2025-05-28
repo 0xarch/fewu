@@ -2,6 +2,9 @@
     "name": "@fewu-swg/fewu",
     "main": "_dist/lib/fewu/app.mjs",
     "version": "3.4.18",
+    "repository": {
+        "url": "https://github.com/fewu-swg/fewu"
+    },
     "dependencies": {
         "fs": "0.0.1-security",
         "mime": "^4.0.7",
