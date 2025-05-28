@@ -25,14 +25,14 @@ export default function registerServer(ctx: Context) {
     if (Argv['-s'] || Argv['--server']) {
         const server = new Server();
         if (Argv['-S'] || Argv['--server']) {
-            ctx.on('afterDeploy', (_ctx) => {
+            ctx.on('afterDeploy', async (_ctx) => {
                 server.create(_ctx).listen(parseInt(Argv['-S']?.[0] || Argv['--server']?.[0]) || 3000);
                 try {
-                    _ctx.locals.Theme.watch(_ctx, (_ctx, _, path, from) => {
+                    await _ctx.locals.Theme.watch(_ctx, (_ctx, _, path, from) => {
                         // _ctx.Deployer.runWatch(_ctx, path, from);
                         registerWatchTask(_ctx, path, from);
                     });
-                    _ctx.locals.Source.watch(_ctx, (_ctx, _, path, from) => {
+                    await _ctx.locals.Source.watch(_ctx, (_ctx, _, path, from) => {
                         // _ctx.Deployer.runWatch(_ctx, path, from);
                         registerWatchTask(_ctx, path, from);
                     });
