@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## REL-NEXT - 2025-05-28
+
+* Bugfix: Version detector causes error in Node.js < 20.11.0
+
 ## REL3.4.18 - 2025-05-20
 
 * Move all private properties signed by TypeScript's `private` key to ECMA's `#` marker.
